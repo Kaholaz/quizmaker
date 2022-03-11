@@ -1,13 +1,11 @@
-package ogr.ntnu.k2.g2.Quiz;
+package org.ntnu.k2.g2.quizmaker.Data;
 
 public class Question {
     private String question;
     private String answer;
+    private int id;
 
-    public Question(String question, String answer) {
-        this.question = question;
-        this.answer = answer;
-    }
+    public Question(String question, String answer) {}
 
     public String getQuestion() {
         return question;
@@ -23,5 +21,13 @@ public class Question {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
