@@ -3,9 +3,9 @@ package org.ntnu.k2.g2.quizmaker.Data;
 public class Question {
     private String question;
     private String answer;
-    private int id;
+    private int id = -1;
 
-    public Question(String question, String answer) {}
+    public Question(){}
 
     public String getQuestion() {
         return question;

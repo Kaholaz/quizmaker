@@ -1,29 +1,30 @@
 package org.ntnu.k2.g2.quizmaker.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Quiz {
     private String name;
-    private int id;
+    private int id = -1;
 
-    private ArrayList<Team> teams;
-    private ArrayList<Question> questions;
+    private HashMap<Integer, Team> teams = new HashMap<>();
+    private HashMap<Integer, Question> questions = new HashMap<>();
 
     public Quiz(){}
 
-    public ArrayList<Team> getTeams() {
+    public HashMap<Integer, Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(ArrayList<Team> teams) {
+    public void setTeams(HashMap<Integer, Team> teams) {
         this.teams = teams;
     }
 
-    public ArrayList<Question> getQuestions() {
+    public HashMap<Integer, Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(ArrayList<Question> questions) {
+    public void setQuestions(HashMap<Integer, Question> questions) {
         this.questions = questions;
     }
 

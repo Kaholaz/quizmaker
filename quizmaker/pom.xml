@@ -25,7 +25,25 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.36.0</version>
+    </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>maven1</id>
+      <name>maven1</name>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>
+      <id>maven</id>
+      <name>maven</name>
+      <url>https://repo.maven.org/maven2</url>
+    </repository>
+  </repositories>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

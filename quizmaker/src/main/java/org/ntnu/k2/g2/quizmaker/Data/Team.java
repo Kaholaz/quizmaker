@@ -3,8 +3,17 @@ package org.ntnu.k2.g2.quizmaker.Data;
 public class Team {
     private String teamName;
     private int score;
+    private int id = -1;
 
     public Team(){}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTeamName() {
         return teamName;
