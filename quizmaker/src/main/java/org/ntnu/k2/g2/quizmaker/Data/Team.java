@@ -1,10 +1,34 @@
 package org.ntnu.k2.g2.quizmaker.Data;
 
+import java.util.Objects;
+
 public class Team {
     private String teamName;
     private int score;
+    private int id = -1;
 
-    public Team(){}
+    protected Team(){}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return score == team.score && id == team.id && Objects.equals(teamName, team.teamName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teamName, score, id);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
+    }
 
     public String getTeamName() {
         return teamName;
