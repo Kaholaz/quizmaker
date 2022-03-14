@@ -1,5 +1,6 @@
-module ogr.ntnu.k2.g2.GUI {
+module org.ntnu.k2.g2.quizmaker {
     requires javafx.controls;
     requires javafx.fxml;
-    exports org.ntnu.k2.g2.quizmaker.GUI;
+    requires java.sql;
+    exports org.ntnu.k2.g2.quizmaker;
 }

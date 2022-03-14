@@ -23,7 +23,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -94,7 +94,6 @@
             <release>${maven.compiler.target}</release>
             <jlinkImageName>hellofx</jlinkImageName>
             <launcher>launcher</launcher>
-            <mainClass>ogr.ntnu.k2.g2.Main</mainClass>
           </configuration>
         </plugin>
       </plugins>
