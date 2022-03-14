@@ -1,2 +1,4 @@
 .idea
-quizmaker/target
+../.idea
+target
+quizmaker.iml
