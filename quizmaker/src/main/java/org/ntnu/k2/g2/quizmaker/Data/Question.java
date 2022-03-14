@@ -1,11 +1,26 @@
 package org.ntnu.k2.g2.quizmaker.Data;
 
+import java.util.Objects;
+
 public class Question {
     private String question;
     private String answer;
     private int id = -1;
 
-    public Question(){}
+    protected Question(){}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question1 = (Question) o;
+        return id == question1.id && Objects.equals(question, question1.question) && Objects.equals(answer, question1.answer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(question, answer, id);
+    }
 
     public String getQuestion() {
         return question;
@@ -27,7 +42,7 @@ public class Question {
         return id;
     }
 
-    public void setId(int id) {
+    protected void setId(int id) {
         this.id = id;
     }
 }

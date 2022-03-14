@@ -2,47 +2,108 @@ package org.ntnu.k2.g2.quizmaker.Data;
 
 import java.io.File;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * A class used to interact with the storage system of quizzes
+ */
 public class QuizRegister {
-    public List<Quiz> getQuizList() {
+    /**
+     * @return A complete representation of the database represented by an arraylist of quizzes
+     */
+    public ArrayList<Quiz> getQuizList() {
         QuizDAO quizDAO = new QuizDAO();
         return quizDAO.getAllQuizzes();
     }
 
+    /**
+     * Gets a quiz with a specific id.
+     * @param id The id of the quiz.
+     * @return A quiz object representation of the entry in the database.
+     *         {@code null} is returned if no quiz matching the query is found in the database.
+     */
     public Quiz getQuiz(int id) {
         QuizDAO quizDAO = new QuizDAO();
         return quizDAO.getQuizById(id);
     }
 
+    /**
+     * Gets a team with a specific id
+     * @param id The id of the team.
+     * @return A team object representation of the entry in the database.
+     *         {@code null} is returned if no team matching the query is found in the database.
+     */
     public Team getTeam(int id) {
         TeamDAO teamDAO = new TeamDAO();
         return teamDAO.getTeamById(id);
     }
 
-    public Question getQuestions(int id) {
+    /**
+     * Gets a question with a specific id
+     * @param id The id of the question.
+     * @return A question object representation of the entry in the database.
+     *         {@code null} is returned if no question matching the query is found in the database.
+     */
+    public Question getQuestion(int id) {
         QuestionDAO questionDAO = new QuestionDAO();
         return questionDAO.getQuestionById(id);
     }
 
+    /**
+     * Saves a quiz and ALL its content to the database.
+     * @param quiz The quiz to save to the database.
+     * @return A quiz object representation of the entry in the database AFTER it has been updated.
+     *         {@code null} is returned if something went wrong when the quiz was saved.
+     */
     public Quiz saveQuiz(Quiz quiz) {
         QuizDAO quizDAO = new QuizDAO();
         return quizDAO.updateQuiz(quiz);
     }
 
+    /**
+     * Saves a team to the database. To use this method, the team object should already be an entry in the database.
+     * If it is not, one should instead use the method newTeam to create a new team with a relation to a quiz.
+     * @param team The team to save to the database.
+     * @return A team object representation of the entry in the database AFTER it has been updated.
+     *         {@code null} is returned if something went wrong when the team was saved.
+     */
     public Team saveTeam(Team team) {
         TeamDAO teamDAO = new TeamDAO();
         return teamDAO.updateTeam(team);
     }
 
+    /**
+     * Saves a question to the database. To use this method, the question object should already be an entry in the database.
+     * If it is not, one should instead use the method newQuestion to create a new question with a relation to a quiz.
+     * @param question The question to save to the database.
+     * @return A question object representation of the entry in the database AFTER it has been updated.
+     *         {@code null} is returned if something went wrong when the question was saved.
+     */
     public Question saveQuestion(Question question) {
         QuestionDAO questionDAO = new QuestionDAO();
         return questionDAO.updateQuestion(question);
     }
 
+    /**
+     * Create a new quiz.
+     * @return The new quiz.
+     */
+    public Quiz newQuiz() {
+        Quiz quiz = new Quiz();
+        QuizDAO quizDAO = new QuizDAO();
+        return quizDAO.updateQuiz(quiz);
+    }
+
+    /**
+     * Creates a new team entry in the database and ads an object representation to the supplied quiz.
+     * This method must be called when creating a new teams.
+     * @param quiz The quiz the team should be part of.
+     * @return A team object representation of the entry in the database AFTER it has been added to the database.
+     *         {@code null} is returned if something went wrong when the team was added to the database.
+     */
     public Team newTeam(Quiz quiz) {
         TeamDAO teamDAO = new TeamDAO();
         Team team = teamDAO.updateTeam(new Team(), quiz.getId());
@@ -50,6 +111,13 @@ public class QuizRegister {
         return team;
     }
 
+    /**
+     * Creates a new question entry in the database and ads an object representation to the supplied quiz.
+     * This method must be called when creating a new questions.
+     * @param quiz The quiz the question should be part of.
+     * @return A question object representation of the entry in the database AFTER it has been added to the database.
+     *         {@code null} is returned if something went wrong when the question was added to the database.
+     */
     public Question newQuestion(Quiz quiz) {
         QuestionDAO questionDAO = new QuestionDAO();
         Question question = questionDAO.updateQuestion(new Question(), quiz.getId());
@@ -57,6 +125,22 @@ public class QuizRegister {
         return question;
     }
 
+    /**
+     * Removes a quiz and all its contents (questions and teams) from the database.
+     * @param quiz The quiz to remove from the database.
+     * @return True if the operation was successful, false if not.
+     */
+    public boolean removeQuiz(Quiz quiz) {
+        QuizDAO quizDAO = new QuizDAO();
+        return quizDAO.removeQuizById(quiz.getId());
+    }
+
+    /**
+     * Removes a team from the database.
+     * @param quiz The quiz the team is a component of.
+     * @param teamId The id of the team to remove.
+     * @return True if the operation was successful, false if not.
+     */
     public boolean removeTeam(Quiz quiz, int teamId) {
         quiz.getTeams().remove(teamId);
 
@@ -64,6 +148,12 @@ public class QuizRegister {
         return teamDAO.removeTeamById(teamId);
     }
 
+    /**
+     * Removes a team from the database.
+     * @param quiz The quiz the team is a component of.
+     * @param questionId The id of the team to remove.
+     * @return True if the operation was successful, false if not.
+     */
     public boolean removeQuestion(Quiz quiz, int questionId) {
         quiz.getQuestions().remove(questionId);
 
@@ -71,7 +161,11 @@ public class QuizRegister {
         return questionDAO.removeQuestionById(questionId);
     }
 
-    private static class DataBase {
+    /**
+     * A class that deals with establishing and closing connections to the database,
+     * as well as setting up the necessary tables and columns of the database.
+     */
+    protected static class DataBase {
         private static Connection connection;
 
         private static final String DB_URL = "jdbc:sqlite:";
@@ -83,8 +177,8 @@ public class QuizRegister {
         private static boolean test = true;
 
         private DataBase () {
-            File root = new File(DB_PATH);
-            File db_path = new File(root, String.format("%s%s", test ? DB_NAME_TEST_PREFIX : "", DB_NAME));
+            File db_path = getDbPath();
+            File root = new File(db_path.getParent());
 
             root.mkdirs();
             String db_url = DB_URL.concat(db_path.getAbsolutePath());
@@ -155,8 +249,13 @@ public class QuizRegister {
          * @return The connection to the database
          */
         public static Connection getConnection() {
-            if (connection == null) {
-                new DataBase();
+            try {
+                if (connection == null || connection.isClosed()) {
+                    new DataBase();
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
             }
             return connection;
         }
@@ -205,16 +304,23 @@ public class QuizRegister {
                 }
             }
         }
+
+        public static File getDbPath() {
+            File path = new File(DB_PATH);
+            String db_name = (test ? DB_NAME_TEST_PREFIX : "").concat(DB_NAME);
+            return new File(path, db_name);
+        }
     }
 
-    private static class QuizDAO {
+    protected static class QuizDAO {
         private Quiz getQuizFromResultSet(ResultSet result) {
             Quiz quiz = null;
             try {
                 if (result.next()) {
                     quiz = new Quiz();
                     quiz.setId(result.getInt("id"));
-                    quiz.setName(result.getString("quiz"));
+                    quiz.setName(result.getString("name"));
+                    quiz.setLastEdited(LocalDateTime.parse(result.getString("lastChanged")));
                 }
             }
             catch (SQLException e) {
@@ -232,7 +338,8 @@ public class QuizRegister {
                 while (result.next()) {
                     Quiz quiz = new Quiz();
                     quiz.setId(result.getInt("id"));
-                    quiz.setName(result.getString("quiz"));
+                    quiz.setName(result.getString("name"));
+                    quiz.setLastEdited(LocalDateTime.parse(result.getString("lastChanged")));
 
                     quizzes.add(quiz);
                 }
@@ -264,6 +371,9 @@ public class QuizRegister {
                 QuestionDAO questionDAO = new QuestionDAO();
                 quiz.setQuestions(questionDAO.getQuestionsByQuizId(id));
                 quiz.setTeams(teamDAO.getTeamsByQuizId(id));
+            }
+            catch (NullPointerException e) {
+                return null;
             }
             catch (SQLException e) {
                 e.printStackTrace();
@@ -315,26 +425,37 @@ public class QuizRegister {
 
             try {
                 connection = DataBase.getConnection();
+                quiz.setLastEdited(LocalDateTime.now());
 
                 // If quiz is not in database
                 if (quiz.getId() == -1) {
                     preparedStatement = connection.prepareStatement(
-                            "INSERT INTO quizzes (name, lastChanged) VALUES (?, datetime('now'));");
-                    preparedStatement.setString(1, quiz.getName());
+                            "INSERT INTO quizzes (name, lastChanged) VALUES (?, ?);");
                 } else {
                     preparedStatement = connection.prepareStatement(
-                            "UPDATE quizzes SET name=?, lastChanged=datetime('now') WHERE id=?;");
-                    preparedStatement.setString(1, quiz.getName());
-                    preparedStatement.setInt(2, quiz.getId());
+                            "UPDATE quizzes SET name=?, lastChanged=? WHERE id=?;");
+                    preparedStatement.setInt(3, quiz.getId());
                 }
+                preparedStatement.setString(1, quiz.getName());
+                preparedStatement.setString(2, quiz.getLastEdited().toString());
 
                 // New teams and questions
                 HashMap<Integer, Team> newTeams = quiz.getTeams();
                 HashMap<Integer, Question> newQuestions = quiz.getQuestions();
 
                 // Executes query and gets the new quiz
-                result = preparedStatement.executeQuery();
-                quiz = getQuizFromResultSet(result);
+                int resultRows = preparedStatement.executeUpdate();
+
+                // Quiz was inserted successfully
+                if (quiz.getId() == -1 && resultRows == 1) {
+                    result = preparedStatement.getGeneratedKeys();
+                    quiz.setId(result.getInt(1));
+                }
+                // Quiz was updated unsuccessfully
+                else if (resultRows == 0) {
+                    quiz.setId(-1); // Creates a new entry since id was not found
+                    quiz = updateQuiz(quiz);
+                }
                 final int quizId = quiz.getId();
 
                 // Make updates to the team and question tables to reflect the quiz object
@@ -350,7 +471,7 @@ public class QuizRegister {
                 // Remove removed teams
                 Stream<Integer> UniqueOldTeams = oldQuizData.getTeams().keySet().stream()
                         .filter(oldId -> !newTeams.keySet().contains(oldId));
-                UniqueOldTeams.forEach(questionDAO::removeQuestionById);
+                UniqueOldTeams.forEach(teamDAO::removeTeamById);
 
                 // Update teams
                 newTeams.values().forEach(team -> teamDAO.updateTeam(team, quizId));
@@ -360,6 +481,9 @@ public class QuizRegister {
             }
             catch (SQLException e) {
                 e.printStackTrace();
+            }
+            catch (NullPointerException e) {
+                return null;
             }
             finally {
                 DataBase.closeConnection(connection);
@@ -386,6 +510,8 @@ public class QuizRegister {
                 TeamDAO teamDAO= new TeamDAO();
                 quiz.getQuestions().keySet().forEach(teamDAO::removeTeamById);
 
+
+                // removes the quiz itself
                 connection = DataBase.getConnection();
                 preparedStatement = connection.prepareStatement(
                         "DELETE FROM quizzes WHERE id=?");
@@ -404,7 +530,7 @@ public class QuizRegister {
         }
     }
 
-    private static class QuestionDAO {
+    protected static class QuestionDAO {
         public QuestionDAO(){}
 
         private Question getQuestionFromResultSet(ResultSet result) {
@@ -546,22 +672,27 @@ public class QuizRegister {
 
             try {
                 connection = DataBase.getConnection();
-                if (question.getId() != -1) {
+                if (question.getId() == -1) {
+                    preparedStatement = connection.prepareStatement(
+                            "INSERT INTO questions (question, answer, quizId) VALUES (?, ?, ?);");
+                    preparedStatement.setInt(3, quizId);
+                } else {
                     preparedStatement = connection.prepareStatement(
                             "UPDATE questions SET question=?, answer=? WHERE id=?");
                     preparedStatement.setInt(3, question.getId());
                 }
-                else {
-                    preparedStatement = connection.prepareStatement(
-                            "INSERT INTO questions (question, answer, quizId) VALUES (?, ?, ?);");
-                    preparedStatement.setInt(3, quizId);
-                }
                 preparedStatement.setString(1, question.getQuestion());
                 preparedStatement.setString(2, question.getAnswer());
 
-                result = preparedStatement.executeQuery();
-
-                question = getQuestionFromResultSet(result);
+                int resultRows = preparedStatement.executeUpdate();
+                if (question.getId() == -1 && resultRows == 1) {
+                    result = preparedStatement.getGeneratedKeys();
+                    question.setId(result.getInt(1));
+                }
+                else if (resultRows == 0) {
+                    question.setId(-1);
+                    question = updateQuestion(question, quizId);
+                }
             }
             catch (SQLException e) {
                 e.printStackTrace();
@@ -607,7 +738,7 @@ public class QuizRegister {
         }
     }
 
-    private static class TeamDAO {
+    protected static class TeamDAO {
         public TeamDAO(){}
 
         private Team getTeamFromResultSet(ResultSet result) {
@@ -617,7 +748,7 @@ public class QuizRegister {
                     team = new Team();
                     team.setId(result.getInt("id"));
                     team.setTeamName(result.getString("name"));
-                    team.setScore(result.getInt("answer"));
+                    team.setScore(result.getInt("score"));
                 }
             }
             catch (SQLException e) {
@@ -637,7 +768,7 @@ public class QuizRegister {
                     Team team = new Team();
                     team.setId(result.getInt("id"));
                     team.setTeamName(result.getString("name"));
-                    team.setScore(result.getInt("answer"));
+                    team.setScore(result.getInt("score"));
 
                     teams.put(team.getId(), team);
                 }
@@ -749,22 +880,27 @@ public class QuizRegister {
 
             try {
                 connection = DataBase.getConnection();
-                if (team.getId() != -1) {
+                if (team.getId() == -1) {
                     preparedStatement = connection.prepareStatement(
-                            "UPDATE teams SET team=?, answer=? WHERE id=?");
-                    preparedStatement.setInt(3, team.getId());
-                }
-                else {
-                    preparedStatement = connection.prepareStatement(
-                            "INSERT INTO teams (team, answer, quizId) VALUES (?, ?, ?);");
+                            "INSERT INTO teams (name, score, quizId) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(3, quizId);
+                } else {
+                    preparedStatement = connection.prepareStatement(
+                            "UPDATE teams SET name=?, score=? WHERE id=?");
+                    preparedStatement.setInt(3, team.getId());
                 }
                 preparedStatement.setString(1, team.getTeamName());
                 preparedStatement.setInt(2, team.getScore());
 
-                result = preparedStatement.executeQuery();
-
-                team = getTeamFromResultSet(result);
+                int resultRows = preparedStatement.executeUpdate();
+                if (team.getId() == -1 && resultRows == 1) {
+                    result = preparedStatement.getGeneratedKeys();
+                    if (result.next()) team.setId(result.getInt(1));
+                }
+                else if (resultRows == 0) {
+                    team.setId(-1);
+                    team = updateTeam(team, quizId);
+                }
             }
             catch (SQLException e) {
                 e.printStackTrace();

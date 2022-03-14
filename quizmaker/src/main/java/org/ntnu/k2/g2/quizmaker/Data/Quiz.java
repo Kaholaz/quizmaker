@@ -1,22 +1,47 @@
 package org.ntnu.k2.g2.quizmaker.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Quiz {
     private String name;
     private int id = -1;
+    private LocalDateTime lastEdited;
 
     private HashMap<Integer, Team> teams = new HashMap<>();
     private HashMap<Integer, Question> questions = new HashMap<>();
 
-    public Quiz(){}
+    protected Quiz(){}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Quiz quiz = (Quiz) o;
+        return id == quiz.id && Objects.equals(name, quiz.name) && Objects.equals(lastEdited, quiz.lastEdited)
+                && Objects.equals(teams, quiz.teams) && Objects.equals(questions, quiz.questions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id, lastEdited, teams, questions);
+    }
+
+    public LocalDateTime getLastEdited() {
+        return lastEdited;
+    }
+
+    protected void setLastEdited(LocalDateTime lastEdited) {
+        this.lastEdited = lastEdited;
+    }
 
     public HashMap<Integer, Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(HashMap<Integer, Team> teams) {
+    protected void setTeams(HashMap<Integer, Team> teams) {
         this.teams = teams;
     }
 
@@ -24,7 +49,7 @@ public class Quiz {
         return questions;
     }
 
-    public void setQuestions(HashMap<Integer, Question> questions) {
+    protected void setQuestions(HashMap<Integer, Question> questions) {
         this.questions = questions;
     }
 
@@ -40,7 +65,7 @@ public class Quiz {
         return id;
     }
 
-    public void setId(int id) {
+    protected void setId(int id) {
         this.id = id;
     }
 }
