@@ -158,4 +158,63 @@ public class QuizRegisterTest extends TestCase {
         assertNull(quizRegister.getQuestion(2));
         assertEquals(quiz.getQuestions().get(1), quizRegister.getQuestion(1));
     }
+
+    public void testRemoveTeamNotInDatabaseReturnsFalse() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz quiz = quizRegister.newQuiz();
+
+        Team team = quizRegister.newTeam(quiz);
+        quizRegister.removeTeam(quiz, team.getId());
+
+        assertFalse(quizRegister.removeTeam(quiz, team.getId()));
+    }
+
+    public void testRemoveQuestionNotInDatabaseReturnsFalse() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz quiz = quizRegister.newQuiz();
+
+        Question question = quizRegister.newQuestion(quiz);
+        quizRegister.removeTeam(quiz, question.getId());
+
+        assertFalse(quizRegister.removeTeam(quiz, question.getId()));
+    }
+
+    public void testSaveTeamNotInDataBaseReturnsNull() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz quiz = quizRegister.newQuiz();
+
+        Team team = quizRegister.newTeam(quiz);
+        quizRegister.removeTeam(quiz, team.getId());
+
+        assertNull(quizRegister.saveTeam(team));
+    }
+
+    public void testSaveQuestionNotInDataBaseReturnsNull() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz quiz = quizRegister.newQuiz();
+
+        Question question = quizRegister.newQuestion(quiz);
+        quizRegister.removeQuestion(quiz, question.getId());
+
+        assertNull(quizRegister.saveQuestion(question));
+    }
+
+    public void testPopulateDatabase() {
+        QuizRegister quizRegister= new QuizRegister();
+        quizRegister.populateDatabase(1, 2, 3);
+
+        ArrayList<Quiz> quizzes = quizRegister.getQuizList();
+
+        assertEquals(2, quizzes.size());
+        assertEquals(2, quizzes.get(1).getTeams().size());
+        assertEquals(3, quizzes.get(1).getQuestions().size());
+
+        assertEquals("Quiz 1", quizzes.get(1).getName());
+
+        assertEquals("Question 2", quizzes.get(1).getQuestions().get(7).getQuestion());
+        assertEquals("Answer 3", quizzes.get(1).getQuestions().get(8).getAnswer());
+
+        assertEquals("Team 2", quizzes.get(1).getTeams().get(5).getTeamName());
+        assertEquals(2, quizzes.get(1).getTeams().get(5).getScore());
+    }
 }
