@@ -1,4 +1,4 @@
-package org.ntnu.k2.g2.quizmaker.GUI.Controllers;
+package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,11 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class mainPageController {
 
