@@ -79,7 +79,8 @@ public class Question {
     }
 
     /**
-     * @param id
+     * Sets the is of the question. This is set during creation by the QuestionDAO
+     * @param id The id of the question
      */
     protected void setId(int id) {
         this.id = id;
