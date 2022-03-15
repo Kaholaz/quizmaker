@@ -18,7 +18,10 @@ public class mainPageController {
     @FXML
     public Button newQuiz, browse;
 
-    public void browse(ActionEvent actionEvent) {
+    public void browse(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/browse.fxml"));
+        Stage stage = (Stage) newQuiz.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     public void newQuiz() throws IOException {
