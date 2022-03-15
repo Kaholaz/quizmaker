@@ -15,11 +15,12 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("CardGame");
 
-        URL url = new File("src/main/resources/GUI/test.fxml").toURI().toURL();
+        URL url = new File("src/main/resources/GUI/mainPage.fxml").toURI().toURL();
 
         Parent root = FXMLLoader.load(url);
 
         primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }
