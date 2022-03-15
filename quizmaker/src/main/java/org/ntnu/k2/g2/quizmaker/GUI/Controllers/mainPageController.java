@@ -1,4 +1,4 @@
-package org.ntnu.k2.g2.quizmaker.GUI;
+package org.ntnu.k2.g2.quizmaker.GUI.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
