@@ -5,9 +5,7 @@ graph TD
    a((main))
    b((dev))
    
-   d((GUI))
    e((gui/.../issue-##))
-   f((gui/.../issue-##))
    
    
    h((bug/.../issue-##))
@@ -17,10 +15,8 @@ graph TD
    a---b
    b---h
    b---i
-   b---d
    b---j
-   d---e
-   d---f
+   b---e
 ```
 
 
