@@ -3,8 +3,7 @@ package org.ntnu.k2.g2.quizmaker.Data;
 import java.io.File;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -61,6 +60,16 @@ public class QuizRegister {
     public Quiz saveQuiz(Quiz quiz) {
         QuizDAO quizDAO = new QuizDAO();
         return quizDAO.updateQuiz(quiz);
+    }
+
+    /**
+     * Saves an ArrayList of quizzes and all changes to its contents to the database.
+     * @param quizzes The quizzes to save to the database.
+     * @return An ArrayList of all quizzes that were properly saved.
+     */
+    public ArrayList<Quiz> saveQuizzes(ArrayList<Quiz> quizzes) {
+        // Save all quizzes that were properly saved
+        return new ArrayList<>(quizzes.stream().map(this::saveQuiz).filter(Objects::nonNull).toList());
     }
 
     /**
@@ -159,6 +168,35 @@ public class QuizRegister {
 
         QuestionDAO questionDAO = new QuestionDAO();
         return questionDAO.removeQuestionById(questionId);
+    }
+
+    /**
+     * Populates the database with a set number of quizzes and a set number of teams and question per quiz.
+     * @param quizzes The number of quizzes to fill that database with.
+     * @param teams The number of teams to fill each quiz with.
+     * @param questions The number of questions to fill each quiz with.
+     * @return An ArrayList of all the quizzes that were added to the database.
+     */
+    public ArrayList<Quiz> populateDatabase(int quizzes, int teams, int questions) {
+        ArrayList<Quiz> quizArrayList = new ArrayList<>();
+
+        for (int i = 1; i <= quizzes; ++i) {
+            Quiz quiz = newQuiz();
+            quiz.setName(String.format("Quiz %d", i));
+            for (int j = 1; j <= teams; ++j) {
+                Team team = newTeam(quiz);
+                team.setTeamName(String.format("Team %d", j));
+                team.setScore(j);
+            }
+            for (int j = 1; j <= questions; ++j) {
+                Question question = newQuestion(quiz);
+                question.setQuestion(String.format("Question %d", j));
+                question.setAnswer(String.format("Answer %d", j));
+            }
+            quizArrayList.add(saveQuiz(quiz));
+        }
+
+        return quizArrayList;
     }
 
     /**
@@ -512,8 +550,7 @@ public class QuizRegister {
                 }
                 // Quiz was updated unsuccessfully
                 else if (resultRows == 0) {
-                    quiz.setId(-1); // Creates a new entry since id was not found
-                    quiz = updateQuiz(quiz);
+                    return null;
                 }
                 final int quizId = quiz.getId();
 
@@ -731,7 +768,7 @@ public class QuizRegister {
         /**
          * Gets the id of a quiz that contains a question with the supplied id.
          * @param questionId The id of the question.
-         * @return The quiz id of the quiz where the question is a component.
+         * @return The quiz id of the quiz where the question is a component. Returns -1 if the questionId is not found.
          */
         public int getQuizIdByQuestionId(int questionId) {
             Connection connection = null;
@@ -789,8 +826,7 @@ public class QuizRegister {
                     question.setId(result.getInt(1));
                 }
                 else if (resultRows == 0) {
-                    question.setId(-1);
-                    question = updateQuestion(question, quizId);
+                    question = null;
                 }
             }
             catch (SQLException e) {
@@ -811,10 +847,16 @@ public class QuizRegister {
          */
         public Question updateQuestion(Question question) {
             int quizId = getQuizIdByQuestionId(question.getId());
+            if (quizId == -1) return null;
             return updateQuestion(question, quizId);
         }
 
 
+        /**
+         * Removes a question with the given id from the database.
+         * @param id The id of the question.
+         * @return True if the question was removed successfully, false if not.
+         */
         public boolean removeQuestionById(int id) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -904,7 +946,7 @@ public class QuizRegister {
         /**
          * Gets the quiz id of the quiz that a team is the component of form the ResultSet of an SQL query.
          * @param result The ResultSet of an SQL query.
-         * @return The id of the quiz that the team is a component of.
+         * @return The id of the quiz that the team is a component of. Returns -1 if the ResultSet is empty.
          */
         private int getQuizIdFromResultSet(ResultSet result) {
             int quizId = -1;
@@ -986,7 +1028,7 @@ public class QuizRegister {
         /**
          * Gets the id of a quiz that a team is the component of.
          * @param teamId The id of the team.
-         * @return The id of the quiz.
+         * @return The id of the quiz. Returns -1 if the teamID is not found in the database.
          */
         public int getQuizIdByTeamId(int teamId) {
             Connection connection = null;
@@ -1044,8 +1086,7 @@ public class QuizRegister {
                     if (result.next()) team.setId(result.getInt(1));
                 }
                 else if (resultRows == 0) {
-                    team.setId(-1);
-                    team = updateTeam(team, quizId);
+                    team = null;
                 }
             }
             catch (SQLException e) {
@@ -1066,6 +1107,7 @@ public class QuizRegister {
          */
         public Team updateTeam(Team team) {
             int quizId = getQuizIdByTeamId(team.getId());
+            if (quizId == -1) return null;
             return updateTeam(team, quizId);
         }
 
