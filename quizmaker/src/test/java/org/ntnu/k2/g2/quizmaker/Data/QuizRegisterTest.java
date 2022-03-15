@@ -62,7 +62,7 @@ public class QuizRegisterTest extends TestCase {
         QuizRegister quizRegister = new QuizRegister();
         Quiz testQuiz = quizRegister.getQuiz(100);
 
-        assertEquals(null, testQuiz);
+        assertNull(testQuiz);
     }
 
     public void testGetTeam() {
@@ -78,7 +78,7 @@ public class QuizRegisterTest extends TestCase {
         QuizRegister quizRegister = new QuizRegister();
         Team team = quizRegister.getTeam(100);
 
-        assertEquals(null, team);
+        assertNull(team);
     }
 
     public void testGetQuestion() {
@@ -94,7 +94,7 @@ public class QuizRegisterTest extends TestCase {
         QuizRegister quizRegister = new QuizRegister();
         Question question = quizRegister.getQuestion(100);
 
-        assertEquals(null, question);
+        assertNull(question);
     }
 
     public void testSaveQuizAltersTeams() {
@@ -107,7 +107,7 @@ public class QuizRegisterTest extends TestCase {
         quiz = quizRegister.saveQuiz(quiz);
 
         assertFalse(quiz.getTeams().containsKey(2));
-        assertEquals(null, quizRegister.getTeam(2));
+        assertNull(quizRegister.getTeam(2));
         assertEquals(quizRegister.getTeam(3), quiz.getTeams().get(3));
     }
 
@@ -121,7 +121,7 @@ public class QuizRegisterTest extends TestCase {
         quiz = quizRegister.saveQuiz(quiz);
 
         assertFalse(quiz.getQuestions().containsKey(3));
-        assertEquals(null, quizRegister.getQuestion(3));
+        assertNull(quizRegister.getQuestion(3));
         assertEquals(quizRegister.getQuestion(4), quiz.getQuestions().get(4));
     }
 
@@ -133,8 +133,8 @@ public class QuizRegisterTest extends TestCase {
 
         ArrayList<Quiz> quizzes = quizRegister.getQuizList();
         assertEquals(0, quizzes.size());
-        assertEquals(null, quizRegister.getQuestion(1));
-        assertEquals(null, quizRegister.getTeam(1));
+        assertNull(quizRegister.getQuestion(1));
+        assertNull(quizRegister.getTeam(1));
     }
 
     public void testRemoveTeam() {
@@ -144,7 +144,7 @@ public class QuizRegisterTest extends TestCase {
         quizRegister.removeTeam(quiz, 1);
 
         assertEquals(2, quiz.getTeams().size());
-        assertEquals(null, quizRegister.getTeam(1));
+        assertNull(quizRegister.getTeam(1));
         assertEquals(quiz.getTeams().get(2), quizRegister.getTeam(2));
     }
 
@@ -155,7 +155,7 @@ public class QuizRegisterTest extends TestCase {
         quizRegister.removeQuestion(quiz, 2);
 
         assertEquals(4, quiz.getQuestions().size());
-        assertEquals(null, quizRegister.getQuestion(2));
+        assertNull(quizRegister.getQuestion(2));
         assertEquals(quiz.getQuestions().get(1), quizRegister.getQuestion(1));
     }
 }

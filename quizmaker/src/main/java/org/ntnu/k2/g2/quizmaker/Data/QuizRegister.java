@@ -174,8 +174,28 @@ public class QuizRegister {
         private static final String DB_NAME = "quizMaker.data";
         private static final String DB_NAME_TEST_PREFIX = "test_";
 
-        private static boolean test = true;
+        private static final boolean test = isTest();
 
+        /**
+         * Checks whenever or not the database is running inside a test by searching through the stack trace.
+         * This method is used to determine what database URL to use.
+         * @return True if the database is running inside a test, false if not.
+         */
+        private static boolean isTest() {
+            StackTraceElement[] stackTraces = Thread.currentThread().getStackTrace();
+            for (StackTraceElement element : stackTraces) {
+                if (element.getClassName().startsWith("org.junit.")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Creates a new database instance.
+         * The constructor establishes a connection to the database and saves it to the connection property.
+         *
+         */
         private DataBase () {
             File db_path = getDbPath();
             File root = new File(db_path.getParent());
@@ -305,6 +325,11 @@ public class QuizRegister {
             }
         }
 
+        /**
+         * Returns the appropriate file path to the database. This method takes into account whenever or not
+         * the database is being run inside a test.
+         * @return The path to the database
+         */
         public static File getDbPath() {
             File path = new File(DB_PATH);
             String db_name = (test ? DB_NAME_TEST_PREFIX : "").concat(DB_NAME);
@@ -312,7 +337,18 @@ public class QuizRegister {
         }
     }
 
+    /**
+     * A class used to interact with the "quizzes"-table in the database.
+     * Instances of this class can be used to save and retrieve quiz-data form the database.
+     */
     protected static class QuizDAO {
+
+        /**
+         * Constructs a quiz based on the ResultSet of an SQL query. Please note:
+         * This method does not fill the teams or questions properties. These are filled in getQuizFromId()
+         * @param result The ResultSet of an SQL query.
+         * @return A quiz based on the result of the SQL query.
+         */
         private Quiz getQuizFromResultSet(ResultSet result) {
             Quiz quiz = null;
             try {
@@ -320,7 +356,7 @@ public class QuizRegister {
                     quiz = new Quiz();
                     quiz.setId(result.getInt("id"));
                     quiz.setName(result.getString("name"));
-                    quiz.setLastEdited(LocalDateTime.parse(result.getString("lastChanged")));
+                    quiz.setLastChanged(LocalDateTime.parse(result.getString("lastChanged")));
                 }
             }
             catch (SQLException e) {
@@ -332,6 +368,13 @@ public class QuizRegister {
             return quiz;
         }
 
+        /**
+         * Constructs an ArrayList of quizzes based on the ResultSet of an SQL query. Please note:
+         * This method does not fill the teams or questions properties.
+         * These properties are filled in the methods that call this method.
+         * @param result The ResultSet of an SQL property
+         * @return An ArrayList of all extracted quizzes form the ResultSet.
+         */
         private ArrayList<Quiz> getQuizzesFromResultSet(ResultSet result) {
             ArrayList<Quiz> quizzes = new ArrayList<>();
             try {
@@ -339,7 +382,7 @@ public class QuizRegister {
                     Quiz quiz = new Quiz();
                     quiz.setId(result.getInt("id"));
                     quiz.setName(result.getString("name"));
-                    quiz.setLastEdited(LocalDateTime.parse(result.getString("lastChanged")));
+                    quiz.setLastChanged(LocalDateTime.parse(result.getString("lastChanged")));
 
                     quizzes.add(quiz);
                 }
@@ -353,6 +396,12 @@ public class QuizRegister {
             return quizzes;
         }
 
+        /**
+         * Gets a quiz by an id. This quiz has its teams and questions properties filled.
+         * This method returns null if no quiz is found.
+         * @param id The id of the quiz.
+         * @return The quiz with the id in the database. If no quiz is found, null is returned.
+         */
         public Quiz getQuizById(int id) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -386,6 +435,10 @@ public class QuizRegister {
             return quiz;
         }
 
+        /**
+         * Gets an ArrayList of all quizzes in the database.
+         * @return An ArrayList containing all quizzes in the database. Returns an empty list if there are no entries.
+         */
         private ArrayList<Quiz> getAllQuizzes() {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -418,6 +471,11 @@ public class QuizRegister {
             return quizzes;
         }
 
+        /**
+         * Saves a quiz to the database.
+         * @param quiz The quiz to save to the database.
+         * @return The quiz as it is saved in the database after the update is done.
+         */
         public Quiz updateQuiz(Quiz quiz) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -425,8 +483,9 @@ public class QuizRegister {
 
             try {
                 connection = DataBase.getConnection();
-                quiz.setLastEdited(LocalDateTime.now());
 
+                // Updates the last changed
+                quiz.setLastChanged(LocalDateTime.now());
                 // If quiz is not in database
                 if (quiz.getId() == -1) {
                     preparedStatement = connection.prepareStatement(
@@ -437,7 +496,7 @@ public class QuizRegister {
                     preparedStatement.setInt(3, quiz.getId());
                 }
                 preparedStatement.setString(1, quiz.getName());
-                preparedStatement.setString(2, quiz.getLastEdited().toString());
+                preparedStatement.setString(2, quiz.getLastChanged().toString());
 
                 // New teams and questions
                 HashMap<Integer, Team> newTeams = quiz.getTeams();
@@ -465,12 +524,12 @@ public class QuizRegister {
 
                 // Remove removed questions
                 Stream<Integer> UniqueOldQuestions = oldQuizData.getQuestions().keySet().stream()
-                        .filter(oldId -> !newQuestions.keySet().contains(oldId));
+                        .filter(oldId -> !newQuestions.containsKey(oldId));
                 UniqueOldQuestions.forEach(questionDAO::removeQuestionById);
 
                 // Remove removed teams
                 Stream<Integer> UniqueOldTeams = oldQuizData.getTeams().keySet().stream()
-                        .filter(oldId -> !newTeams.keySet().contains(oldId));
+                        .filter(oldId -> !newTeams.containsKey(oldId));
                 UniqueOldTeams.forEach(teamDAO::removeTeamById);
 
                 // Update teams
@@ -493,6 +552,11 @@ public class QuizRegister {
             return quiz;
         }
 
+        /**
+         * Removes a quiz and ALL its components (questions and teams) from the database.
+         * @param id The ID of the quiz to remove.
+         * @return True if the operation was successful, false if not.
+         */
         public boolean removeQuizById(int id) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -530,9 +594,18 @@ public class QuizRegister {
         }
     }
 
+    /**
+     * A class that deals with the "questions"-table in the database.
+     * Instances of this class can be used to save and retrieve data from the database.
+     */
     protected static class QuestionDAO {
         public QuestionDAO(){}
 
+        /**
+         * Returns a question from the ResultSet returned by a SQL query.
+         * @param result The ResultSet of an SQL query.
+         * @return The question
+         */
         private Question getQuestionFromResultSet(ResultSet result) {
             Question question = null;
             try {
@@ -552,6 +625,11 @@ public class QuizRegister {
             return question;
         }
 
+        /**
+         * Gets the quiz id of the ResultSet of a SQL query in the teams table.
+         * @param result The ResultSet from an SQL query.
+         * @return The quiz id of the team returned by the SQL query.
+         */
         private int getQuizIdByResultSet(ResultSet result) {
             int quizId = -1;
             try {
@@ -568,6 +646,11 @@ public class QuizRegister {
             return quizId;
         }
 
+        /**
+         * Returns an ArrayList of all questions extracted from a ResultSet of a SQL query.
+         * @param result The ResultSet of and SQL query
+         * @return An ArrayList of all questions extracted from the ResultSet.
+         */
         private HashMap<Integer, Question> getQuestionsFromResultSet(ResultSet result) {
             HashMap<Integer, Question> questions = new HashMap<>();
 
@@ -590,6 +673,11 @@ public class QuizRegister {
             return questions;
         }
 
+        /**
+         * Gets a question form the database based on its ID.
+         * @param id The id of the question.
+         * @return The question with this ID. If there is no question that matches the ID, a null pointer is returned.
+         */
         public Question getQuestionById(int id) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -640,6 +728,11 @@ public class QuizRegister {
             return questions;
         }
 
+        /**
+         * Gets the id of a quiz that contains a question with the supplied id.
+         * @param questionId The id of the question.
+         * @return The quiz id of the quiz where the question is a component.
+         */
         public int getQuizIdByQuestionId(int questionId) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -665,6 +758,12 @@ public class QuizRegister {
             return quizId;
         }
 
+        /**
+         * Saves a question to the database.
+         * @param question The question to save to the database.
+         * @param quizId The id of the quiz this question is part of.
+         * @return The question as it is now saved in the database.
+         */
         public Question updateQuestion(Question question, int quizId) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -705,11 +804,12 @@ public class QuizRegister {
             return question;
         }
 
+        /**
+         * Updates the question is the database by finding its quiz id implicitly.
+         * @param question The question to update in the database
+         * @return The question as it is now saved in the database.
+         */
         public Question updateQuestion(Question question) {
-            if (question.getId() == -1) {
-                throw new IllegalArgumentException("Question id must be set to update question implicitly");
-            }
-
             int quizId = getQuizIdByQuestionId(question.getId());
             return updateQuestion(question, quizId);
         }
@@ -738,9 +838,22 @@ public class QuizRegister {
         }
     }
 
+    /**
+     * A class that deals with the "teams"-table in the database.
+     * Instances of this class can be used to save and retrieve data about teams from the database.
+     */
     protected static class TeamDAO {
+
+        /**
+         * Creates a new instance of the TeamDAO
+         */
         public TeamDAO(){}
 
+        /**
+         * Gets a team from a ResultSet of an SQL query.
+         * @param result The ResultSet of an SQL query.
+         * @return The team based on the ResultSet.
+         */
         private Team getTeamFromResultSet(ResultSet result) {
             Team team = null;
             try {
@@ -760,6 +873,12 @@ public class QuizRegister {
             return team;
         }
 
+        /**
+         * Returns a map of all teams from the ResultSet of an SQL query.
+         * @param result The ResultSet of an SQL query.
+         * @return A Map of all teams from the ResultSet of an SQL query. The key is the id of the team,
+         *         and the value is the team-object.
+         */
         private HashMap<Integer, Team> getTeamsFromResultSet(ResultSet result) {
             HashMap<Integer, Team> teams = new HashMap<>();
 
@@ -782,6 +901,11 @@ public class QuizRegister {
             return teams;
         }
 
+        /**
+         * Gets the quiz id of the quiz that a team is the component of form the ResultSet of an SQL query.
+         * @param result The ResultSet of an SQL query.
+         * @return The id of the quiz that the team is a component of.
+         */
         private int getQuizIdFromResultSet(ResultSet result) {
             int quizId = -1;
             try {
@@ -798,6 +922,11 @@ public class QuizRegister {
             return quizId;
         }
 
+        /**
+         * Gets a team from its ID
+         * @param id The id of the team
+         * @return The team that matches the ID. Returns null if no team was found.
+         */
         public Team getTeamById(int id) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -823,6 +952,12 @@ public class QuizRegister {
             return team;
         }
 
+        /**
+         * Gets all teams that are components of a quiz.
+         * @param quizId The id of the Quiz
+         * @return A map of all the teams that are components of the quiz. The keys in the map are
+         *         the ids of the teams, while the keys are the teams objects.
+         */
         public HashMap<Integer, Team> getTeamsByQuizId(int quizId) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -848,6 +983,11 @@ public class QuizRegister {
             return teams;
         }
 
+        /**
+         * Gets the id of a quiz that a team is the component of.
+         * @param teamId The id of the team.
+         * @return The id of the quiz.
+         */
         public int getQuizIdByTeamId(int teamId) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -857,7 +997,7 @@ public class QuizRegister {
             try {
                 connection = DataBase.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM teams WHERE id=?;");
-                preparedStatement.setInt(1, quizId);
+                preparedStatement.setInt(1, teamId);
                 result = preparedStatement.executeQuery();
 
                 quizId = getQuizIdFromResultSet(result);
@@ -873,6 +1013,12 @@ public class QuizRegister {
             return quizId;
         }
 
+        /**
+         * Updates the entry of a team in the database to reflect a team object
+         * @param team The team object
+         * @param quizId The id of the quiz that the team is a component of.
+         * @return The team how it is saved in the database.
+         */
         public Team updateTeam(Team team, int quizId) {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
@@ -913,11 +1059,12 @@ public class QuizRegister {
             return team;
         }
 
+        /**
+         * Updates the database entry of a team by finding the quizId implicitly.
+         * @param team The team to save in the database.
+         * @return The team how it is saved in the database.
+         */
         public Team updateTeam(Team team) {
-            if (team.getId() == -1) {
-                throw new IllegalArgumentException("Team id must be set to update team implicitly");
-            }
-
             int quizId = getQuizIdByTeamId(team.getId());
             return updateTeam(team, quizId);
         }
