@@ -9,9 +9,11 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class GUI extends Application {
+    public Stage mainStage;
 
     @Override
     public void start(Stage primaryStage) {
+        mainStage = primaryStage;
         primaryStage.setTitle("CardGame");
 
         FXMLLoader loader = new FXMLLoader();
