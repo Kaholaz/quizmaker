@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainPageController {
 
@@ -16,7 +17,7 @@ public class MainPageController {
     public Button newQuiz, browse;
 
     public void browse(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/browse.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/browse.fxml")));
         Stage stage = (Stage) newQuiz.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
