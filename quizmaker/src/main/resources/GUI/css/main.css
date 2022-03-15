@@ -1,0 +1,45 @@
+.rounded-big-with-border {
+    -fx-background-radius: 50%;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+}
+
+.rounded-medium-with-border {
+    -fx-background-radius: 50%;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 75px;
+    -fx-pref-height: 75px;
+}
+
+.rounded-small-with-border {
+    -fx-background-radius: 50%;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
+
+.rounded-big {
+    -fx-background-radius: 50%;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+}
+
+.rounded-medium {
+    -fx-background-radius: 50%;
+    -fx-pref-width: 75px;
+    -fx-pref-height: 75px;
+}
+
+
+.rounded-big {
+    -fx-background-radius: 50%;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
