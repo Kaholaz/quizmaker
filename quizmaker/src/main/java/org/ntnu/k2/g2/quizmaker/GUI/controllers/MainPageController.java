@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class mainPageController {
+public class MainPageController {
 
     @FXML
     public Button newQuiz, browse;
