@@ -22,8 +22,7 @@ public class mainPageController {
     }
 
     public void newQuiz() throws IOException {
-        URL url = new File("src/main/resources/GUI/newQuiz.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/newQuiz.fxml"));
         Stage stage = (Stage) newQuiz.getScene().getWindow();
         stage.setScene(new Scene(root));
 
