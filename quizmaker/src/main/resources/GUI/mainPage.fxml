@@ -4,13 +4,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.ntnu.k2.g2.quizmaker.GUI.mainPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.mainPageController">
     <children>
-        <Button layoutX="412.0" layoutY="270.0" mnemonicParsing="false" onAction="#newQuiz"
-                text="New quiz"/>
-        <Button layoutX="105.0" layoutY="270.0" mnemonicParsing="false" onAction="#browse" text="Browse"/>
-        <Text layoutX="255.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker 3000"/>
+        <Button fx:id="newQuiz" layoutX="412.0" layoutY="270.0" mnemonicParsing="false" onAction="#newQuiz" text="New quiz" />
+        <Button fx:id="browse" layoutX="105.0" layoutY="270.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
+        <Text fx:id="header" layoutX="255.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker 3000" />
     </children>
 </Pane>

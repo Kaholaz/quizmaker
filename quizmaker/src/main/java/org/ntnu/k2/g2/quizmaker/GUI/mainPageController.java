@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.net.URL;
 public class mainPageController {
 
     @FXML
-    public Button newQuiz;
+    public Button newQuiz, browse;
 
     public void browse(ActionEvent actionEvent) {
     }
@@ -25,6 +26,6 @@ public class mainPageController {
         Parent root = FXMLLoader.load(url);
         Stage stage = (Stage) newQuiz.getScene().getWindow();
         stage.setScene(new Scene(root));
-        
+
     }
 }
