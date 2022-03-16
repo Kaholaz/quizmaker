@@ -19,6 +19,22 @@ public class QuizRegister {
     }
 
     /**
+     * Gets all quizzes where the isActive flag is set to true.
+     * @return An ArrayList of all active quizzes.
+     */
+    public ArrayList<Quiz> getActiveQuizzes() {
+        return new ArrayList<>(getQuizList().stream().filter(Quiz::isActive).toList());
+    }
+
+    /**
+     * Gets all quizzes where the isActive flag is set to false.
+     * @return An ArrayList of al inactive/archived quizzes.
+     */
+    public ArrayList<Quiz> getArchivedQuizzes() {
+        return new ArrayList<>(getQuizList().stream().filter(quiz -> !quiz.isActive()).toList());
+    }
+
+    /**
      * Gets a quiz with a specific id.
      * @param id The id of the quiz.
      * @return A quiz object representation of the entry in the database.
@@ -265,6 +281,8 @@ public class QuizRegister {
                         CREATE TABLE IF NOT EXISTS quizzes (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name TEXT,
+                        url TEXT,
+                        active INTEGER,
                         lastChanged TEXT
                         );
                         """);
@@ -394,6 +412,8 @@ public class QuizRegister {
                     quiz = new Quiz();
                     quiz.setId(result.getInt("id"));
                     quiz.setName(result.getString("name"));
+                    quiz.setActive(result.getBoolean("active"));
+                    quiz.setUrl("url");
                     quiz.setLastChanged(LocalDateTime.parse(result.getString("lastChanged")));
                 }
             }
@@ -420,6 +440,8 @@ public class QuizRegister {
                     Quiz quiz = new Quiz();
                     quiz.setId(result.getInt("id"));
                     quiz.setName(result.getString("name"));
+                    quiz.setActive(result.getBoolean("active"));
+                    quiz.setUrl("url");
                     quiz.setLastChanged(LocalDateTime.parse(result.getString("lastChanged")));
 
                     quizzes.add(quiz);
@@ -527,14 +549,16 @@ public class QuizRegister {
                 // If quiz is not in database
                 if (quiz.getId() == -1) {
                     preparedStatement = connection.prepareStatement(
-                            "INSERT INTO quizzes (name, lastChanged) VALUES (?, ?);");
+                            "INSERT INTO quizzes (name, url, active, lastChanged) VALUES (?, ?, ?, ?);");
                 } else {
                     preparedStatement = connection.prepareStatement(
-                            "UPDATE quizzes SET name=?, lastChanged=? WHERE id=?;");
-                    preparedStatement.setInt(3, quiz.getId());
+                            "UPDATE quizzes SET name=?, url=?, active=?, lastChanged=? WHERE id=?;");
+                    preparedStatement.setInt(5, quiz.getId());
                 }
                 preparedStatement.setString(1, quiz.getName());
-                preparedStatement.setString(2, quiz.getLastChanged().toString());
+                preparedStatement.setString(2, quiz.getUrl());
+                preparedStatement.setBoolean(3, quiz.isActive());
+                preparedStatement.setString(4, quiz.getLastChanged().toString());
 
                 // New teams and questions
                 HashMap<Integer, Team> newTeams = quiz.getTeams();

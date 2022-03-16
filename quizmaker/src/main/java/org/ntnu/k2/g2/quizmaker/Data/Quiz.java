@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class Quiz {
     private String name;
+    private String url;
+    private boolean active = true;
     private int id = -1;
     private LocalDateTime lastChanged;
 
@@ -102,7 +104,7 @@ public class Quiz {
 
     /**
      * Sets the name of the quiz.
-     * @param name The
+     * @param name The name of the quiz.
      */
     public void setName(String name) {
         this.name = name;
@@ -121,5 +123,36 @@ public class Quiz {
      */
     protected void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Gets url where users can submit data.
+     * @return The url where users can submit data
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Sets the url where users can submit data.
+     * @param url The url where users can submit data.
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * @return Whenever or not the quiz is active. Archived quizzes have this attribute set to false.
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Sets whenever or not the quiz is active or not. Archived quizzes should have this attribute set to false.
+     * @param active Whenever or not this quiz is active.
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
