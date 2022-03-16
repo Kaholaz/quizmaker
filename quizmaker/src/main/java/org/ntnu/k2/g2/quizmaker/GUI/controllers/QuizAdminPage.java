@@ -69,6 +69,7 @@ public class QuizAdminPage {
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
+        //if check if is quiz is archived or active
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listActiveQuizzesPage.fxml")));
         Stage stage = (Stage) back.getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -76,8 +77,12 @@ public class QuizAdminPage {
 
     @FXML
     void onDetails(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/quizDetailsPage.fxml")));
-        Stage stage = (Stage) details.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Objects.requireNonNull(getClass().getResource("/GUI/quizDetailsPage.fxml")));
+        Parent root = loader.load();
+        QuizDetailsPage quizDetailsPage = loader.getController();
+        quizDetailsPage.setQuiz(quiz);
+        Stage stage = (Stage) quizName.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
@@ -117,6 +122,9 @@ public class QuizAdminPage {
     void setQuiz(Quiz quiz) {
         this.quiz = quiz;
         update();
+    }
+
+    void goToDetailsPage(Quiz quiz) throws IOException {
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
