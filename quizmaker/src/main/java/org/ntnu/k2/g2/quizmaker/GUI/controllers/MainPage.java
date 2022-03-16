@@ -17,7 +17,7 @@ public class MainPage {
 
     public void onListQuizzesBtnClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/listActiveQuizzesPage.fxml"));
-        Stage stage = (Stage) btnNewQuiz.getScene().getWindow();
+        Stage stage = (Stage) btnListQuizzes.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 

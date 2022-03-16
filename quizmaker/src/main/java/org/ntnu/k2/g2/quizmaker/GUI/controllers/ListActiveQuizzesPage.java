@@ -5,15 +5,24 @@
 
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 
@@ -43,11 +52,14 @@ public class ListActiveQuizzesPage {
     }
 
     @FXML
-    void onBack(ActionEvent event) {
-
+    void onBack(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/mainPage.fxml")));
+        Stage stage = (Stage) scrollPane.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert archive != null : "fx:id=\"archive\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
@@ -62,14 +74,32 @@ public class ListActiveQuizzesPage {
         ArrayList<Quiz> quizzes = quizRegister.getQuizList();
 
         int index = 1;
+
         for (Quiz quiz : quizzes) {
             Text text = new Text();
             Button button = new Button("Admin");
+            button.setId(Integer.toString(quiz.getId()));
+            button.setOnAction((ActionEvent e) -> {
+                try {
+                    this.goToAdminPage();
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            });
             text.setText(quiz.getName());
+
             quizzesContainer.add(text, 0, index);
             quizzesContainer.add(button, 1, index);
+
             index++;
         }
+    }
+
+    @FXML
+    public void goToAdminPage() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/quizAdminPage.fxml")));
+        Stage stage = (Stage) scrollPane.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
 }
