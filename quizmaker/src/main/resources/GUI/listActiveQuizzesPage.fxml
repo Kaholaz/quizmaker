@@ -16,7 +16,7 @@
             <AnchorPane prefHeight="51.0" prefWidth="600.0">
                <children>
                   <Button fx:id="back" layoutX="544.0" layoutY="13.0" mnemonicParsing="false" onAction="#onBack" text="back" />
-                  <Text layoutX="21.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz-maker" />
+                  <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz-maker" />
                   <Button fx:id="archive" layoutX="477.0" layoutY="13.0" mnemonicParsing="false" onAction="#onArchive" text="Archive" />
                </children>
             </AnchorPane>

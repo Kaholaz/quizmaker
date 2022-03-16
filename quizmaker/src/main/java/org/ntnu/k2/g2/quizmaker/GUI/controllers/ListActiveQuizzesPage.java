@@ -12,14 +12,12 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -49,8 +47,10 @@ public class ListActiveQuizzesPage {
     private int id;
 
     @FXML
-    void onArchive(ActionEvent event) {
-
+    void onArchive(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listArchivedQuizzesPage.fxml")));
+        Stage stage = (Stage) scrollPane.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
@@ -107,7 +107,6 @@ public class ListActiveQuizzesPage {
         Stage stage = (Stage) scrollPane.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
-
 
 
 }
