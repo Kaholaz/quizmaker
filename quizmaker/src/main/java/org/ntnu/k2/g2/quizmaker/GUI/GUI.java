@@ -40,5 +40,4 @@ public class GUI extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-
 }

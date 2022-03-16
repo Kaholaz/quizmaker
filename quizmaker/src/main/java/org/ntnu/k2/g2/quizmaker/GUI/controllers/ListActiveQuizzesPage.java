@@ -46,6 +46,8 @@ public class ListActiveQuizzesPage {
     @FXML // fx:id="scrollPane"
     private ScrollPane scrollPane; // Value injected by FXMLLoader
 
+    private int id;
+
     @FXML
     void onArchive(ActionEvent event) {
 
@@ -69,7 +71,7 @@ public class ListActiveQuizzesPage {
     }
 
 
-    private void updateQuizzes() {
+    void updateQuizzes() {
         QuizRegister quizRegister = new QuizRegister();
         ArrayList<Quiz> quizzes = quizRegister.getQuizList();
 
@@ -81,7 +83,7 @@ public class ListActiveQuizzesPage {
             button.setId(Integer.toString(quiz.getId()));
             button.setOnAction((ActionEvent e) -> {
                 try {
-                    this.goToAdminPage();
+                    this.goToAdminPage(quiz);
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -96,10 +98,16 @@ public class ListActiveQuizzesPage {
     }
 
     @FXML
-    public void goToAdminPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/quizAdminPage.fxml")));
+    void goToAdminPage(Quiz quiz) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Objects.requireNonNull(getClass().getResource("/GUI/quizAdminPage.fxml")));
+        Parent root = loader.load();
+        QuizAdminPage quizAdminPage = loader.getController();
+        quizAdminPage.setQuiz(quiz);
         Stage stage = (Stage) scrollPane.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
+
+
 
 }

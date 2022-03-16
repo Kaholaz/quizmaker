@@ -4,12 +4,20 @@
 
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 
 public class QuizAdminPage {
 
@@ -52,39 +60,63 @@ public class QuizAdminPage {
     @FXML // fx:id="sumTeams"
     private Text sumTeams; // Value injected by FXMLLoader
 
+    private Quiz quiz;
+
     @FXML
     void editScores(ActionEvent event) {
 
     }
 
     @FXML
-    void onBack(ActionEvent event) {
-
+    void onBack(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listActiveQuizzesPage.fxml")));
+        Stage stage = (Stage) back.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
-    void onDetails(ActionEvent event) {
-
+    void onDetails(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/quizDetailsPage.fxml")));
+        Stage stage = (Stage) details.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
-    void onEditQuestion(ActionEvent event) {
-
+    void onEditQuestion(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/questionEditorPage.fxml")));
+        Stage stage = (Stage) editQuestions.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
-    void onEditTeams(ActionEvent event) {
-
+    void onEditTeams(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/teamEditorPage.fxml")));
+        Stage stage = (Stage) details.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
-    void onExportQA(ActionEvent event) {
-
+    void onExportQA(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/NotImplemented.fxml")));
+        Stage stage = (Stage) details.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
-    void onRetrieveScores(ActionEvent event) {
+    void onRetrieveScores(ActionEvent event) throws IOException {
+        //Not yet implemented
+    }
 
+    void update() {
+        quizName.setText(quiz.getName());
+        sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
+        sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
+
+    }
+
+    void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+        update();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -100,7 +132,6 @@ public class QuizAdminPage {
         assert retrieveScores != null : "fx:id=\"retrieveScores\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert sumQuestions != null : "fx:id=\"sumQuestions\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
-
     }
 
 }
