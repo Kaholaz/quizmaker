@@ -16,6 +16,19 @@ public class Quiz {
 
     protected Quiz(){}
 
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", active=" + active +
+                ", lastChanged=" + lastChanged +
+                ", teams=" + teams.values() +
+                ", questions=" + questions.values() +
+                '}';
+    }
+
     /**
      * Checks the equality of two quizzes. All parameters and all contents of the parameters are considered.
      * Order of the question or teams does not matter as they are stored as HashMaps.
