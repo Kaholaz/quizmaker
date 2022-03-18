@@ -1,14 +1,10 @@
+
 /**
- * Sample Skeleton for 'listArchivedQuizzesPage.fxml' Controller Class
+ * Sample Skeleton for 'listActiveQuizzesPage.fxml' Controller Class
  */
 
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,13 +18,22 @@ import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 
-public class ListArchivedQuizzesPage {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+public class ListActiveQuizzesPageNonTest {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
+
+    @FXML // fx:id="archive"
+    private Button archive; // Value injected by FXMLLoader
 
     @FXML // fx:id="back"
     private Button back; // Value injected by FXMLLoader
@@ -39,25 +44,47 @@ public class ListArchivedQuizzesPage {
     @FXML // fx:id="scrollPane"
     private ScrollPane scrollPane; // Value injected by FXMLLoader
 
+    private int id;
+
     @FXML
-    void onBack(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listActiveQuizzesPage.fxml")));
+    void onArchive(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listArchivedQuizzesPage.fxml")));
         Stage stage = (Stage) scrollPane.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
-        assert quizzesContainer != null : "fx:id=\"quizzesContainer\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
-        assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
-        updateQuizzes();
+    @FXML
+    void onBack(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/mainPage.fxml")));
+        Stage stage = (Stage) scrollPane.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
+
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert archive != null : "fx:id=\"archive\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
+        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
+        assert quizzesContainer != null : "fx:id=\"quizzesContainer\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
+        assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
+        this.updateQuizzes();
+    }
+
+
+    void populateDatabase(QuizRegister quizRegister) {
+        if (quizRegister.getQuizList().isEmpty()) {
+            quizRegister.populateDatabase(20, 6, 16);
+        }
+
+    }
+
     void updateQuizzes() {
         QuizRegister quizRegister = new QuizRegister();
-        ArrayList<Quiz> quizzes = quizRegister.getArchivedQuizzes();
+        populateDatabase(quizRegister);
 
-        int index = 1;
+        ArrayList<Quiz> quizzes = quizRegister.getActiveQuizzes();
+
+        int index = 0;
 
         for (Quiz quiz : quizzes) {
             Text text = new Text();
@@ -78,6 +105,7 @@ public class ListArchivedQuizzesPage {
             index++;
         }
     }
+
     @FXML
     void goToAdminPage(Quiz quiz) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -88,9 +116,6 @@ public class ListArchivedQuizzesPage {
         Stage stage = (Stage) scrollPane.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
-
-
-
 
 
 }

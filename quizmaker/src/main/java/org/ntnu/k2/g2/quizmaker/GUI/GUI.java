@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 
@@ -14,7 +16,6 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         mainStage = primaryStage;
-        primaryStage.setTitle("CardGame");
 
         FXMLLoader loader = new FXMLLoader();
         URL mainPageURL = getClass().getResource("/GUI/mainPage.fxml");
@@ -36,8 +37,11 @@ public class GUI extends Application {
             System.out.println("A different, unexpected exception was thrown while loading the FXML file...\n\n" + e.getClass() + ": " + e.getMessage());
             return;
         }
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        primaryStage.setScene(scene);
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
+        //primaryStage.setResizable(false);
         primaryStage.show();
     }
 

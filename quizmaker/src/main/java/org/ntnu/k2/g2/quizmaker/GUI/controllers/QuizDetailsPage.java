@@ -81,6 +81,7 @@ public class QuizDetailsPage {
         sumQuestions.setText(String.valueOf(quiz.getQuestions().size()));
         lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
+        quizName.setText(quiz.getName());
 
         AtomicInteger i = new AtomicInteger(1);
 

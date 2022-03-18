@@ -14,11 +14,15 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
@@ -39,7 +43,7 @@ public class ListActiveQuizzesPage {
     private Button back; // Value injected by FXMLLoader
 
     @FXML // fx:id="quizzesContainer"
-    private GridPane quizzesContainer; // Value injected by FXMLLoader
+    private VBox vBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="scrollPane"
     private ScrollPane scrollPane; // Value injected by FXMLLoader
@@ -65,36 +69,52 @@ public class ListActiveQuizzesPage {
     void initialize() {
         assert archive != null : "fx:id=\"archive\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
-        assert quizzesContainer != null : "fx:id=\"quizzesContainer\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         this.updateQuizzes();
     }
 
 
+    void populateDatabase(QuizRegister quizRegister) {
+        if (quizRegister.getQuizList().isEmpty()) {
+            quizRegister.populateDatabase(20, 6, 16);
+        }
+
+    }
+
     void updateQuizzes() {
         QuizRegister quizRegister = new QuizRegister();
-        ArrayList<Quiz> quizzes = quizRegister.getQuizList();
+        populateDatabase(quizRegister);
 
-        int index = 1;
+        ArrayList<Quiz> quizzes = quizRegister.getActiveQuizzes();
+
+        int index = 0;
 
         for (Quiz quiz : quizzes) {
-            Text text = new Text();
-            Button button = new Button("Admin");
-            button.setId(Integer.toString(quiz.getId()));
-            button.setOnAction((ActionEvent e) -> {
-                try {
-                    this.goToAdminPage(quiz);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            });
-            text.setText(quiz.getName());
-
-            quizzesContainer.add(text, 0, index);
-            quizzesContainer.add(button, 1, index);
-
+            makePane(quiz);
             index++;
         }
+    }
+
+    void makePane(Quiz quiz) {
+        Text text = new Text(quiz.getName());
+
+        Pane spacerPane = new Pane();
+        spacerPane.setPrefWidth(200);
+        Button admin = new Button("Admin");
+
+        admin.setId(String.valueOf(quiz.getId()));
+        admin.setOnAction((ActionEvent e) -> {
+            try {
+                this.goToAdminPage(quiz);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
+
+        HBox hBox = new HBox();
+
+        hBox.getChildren().addAll(text, spacerPane, admin);
+        vBox.getChildren().add(hBox);
     }
 
     @FXML
