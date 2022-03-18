@@ -2,38 +2,29 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListActiveQuizzesPage">
-   <children>
-      <VBox>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListActiveQuizzesPage">
+   <center>
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" vbarPolicy="ALWAYS">
+            <content>
+            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="687.0" />
+            </content>
+        </ScrollPane>
+   </center>
+   <top>
+      <HBox styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="51.0" prefWidth="600.0">
-               <children>
-                  <Button fx:id="back" layoutX="544.0" layoutY="13.0" mnemonicParsing="false" onAction="#onBack" text="back" />
-                  <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz-maker" />
-                  <Button fx:id="archive" layoutX="477.0" layoutY="13.0" mnemonicParsing="false" onAction="#onArchive" text="Archive" />
-               </children>
-            </AnchorPane>
-              <ScrollPane fx:id="scrollPane" prefHeight="333.0" prefWidth="600.0">
-                  <content>
-                      <GridPane fx:id="quizzesContainer" hgap="20.0" prefHeight="89.0" prefWidth="597.0" vgap="20.0">
-                          <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="505.0" minWidth="10.0" prefWidth="493.66668701171875" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.33331298828125" minWidth="10.0" prefWidth="104.33331298828125" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                      </GridPane>
-                  </content>
-              </ScrollPane>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" />
+            <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="archive" mnemonicParsing="false" onAction="#onArchive" styleClass="button-small" stylesheets="@css/main.css" text="Archive" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" styleClass="button-small" stylesheets="@css/main.css" text="Back" />
          </children>
-      </VBox>
-   </children>
-</AnchorPane>
+      </HBox>
+   </top>
+</BorderPane>

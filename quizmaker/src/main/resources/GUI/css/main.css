@@ -43,3 +43,16 @@
     -fx-pref-width: 50px;
     -fx-pref-height: 50px;
 }
+
+.button-small {
+    -fx-background-color:
+        #707070,
+        linear-gradient(#fcfcfc, #f3f3f3),
+        linear-gradient(#f2f2f2 0%, #ebebeb 49%, #dddddd 50%, #cfcfcf 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-background-color: white;
+    -fx-padding: 3 5 3 5;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}

@@ -14,15 +14,19 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
 
 public class ListActiveQuizzesPage {
 
@@ -39,7 +43,7 @@ public class ListActiveQuizzesPage {
     private Button back; // Value injected by FXMLLoader
 
     @FXML // fx:id="quizzesContainer"
-    private GridPane quizzesContainer; // Value injected by FXMLLoader
+    private VBox vBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="scrollPane"
     private ScrollPane scrollPane; // Value injected by FXMLLoader
@@ -47,17 +51,13 @@ public class ListActiveQuizzesPage {
     private int id;
 
     @FXML
-    void onArchive(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listArchivedQuizzesPage.fxml")));
-        Stage stage = (Stage) scrollPane.getScene().getWindow();
-        stage.setScene(new Scene(root));
+    void onArchive(ActionEvent event) {
+        GUI.setSceneFromNode(archive, "/GUI/listArchivedQuizzesPage.fxml");
     }
 
     @FXML
-    void onBack(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/mainPage.fxml")));
-        Stage stage = (Stage) scrollPane.getScene().getWindow();
-        stage.setScene(new Scene(root));
+    void onBack(ActionEvent event) {
+        GUI.setSceneFromNode(back, "/GUI/mainPage.fxml");
     }
 
     @FXML
@@ -65,47 +65,24 @@ public class ListActiveQuizzesPage {
     void initialize() {
         assert archive != null : "fx:id=\"archive\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
-        assert quizzesContainer != null : "fx:id=\"quizzesContainer\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         this.updateQuizzes();
     }
 
 
-    void updateQuizzes() {
-        QuizRegister quizRegister = new QuizRegister();
-        ArrayList<Quiz> quizzes = quizRegister.getQuizList();
-
-        int index = 1;
-
-        for (Quiz quiz : quizzes) {
-            Text text = new Text();
-            Button button = new Button("Admin");
-            button.setId(Integer.toString(quiz.getId()));
-            button.setOnAction((ActionEvent e) -> {
-                try {
-                    this.goToAdminPage(quiz);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            });
-            text.setText(quiz.getName());
-
-            quizzesContainer.add(text, 0, index);
-            quizzesContainer.add(button, 1, index);
-
-            index++;
+    void populateDatabase(QuizRegister quizRegister) {
+        if (quizRegister.getQuizList().isEmpty()) {
+            quizRegister.populateDatabase(20, 6, 16);
         }
     }
 
-    @FXML
-    void goToAdminPage(Quiz quiz) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Objects.requireNonNull(getClass().getResource("/GUI/quizAdminPage.fxml")));
-        Parent root = loader.load();
-        QuizAdminPage quizAdminPage = loader.getController();
-        quizAdminPage.setQuiz(quiz);
-        Stage stage = (Stage) scrollPane.getScene().getWindow();
-        stage.setScene(new Scene(root));
+    void updateQuizzes() {
+        QuizRegister quizRegister = new QuizRegister();
+        populateDatabase(quizRegister);
+
+        ArrayList<Quiz> quizzes = quizRegister.getActiveQuizzes();
+
+        quizzes.forEach(quiz -> ListPagesFactory.makeQuestion(vBox, quiz));
     }
 
 

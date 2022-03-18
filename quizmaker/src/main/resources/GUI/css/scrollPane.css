@@ -1,0 +1,13 @@
+.vBox {
+    -fx-padding:3px;
+    -fx-background-color: white;
+    -fx-padding: 4px;
+    -fx-border-insets: 4px;
+}
+.HBox {
+    -fx-padding: 4px;
+    -fx-background-color: lightgrey;
+}
+
+.scrollPane {
+}
