@@ -17,10 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
 
 public class ListArchivedQuizzesPage {
 
@@ -33,63 +36,25 @@ public class ListArchivedQuizzesPage {
     @FXML // fx:id="back"
     private Button back; // Value injected by FXMLLoader
 
-    @FXML // fx:id="quizzesContainer"
-    private GridPane quizzesContainer; // Value injected by FXMLLoader
-
-    @FXML // fx:id="scrollPane"
-    private ScrollPane scrollPane; // Value injected by FXMLLoader
+    @FXML // fx:id="vBox"
+    private VBox vBox; // Value injected by FXMLLoader
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listActiveQuizzesPage.fxml")));
-        Stage stage = (Stage) scrollPane.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        GUI.setSceneFromNode(back, "/GUI/listActiveQuizzesPage.fxml");
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
-        assert quizzesContainer != null : "fx:id=\"quizzesContainer\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
-        assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
+        assert vBox != null : "fx:id=\"vBox\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
         updateQuizzes();
     }
     void updateQuizzes() {
         QuizRegister quizRegister = new QuizRegister();
         ArrayList<Quiz> quizzes = quizRegister.getArchivedQuizzes();
-
-        int index = 1;
-
-        for (Quiz quiz : quizzes) {
-            Text text = new Text();
-            Button button = new Button("Admin");
-            button.setId(Integer.toString(quiz.getId()));
-            button.setOnAction((ActionEvent e) -> {
-                try {
-                    this.goToAdminPage(quiz);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            });
-            text.setText(quiz.getName());
-
-            quizzesContainer.add(text, 0, index);
-            quizzesContainer.add(button, 1, index);
-
-            index++;
-        }
+        quizzes.forEach(quiz -> ListPagesFactory.makeQuestion(vBox, quiz));
     }
-    @FXML
-    void goToAdminPage(Quiz quiz) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Objects.requireNonNull(getClass().getResource("/GUI/quizAdminPage.fxml")));
-        Parent root = loader.load();
-        QuizAdminPage quizAdminPage = loader.getController();
-        quizAdminPage.setQuiz(quiz);
-        Stage stage = (Stage) scrollPane.getScene().getWindow();
-        stage.setScene(new Scene(root));
-    }
-
-
 
 
 

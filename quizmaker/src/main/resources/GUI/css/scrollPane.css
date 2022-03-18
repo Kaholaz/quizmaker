@@ -1,14 +1,12 @@
 .vBox {
     -fx-padding:3px;
-    -fx-background-color: lightgrey;
-    -fx-background-radius: 18 18 18, 18;
-    -fx-border-width: 1px;
-    -fx-border-color: black;
-    -fx-border-style: solid;
-    -fx-border-radius: 18 18 18, 18;
+    -fx-background-color: white;
     -fx-padding: 4px;
-    -fx-border-insets: 60px 4px 4px 4px;
-    -fx-background-insets: 60px 4px 4px 4px;
+    -fx-border-insets: 4px;
+}
+.HBox {
+    -fx-padding: 4px;
+    -fx-background-color: lightgrey;
 }
 
 .scrollPane {
