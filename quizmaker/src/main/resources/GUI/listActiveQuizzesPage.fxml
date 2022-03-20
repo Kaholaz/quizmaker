@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListActiveQuizzesPage">
    <center>
         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" vbarPolicy="ALWAYS">
             <content>
-            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="687.0" />
+            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="705.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" />
             </content>
         </ScrollPane>
    </center>
@@ -21,8 +20,7 @@
       <HBox styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" />
-            <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="archive" mnemonicParsing="false" onAction="#onArchive" styleClass="button-small" stylesheets="@css/main.css" text="Archive" />
+            <Pane prefHeight="26.0" prefWidth="565.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" styleClass="button-small" stylesheets="@css/main.css" text="Back" />
          </children>
       </HBox>

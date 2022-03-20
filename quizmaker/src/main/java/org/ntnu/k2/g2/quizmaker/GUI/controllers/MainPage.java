@@ -22,7 +22,7 @@ public class MainPage {
     }
 
     public void onCreateNewQuizBtnClicked() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/listActiveQuizzesPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/createNewQuizPage.fxml"));
         Stage stage = (Stage) btnNewQuiz.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
