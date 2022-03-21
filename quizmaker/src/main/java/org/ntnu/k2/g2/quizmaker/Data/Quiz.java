@@ -1,5 +1,13 @@
 package org.ntnu.k2.g2.quizmaker.Data;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Objects;
@@ -167,5 +175,159 @@ public class Quiz {
      */
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public void exportAnswersheetWithQuestions() {
+        // Creating a PdfWriter
+        String dest = "C:/itextTest/answersheetWithQuestions.pdf";
+        PdfWriter writer = null;
+        try {
+            writer = new PdfWriter(dest);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Creating a PdfDocument
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        PdfPage pdfPage = pdf.addNewPage();
+
+        String title = getName();
+        Paragraph paragraph1 = new Paragraph(title);
+        document.add(paragraph1);
+        PdfCanvas canvas = new PdfCanvas(pdfPage);
+
+        HashMap<Integer, Question> questions = getQuestions();
+        int counter = 1;
+
+        for (Question q : questions.values()) {
+            String header = "Question " + counter + ": ";
+            String question = q.getQuestion();
+            String answer = "\nAnswer: ";
+            Paragraph quest = new Paragraph();
+            quest.add(header);
+            quest.add(question);
+            quest.add(answer);
+            document.add(quest);
+            canvas.moveTo(80,787 - counter*44);
+            canvas.lineTo(550,787 - counter*44);
+            counter++;
+        }
+        canvas.closePathStroke();
+
+        // Closing the document
+        document.close();
+    }
+
+    public void exportAnswersheetWithoutQuestions() {
+        // Creating a PdfWriter
+        String dest = "C:/itextTest/answersheetWithoutQuestions.pdf";
+        PdfWriter writer = null;
+        try {
+            writer = new PdfWriter(dest);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Creating a PdfDocument
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        PdfPage pdfPage = pdf.addNewPage();
+
+        String title = getName();
+        Paragraph paragraph1 = new Paragraph(title);
+        document.add(paragraph1);
+        PdfCanvas canvas = new PdfCanvas(pdfPage);
+
+        HashMap<Integer, Question> questions = getQuestions();
+        int counter = 1;
+
+        for (Question q : questions.values()) {
+            String header = "Question " + counter + ": ";
+            String answer = "\nAnswer: ";
+            Paragraph quest = new Paragraph();
+            quest.add(header);
+            quest.add(answer);
+            document.add(quest);
+            canvas.moveTo(80,787 - counter*44);
+            canvas.lineTo(550,787 - counter*44);
+            counter++;
+        }
+        canvas.closePathStroke();
+
+        // Closing the document
+        document.close();
+    }
+
+    public void exportAnswersWithQuestions() {
+        // Creating a PdfWriter
+        String dest = "C:/itextTest/answersWithQuestions.pdf";
+        PdfWriter writer = null;
+        try {
+            writer = new PdfWriter(dest);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Creating a PdfDocument
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        String title = getName();
+        Paragraph paragraph1 = new Paragraph(title);
+        document.add(paragraph1);
+
+        HashMap<Integer, Question> questions = getQuestions();
+        int counter = 1;
+
+        for (Question q : questions.values()) {
+            String header = "Question " + counter + ": ";
+            String question = q.getQuestion();
+            String answer = "\nAnswer: " + q.getAnswer();
+            Paragraph quest = new Paragraph();
+            quest.add(header);
+            quest.add(question);
+            quest.add(answer);
+            document.add(quest);
+            counter++;
+        }
+
+        // Closing the document
+        document.close();
+    }
+
+    public void exportAnswersWithoutQuestions() {
+        // Creating a PdfWriter
+        String dest = "C:/itextTest/answersWithoutQuestions.pdf";
+        PdfWriter writer = null;
+        try {
+            writer = new PdfWriter(dest);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Creating a PdfDocument
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        String title = getName();
+        Paragraph paragraph1 = new Paragraph(title);
+        document.add(paragraph1);
+
+        HashMap<Integer, Question> questions = getQuestions();
+        int counter = 1;
+
+        for (Question q : questions.values()) {
+            String header = "Question " + counter + ": ";
+            String answer = "\nAnswer: " + q.getAnswer();
+            Paragraph quest = new Paragraph();
+            quest.add(header);
+            quest.add(answer);
+            document.add(quest);
+            counter++;
+        }
+
+        // Closing the document
+        document.close();
     }
 }

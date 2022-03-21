@@ -273,4 +273,14 @@ public class QuizRegisterTest extends TestCase {
         assertEquals("Team 2", quizzes.get(1).getTeams().get(5).getTeamName());
         assertEquals(2, quizzes.get(1).getTeams().get(5).getScore());
     }
+
+    public void testPdfExport() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz testQuiz = quizRegister.getQuiz(1);
+
+        testQuiz.exportAnswersheetWithQuestions();
+        testQuiz.exportAnswersheetWithoutQuestions();
+        testQuiz.exportAnswersWithQuestions();
+        testQuiz.exportAnswersWithoutQuestions();
+    }
 }
