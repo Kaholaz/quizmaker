@@ -19,7 +19,7 @@ public class QuizRegisterTest extends TestCase {
     }
 
     private static void deleteDatabase() {
-        QuizRegister.DataBase.getDbPath().delete();
+        QuizRegister.DatabaseConnection.getDbPath().delete();
     }
 
     private static void populateDatabase() {
