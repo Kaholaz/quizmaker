@@ -17,7 +17,6 @@ import java.net.URL;
 import java.util.Objects;
 
 public class GUI extends Application {
-    public Stage mainStage;
 
     @Override
     public void start(Stage primaryStage) {

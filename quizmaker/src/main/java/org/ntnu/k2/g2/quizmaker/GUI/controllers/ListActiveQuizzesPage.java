@@ -82,7 +82,7 @@ public class ListActiveQuizzesPage {
 
         ArrayList<Quiz> quizzes = quizRegister.getActiveQuizzes();
 
-        quizzes.forEach(quiz -> ListPagesFactory.makeQuestion(vBox, quiz));
+        quizzes.forEach(quiz -> vBox.getChildren().add(ListPagesFactory.makeQuestion(quiz)));
     }
 
 

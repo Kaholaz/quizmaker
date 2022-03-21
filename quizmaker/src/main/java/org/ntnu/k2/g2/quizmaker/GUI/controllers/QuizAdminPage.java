@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 
 public class QuizAdminPage {
 
@@ -102,9 +105,14 @@ public class QuizAdminPage {
 
     @FXML
     void onExportQA(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/NotImplemented.fxml")));
-        Stage stage = (Stage) details.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/exportQAPage.fxml"));
+        Parent root = GUI.checkFXMLLoader(loader);
+        ExportQAPage exportQAPage = loader.getController();
+
+        Stage stage = new Stage();
         stage.setScene(new Scene(root));
+        stage.show();
+
     }
 
     @FXML
@@ -127,7 +135,8 @@ public class QuizAdminPage {
     void goToDetailsPage(Quiz quiz) throws IOException {
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert details != null : "fx:id=\"details\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
