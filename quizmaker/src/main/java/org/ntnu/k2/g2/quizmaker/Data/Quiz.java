@@ -177,6 +177,10 @@ public class Quiz {
         this.active = active;
     }
 
+    /**
+     * Creates an answersheet with questions for the quiz as a pdf saved locally on the computer.
+     * Local destination can be changed in dest variable.
+     */
     public void exportAnswersheetWithQuestions() {
         // Creating a PdfWriter
         String dest = "C:/itextTest/answersheetWithQuestions.pdf";
@@ -219,6 +223,10 @@ public class Quiz {
         document.close();
     }
 
+    /**
+     * Creates an answersheet without questions for the quiz as a pdf saved locally on the computer.
+     * Local destination can be changed in dest variable.
+     */
     public void exportAnswersheetWithoutQuestions() {
         // Creating a PdfWriter
         String dest = "C:/itextTest/answersheetWithoutQuestions.pdf";
@@ -259,6 +267,10 @@ public class Quiz {
         document.close();
     }
 
+    /**
+     * Creates a sheet with answers and questions for the quiz as a pdf saved locally on the computer.
+     * Local destination can be changed in dest variable.
+     */
     public void exportAnswersWithQuestions() {
         // Creating a PdfWriter
         String dest = "C:/itextTest/answersWithQuestions.pdf";
@@ -296,6 +308,10 @@ public class Quiz {
         document.close();
     }
 
+    /**
+     * Creates a sheet with answers for the quiz as a pdf saved locally on the computer.
+     * Local destination can be changed in dest variable.
+     */
     public void exportAnswersWithoutQuestions() {
         // Creating a PdfWriter
         String dest = "C:/itextTest/answersWithoutQuestions.pdf";
