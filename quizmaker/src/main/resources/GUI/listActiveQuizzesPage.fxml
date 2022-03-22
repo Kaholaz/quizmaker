@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListActiveQuizzesPage">
+<BorderPane stylesheets="@css/scrollPane.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListActiveQuizzesPage">
    <center>
         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" vbarPolicy="ALWAYS">
             <content>

@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
 
 public class QuizAdminPage {
 
@@ -80,13 +82,15 @@ public class QuizAdminPage {
 
     @FXML
     void onDetails(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Objects.requireNonNull(getClass().getResource("/GUI/quizDetailsPage.fxml")));
-        Parent root = loader.load();
-        QuizDetailsPage quizDetailsPage = loader.getController();
-        quizDetailsPage.setQuiz(quiz);
-        Stage stage = (Stage) quizName.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        details.setOnAction(actionEvent -> {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Objects.requireNonNull(ListPagesFactory.class.getResource("/GUI/.fxml")));
+            Parent root = GUI.checkFXMLLoader(loader);
+            TeamEditorPage teamEditorPage = loader.getController();
+            teamEditorPage.setQuiz(quiz);
+            Stage stage = (Stage) details.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        });
     }
 
     @FXML
@@ -98,7 +102,7 @@ public class QuizAdminPage {
 
     @FXML
     void onEditTeams(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/teamEditorPage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/quizDetailsPage.fxml")));
         Stage stage = (Stage) details.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
@@ -132,12 +136,9 @@ public class QuizAdminPage {
         update();
     }
 
-    void goToDetailsPage(Quiz quiz) throws IOException {
-    }
-
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize() throws IOException {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert details != null : "fx:id=\"details\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert difficulty != null : "fx:id=\"difficulty\" was not injected: check your FXML file 'quizAdminPage.fxml'.";

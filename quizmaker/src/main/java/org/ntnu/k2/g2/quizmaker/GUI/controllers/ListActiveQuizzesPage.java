@@ -66,6 +66,7 @@ public class ListActiveQuizzesPage {
         assert archive != null : "fx:id=\"archive\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
         assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
+
         this.updateQuizzes();
     }
 
@@ -84,6 +85,4 @@ public class ListActiveQuizzesPage {
 
         quizzes.forEach(quiz -> vBox.getChildren().add(ListPagesFactory.makeQuestion(quiz)));
     }
-
-
 }

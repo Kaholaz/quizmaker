@@ -1,4 +1,4 @@
-.vBox {
+.VBox {
     -fx-padding:3px;
     -fx-background-color: white;
     -fx-padding: 4px;
@@ -8,6 +8,6 @@
     -fx-padding: 4px;
     -fx-background-color: lightgrey;
 }
-
-.scrollPane {
+.pane {
+    -fx-background-color: lightgrey;
 }
