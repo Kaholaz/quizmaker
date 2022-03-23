@@ -52,6 +52,9 @@ public class QuizDetailsPage {
     @FXML // fx:id="lastChange"
     private Text lastChanged; // Value injected by FXMLLoader
 
+    @FXML
+    private Text quizNameHeader;
+
     private Quiz quiz;
 
     @FXML

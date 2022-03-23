@@ -84,10 +84,10 @@ public class QuizAdminPage {
     void onDetails(ActionEvent event) throws IOException {
         details.setOnAction(actionEvent -> {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Objects.requireNonNull(ListPagesFactory.class.getResource("/GUI/.fxml")));
+            loader.setLocation(ListPagesFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
             Parent root = GUI.checkFXMLLoader(loader);
-            TeamEditorPage teamEditorPage = loader.getController();
-            teamEditorPage.setQuiz(quiz);
+            QuizDetailsPage quizDetailsPage = loader.getController();
+            quizDetailsPage.setQuiz(quiz);
             Stage stage = (Stage) details.getScene().getWindow();
             stage.setScene(new Scene(root));
         });
@@ -102,7 +102,7 @@ public class QuizAdminPage {
 
     @FXML
     void onEditTeams(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/quizDetailsPage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/teamEditorPage.fxml")));
         Stage stage = (Stage) details.getScene().getWindow();
         stage.setScene(new Scene(root));
     }
