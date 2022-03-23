@@ -56,3 +56,17 @@
     -fx-text-fill: black;
     -fx-font-size: 14px;
 }
+
+.main-container {
+    -fx-background-color: lightgrey;
+    -fx-padding: 4px;
+
+}
+
+.gridPane-basic {
+ -fx-font-size: 15px;
+}
+
+.gridPane-basic-elements {
+    -fx-padding: 9px;
+}

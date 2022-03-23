@@ -21,7 +21,7 @@
         </HBox>
     </top>
     <center>
-        <ScrollPane hbarPolicy="NEVER" hmin="20.0" prefHeight="292.0" prefWidth="439.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+        <ScrollPane hbarPolicy="NEVER" hmin="20.0" prefHeight="292.0" prefWidth="439.0" styleClass="scrollPane" stylesheets="@css/clickable.css" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
             <content>
                 <VBox fx:id="vBox" prefHeight="291.0" prefWidth="585.0" />
             </content>

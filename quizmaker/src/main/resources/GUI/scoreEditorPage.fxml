@@ -20,9 +20,9 @@
       </HBox>
    </top>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scrollPane" stylesheets="@css/clickable.css" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" />
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="scrollPane" stylesheets="@css/clickable.css" />
          </content>
       </ScrollPane>
    </center>

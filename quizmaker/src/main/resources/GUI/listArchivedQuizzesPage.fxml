@@ -10,7 +10,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListArchivedQuizzesPage">
    <center>
-        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/scrollPane.css" vbarPolicy="ALWAYS">
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/clickable.css" vbarPolicy="ALWAYS">
             <content>
             <VBox fx:id="vBox" prefHeight="200.0" prefWidth="687.0" />
             </content>

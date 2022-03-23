@@ -10,17 +10,14 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
 
@@ -109,9 +106,11 @@ public class QuizAdminPage {
 
     @FXML
     void onExportQA(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/exportQAPage.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ListPagesFactory.class.getResource("/GUI/exportPage.fxml"));
         Parent root = GUI.checkFXMLLoader(loader);
-        ExportQAPage exportQAPage = loader.getController();
+        ExportPage exportQAPage = loader.getController();
+        exportQAPage.setQuiz(quiz);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

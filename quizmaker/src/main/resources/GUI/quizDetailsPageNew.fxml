@@ -27,38 +27,37 @@
                         <Font size="27.0" />
                      </font>
                   </Text>
-                  <Pane prefHeight="8.0" prefWidth="281.0" VBox.vgrow="ALWAYS" />
-                  <GridPane prefHeight="97.0" prefWidth="146.0" styleClass="gridPane-basic" stylesheets="@css/clickable.css" VBox.vgrow="ALWAYS">
+                  <GridPane prefHeight="218.0" prefWidth="221.0" styleClass="gridPane-basic" stylesheets="@css/clickable.css" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="136.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="75.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antall spørsmål:" GridPane.hgrow="ALWAYS" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antall spørsmål:" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antall lag:" GridPane.rowIndex="1" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vanskelighets grad:" wrappingWidth="100.66665649414062" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <Text fx:id="sumTeams" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text fx:id="difficulty" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Text fx:id="sumQuestions" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gjennomsnitt:" GridPane.rowIndex="3" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sist endret:" GridPane.rowIndex="4" />
+                        <Text fx:id="average" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Text fx:id="lastChanged" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                      <VBox.margin>
-                        <Insets left="50.0" top="20.0" />
+                        <Insets left="50.0" top="10.0" />
                      </VBox.margin>
                   </GridPane>
-                  <Pane prefHeight="9.0" prefWidth="276.0" VBox.vgrow="ALWAYS" />
-                  <HBox>
+                  <HBox fillHeight="false" prefHeight="44.0" prefWidth="271.0">
                      <children>
-                        <Pane prefHeight="75.0" prefWidth="158.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" prefHeight="25.0" prefWidth="111.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Details">
-                           <HBox.margin>
-                              <Insets bottom="20.0" right="10.0" top="50.0" />
-                           </HBox.margin>
-                        </Button>
+                        <Pane prefHeight="121.0" prefWidth="152.0" />
                      </children>
                   </HBox>
                </children>
@@ -66,39 +65,26 @@
                   <Insets bottom="30.0" left="30.0" top="20.0" />
                </HBox.margin>
             </VBox>
-            <HBox prefHeight="320.0" prefWidth="319.0" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="264.0" prefWidth="108.0" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets bottom="30.0" left="10.0" top="20.0" />
                </HBox.margin>
                <children>
-                  <Pane prefHeight="320.0" prefWidth="5.0" HBox.hgrow="ALWAYS" />
-                  <GridPane alignment="CENTER" prefHeight="220.0" prefWidth="181.0" stylesheets="@css/clickable.css" HBox.hgrow="ALWAYS">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ranking:">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <GridPane fx:id="rankingGrid" alignment="CENTER" prefHeight="220.0" prefWidth="181.0" stylesheets="@css/clickable.css">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit questions">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin></Button>
-                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit teams" GridPane.rowIndex="1" />
-                        <Button fx:id="editScores" mnemonicParsing="false" onAction="#editScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit scores" GridPane.rowIndex="2" />
-                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Retrieve scores" GridPane.rowIndex="3" />
-                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" styleClass="button-big" stylesheets="@css/clickable.css" text="Export Q&amp;A" GridPane.rowIndex="4" />
-                     </children>
-                     <HBox.margin>
-                        <Insets bottom="50.0" top="50.0" />
-                     </HBox.margin>
                   </GridPane>
                </children>
-            </HBox>
+            </VBox>
             <Pane prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>

@@ -86,7 +86,7 @@ public class QuizDetailsPage {
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
 
-        AtomicInteger i = new AtomicInteger(1);
+        AtomicInteger i = new AtomicInteger(0);
 
         quiz.getTeams().values().stream().sorted(Comparator.comparingInt(Team::getScore)).forEach(team -> {
 

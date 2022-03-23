@@ -50,14 +50,10 @@ public class ListPagesFactory {
         return hBox;
     }
     public static Button makeQuestionv2(Quiz quiz) {
-
-
         Button admin = new Button(quiz.getName());
 
 
         Stage stage = (Stage) admin.getScene().getWindow();
-        admin.prefWidthProperty().bind(Bindings.divide(stage.widthProperty(), 10.0));
-
         admin.setId(String.valueOf(quiz.getId()));
 
         admin.setOnAction((ActionEvent e) -> {
