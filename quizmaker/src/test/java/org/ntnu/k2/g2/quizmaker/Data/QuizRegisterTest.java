@@ -278,9 +278,9 @@ public class QuizRegisterTest extends TestCase {
         QuizRegister quizRegister = new QuizRegister();
         Quiz testQuiz = quizRegister.getQuiz(1);
 
-        testQuiz.exportAnswersheetWithQuestions();
-        testQuiz.exportAnswersheetWithoutQuestions();
-        testQuiz.exportAnswersWithQuestions();
-        testQuiz.exportAnswersWithoutQuestions();
+        testQuiz.exportAnswersheetWithQuestions("src/main/resources");
+        testQuiz.exportAnswersheetWithoutQuestions("src/main/resources");
+        testQuiz.exportAnswersWithQuestions("src/main/resources");
+        testQuiz.exportAnswersWithoutQuestions("src/main/resources");
     }
 }

@@ -180,23 +180,22 @@ public class Quiz {
     /**
      * Creates an answersheet with questions for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
+     * @param destination Chosen destination for the export to be saved
      */
-    public void exportAnswersheetWithQuestions() {
-        // Creating a PdfWriter
-        String dest = "C:/itextTest/answersheetWithQuestions.pdf";
+    public void exportAnswersheetWithQuestions(String destination) {
+        String title = getName();
         PdfWriter writer = null;
+        String dest = destination + "/" + title + " - Answersheet With Questions.pdf";
         try {
             writer = new PdfWriter(dest);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        // Creating a PdfDocument
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
         PdfPage pdfPage = pdf.addNewPage();
 
-        String title = getName();
         Paragraph paragraph1 = new Paragraph(title);
         document.add(paragraph1);
         PdfCanvas canvas = new PdfCanvas(pdfPage);
@@ -219,30 +218,28 @@ public class Quiz {
         }
         canvas.closePathStroke();
 
-        // Closing the document
         document.close();
     }
 
     /**
      * Creates an answersheet without questions for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
+     * @param destination Chosen destination for the export to be saved
      */
-    public void exportAnswersheetWithoutQuestions() {
-        // Creating a PdfWriter
-        String dest = "C:/itextTest/answersheetWithoutQuestions.pdf";
+    public void exportAnswersheetWithoutQuestions(String destination) {
+        String title = getName();
         PdfWriter writer = null;
+        String dest = destination + "/" + title + " - Answersheet Without Questions.pdf";
         try {
             writer = new PdfWriter(dest);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        // Creating a PdfDocument
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
         PdfPage pdfPage = pdf.addNewPage();
 
-        String title = getName();
         Paragraph paragraph1 = new Paragraph(title);
         document.add(paragraph1);
         PdfCanvas canvas = new PdfCanvas(pdfPage);
@@ -263,17 +260,17 @@ public class Quiz {
         }
         canvas.closePathStroke();
 
-        // Closing the document
         document.close();
     }
 
     /**
      * Creates a sheet with answers and questions for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
+     * @param destination Chosen destination for the export to be saved
      */
-    public void exportAnswersWithQuestions() {
-        // Creating a PdfWriter
-        String dest = "C:/itextTest/answersWithQuestions.pdf";
+    public void exportAnswersWithQuestions(String destination) {
+        String title = getName();
+        String dest = destination + "/" + title + " - Answers With Questions.pdf";
         PdfWriter writer = null;
         try {
             writer = new PdfWriter(dest);
@@ -281,11 +278,9 @@ public class Quiz {
             e.printStackTrace();
         }
 
-        // Creating a PdfDocument
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        String title = getName();
         Paragraph paragraph1 = new Paragraph(title);
         document.add(paragraph1);
 
@@ -304,17 +299,17 @@ public class Quiz {
             counter++;
         }
 
-        // Closing the document
         document.close();
     }
 
     /**
      * Creates a sheet with answers for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
+     * @param destination Chosen destination for the export to be saved
      */
-    public void exportAnswersWithoutQuestions() {
-        // Creating a PdfWriter
-        String dest = "C:/itextTest/answersWithoutQuestions.pdf";
+    public void exportAnswersWithoutQuestions(String destination) {
+        String title = getName();
+        String dest = destination + "/" + title + " - Answers Without Questions.pdf";
         PdfWriter writer = null;
         try {
             writer = new PdfWriter(dest);
@@ -322,11 +317,9 @@ public class Quiz {
             e.printStackTrace();
         }
 
-        // Creating a PdfDocument
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        String title = getName();
         Paragraph paragraph1 = new Paragraph(title);
         document.add(paragraph1);
 
@@ -343,7 +336,6 @@ public class Quiz {
             counter++;
         }
 
-        // Closing the document
         document.close();
     }
 }
