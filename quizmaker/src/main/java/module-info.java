@@ -10,5 +10,7 @@ open module org.ntnu.k2.g2.quizmaker {
     requires google.oauth.client.jetty;
     requires google.oauth.client.java6;
     requires google.oauth.client;
+    requires kernel;
+    requires layout;
     exports org.ntnu.k2.g2.quizmaker;
 }
