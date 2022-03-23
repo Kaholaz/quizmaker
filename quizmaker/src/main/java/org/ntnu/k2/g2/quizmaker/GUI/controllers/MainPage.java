@@ -4,9 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 
 import java.io.IOException;
 
@@ -16,14 +15,12 @@ public class MainPage {
     public Button btnNewQuiz, btnListQuizzes;
 
     public void onListQuizzesBtnClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/listActiveQuizzesPage.fxml"));
-        Stage stage = (Stage) btnListQuizzes.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        GUI.setSceneFromNode(btnListQuizzes, "/GUI/listActiveQuizzesPage.fxml");
     }
 
     public void onCreateNewQuizBtnClicked() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/createNewQuizPage.fxml"));
-        Stage stage = (Stage) btnNewQuiz.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Parent root = FXMLLoader.load(getClass().getResource(""));
+        GUI.setSceneFromNode(btnNewQuiz, "/GUI/createNewQuizPage.fxml");
+
     }
 }

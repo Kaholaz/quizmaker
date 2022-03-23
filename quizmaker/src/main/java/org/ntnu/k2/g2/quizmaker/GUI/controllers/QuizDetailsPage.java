@@ -4,13 +4,6 @@
 
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +15,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.Team;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuizDetailsPage {
 
@@ -52,20 +53,11 @@ public class QuizDetailsPage {
     @FXML // fx:id="lastChange"
     private Text lastChanged; // Value injected by FXMLLoader
 
-    @FXML
-    private Text quizNameHeader;
-
     private Quiz quiz;
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Objects.requireNonNull(getClass().getResource("/GUI/quizAdminPage.fxml")));
-        Parent root = loader.load();
-        QuizAdminPage quizAdminPage = loader.getController();
-        quizAdminPage.setQuiz(quiz);
-        Stage stage = (Stage) back.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        ListPagesFactory.goToAdminPage(back, quiz);
     }
 
     @FXML
@@ -89,7 +81,6 @@ public class QuizDetailsPage {
         AtomicInteger i = new AtomicInteger(0);
 
         quiz.getTeams().values().stream().sorted(Comparator.comparingInt(Team::getScore)).forEach(team -> {
-
             rankingGrid.addRow(i.get(), new Text(team.getTeamName()));
             i.getAndIncrement();
         });

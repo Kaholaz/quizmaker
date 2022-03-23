@@ -4,26 +4,17 @@
 
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.*;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.ExportFactory;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ExportPage {
 
@@ -52,14 +43,16 @@ public class ExportPage {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Stage stage = (Stage) export.getScene().getWindow();
         directoryChooser.showDialog(stage);
-        exportMsg.setText("Export successfull");
+        exportMsg.setText("Export successful");
 
     }
+
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert export != null : "fx:id=\"export\" was not injected: check your FXML file 'exportPage.fxml'.";
         assert vBox != null : "fx:id=\"vBox\" was not injected: check your FXML file 'exportPage.fxml'.";
+
     }
 
     public void setQuiz(Quiz quiz) {

@@ -72,9 +72,12 @@ public class QuizAdminPage {
     @FXML
     void onBack(ActionEvent event) throws IOException {
         //if check if is quiz is archived or active
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/listActiveQuizzesPage.fxml")));
-        Stage stage = (Stage) back.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        String path = "/GUI/listArchivedQuizzesPage.fxml";
+
+        if (quiz.isActive()) {
+            path = "/GUI/listActiveQuizzesPage.fxml";
+        }
+        GUI.setSceneFromNode(back, path);
     }
 
     @FXML
@@ -92,16 +95,19 @@ public class QuizAdminPage {
 
     @FXML
     void onEditQuestion(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/questionEditorPage.fxml")));
-        Stage stage = (Stage) editQuestions.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        GUI.setSceneFromNode(editQuestions, "/GUI/questionEditorPage.fxml");
     }
 
     @FXML
     void onEditTeams(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/teamEditorPage.fxml")));
-        Stage stage = (Stage) details.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/teamEditorPage.fxml"));
+        Parent root = GUI.checkFXMLLoader(loader);
+        TeamEditorPage teamEditorPage = loader.getController();
+        teamEditorPage.setQuiz(quiz);
+        Scene scene = details.getScene();
+        Stage stage = (Stage) scene.getWindow();
+        stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
     }
 
     @FXML
@@ -111,7 +117,6 @@ public class QuizAdminPage {
         Parent root = GUI.checkFXMLLoader(loader);
         ExportPage exportQAPage = loader.getController();
         exportQAPage.setQuiz(quiz);
-
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
@@ -127,7 +132,6 @@ public class QuizAdminPage {
         quizName.setText(quiz.getName());
         sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
-
     }
 
     public void setQuiz(Quiz quiz) {

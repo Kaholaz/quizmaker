@@ -72,8 +72,9 @@ public class ListPagesFactory {
         Parent root = GUI.checkFXMLLoader(loader);
         QuizAdminPage quizAdminPage = loader.getController();
         quizAdminPage.setQuiz(quiz);
-        Stage stage = (Stage) node.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene scene = node.getScene();
+        Stage stage = (Stage) scene.getWindow();
+        stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
     }
 
 

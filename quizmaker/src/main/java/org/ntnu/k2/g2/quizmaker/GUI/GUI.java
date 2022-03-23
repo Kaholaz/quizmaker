@@ -36,7 +36,7 @@ public class GUI extends Application {
         Scene scene = node.getScene();
         Stage stage = (Stage) scene.getWindow();
         scene.setFill(Color.TRANSPARENT);
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
     }
 
     public static void setSceneFromStage(Stage stage, String path) {
