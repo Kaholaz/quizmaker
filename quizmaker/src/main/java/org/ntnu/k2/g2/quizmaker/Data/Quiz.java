@@ -9,7 +9,9 @@ import com.itextpdf.layout.element.Paragraph;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Quiz {
@@ -86,6 +88,16 @@ public class Quiz {
      */
     public HashMap<Integer, Team> getTeams() {
         return teams;
+    }
+
+    /**
+     * Get all teams that are part of a team, sorted in descending order according to their score.
+     * @return The teams of the quiz in descending order according to their score.
+     */
+    public Iterator<Team> getTeamsSortedByScore() {
+        return teams.values().stream().sorted(
+                        Comparator.comparingInt(Team::getScore).reversed())
+                .iterator();
     }
 
     /**
