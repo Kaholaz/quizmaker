@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.QuizAdminPage">
+   <center>
+      <HBox prefHeight="320.0" prefWidth="539.0">
+         <children>
+            <Pane prefHeight="320.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+            <VBox prefHeight="290.0" prefWidth="421.0" styleClass="main-container" stylesheets="@css/main.css" HBox.hgrow="ALWAYS">
+               <children>
+                  <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" text="Quizname">
+                     <VBox.margin>
+                        <Insets left="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Text>
+                  <Pane prefHeight="8.0" prefWidth="281.0" VBox.vgrow="ALWAYS" />
+                  <GridPane prefHeight="97.0" prefWidth="146.0" styleClass="gridPane-basic" stylesheets="@css/clickable.css" VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="136.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="75.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antall spørsmål:" GridPane.hgrow="ALWAYS" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antall lag:" GridPane.rowIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vanskelighets grad:" wrappingWidth="100.66665649414062" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                        <Text fx:id="sumTeams" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Text fx:id="difficulty" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Text fx:id="sumQuestions" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="50.0" top="20.0" />
+                     </VBox.margin>
+                  </GridPane>
+                  <Pane prefHeight="9.0" prefWidth="276.0" VBox.vgrow="ALWAYS" />
+                  <HBox>
+                     <children>
+                        <Pane prefHeight="75.0" prefWidth="158.0" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" prefHeight="25.0" prefWidth="111.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Details">
+                           <HBox.margin>
+                              <Insets bottom="20.0" right="10.0" top="50.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="30.0" left="30.0" top="20.0" />
+               </HBox.margin>
+            </VBox>
+            <HBox prefHeight="320.0" prefWidth="319.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+               <children>
+                  <Pane prefHeight="320.0" prefWidth="5.0" HBox.hgrow="ALWAYS" />
+                  <GridPane alignment="CENTER" prefHeight="220.0" prefWidth="181.0" stylesheets="@css/clickable.css" HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit questions">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></Button>
+                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit teams" GridPane.rowIndex="1" />
+                        <Button fx:id="editScores" mnemonicParsing="false" onAction="#editScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit scores" GridPane.rowIndex="2" />
+                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Retrieve scores" GridPane.rowIndex="3" />
+                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" styleClass="button-big" stylesheets="@css/clickable.css" text="Export Q&amp;A" GridPane.rowIndex="4" />
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="50.0" top="50.0" />
+                     </HBox.margin>
+                  </GridPane>
+               </children>
+            </HBox>
+            <Pane prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </center>
+   <top>
+      <HBox styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker" wrappingWidth="60.310546875" />
+            <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" text="back" />
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

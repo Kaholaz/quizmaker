@@ -1,0 +1,43 @@
+.button-big {
+    -fx-pref-width: Infinity;
+    -fx-pref-height: 70px;
+    -fx-border-insets: 4px;
+    -fx-background-insets: 4px;
+    -fx-border-color: black;
+    -fx-border-type: solid;
+    -fx-border-width: 2px;
+    -fx-background-color: lightblue;
+}
+
+.button-stealth {
+    -fx-background: white;
+    -fx-border-color: black;
+    -fx-border-type: solid;
+    -fx-border-width: 2px;
+}
+
+.check-box .box {
+    -fx-border-insets: 4px;
+    -fx-background-insets: 4px;
+-fx-background-color: white;
+-fx-border-color:grey;
+-fx-border-radius:3px;
+
+}
+
+.check-box {
+    -fx-font-size: 15px;
+}
+
+.check-box:selected .mark {
+
+-fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+-fx-background-color: #28a3f4;
+}
+
+
