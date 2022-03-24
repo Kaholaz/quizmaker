@@ -82,15 +82,13 @@ public class QuizAdminPage {
 
     @FXML
     void onDetails(ActionEvent event) throws IOException {
-        details.setOnAction(actionEvent -> {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ListPagesFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
-            Parent root = GUI.checkFXMLLoader(loader);
-            QuizDetailsPage quizDetailsPage = loader.getController();
-            quizDetailsPage.setQuiz(quiz);
-            Stage stage = (Stage) details.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        });
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ListPagesFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
+        Parent root = GUI.checkFXMLLoader(loader);
+        QuizDetailsPage quizDetailsPage = loader.getController();
+        quizDetailsPage.setQuiz(quiz);
+        Stage stage = (Stage) details.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML

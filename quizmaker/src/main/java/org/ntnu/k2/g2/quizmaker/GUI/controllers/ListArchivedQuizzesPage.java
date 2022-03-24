@@ -46,7 +46,7 @@ public class ListArchivedQuizzesPage {
     void updateQuizzes() {
         QuizRegister quizRegister = new QuizRegister();
         ArrayList<Quiz> quizzes = quizRegister.getArchivedQuizzes();
-        quizzes.forEach(quiz -> vBox.getChildren().add(ListPagesFactory.makeQuestion(quiz)));
+        quizzes.forEach(quiz -> vBox.getChildren().add(ListPagesFactory.makeQuestionv2(quiz)));
     }
 
 
