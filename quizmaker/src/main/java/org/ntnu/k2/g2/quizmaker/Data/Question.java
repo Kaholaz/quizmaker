@@ -18,6 +18,15 @@ public class Question {
      */
     protected Question(){}
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id="  + id +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                '}';
+    }
+
     /**
      * Checks the equality between to questions. This method takes all properties into account.
      * @param o Another question instance.

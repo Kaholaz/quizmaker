@@ -219,8 +219,8 @@ public class QuizRegister {
      * A class that deals with establishing and closing connections to the database,
      * as well as setting up the necessary tables and columns of the database.
      */
-    protected static class DataBase {
-        private static Connection connection;
+    protected static class DatabaseConnection {
+        private static Connection connectionSingleton;
 
         private static final String DB_URL = "jdbc:sqlite:";
 
@@ -229,6 +229,54 @@ public class QuizRegister {
         private static final String DB_NAME_TEST_PREFIX = "test_";
 
         private static final boolean test = isTest();
+
+        /**
+         * Creates a new database instance.
+         * The constructor establishes a connection to the database and saves it to the connection property.
+         *
+         */
+        private DatabaseConnection() {
+            File db_path = getDbPath();
+            File root = new File(db_path.getParent());
+
+            root.mkdirs();
+            String db_url = DB_URL.concat(db_path.getAbsolutePath());
+            try {
+                connectionSingleton = DriverManager.getConnection(db_url);
+                initTables();
+            }
+            catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        /**
+         * There is only ever one connection to the DB. It is retrieved by using this method.
+         * This method initializes a new connection instance if one does not already exist.
+         * @return The connection to the database
+         */
+        public static Connection getConnection() {
+            try {
+            if (connectionSingleton == null || connectionSingleton.isClosed() || !getDbPath().exists()) {
+                    new DatabaseConnection();
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return connectionSingleton;
+        }
+
+        /**
+         * Returns the appropriate file path to the database. This method takes into account whenever or not
+         * the database is being run inside a test.
+         * @return The path to the database
+         */
+        public static File getDbPath() {
+            File path = new File(DB_PATH);
+            String db_name = (test ? DB_NAME_TEST_PREFIX : "").concat(DB_NAME);
+            return new File(path, db_name);
+        }
 
         /**
          * Checks whenever or not the database is running inside a test by searching through the stack trace.
@@ -243,26 +291,6 @@ public class QuizRegister {
                 }
             }
             return false;
-        }
-
-        /**
-         * Creates a new database instance.
-         * The constructor establishes a connection to the database and saves it to the connection property.
-         *
-         */
-        private DataBase () {
-            File db_path = getDbPath();
-            File root = new File(db_path.getParent());
-
-            root.mkdirs();
-            String db_url = DB_URL.concat(db_path.getAbsolutePath());
-            try {
-                connection = DriverManager.getConnection(db_url);
-                initTables();
-            }
-            catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
 
         /**
@@ -320,38 +348,6 @@ public class QuizRegister {
         }
 
         /**
-         * There is only ever one connection to the DB. It is retrieved by using this method.
-         * This method initializes a new connection instance if one does not already exist.
-         * @return The connection to the database
-         */
-        public static Connection getConnection() {
-            try {
-                if (connection == null || connection.isClosed()) {
-                    new DataBase();
-                }
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return connection;
-        }
-
-        /**
-         * Closes a connection to a database, and handles any thrown exceptions
-         * @param connection The connection to the database
-         */
-        public static void closeConnection(Connection connection) {
-            if (connection != null) {
-                try {
-                    connection.close();
-                }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        /**
          * Closes a PreparedStatement, and handles any thrown exceptions.
          * @param preparedStatement The PreparedStatement
          */
@@ -380,17 +376,6 @@ public class QuizRegister {
                 }
             }
         }
-
-        /**
-         * Returns the appropriate file path to the database. This method takes into account whenever or not
-         * the database is being run inside a test.
-         * @return The path to the database
-         */
-        public static File getDbPath() {
-            File path = new File(DB_PATH);
-            String db_name = (test ? DB_NAME_TEST_PREFIX : "").concat(DB_NAME);
-            return new File(path, db_name);
-        }
     }
 
     /**
@@ -398,7 +383,6 @@ public class QuizRegister {
      * Instances of this class can be used to save and retrieve quiz-data form the database.
      */
     protected static class QuizDAO {
-
         /**
          * Constructs a quiz based on the ResultSet of an SQL query. Please note:
          * This method does not fill the teams or questions properties. These are filled in getQuizFromId()
@@ -421,7 +405,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return quiz;
         }
@@ -451,7 +435,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return quizzes;
         }
@@ -463,13 +447,13 @@ public class QuizRegister {
          * @return The quiz with the id in the database. If no quiz is found, null is returned.
          */
         public Quiz getQuizById(int id) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             Quiz quiz = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE id=?;");
                 preparedStatement.setInt(1, id);
                 result = preparedStatement.executeQuery();
@@ -488,9 +472,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return quiz;
         }
@@ -500,13 +483,13 @@ public class QuizRegister {
          * @return An ArrayList containing all quizzes in the database. Returns an empty list if there are no entries.
          */
         private ArrayList<Quiz> getAllQuizzes() {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             ArrayList<Quiz> quizzes = new ArrayList<>();
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM quizzes;");
                 result = preparedStatement.executeQuery();
 
@@ -524,9 +507,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return quizzes;
         }
@@ -537,12 +519,12 @@ public class QuizRegister {
          * @return The quiz as it is saved in the database after the update is done.
          */
         public Quiz updateQuiz(Quiz quiz) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
 
                 // Updates the last changed
                 quiz.setLastChanged(LocalDateTime.now());
@@ -606,9 +588,9 @@ public class QuizRegister {
                 return null;
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return quiz;
         }
@@ -619,7 +601,7 @@ public class QuizRegister {
          * @return True if the operation was successful, false if not.
          */
         public boolean removeQuizById(int id) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             boolean result = false;
 
@@ -637,7 +619,7 @@ public class QuizRegister {
 
 
                 // removes the quiz itself
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement(
                         "DELETE FROM quizzes WHERE id=?");
                 preparedStatement.setInt(1, id);
@@ -648,8 +630,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
+
+                DatabaseConnection.closePreparedStatement(preparedStatement);
             }
             return result;
         }
@@ -660,8 +642,6 @@ public class QuizRegister {
      * Instances of this class can be used to save and retrieve data from the database.
      */
     protected static class QuestionDAO {
-        public QuestionDAO(){}
-
         /**
          * Returns a question from the ResultSet returned by a SQL query.
          * @param result The ResultSet of an SQL query.
@@ -681,7 +661,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return question;
         }
@@ -702,7 +682,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return quizId;
         }
@@ -729,7 +709,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return questions;
         }
@@ -740,13 +720,13 @@ public class QuizRegister {
          * @return The question with this ID. If there is no question that matches the ID, a null pointer is returned.
          */
         public Question getQuestionById(int id) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             Question question = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE id=?;");
                 preparedStatement.setInt(1, id);
                 result = preparedStatement.executeQuery();
@@ -757,21 +737,20 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return question;
         }
 
         public HashMap<Integer, Question> getQuestionsByQuizId(int quizId) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             HashMap<Integer, Question> questions = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE quizId=?;");
                 preparedStatement.setInt(1, quizId);
                 result = preparedStatement.executeQuery();
@@ -782,9 +761,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return questions;
         }
@@ -795,13 +773,13 @@ public class QuizRegister {
          * @return The quiz id of the quiz where the question is a component. Returns -1 if the questionId is not found.
          */
         public int getQuizIdByQuestionId(int questionId) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             int quizId = -1;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE id=?;");
                 preparedStatement.setInt(1, questionId);
                 result = preparedStatement.executeQuery();
@@ -812,9 +790,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return quizId;
         }
@@ -826,12 +803,12 @@ public class QuizRegister {
          * @return The question as it is now saved in the database.
          */
         public Question updateQuestion(Question question, int quizId) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 if (question.getId() == -1) {
                     preparedStatement = connection.prepareStatement(
                             "INSERT INTO questions (question, answer, quizId) VALUES (?, ?, ?);");
@@ -857,9 +834,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return question;
         }
@@ -882,12 +858,12 @@ public class QuizRegister {
          * @return True if the question was removed successfully, false if not.
          */
         public boolean removeQuestionById(int id) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             boolean result = false;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement(
                         "DELETE FROM questions WHERE id=?");
                 preparedStatement.setInt(1, id);
@@ -897,8 +873,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
             }
             return result;
         }
@@ -909,12 +884,6 @@ public class QuizRegister {
      * Instances of this class can be used to save and retrieve data about teams from the database.
      */
     protected static class TeamDAO {
-
-        /**
-         * Creates a new instance of the TeamDAO
-         */
-        public TeamDAO(){}
-
         /**
          * Gets a team from a ResultSet of an SQL query.
          * @param result The ResultSet of an SQL query.
@@ -934,7 +903,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return team;
         }
@@ -962,7 +931,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return teams;
         }
@@ -983,7 +952,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closeResultSet(result);
             }
             return quizId;
         }
@@ -994,13 +963,13 @@ public class QuizRegister {
          * @return The team that matches the ID. Returns null if no team was found.
          */
         public Team getTeamById(int id) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             Team team = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM teams WHERE id=?;");
                 preparedStatement.setInt(1, id);
                 result = preparedStatement.executeQuery();
@@ -1011,9 +980,9 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return team;
         }
@@ -1025,13 +994,13 @@ public class QuizRegister {
          *         the ids of the teams, while the keys are the teams objects.
          */
         public HashMap<Integer, Team> getTeamsByQuizId(int quizId) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             HashMap<Integer, Team> teams = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM teams WHERE quizId=?;");
                 preparedStatement.setInt(1, quizId);
                 result = preparedStatement.executeQuery();
@@ -1042,9 +1011,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return teams;
         }
@@ -1055,13 +1023,13 @@ public class QuizRegister {
          * @return The id of the quiz. Returns -1 if the teamID is not found in the database.
          */
         public int getQuizIdByTeamId(int teamId) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
             int quizId = -1;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement("SELECT * FROM teams WHERE id=?;");
                 preparedStatement.setInt(1, teamId);
                 result = preparedStatement.executeQuery();
@@ -1072,9 +1040,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return quizId;
         }
@@ -1086,12 +1053,12 @@ public class QuizRegister {
          * @return The team how it is saved in the database.
          */
         public Team updateTeam(Team team, int quizId) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             ResultSet result = null;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 if (team.getId() == -1) {
                     preparedStatement = connection.prepareStatement(
                             "INSERT INTO teams (name, score, quizId) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
@@ -1117,9 +1084,8 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
-                DataBase.closeResultSet(result);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closeResultSet(result);
             }
             return team;
         }
@@ -1136,12 +1102,12 @@ public class QuizRegister {
         }
 
         public boolean removeTeamById(int id) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
             boolean result = false;
 
             try {
-                connection = DataBase.getConnection();
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement(
                         "DELETE FROM teams WHERE id=?");
                 preparedStatement.setInt(1, id);
@@ -1151,8 +1117,7 @@ public class QuizRegister {
                 e.printStackTrace();
             }
             finally {
-                DataBase.closeConnection(connection);
-                DataBase.closePreparedStatement(preparedStatement);
+                DatabaseConnection.closePreparedStatement(preparedStatement);
             }
             return result;
         }
