@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.MainPage">
-   <children>
-      <Button fx:id="btnNewQuiz" layoutX="385.0" layoutY="188.0" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" text="New Quiz" />
-      <Button fx:id="btnListQuizzes" layoutX="119.0" layoutY="188.0" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" text="List Quizzes" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.MainPage">
+   <center>
+      <StackPane BorderPane.alignment="TOP_CENTER">
+         <children>
+            <VBox prefHeight="196.0" prefWidth="200.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="365.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker" wrappingWidth="157.69873046875">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="300.0">
+                           <children>
+                              <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" styleClass="rounded-big-with-border" text="List Quiz">
+                                 <HBox.margin>
+                                    <Insets right="100.0" />
+                                 </HBox.margin>
+                                 <stylesheets>
+                                    <URL value="@css/clickable.css" />
+                                    <URL value="@css/main.css" />
+                                 </stylesheets>
+                              </Button>
+                              <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" styleClass="rounded-big-with-border" stylesheets="@css/main.css" text="New quiz" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>

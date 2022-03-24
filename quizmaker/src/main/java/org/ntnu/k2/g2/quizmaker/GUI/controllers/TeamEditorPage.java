@@ -55,7 +55,7 @@ public class TeamEditorPage {
         strings.add("Jens");
         strings.add("Ole");
 
-        teams.forEach((count, team) -> vBox.getChildren().add(ListPagesFactory.makeEditPaneForTeams(team.getTeamName(), strings)));
+        teams.forEach((count, team) -> vBox.getChildren().add(ListPagesFactory.makeEditPaneForTeams(team.getTeamName(), strings, quiz)));
     }
 
     void setQuiz(Quiz quiz) {

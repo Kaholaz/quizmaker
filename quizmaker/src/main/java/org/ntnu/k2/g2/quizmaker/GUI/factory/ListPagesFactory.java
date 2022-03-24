@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -78,7 +79,7 @@ public class ListPagesFactory {
     }
 
 
-    public static VBox makeEditPaneForTeams(String header, ArrayList<String> teamMembers) {
+    public static VBox makeEditPaneForTeams(String header, ArrayList<String> teamMembers, Quiz quiz) {
         VBox vBox = new VBox();
 
         Text teamName = new Text();
@@ -87,11 +88,16 @@ public class ListPagesFactory {
         HBox hBox = new HBox();
         for (String member : teamMembers) {
             TextField textField = new TextField();
+
             textField.appendText(member);
+
+            textField.setOnAction(e -> {
+            });
             hBox.getChildren().add(textField);
         }
 
         vBox.getChildren().addAll(teamName, hBox);
+        vBox.setPadding(new Insets(0, 0, 0, 20));
 
         return vBox;
     }
