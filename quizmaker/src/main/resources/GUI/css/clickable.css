@@ -40,4 +40,18 @@
 -fx-background-color: #28a3f4;
 }
 
+.listQuiz {
+    -fx-pref-width: 200000px;
+    -fx-padding: 30px;
+       -fx-border-insets: 4px;
+       -fx-background-insets: 4px;
+       -fx-font-size: 18px;
+           -fx-border-color: black;
+           -fx-border-type: solid;
+           -fx-border-width: 2px;
+           -fx-background-color: lightgrey;
+}
 
+.listQuiz:hover {
+    -fx-background-color: lightgreen;
+}

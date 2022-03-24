@@ -50,11 +50,13 @@ public class ListPagesFactory {
 
         return hBox;
     }
-    public static Button makeQuestionv2(Quiz quiz) {
+    public static HBox makeQuestionv2(Quiz quiz) {
+        HBox hBox = new HBox();
+
         Button admin = new Button(quiz.getName());
 
+        Scene scene = admin.getScene();
 
-        Stage stage = (Stage) admin.getScene().getWindow();
         admin.setId(String.valueOf(quiz.getId()));
 
         admin.setOnAction((ActionEvent e) -> {
@@ -64,7 +66,12 @@ public class ListPagesFactory {
                 ex.printStackTrace();
             }
         });
-        return admin;
+        admin.getStyleClass().add("listQuiz");
+
+
+        hBox.getChildren().add(admin);
+
+        return hBox;
     }
 
     public static void goToAdminPage( Node node, Quiz quiz) throws IOException {
