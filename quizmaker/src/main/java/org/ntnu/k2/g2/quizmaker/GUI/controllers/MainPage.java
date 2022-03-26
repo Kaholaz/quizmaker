@@ -14,12 +14,11 @@ public class MainPage {
     @FXML
     public Button btnNewQuiz, btnListQuizzes;
 
-    public void onListQuizzesBtnClicked(ActionEvent actionEvent) throws IOException {
+    public void onListQuizzesBtnClicked(ActionEvent actionEvent) {
         GUI.setSceneFromNode(btnListQuizzes, "/GUI/listActiveQuizzesPage.fxml");
     }
 
-    public void onCreateNewQuizBtnClicked() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(""));
+    public void onCreateNewQuizBtnClicked() {
         GUI.setSceneFromNode(btnNewQuiz, "/GUI/createNewQuizPage.fxml");
 
     }
