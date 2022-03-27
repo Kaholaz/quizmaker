@@ -6,6 +6,8 @@ package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.GeneralSecurityException;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -21,6 +23,8 @@ import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
+import org.ntnu.k2.g2.quizmaker.UserData.ResultSheet;
 
 public class QuizAdminPage {
 
@@ -123,7 +127,18 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onRetrieveScores(ActionEvent event) throws IOException {
+    void onRetrieveScores(ActionEvent event) throws IOException, GeneralSecurityException {
+        ResultSheet resultSheet = new ResultSheet();
+        QuizResultManager quizResultManager = new QuizResultManager();
+
+        try {
+            List<List<Object>> update = resultSheet.fetchResultSheetValues(quiz.getUrl());
+            quizResultManager.registerResults(quiz.getId(), update);
+        } catch (Exception e) {
+            System.out.println("Failed to import blabla add gui");
+        }
+
+        this.update();
     }
 
     void update() {

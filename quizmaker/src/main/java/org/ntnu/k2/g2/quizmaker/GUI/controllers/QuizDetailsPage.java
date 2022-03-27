@@ -20,6 +20,7 @@ import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -78,12 +79,13 @@ public class QuizDetailsPage {
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
 
-        AtomicInteger i = new AtomicInteger(0);
+        Iterator<Team> teamsSorted = quiz.getTeamsSortedByScore();
+        int i = 0;
 
-        quiz.getTeams().values().stream().sorted(Comparator.comparingInt(Team::getScore)).forEach(team -> {
-            rankingGrid.addRow(i.get(), new Text(team.getTeamName()));
-            i.getAndIncrement();
-        });
+        while (teamsSorted.hasNext()) {
+            rankingGrid.addRow(i, new Text(teamsSorted.next().getTeamName()));
+            i++;
+        }
     }
 
     void setQuiz(Quiz quiz) {
