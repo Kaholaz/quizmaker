@@ -35,6 +35,24 @@ public class ResultSheetTest extends TestCase {
         QuizResultManager.createResultSheet(quiz);
     }
 
+    public void testImportResultSheet() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz quiz = quizRegister.newQuiz();
+        quiz.setName("Test quiz");
+
+        ResultSheet resultSheet = new ResultSheet();
+        try {
+            resultSheet.appendRowValues(quiz.getSheetId(), "Team1", "1");
+            resultSheet.appendRowValues(quiz.getSheetId(), "Team2", "2");
+            QuizResultManager.importResults(quiz);
+        }
+        catch (IOException | GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(2, quiz.getTeams().size());
+    }
+
     public void testAppendRowValues() throws GeneralSecurityException, IOException {
         ResultSheet resultsheet = new ResultSheet();
         String sheetID ="11MG2HsYNGL5VFpdaRkGlvE8EqtqlYAI13IBF9fw2K8o";
@@ -50,6 +68,8 @@ public class ResultSheetTest extends TestCase {
         resultsheet.addRowValues(sheetID,"Team DD", "8","2");
         resultsheet.addRowValues(sheetID,"Team LL", "8","3");
         resultsheet.addRowValues(sheetID,"Team YD", "9","2");
+
+
     }
 
     public void testCountRows() throws GeneralSecurityException, IOException {

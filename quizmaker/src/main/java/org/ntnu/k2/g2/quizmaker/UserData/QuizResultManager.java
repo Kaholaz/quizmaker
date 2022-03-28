@@ -23,6 +23,7 @@ public class QuizResultManager {
 
         String sheetId = resultSheet.createSheet(quiz.getName());
         quiz.setSheetId(sheetId);
+        resultSheet.addRowValues(sheetId, "Teams", "Scores", "1");
 
         return sheetId;
     }
