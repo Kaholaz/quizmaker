@@ -42,9 +42,6 @@ public class QuizAdminPage {
     @FXML // fx:id="editQuestions"
     private Button editQuestions; // Value injected by FXMLLoader
 
-    @FXML // fx:id="editScores"
-    private Button editScores; // Value injected by FXMLLoader
-
     @FXML // fx:id="editTeams"
     private Button editTeams; // Value injected by FXMLLoader
 
@@ -64,6 +61,9 @@ public class QuizAdminPage {
     private Text sumTeams; // Value injected by FXMLLoader
 
     @FXML
+    private Button changeState;
+
+    @FXML
     private Text errorMsg;
 
     private Quiz quiz = QuizHandlerSingelton.getQuiz();
@@ -73,6 +73,8 @@ public class QuizAdminPage {
         QuizRegister quizRegister = new QuizRegister();
         quiz.setActive(!quiz.isActive());
         quizRegister.saveQuiz(quiz);
+        QuizHandlerSingelton.setQuiz(quiz);
+        GUI.setSceneFromNode(changeState, "/GUI/listQuizzesPage.fxml");
 
     }
 
@@ -102,7 +104,7 @@ public class QuizAdminPage {
     void onEditTeams(ActionEvent event) {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
-                Desktop.getDesktop().browse(new URI("http://www.example.com"));
+                Desktop.getDesktop().browse(new URI(quiz.getUrl()));
 
             } catch (URISyntaxException | IOException e) {
                 e.printStackTrace();
@@ -159,7 +161,6 @@ public class QuizAdminPage {
         assert details != null : "fx:id=\"details\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert difficulty != null : "fx:id=\"difficulty\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert editQuestions != null : "fx:id=\"editQuestions\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
-        assert editScores != null : "fx:id=\"editScores\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert editTeams != null : "fx:id=\"editTeams\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert exportQA != null : "fx:id=\"exportQA\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert quizName != null : "fx:id=\"quizName\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
