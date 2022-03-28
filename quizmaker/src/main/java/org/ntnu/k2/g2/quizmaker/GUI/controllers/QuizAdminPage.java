@@ -9,11 +9,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.awt.Desktop;
-import java.net.URI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +23,7 @@ import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
 import org.ntnu.k2.g2.quizmaker.UserData.ResultSheet;
 
@@ -98,7 +95,7 @@ public class QuizAdminPage {
     @FXML
     void onDetails(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ListPagesFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
+        loader.setLocation(GUIFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
         Parent root = GUI.checkFXMLLoader(loader);
         QuizDetailsPage quizDetailsPage = loader.getController();
         quizDetailsPage.setQuiz(quiz);
@@ -138,7 +135,7 @@ public class QuizAdminPage {
     @FXML
     void onExportQA(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ListPagesFactory.class.getResource("/GUI/exportPage.fxml"));
+        loader.setLocation(GUIFactory.class.getResource("/GUI/exportPage.fxml"));
         Parent root = GUI.checkFXMLLoader(loader);
         ExportPage exportQAPage = loader.getController();
         exportQAPage.setQuiz(quiz);
@@ -156,11 +153,8 @@ public class QuizAdminPage {
 
     @FXML
     void onRetrieveScores(ActionEvent event) {
-        ResultSheet resultSheet = new ResultSheet();
-        QuizResultManager quizResultManager = new QuizResultManager();
-
         try {
-            quizResultManager.importResults(quiz);
+            QuizResultManager.importResults(quiz);
         } catch (Exception e) {
             e.printStackTrace();
             errorMsg.setText("Could not retrieve scores.");

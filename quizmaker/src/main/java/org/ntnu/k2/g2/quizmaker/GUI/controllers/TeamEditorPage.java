@@ -9,14 +9,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.Data.Team;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -51,7 +49,7 @@ public class TeamEditorPage {
     void updateQuizzes() {
         HashMap<Integer, Team> teams = quiz.getTeams();
 
-        teams.forEach((count, team) -> vBox.getChildren().add(ListPagesFactory.makeEditPaneForTeams(team, quiz)));
+        teams.forEach((count, team) -> vBox.getChildren().add(GUIFactory.makeEditPaneForTeams(team, quiz)));
     }
 
     void setQuiz(Quiz quiz) {

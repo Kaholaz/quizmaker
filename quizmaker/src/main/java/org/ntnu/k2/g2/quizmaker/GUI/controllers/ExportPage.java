@@ -47,7 +47,7 @@ public class ExportPage {
         Stage stage = (Stage) export.getScene().getWindow();
         File file = directoryChooser.showDialog(stage);
         String msg = "Export successful";
-
+        //make with script?
         try {
             if (c1.isSelected()) {
                 quiz.exportAnswersheetWithoutQuestions(file.toString());
@@ -70,9 +70,7 @@ public class ExportPage {
         } catch (Exception e) {
             msg = "Export Unsuccessful";
         }
-
         exportMsg.setText(msg);
-
     }
 
     @FXML

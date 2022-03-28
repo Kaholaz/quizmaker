@@ -1,21 +1,18 @@
 package org.ntnu.k2.g2.quizmaker.GUI.factory;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
@@ -26,10 +23,9 @@ import org.ntnu.k2.g2.quizmaker.GUI.controllers.QuizAdminPage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
-public class ListPagesFactory {
+public class GUIFactory {
     public static HBox makeQuestion(Quiz quiz) {
 
         Text text = new Text(quiz.getName());
@@ -82,7 +78,7 @@ public class ListPagesFactory {
 
     public static void goToAdminPage(Node node, Quiz quiz) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Objects.requireNonNull(ListPagesFactory.class.getResource("/GUI/quizAdminPage.fxml")));
+        loader.setLocation(Objects.requireNonNull(GUIFactory.class.getResource("/GUI/quizAdminPage.fxml")));
         Parent root = GUI.checkFXMLLoader(loader);
         QuizAdminPage quizAdminPage = loader.getController();
         quizAdminPage.setQuiz(quiz);
@@ -120,5 +116,25 @@ public class ListPagesFactory {
         hBox.getChildren().addAll(teamName, textField, button);
 
         return hBox;
+    }
+
+    public static CheckBox createCheckBoxButton(String string, ArrayList<Boolean> checkBoxes, int i) {
+        CheckBox checkBox = new CheckBox();
+        checkBox.setText(string);
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                boolean val = checkBoxes.get(i);
+                checkBoxes.set(i, !val);
+            }
+        };
+        return checkBox;
+    }
+
+    public static Text basicText(String string) {
+        Text text = new Text();
+        text.setText(string);
+        text.setStyle("-fx-padding: 4px;");
+        return text;
     }
 }

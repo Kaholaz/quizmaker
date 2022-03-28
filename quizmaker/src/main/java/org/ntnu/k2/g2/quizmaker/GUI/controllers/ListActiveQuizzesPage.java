@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class ListActiveQuizzesPage {
         QuizRegister quizRegister = new QuizRegister();
         ArrayList<Quiz> quizzes = quizRegister.getActiveQuizzes();
 
-        quizzes.forEach(quiz -> vBox.getChildren().add(ListPagesFactory.makeQuestionv2(quiz)));
+        quizzes.forEach(quiz -> vBox.getChildren().add(GUIFactory.makeQuestionv2(quiz)));
 
     }
 }
