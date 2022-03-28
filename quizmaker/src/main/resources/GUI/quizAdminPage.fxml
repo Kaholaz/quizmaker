@@ -116,6 +116,9 @@
       <Text fx:id="errorMsg" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="TOP_CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" />
-         </BorderPane.margin></Text>
+         </BorderPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></Text>
    </bottom>
 </BorderPane>

@@ -62,7 +62,7 @@ public class QuizResultManager {
         QuizRegister quizRegister = new QuizRegister();
         ResultSheet resultSheet = new ResultSheet();
 
-        quiz.getTeams().keySet().stream().forEach(id -> quiz.getTeams().remove(id));
+        quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));
         var quizResult = resultSheet.fetchResultSheetValues(quiz.getSheetId());
 
         for (List row : quizResult) {
