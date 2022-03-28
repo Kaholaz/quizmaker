@@ -2,9 +2,14 @@ package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.Data.Question;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
@@ -44,7 +49,20 @@ public class QuestionEditorPage {
 
     @FXML
     void onSave(ActionEvent event) {
+        for (int i = 0; i < vBox.getChildren().size(); i++) {
+            Pane questionPane = (Pane) vBox.getChildren().get(i);
+            Set<Node> textAreas = questionPane.lookupAll("TextArea");
 
+            TextArea questionTextArea = (TextArea) textAreas.toArray()[0];
+            TextArea answerTextArea = (TextArea) textAreas.toArray()[1];
+
+            String newQuestion = questionTextArea.getText();
+            String newAnswer = answerTextArea.getText();
+
+            Question questionToChange = (Question) quiz.getQuestions().values().toArray()[i];
+            questionToChange.setQuestion(newQuestion);
+            questionToChange.setAnswer(newAnswer);
+        }
     }
 
     @FXML
