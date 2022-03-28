@@ -1,3 +1,4 @@
 *.data
 UserData
 *.pdf
+*.json
