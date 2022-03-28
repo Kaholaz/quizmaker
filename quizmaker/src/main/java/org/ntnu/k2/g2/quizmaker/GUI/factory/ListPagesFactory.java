@@ -1,6 +1,8 @@
 package org.ntnu.k2.g2.quizmaker.GUI.factory;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,11 +19,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.Data.Team;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.controllers.QuizAdminPage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ListPagesFactory {
@@ -50,6 +55,7 @@ public class ListPagesFactory {
 
         return hBox;
     }
+
     public static HBox makeQuestionv2(Quiz quiz) {
         HBox hBox = new HBox();
 
@@ -74,7 +80,7 @@ public class ListPagesFactory {
         return hBox;
     }
 
-    public static void goToAdminPage( Node node, Quiz quiz) throws IOException {
+    public static void goToAdminPage(Node node, Quiz quiz) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Objects.requireNonNull(ListPagesFactory.class.getResource("/GUI/quizAdminPage.fxml")));
         Parent root = GUI.checkFXMLLoader(loader);
@@ -86,26 +92,33 @@ public class ListPagesFactory {
     }
 
 
-    public static VBox makeEditPaneForTeams(String header, ArrayList<String> teamMembers, Quiz quiz) {
-        VBox vBox = new VBox();
-
-        Text teamName = new Text();
-        teamName.setText(header);
+    public static HBox makeEditPaneForTeams(Team team, Quiz quiz) {
+        QuizRegister quizRegister = new QuizRegister();
 
         HBox hBox = new HBox();
-        for (String member : teamMembers) {
-            TextField textField = new TextField();
+        Text teamName = new Text(team.getTeamName());
+        TextField textField = new TextField();
+        Button button = new Button("Delete");
 
-            textField.appendText(member);
-
-            textField.setOnAction(e -> {
-            });
-            hBox.getChildren().add(textField);
+        button.setOnAction(actionEvent -> {
+            quizRegister.removeTeam(quiz, team.getId());
+            hBox.getChildren().clear();
         }
+        );
 
-        vBox.getChildren().addAll(teamName, hBox);
-        vBox.setPadding(new Insets(0, 0, 0, 20));
+        textField.setText(Integer.toString(team.getScore()));
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
 
-        return vBox;
+            team.setScore(Integer.parseInt(textField.getText()));
+            quizRegister.saveTeam(team);
+        });
+
+        hBox.setStyle("-fx-padding: 4px;");
+        hBox.getChildren().addAll(teamName, textField, button);
+
+        return hBox;
     }
 }
