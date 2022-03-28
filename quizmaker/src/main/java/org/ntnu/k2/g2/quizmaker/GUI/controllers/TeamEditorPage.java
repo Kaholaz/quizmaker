@@ -51,11 +51,7 @@ public class TeamEditorPage {
     void updateQuizzes() {
         HashMap<Integer, Team> teams = quiz.getTeams();
 
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("Jens");
-        strings.add("Ole");
-
-        teams.forEach((count, team) -> vBox.getChildren().add(ListPagesFactory.makeEditPaneForTeams(team.getTeamName(), strings, quiz)));
+        teams.forEach((count, team) -> vBox.getChildren().add(ListPagesFactory.makeEditPaneForTeams(team, quiz)));
     }
 
     void setQuiz(Quiz quiz) {

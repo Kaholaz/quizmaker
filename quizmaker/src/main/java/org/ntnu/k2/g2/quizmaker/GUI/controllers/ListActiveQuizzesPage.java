@@ -61,19 +61,11 @@ public class ListActiveQuizzesPage {
         this.updateQuizzes();
     }
 
-
-    void populateDatabase(QuizRegister quizRegister) {
-        if (quizRegister.getQuizList().isEmpty()) {
-            quizRegister.populateDatabase(20, 6, 16);
-        }
-    }
-
     void updateQuizzes() {
         QuizRegister quizRegister = new QuizRegister();
-        populateDatabase(quizRegister);
-
         ArrayList<Quiz> quizzes = quizRegister.getActiveQuizzes();
 
         quizzes.forEach(quiz -> vBox.getChildren().add(ListPagesFactory.makeQuestionv2(quiz)));
+
     }
 }

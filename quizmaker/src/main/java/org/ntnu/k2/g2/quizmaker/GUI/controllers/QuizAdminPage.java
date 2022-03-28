@@ -5,11 +5,15 @@
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.awt.Desktop;
+import java.net.URI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,10 +71,16 @@ public class QuizAdminPage {
     @FXML // fx:id="sumTeams"
     private Text sumTeams; // Value injected by FXMLLoader
 
+    @FXML
+    private Text errorMsg;
+
     private Quiz quiz;
 
     @FXML
-    void editScores(ActionEvent event) {
+    void onChangeState(ActionEvent event) {
+        QuizRegister quizRegister = new QuizRegister();
+        quiz.setActive(!quiz.isActive());
+        quizRegister.saveQuiz(quiz);
 
     }
 
@@ -102,19 +112,31 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onEditTeams(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/teamEditorPage.fxml"));
-        Parent root = GUI.checkFXMLLoader(loader);
-        TeamEditorPage teamEditorPage = loader.getController();
-        teamEditorPage.setQuiz(quiz);
-        Scene scene = details.getScene();
-        Stage stage = (Stage) scene.getWindow();
-        stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
+    void onEditTeams(ActionEvent event) {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                Desktop.getDesktop().browse(new URI("http://www.example.com"));
+
+            } catch (URISyntaxException | IOException e) {
+                e.printStackTrace();
+                errorMsg.setText("Could not load URL from quiz.");
+            }
+
+        } else {
+            errorMsg.setText("Could not load default browser.");
+        }
+
+        retrieveScores.setStyle("-fx-background-color: yellow;");
     }
 
+    /**
+     * Opens new Stage and sets quiz by the controller on the page.
+     *
+     * @param event Action event
+     */
+
     @FXML
-    void onExportQA(ActionEvent event) throws IOException {
+    void onExportQA(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ListPagesFactory.class.getResource("/GUI/exportPage.fxml"));
         Parent root = GUI.checkFXMLLoader(loader);
@@ -126,6 +148,12 @@ public class QuizAdminPage {
 
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
+
     @FXML
     void onRetrieveScores(ActionEvent event) throws IOException, GeneralSecurityException {
         ResultSheet resultSheet = new ResultSheet();
@@ -135,10 +163,11 @@ public class QuizAdminPage {
             List<List<Object>> update = resultSheet.fetchResultSheetValues(quiz.getUrl());
             quizResultManager.registerResults(quiz.getId(), update);
         } catch (Exception e) {
-            System.out.println("Failed to import blabla add gui");
+            e.printStackTrace();
+            errorMsg.setText("Could not retrieve scores.");
         }
 
-        this.update();
+        retrieveScores.setStyle("-fx-background-color: lightblue;");
     }
 
     void update() {
@@ -167,5 +196,4 @@ public class QuizAdminPage {
         assert sumQuestions != null : "fx:id=\"sumQuestions\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
     }
-
 }

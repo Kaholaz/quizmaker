@@ -13,6 +13,7 @@ open module org.ntnu.k2.g2.quizmaker {
     requires google.oauth.client;
     requires kernel;
     requires layout;
-    
+    requires java.desktop;
+
     exports org.ntnu.k2.g2.quizmaker;
 }
