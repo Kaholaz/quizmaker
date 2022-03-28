@@ -80,7 +80,7 @@ public class QuizAdminPage {
             e.printStackTrace();
             errorMsg.setText("Could not change Quiz state");
         }
-        errorMsg.setText("Changed quiz state");
+        GUI.setSceneFromNode(errorMsg, "/GUI/listQuizzesPage.fxml");
     }
 
     @FXML
