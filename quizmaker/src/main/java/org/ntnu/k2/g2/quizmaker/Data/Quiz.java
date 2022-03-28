@@ -16,7 +16,8 @@ import java.util.Objects;
 
 public class Quiz {
     private String name;
-    private String url;
+    private final String SHEET_URL = "https://docs.google.com/spreadsheets/d/";
+    private String sheetId;
     private boolean active = true;
     private int id = -1;
     private LocalDateTime lastChanged;
@@ -31,7 +32,7 @@ public class Quiz {
         return "Quiz{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
+                ", sheetId='" + sheetId + '\'' +
                 ", active=" + active +
                 ", lastChanged=" + lastChanged +
                 ", teams=" + teams.values() +
@@ -159,19 +160,26 @@ public class Quiz {
     }
 
     /**
+     * @return The sheet id of the quiz.
+     */
+    public String getSheetId() {
+        return sheetId;
+    }
+
+    /**
+     * Sets the sheetId of this quiz. This is the ID of the page where users can submit data.
+     * @param sheetId The sheetId of the quiz.
+     */
+    public void setSheetId(String sheetId) {
+        this.sheetId = sheetId;
+    }
+
+    /**
      * Gets url where users can submit data.
      * @return The url where users can submit data
      */
     public String getUrl() {
-        return url;
-    }
-
-    /**
-     * Sets the url where users can submit data.
-     * @param url The url where users can submit data.
-     */
-    public void setUrl(String url) {
-        this.url = url;
+        return SHEET_URL + sheetId;
     }
 
     /**

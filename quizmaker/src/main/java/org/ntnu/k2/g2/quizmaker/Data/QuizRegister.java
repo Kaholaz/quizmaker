@@ -1,6 +1,10 @@
 package org.ntnu.k2.g2.quizmaker.Data;
 
+import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
+
 import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -75,6 +79,10 @@ public class QuizRegister {
      */
     public Quiz saveQuiz(Quiz quiz) {
         QuizDAO quizDAO = new QuizDAO();
+        Quiz outQuiz = quizDAO.updateQuiz(quiz);
+        if (!quiz.getName().equals(outQuiz.getName())) {
+            QuizResultManager.changeResultSheetName(quiz);
+        }
         return quizDAO.updateQuiz(quiz);
     }
 
@@ -117,7 +125,28 @@ public class QuizRegister {
      * @return The new quiz.
      */
     public Quiz newQuiz() {
+        return newQuiz(false);
+    }
+
+    /**
+     * Create a new quiz.
+     * @param isTest If this flag is set to true, new quizzes are created without a result sheet.
+     *               This is to be used in testing.
+     * @return The new quiz.
+     */
+    protected Quiz newQuiz(boolean isTest) {
         Quiz quiz = new Quiz();
+        quiz.setName("new quiz");
+
+        if (!isTest) {
+            try {
+                QuizResultManager.createResultSheet(quiz);
+            }
+            catch (GeneralSecurityException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         QuizDAO quizDAO = new QuizDAO();
         return quizDAO.updateQuiz(quiz);
     }
@@ -156,6 +185,8 @@ public class QuizRegister {
      * @return True if the operation was successful, false if not.
      */
     public boolean removeQuiz(Quiz quiz) {
+        QuizResultManager.deleteResultSheet(quiz);
+
         QuizDAO quizDAO = new QuizDAO();
         return quizDAO.removeQuizById(quiz.getId());
     }
@@ -309,7 +340,7 @@ public class QuizRegister {
                         CREATE TABLE IF NOT EXISTS quizzes (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name TEXT,
-                        url TEXT,
+                        sheetId TEXT,
                         active INTEGER,
                         lastChanged TEXT
                         );
@@ -397,7 +428,7 @@ public class QuizRegister {
                     quiz.setId(result.getInt("id"));
                     quiz.setName(result.getString("name"));
                     quiz.setActive(result.getBoolean("active"));
-                    quiz.setUrl("url");
+                    quiz.setSheetId("sheetId");
                     quiz.setLastChanged(LocalDateTime.parse(result.getString("lastChanged")));
                 }
             }
@@ -425,7 +456,7 @@ public class QuizRegister {
                     quiz.setId(result.getInt("id"));
                     quiz.setName(result.getString("name"));
                     quiz.setActive(result.getBoolean("active"));
-                    quiz.setUrl("url");
+                    quiz.setSheetId("sheetId");
                     quiz.setLastChanged(LocalDateTime.parse(result.getString("lastChanged")));
 
                     quizzes.add(quiz);
@@ -531,14 +562,14 @@ public class QuizRegister {
                 // If quiz is not in database
                 if (quiz.getId() == -1) {
                     preparedStatement = connection.prepareStatement(
-                            "INSERT INTO quizzes (name, url, active, lastChanged) VALUES (?, ?, ?, ?);");
+                            "INSERT INTO quizzes (name, sheetId, active, lastChanged) VALUES (?, ?, ?, ?);");
                 } else {
                     preparedStatement = connection.prepareStatement(
-                            "UPDATE quizzes SET name=?, url=?, active=?, lastChanged=? WHERE id=?;");
+                            "UPDATE quizzes SET name=?, sheetId=?, active=?, lastChanged=? WHERE id=?;");
                     preparedStatement.setInt(5, quiz.getId());
                 }
                 preparedStatement.setString(1, quiz.getName());
-                preparedStatement.setString(2, quiz.getUrl());
+                preparedStatement.setString(2, quiz.getSheetId());
                 preparedStatement.setBoolean(3, quiz.isActive());
                 preparedStatement.setString(4, quiz.getLastChanged().toString());
 
