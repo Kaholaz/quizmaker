@@ -1,12 +1,6 @@
-/**
- * Sample Skeleton for 'quizAdminPage.fxml' Controller Class
- */
-
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -70,7 +64,7 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onBack(ActionEvent event) throws IOException {
+    void onBack(ActionEvent event) {
         //if check if is quiz is archived or active
         String path = "/GUI/listArchivedQuizzesPage.fxml";
 
@@ -81,7 +75,7 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onDetails(ActionEvent event) throws IOException {
+    void onDetails(ActionEvent event){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ListPagesFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
         Parent root = GUI.checkFXMLLoader(loader);
@@ -92,12 +86,13 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onEditQuestion(ActionEvent event) throws IOException {
+    void onEditQuestion(ActionEvent event){
+        QuestionEditorPage.returnPage = "/GUI/quizAdminPage.fxml";
         GUI.setSceneFromNode(editQuestions, "/GUI/questionEditorPage.fxml");
     }
 
     @FXML
-    void onEditTeams(ActionEvent event) throws IOException {
+    void onEditTeams(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/teamEditorPage.fxml"));
         Parent root = GUI.checkFXMLLoader(loader);
@@ -109,7 +104,7 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onExportQA(ActionEvent event) throws IOException {
+    void onExportQA(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ListPagesFactory.class.getResource("/GUI/exportPage.fxml"));
         Parent root = GUI.checkFXMLLoader(loader);
@@ -122,7 +117,7 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onRetrieveScores(ActionEvent event) throws IOException {
+    void onRetrieveScores(ActionEvent event) {
         //Not yet implemented
     }
 
@@ -139,7 +134,7 @@ public class QuizAdminPage {
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() throws IOException {
+    void initialize() {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert details != null : "fx:id=\"details\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert difficulty != null : "fx:id=\"difficulty\" was not injected: check your FXML file 'quizAdminPage.fxml'.";

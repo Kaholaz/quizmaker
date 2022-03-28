@@ -29,6 +29,18 @@ public class QuestionEditorPage {
     @FXML // fx:id="vBox"
     private VBox vBox; // Value injected by FXMLLoader
 
+    // This is like a "state". This property can be set to the quiz that should be displayed. The question editor
+    // will show all questions from this quiz. The quiz state can be set whenever in whichever file and is implemented
+    // so that you can choose which quiz to render before directing the user to the quiz creator page.
+    // For example... If someone clicks the "Create New Quiz" button, a new Quiz should be
+    // created, then this variable should be set to that quiz instance, and then finally the user can be redirected
+    // to this page.
+    public static Quiz quiz;
+
+    // This is also a "state". This is the page that the back button will return to.
+    // TODO: Implement checks when setting to this variable
+    public static String returnPage = "/GUI/mainPage.fxml";
+
     @FXML
     void onSave(ActionEvent event) {
 
@@ -36,7 +48,7 @@ public class QuestionEditorPage {
 
     @FXML
     void onBack(ActionEvent event) {
-        GUI.setSceneFromNode(save, "/GUI/mainPage.fxml");
+        GUI.setSceneFromNode(save, returnPage);
     }
 
     @FXML
