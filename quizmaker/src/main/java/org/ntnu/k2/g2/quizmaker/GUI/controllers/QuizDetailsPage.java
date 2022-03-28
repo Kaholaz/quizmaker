@@ -11,6 +11,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.Team;
+import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 
 import java.io.IOException;
@@ -47,11 +49,11 @@ public class QuizDetailsPage {
     @FXML // fx:id="lastChange"
     private Text lastChanged; // Value injected by FXMLLoader
 
-    private Quiz quiz;
+    private final Quiz quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
-        GUIFactory.goToAdminPage(back, quiz);
+        GUI.setSceneFromNode(back, "/GUI/quizAdminPage.fxml");
     }
 
     @FXML
@@ -63,7 +65,7 @@ public class QuizDetailsPage {
         assert rankingGrid != null : "fx:id=\"rankingGrid\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
         assert sumQuestions != null : "fx:id=\"sumQuestions\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
         assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
-
+        update();
     }
 
     void update() {
@@ -79,10 +81,5 @@ public class QuizDetailsPage {
             rankingGrid.addRow(i, GUIFactory.basicText(teamsSorted.next().getTeamName()));
             i++;
         }
-    }
-
-    void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-        update();
     }
 }

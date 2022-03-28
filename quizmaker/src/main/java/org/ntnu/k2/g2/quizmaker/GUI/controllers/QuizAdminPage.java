@@ -14,18 +14,13 @@ import java.awt.Desktop;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
-import org.ntnu.k2.g2.quizmaker.UserData.ResultSheet;
 
 public class QuizAdminPage {
 
@@ -71,7 +66,7 @@ public class QuizAdminPage {
     @FXML
     private Text errorMsg;
 
-    private Quiz quiz;
+    private Quiz quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onChangeState(ActionEvent event) {
@@ -82,29 +77,24 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onBack(ActionEvent event) throws IOException {
+    void onBack(ActionEvent event) {
         //if check if is quiz is archived or active
         String path = "/GUI/listArchivedQuizzesPage.fxml";
 
         if (quiz.isActive()) {
-            path = "/GUI/listActiveQuizzesPage.fxml";
+            path = "/GUI/listQuizzesPage.fxml";
         }
         GUI.setSceneFromNode(back, path);
     }
 
     @FXML
-    void onDetails(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(GUIFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
-        Parent root = GUI.checkFXMLLoader(loader);
-        QuizDetailsPage quizDetailsPage = loader.getController();
-        quizDetailsPage.setQuiz(quiz);
-        Stage stage = (Stage) details.getScene().getWindow();
-        stage.setScene(new Scene(root));
+    void onDetails(ActionEvent event) {
+        QuizHandlerSingelton.setQuiz(quiz);
+        GUI.setSceneFromNode(details, "/GUI/quizDetailsPage.fxml");
     }
 
     @FXML
-    void onEditQuestion(ActionEvent event) throws IOException {
+    void onEditQuestion(ActionEvent event) {
         GUI.setSceneFromNode(editQuestions, "/GUI/questionEditorPage.fxml");
     }
 
@@ -134,15 +124,8 @@ public class QuizAdminPage {
 
     @FXML
     void onExportQA(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(GUIFactory.class.getResource("/GUI/exportPage.fxml"));
-        Parent root = GUI.checkFXMLLoader(loader);
-        ExportPage exportQAPage = loader.getController();
-        exportQAPage.setQuiz(quiz);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-
+        QuizHandlerSingelton.setQuiz(quiz);
+        GUI.createNewStage(exportQA, "/GUI/exportPage.fxml");
     }
 
     /**
@@ -169,11 +152,6 @@ public class QuizAdminPage {
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-        update();
-    }
-
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
@@ -188,5 +166,6 @@ public class QuizAdminPage {
         assert retrieveScores != null : "fx:id=\"retrieveScores\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert sumQuestions != null : "fx:id=\"sumQuestions\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
+        update();
     }
 }

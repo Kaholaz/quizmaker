@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.Team;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 
 import java.io.IOException;
@@ -32,11 +33,11 @@ public class TeamEditorPage {
     @FXML // fx:id="vBox"
     private VBox vBox; // Value injected by FXMLLoader
 
-    private Quiz quiz;
+    private final Quiz quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
-        GUI.setSceneFromNode(back, "/GUI/listActiveQuizzesPage.fxml");
+        GUI.setSceneFromNode(back, "/GUI/listQuizzesPage.fxml");
     }
 
     @FXML
@@ -44,18 +45,11 @@ public class TeamEditorPage {
     void initialize() {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
         assert vBox != null : "fx:id=\"vBox\" was not injected: check your FXML file 'listArchivedQuizzesPage.fxml'.";
+        update();
     }
 
-    void updateQuizzes() {
+    void update() {
         HashMap<Integer, Team> teams = quiz.getTeams();
-
         teams.forEach((count, team) -> vBox.getChildren().add(GUIFactory.makeEditPaneForTeams(team, quiz)));
     }
-
-    void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-        updateQuizzes();
-    }
-
-
 }

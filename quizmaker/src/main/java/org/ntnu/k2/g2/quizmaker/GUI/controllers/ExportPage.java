@@ -13,6 +13,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
 import java.io.File;
 import java.net.URL;
@@ -39,7 +40,7 @@ public class ExportPage {
     @FXML
     private CheckBox c1, c2, c3, c4, c5, c6;
 
-    private Quiz quiz;
+    private final Quiz quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     private void onExport() {
@@ -79,9 +80,5 @@ public class ExportPage {
         assert export != null : "fx:id=\"export\" was not injected: check your FXML file 'exportPage.fxml'.";
         assert vBox != null : "fx:id=\"vBox\" was not injected: check your FXML file 'exportPage.fxml'.";
 
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
     }
 }

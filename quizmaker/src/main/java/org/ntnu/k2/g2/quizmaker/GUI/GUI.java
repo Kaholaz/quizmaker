@@ -10,7 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.GUI.controllers.ExportPage;
 import org.ntnu.k2.g2.quizmaker.GUI.controllers.QuizAdminPage;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,21 +26,28 @@ public class GUI extends Application {
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
         //primaryStage.initStyle(StageStyle.TRANSPARENT);
         //primaryStage.setResizable(false);
-
     }
 
     public static void setSceneFromNode(Node node, String path) {
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setScene(createScene(node, path));
+    }
+
+    public static Scene createScene(Node node, String path) {
         FXMLLoader loader = new FXMLLoader();
+        Scene prev = node.getScene();
         loader.setLocation(GUI.class.getResource(path));
+        Parent root = GUI.checkFXMLLoader(loader);
 
-        Parent root = checkFXMLLoader(loader);
+        Scene scene = new Scene(root, prev.getWidth(), prev.getHeight());
 
-        Scene scene = node.getScene();
-        Stage stage = (Stage) scene.getWindow();
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
-        stage.setMinHeight(scene.getHeight());
-        stage.setMinWidth(scene.getWidth());
+        return scene;
+    }
+
+    public static void createNewStage(Node node, String path) {
+        Stage stage = new Stage();
+        stage.setScene(createScene(node, path));
+        stage.show();
     }
 
     public static void setSceneFromStage(Stage stage, String path) {
@@ -51,7 +60,6 @@ public class GUI extends Application {
     }
 
     public static Parent checkFXMLLoader(FXMLLoader loader) {
-
         Parent root = null;
 
         try {
@@ -65,6 +73,7 @@ public class GUI extends Application {
         } catch (Exception e) {
             System.out.println("A different, unexpected exception was thrown while loading the FXML file...\n\n" + e.getClass() + ": " + e.getMessage());
         }
+
         return root;
     }
 
