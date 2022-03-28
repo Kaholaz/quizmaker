@@ -47,7 +47,7 @@ public class QuizResultManager {
      * @return True if the operation was successful, false if not.
      */
     public static boolean deleteResultSheet(Quiz quiz) {
-        /**
+        /*
          * TODO: make it possible to remove a result sheet
          */
         return false;
@@ -67,7 +67,7 @@ public class QuizResultManager {
 
         for (List row : quizResult) {
             String teamName = row.get(0).toString();
-            int score = (Integer)row.get(1);
+            int score = Integer.parseInt((String) row.get(1));
 
             Team team = quizRegister.newTeam(quiz);
             team.setTeamName(teamName);
