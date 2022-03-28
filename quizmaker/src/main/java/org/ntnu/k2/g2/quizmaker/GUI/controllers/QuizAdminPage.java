@@ -71,11 +71,16 @@ public class QuizAdminPage {
     @FXML
     void onChangeState(ActionEvent event) {
         QuizRegister quizRegister = new QuizRegister();
-        quiz.setActive(!quiz.isActive());
-        quizRegister.saveQuiz(quiz);
-        QuizHandlerSingelton.setQuiz(quiz);
-        GUI.setSceneFromNode(changeState, "/GUI/listQuizzesPage.fxml");
 
+        try {
+            quiz.setActive(!quiz.isActive());
+            quizRegister.saveQuiz(quiz);
+            QuizHandlerSingelton.setQuiz(quiz);
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorMsg.setText("Could not change Quiz state");
+        }
+        errorMsg.setText("Changed quiz state");
     }
 
     @FXML
@@ -109,13 +114,17 @@ public class QuizAdminPage {
             } catch (URISyntaxException | IOException e) {
                 e.printStackTrace();
                 errorMsg.setText("Could not load URL from quiz.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorMsg.setText("An unexpected error occurred");
             }
+            retrieveScores.setStyle("-fx-background-color: yellow;");
 
         } else {
             errorMsg.setText("Could not load default browser.");
+
         }
 
-        retrieveScores.setStyle("-fx-background-color: yellow;");
     }
 
     /**
@@ -145,7 +154,9 @@ public class QuizAdminPage {
             errorMsg.setText("Could not retrieve scores.");
         }
 
-        retrieveScores.setStyle("-fx-background-color: lightblue;");
+        update();
+        errorMsg.setStyle("-fx-backgroud-color: lightblue;");
+        errorMsg.setText("Import successfull");
     }
 
     void update() {
