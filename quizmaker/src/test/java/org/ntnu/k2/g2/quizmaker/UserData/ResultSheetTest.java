@@ -6,6 +6,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.testing.http.HttpTesting;
 import com.google.api.client.testing.http.MockHttpTransport;
 import junit.framework.TestCase;
+import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class ResultSheetTest extends TestCase {
     public void createMockSheetService() throws IOException {
         HttpTransport transport = new MockHttpTransport();
         HttpRequest request = transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
-        HttpResponse response = ((HttpRequest) request).execute();
+        HttpResponse response = request.execute();
     }
 
     public void testCreateSheet() throws IOException, GeneralSecurityException {
@@ -29,8 +30,9 @@ public class ResultSheetTest extends TestCase {
 
     public void testCreateSheetWithDatabase() throws IOException, GeneralSecurityException {
         QuizRegister quizRegister = new QuizRegister();
-        QuizResultManager quizResultManager = new QuizResultManager();
-        quizResultManager.createResultSheet(quizRegister.newQuiz().getId(),"TestCreateSheetWithDatabase");
+        Quiz quiz = quizRegister.newQuiz();
+        quiz.setName("TestCreateSheetWithDatabase");
+        QuizResultManager.createResultSheet(quiz);
     }
 
     public void testAppendRowValues() throws GeneralSecurityException, IOException {
@@ -38,7 +40,6 @@ public class ResultSheetTest extends TestCase {
         String sheetID ="11MG2HsYNGL5VFpdaRkGlvE8EqtqlYAI13IBF9fw2K8o";
 
         resultsheet.appendRowValues(sheetID,"Team XX", "9");
-
     }
 
     public void testAddRowValues() throws GeneralSecurityException, IOException {

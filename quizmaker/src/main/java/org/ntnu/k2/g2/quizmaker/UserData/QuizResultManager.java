@@ -10,36 +10,60 @@ import java.util.List;
 public class QuizResultManager {
 
     /**
-     * @param quizId
-     * @param quizName
+     * This method creates an associated result sheet for a quiz
+     * @param quiz The quiz to create the result sheet for.
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    public String createResultSheet(int quizId, String quizName) throws GeneralSecurityException, IOException {
-        QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.getQuiz(quizId);
-
+    public static String createResultSheet(Quiz quiz) throws GeneralSecurityException, IOException {
+        if (quiz.getSheetId() != null) {
+            return quiz.getSheetId();
+        }
         ResultSheet resultSheet = new ResultSheet();
 
-        String sheetId = resultSheet.createSheet(quizName);
-        resultSheet.addRowValues(sheetId,"Team Name", "Points","1");
+        String sheetId = resultSheet.createSheet(quiz.getName());
+        quiz.setSheetId(sheetId);
 
-        quiz.setUrl("https://docs.google.com/spreadsheets/d/" + sheetId);
-
-        quizRegister.saveQuiz(quiz);
         return sheetId;
     }
 
     /**
-     * Adds the results from the quiz result-sheet to the database
-     * @param quizResult List<List<Object>> list containing the results from the quiz fetched from result sheet
-     * @param quizId quiz id in the database
+     * Changes a name of quiz's associated result sheet. This sets the name of the sheet according to value returned by
+     * quiz.getName()
+     * @param quiz The quiz whose result sheet to change.
+     * @return True if the operation was successful, false if not.
      */
-    public void registerResults(int quizId, List<List<Object>> quizResult){
-        QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.getQuiz(quizId);
+    public static boolean changeResultSheetName(Quiz quiz) {
+        /*
+        TODO: Make it possible to change the name of a result sheet
+         */
+        return false;
+    }
 
-        quiz.getTeams().keySet().stream().forEach(teamId-> quizRegister.removeTeam(quiz, teamId));
+    /**
+     * Removes a quiz's associated result sheet. This removes the result sheet of the quiz based on what
+     * quiz.getSheetId() returns.
+     * @param quiz The quiz whose result sheet to delete.
+     * @return True if the operation was successful, false if not.
+     */
+    public static boolean deleteResultSheet(Quiz quiz) {
+        /*
+         * TODO: make it possible to remove a result sheet
+         */
+        return false;
+    }
+
+    /**
+     * Imports scores and teams from the result sheet where the users have entered their score.
+     * This method retrieves the scores with the Google API and
+     * @param quiz The quiz to import the results for.
+     */
+    public static Quiz importResults(Quiz quiz) throws GeneralSecurityException, IOException {
+        QuizRegister quizRegister = new QuizRegister();
+        ResultSheet resultSheet = new ResultSheet();
+
+        quiz.getTeams().keySet().stream().forEach(id -> quiz.getTeams().remove(id));
+        var quizResult = resultSheet.fetchResultSheetValues(quiz.getSheetId());
 
         for (List row : quizResult) {
             String teamName = row.get(0).toString();
@@ -49,7 +73,9 @@ public class QuizResultManager {
             team.setTeamName(teamName);
             team.setScore(score);
         }
+
         quizRegister.saveQuiz(quiz);
+        return quiz;
     }
 
 

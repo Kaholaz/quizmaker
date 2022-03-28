@@ -127,13 +127,12 @@ public class QuizAdminPage {
     }
 
     @FXML
-    void onRetrieveScores(ActionEvent event) throws IOException, GeneralSecurityException {
+    void onRetrieveScores(ActionEvent event) {
         ResultSheet resultSheet = new ResultSheet();
         QuizResultManager quizResultManager = new QuizResultManager();
 
         try {
-            List<List<Object>> update = resultSheet.fetchResultSheetValues(quiz.getUrl());
-            quizResultManager.registerResults(quiz.getId(), update);
+            quizResultManager.importResults(quiz);
         } catch (Exception e) {
             System.out.println("Failed to import blabla add gui");
         }

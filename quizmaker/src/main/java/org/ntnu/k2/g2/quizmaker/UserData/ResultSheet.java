@@ -31,7 +31,7 @@ public class ResultSheet {
      * Creates an empty spreadsheet. Should be called using QuizResultManager and
      * createResultSheet()  method.
      * @param sheetTitle Title of the spreadsheet
-     * @return Spreadsheet-id (used in sheet URL:https://docs.google.com/spreadsheets/d/SHEET_ID/edit#gid=0)
+     * @return Spreadsheet-id (used in sheet URL:https://docs.google.com/spreadsheets/d/SHEET_ID)
      * @throws IOException
      * @throws GeneralSecurityException
      */

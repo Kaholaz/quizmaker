@@ -19,12 +19,17 @@ public class QuizRegisterTest extends TestCase {
     }
 
     private static void deleteDatabase() {
+        QuizRegister quizRegister = new QuizRegister();
+        ArrayList<Quiz> quizzes = quizRegister.getQuizList();
+        for (Quiz quiz : quizzes) {
+            quizRegister.removeQuiz(quiz);
+        }
         QuizRegister.DatabaseConnection.getDbPath().delete();
     }
 
     private static void populateDatabase() {
         QuizRegister quizRegister = new QuizRegister();
-        Quiz testQuiz = quizRegister.newQuiz();
+        Quiz testQuiz = quizRegister.newQuiz(true);
 
         testQuiz.setName("Test Quiz");
 
@@ -102,7 +107,6 @@ public class QuizRegisterTest extends TestCase {
     public void testSaveQuiz() {
         QuizRegister quizRegister = new QuizRegister();
         Quiz quiz = quizRegister.getQuiz(1);
-        quiz.setUrl("Google.com");
         quiz.setActive(false);
         quiz.setName("Altered name");
 
@@ -203,7 +207,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testRemoveTeamNotInDatabaseReturnsFalse() {
         QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.newQuiz();
+        Quiz quiz = quizRegister.newQuiz(true);
 
         Team team = quizRegister.newTeam(quiz);
         quizRegister.removeTeam(quiz, team.getId());
@@ -213,7 +217,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testRemoveQuestionNotInDatabaseReturnsFalse() {
         QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.newQuiz();
+        Quiz quiz = quizRegister.newQuiz(true);
 
         Question question = quizRegister.newQuestion(quiz);
         quizRegister.removeTeam(quiz, question.getId());
@@ -223,7 +227,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testSaveTeamNotInDataBaseReturnsNull() {
         QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.newQuiz();
+        Quiz quiz = quizRegister.newQuiz(true);
 
         Team team = quizRegister.newTeam(quiz);
         quizRegister.removeTeam(quiz, team.getId());
@@ -233,7 +237,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testSaveQuestionNotInDataBaseReturnsNull() {
         QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.newQuiz();
+        Quiz quiz = quizRegister.newQuiz(true);
 
         Question question = quizRegister.newQuestion(quiz);
         quizRegister.removeQuestion(quiz, question.getId());
