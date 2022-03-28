@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane stylesheets="@css/clickable.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListActiveQuizzesPage">
+<BorderPane stylesheets="@css/clickable.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListQuizzesPage">
    <center>
         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/clickable.css" vbarPolicy="ALWAYS">
             <content>
@@ -21,7 +21,7 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" />
             <Pane prefHeight="0.0" prefWidth="200.0" stylesheets="@css/menu.css" HBox.hgrow="ALWAYS" />
-            <Button fx:id="archive" mnemonicParsing="false" onAction="#onArchive" stylesheets="@css/main.css" text="Archive" />
+            <Button fx:id="switchStatus" mnemonicParsing="false" onAction="#onSwitchStatus" stylesheets="@css/main.css" />
             <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" stylesheets="@css/menu.css" text="Back" />
          </children>
       </HBox>

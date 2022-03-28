@@ -6,24 +6,19 @@ package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.Team;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuizDetailsPage {
 
@@ -54,11 +49,11 @@ public class QuizDetailsPage {
     @FXML // fx:id="lastChange"
     private Text lastChanged; // Value injected by FXMLLoader
 
-    private Quiz quiz;
+    private final Quiz quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
-        ListPagesFactory.goToAdminPage(back, quiz);
+        GUI.setSceneFromNode(back, "/GUI/quizAdminPage.fxml");
     }
 
     @FXML
@@ -70,7 +65,7 @@ public class QuizDetailsPage {
         assert rankingGrid != null : "fx:id=\"rankingGrid\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
         assert sumQuestions != null : "fx:id=\"sumQuestions\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
         assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
-
+        update();
     }
 
     void update() {
@@ -83,13 +78,8 @@ public class QuizDetailsPage {
         int i = 0;
 
         while (teamsSorted.hasNext()) {
-            rankingGrid.addRow(i, new Text(teamsSorted.next().getTeamName()));
+            rankingGrid.addRow(i, GUIFactory.basicText(teamsSorted.next().getTeamName()));
             i++;
         }
-    }
-
-    void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-        update();
     }
 }

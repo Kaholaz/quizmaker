@@ -1,6 +1,6 @@
 
 /**
- * Sample Skeleton for 'listActiveQuizzesPage.fxml' Controller Class
+ * Sample Skeleton for 'listQuizzesPage.fxml' Controller Class
  */
 
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
@@ -13,13 +13,14 @@ import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ListActiveQuizzesPage {
+public class ListQuizzesPage {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -39,11 +40,13 @@ public class ListActiveQuizzesPage {
     @FXML // fx:id="scrollPane"
     private ScrollPane scrollPane; // Value injected by FXMLLoader
 
-    private int id;
+    @FXML // fx:id="switchStatus"
+    private Button switchStatus; // Value injected by FXMLLoader
 
     @FXML
-    void onArchive(ActionEvent event) {
-        GUI.setSceneFromNode(archive, "/GUI/listArchivedQuizzesPage.fxml");
+    void onSwitchStatus(ActionEvent event) {
+        QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
+        update();
     }
 
     @FXML
@@ -54,18 +57,25 @@ public class ListActiveQuizzesPage {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert archive != null : "fx:id=\"archive\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
-        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
-        assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listActiveQuizzesPage.fxml'.";
+        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listQuizzesPage.fxml'.";
+        assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listQuizzesPage.fxml'.";
 
-        this.updateQuizzes();
+        this.update();
     }
 
-    void updateQuizzes() {
+    void update() {
         QuizRegister quizRegister = new QuizRegister();
-        ArrayList<Quiz> quizzes = quizRegister.getActiveQuizzes();
+        ArrayList<Quiz> quizzes;
 
-        quizzes.forEach(quiz -> vBox.getChildren().add(ListPagesFactory.makeQuestionv2(quiz)));
+        if (QuizHandlerSingelton.isActive()) {
+            quizzes = quizRegister.getActiveQuizzes();
+            switchStatus.setText("Archived");
+        } else {
+            switchStatus.setText("Active");
+            quizzes = quizRegister.getArchivedQuizzes();
+        }
+        vBox.getChildren().clear();
+        quizzes.forEach(quiz -> vBox.getChildren().add(GUIFactory.listQuestionItem(quiz)));
 
     }
 }
