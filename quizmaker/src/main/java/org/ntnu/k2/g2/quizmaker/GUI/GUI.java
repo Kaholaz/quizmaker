@@ -37,6 +37,8 @@ public class GUI extends Application {
         Stage stage = (Stage) scene.getWindow();
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
+        stage.setMinHeight(scene.getHeight());
+        stage.setMinWidth(scene.getWidth());
     }
 
     public static void setSceneFromStage(Stage stage, String path) {
