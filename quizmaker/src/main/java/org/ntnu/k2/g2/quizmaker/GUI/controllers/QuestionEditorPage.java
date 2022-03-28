@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'quizCreatorPage.fxml' Controller Class
- */
-
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import java.net.URL;
@@ -10,7 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import org.ntnu.k2.g2.quizmaker.Data.Question;
+import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+
+import static org.ntnu.k2.g2.quizmaker.GUI.factory.QuestionEditorFactory.createQuestionPane;
 
 public class QuestionEditorPage {
 
@@ -53,7 +54,9 @@ public class QuestionEditorPage {
 
     @FXML
     void onBtnCreateNewQuestionClick(ActionEvent event) {
-        GUI.setSceneFromNode(save, "/GUI/questionEditorPage.fxml");
+        QuizRegister register = new QuizRegister();
+        Question newQuestion = register.newQuestion(quiz);
+        vBox.getChildren().add(createQuestionPane(newQuestion));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -61,7 +64,12 @@ public class QuestionEditorPage {
         assert save != null : "fx:id=\"save\" was not injected: check your FXML file 'quizCreatorPage.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'quizCreatorPage.fxml'.";
         assert vBox != null : "fx:id=\"vBox\" was not injected: check your FXML file 'quizCreatorPage.fxml'.";
-
+        loadQuestionsToVBox();
     }
 
+    private void loadQuestionsToVBox() {
+        quiz.getQuestions().forEach((id, question) -> {
+            vBox.getChildren().add(createQuestionPane(question));
+        });
+    }
 }

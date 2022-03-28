@@ -56,7 +56,7 @@ public class QuizAdminPage {
     @FXML // fx:id="sumTeams"
     private Text sumTeams; // Value injected by FXMLLoader
 
-    private Quiz quiz;
+    private static Quiz quiz;
 
     @FXML
     void editScores(ActionEvent event) {
@@ -128,7 +128,7 @@ public class QuizAdminPage {
     }
 
     public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+        QuizAdminPage.quiz = quiz;
         update();
     }
 
