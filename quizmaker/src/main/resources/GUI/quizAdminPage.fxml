@@ -112,14 +112,4 @@
          </children>
       </HBox>
    </top>
-   <bottom>
-      <Text fx:id="errorMsg" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="TOP_CENTER">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets bottom="10.0" />
-         </BorderPane.margin>
-      </Text>
-   </bottom>
 </BorderPane>

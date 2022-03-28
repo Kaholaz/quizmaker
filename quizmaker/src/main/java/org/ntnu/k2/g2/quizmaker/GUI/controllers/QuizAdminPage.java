@@ -64,10 +64,6 @@ public class QuizAdminPage {
     @FXML // fx:id="sumQuestions"
     private Text sumQuestions; // Value injected by FXMLLoader
 
-
-    @FXML // fx:id="errorMsg"
-    private Text errorMsg; // Value injected by FXMLLoader
-
     @FXML // fx:id="sumTeams"
     private Text sumTeams; // Value injected by FXMLLoader
 
@@ -134,20 +130,13 @@ public class QuizAdminPage {
     void onRetrieveScores(ActionEvent event) throws IOException, GeneralSecurityException {
         ResultSheet resultSheet = new ResultSheet();
         QuizResultManager quizResultManager = new QuizResultManager();
-        String errormsg = "Importering vellykket";
-        String style = "-fx-text-fill: green;";
 
         try {
             List<List<Object>> update = resultSheet.fetchResultSheetValues(quiz.getUrl());
             quizResultManager.registerResults(quiz.getId(), update);
         } catch (Exception e) {
-            errormsg = "Importering feilet";
-            style = "-fx-text-fill: red";
+            System.out.println("Failed to import blabla add gui");
         }
-
-        errorMsg.setText(errormsg);
-        errorMsg.setStyle(style);
-
 
         this.update();
     }
