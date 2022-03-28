@@ -22,6 +22,8 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
 
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
+
+
         //primaryStage.initStyle(StageStyle.TRANSPARENT);
         //primaryStage.setResizable(false);
 
@@ -37,15 +39,17 @@ public class GUI extends Application {
         Stage stage = (Stage) scene.getWindow();
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
-        stage.setMinHeight(scene.getHeight());
-        stage.setMinWidth(scene.getWidth());
+
     }
 
     public static void setSceneFromStage(Stage stage, String path) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
         Parent root = checkFXMLLoader(loader);
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setMinHeight(400);
+        stage.setMinWidth(600);
         stage.show();
 
     }
