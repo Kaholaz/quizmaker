@@ -86,7 +86,7 @@ public class ResultSheet {
     }
 
     /**
-     * Counts number of filled rows in spreadsheet
+     * Counts number of filled rows in spreadsheet. Includes first row.
      * @param sheetId spreadsheet id
      * @return number of filled rows
      * @throws IOException

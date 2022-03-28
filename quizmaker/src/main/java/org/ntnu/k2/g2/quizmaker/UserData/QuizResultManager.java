@@ -10,7 +10,6 @@ import java.util.List;
 public class QuizResultManager {
 
     /**
-     *
      * @param quizId
      * @param quizName
      * @throws GeneralSecurityException
@@ -23,10 +22,11 @@ public class QuizResultManager {
         ResultSheet resultSheet = new ResultSheet();
 
         String sheetId = resultSheet.createSheet(quizName);
+        resultSheet.addRowValues(sheetId,"Team Name", "Points","1");
+
         quiz.setUrl("https://docs.google.com/spreadsheets/d/" + sheetId);
 
         quizRegister.saveQuiz(quiz);
-
         return sheetId;
     }
 
@@ -43,7 +43,7 @@ public class QuizResultManager {
 
         for (List row : quizResult) {
             String teamName = row.get(0).toString();
-            int score = (Integer)row.get(1);
+            int score = Integer.parseInt((String) row.get(1));
 
             Team team = quizRegister.newTeam(quiz);
             team.setTeamName(teamName);
