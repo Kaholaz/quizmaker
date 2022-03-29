@@ -12,8 +12,11 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 public class ExportPage {
@@ -34,7 +37,7 @@ public class ExportPage {
     private Text exportMsg;
 
     @FXML
-    private CheckBox c1, c2, c3, c4, c5, c6, c7;
+    private CheckBox c1, c2, c3, c4, c5, c6;
 
     private Quiz quiz;
 
@@ -42,8 +45,33 @@ public class ExportPage {
     private void onExport() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Stage stage = (Stage) export.getScene().getWindow();
-        directoryChooser.showDialog(stage);
-        exportMsg.setText("Export successful");
+        File file = directoryChooser.showDialog(stage);
+        String msg = "Export successful";
+
+        try {
+            if (c1.isSelected()) {
+                quiz.exportAnswersheetWithoutQuestions(file.toString());
+            }
+            if (c2.isSelected()) {
+                quiz.exportAnswersheetWithQuestions(file.toString());
+            }
+            if (c3.isSelected()) {
+                quiz.exportAnswersheetWithoutQuestions(file.toString());
+            }
+            if (c4.isSelected()) {
+                quiz.exportAnswersheetWithoutQuestions(file.toString());
+            }
+            if (c5.isSelected()) {
+                quiz.exportAnswersWithQuestions(file.toString());
+            }
+            if (c6.isSelected()) {
+                quiz.exportAnswersWithoutQuestions(file.toString());
+            }
+        } catch (Exception e) {
+            msg = "Export Unsuccessful";
+        }
+
+        exportMsg.setText(msg);
 
     }
 

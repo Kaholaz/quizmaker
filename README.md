@@ -1,11 +1,9 @@
-#GITLAB
+# GITLAB
 
 ```mermaid
 graph TD
    a((main))
    b((dev))
-   
-   e((gui/.../issue-##))
    
    
    h((bug/.../issue-##))
@@ -16,7 +14,6 @@ graph TD
    b---h
    b---i
    b---j
-   b---e
 ```
 
 

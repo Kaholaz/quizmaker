@@ -3,6 +3,7 @@ package org.ntnu.k2.g2.quizmaker.Data;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuizRegisterTest extends TestCase {
     /**
@@ -18,7 +19,7 @@ public class QuizRegisterTest extends TestCase {
     }
 
     private static void deleteDatabase() {
-        QuizRegister.DataBase.getDbPath().delete();
+        QuizRegister.DatabaseConnection.getDbPath().delete();
     }
 
     private static void populateDatabase() {
@@ -56,6 +57,7 @@ public class QuizRegisterTest extends TestCase {
         assertEquals(5, testQuiz.getQuestions().size());
         assertEquals(3, testQuiz.getTeams().size());
         assertEquals(1, testQuiz.getId());
+        assertTrue(testQuiz.isActive());
     }
 
     public void testGetQuizReturnsNullOnInvalidId() {
@@ -95,6 +97,46 @@ public class QuizRegisterTest extends TestCase {
         Question question = quizRegister.getQuestion(100);
 
         assertNull(question);
+    }
+
+    public void testSaveQuiz() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz quiz = quizRegister.getQuiz(1);
+        quiz.setUrl("Google.com");
+        quiz.setActive(false);
+        quiz.setName("Altered name");
+
+        Quiz returnQuiz = quizRegister.saveQuiz(quiz);
+        Quiz savedQuiz = quizRegister.getQuiz(1);
+
+        assertEquals(quiz, returnQuiz);
+        assertEquals(quiz, savedQuiz);
+    }
+
+    public void testSaveTeam() {
+        QuizRegister quizRegister = new QuizRegister();
+        Team team = quizRegister.getTeam(3);
+        team.setScore(69);
+        team.setTeamName("Altered team name");
+
+        Team returnTeam = quizRegister.saveTeam(team);
+        Team savedTeam = quizRegister.getTeam(3);
+
+        assertEquals(team, returnTeam);
+        assertEquals(team, savedTeam);
+    }
+
+    public void testSaveQuestion() {
+        QuizRegister quizRegister = new QuizRegister();
+        Question question = quizRegister.getQuestion(4);
+        question.setQuestion("New Question");
+        question.setAnswer("New Answer");
+
+        Question returnQuestion = quizRegister.saveQuestion(question);
+        Question savedQuestion = quizRegister.getQuestion(4);
+
+        assertEquals(question, returnQuestion);
+        assertEquals(question, savedQuestion);
     }
 
     public void testSaveQuizAltersTeams() {
@@ -199,6 +241,20 @@ public class QuizRegisterTest extends TestCase {
         assertNull(quizRegister.saveQuestion(question));
     }
 
+    public void testGetArchivedQuizzes() {
+        QuizRegister quizRegister = new QuizRegister();
+        quizRegister.populateDatabase(1,2,3);
+
+        Quiz quiz = quizRegister.getQuiz(2);
+        System.out.println(quiz);
+        quiz.setActive(false);
+
+        quizRegister.saveQuiz(quiz);
+
+        assertEquals(List.of(quizRegister.getQuiz(1)),quizRegister.getActiveQuizzes());
+        assertEquals(List.of(quizRegister.getQuiz(2)), quizRegister.getArchivedQuizzes());
+    }
+
     public void testPopulateDatabase() {
         QuizRegister quizRegister= new QuizRegister();
         quizRegister.populateDatabase(1, 2, 3);
@@ -216,5 +272,15 @@ public class QuizRegisterTest extends TestCase {
 
         assertEquals("Team 2", quizzes.get(1).getTeams().get(5).getTeamName());
         assertEquals(2, quizzes.get(1).getTeams().get(5).getScore());
+    }
+
+    public void testPdfExport() {
+        QuizRegister quizRegister = new QuizRegister();
+        Quiz testQuiz = quizRegister.getQuiz(1);
+
+        testQuiz.exportAnswersheetWithQuestions("src/main/resources");
+        testQuiz.exportAnswersheetWithoutQuestions("src/main/resources");
+        testQuiz.exportAnswersWithQuestions("src/main/resources");
+        testQuiz.exportAnswersWithoutQuestions("src/main/resources");
     }
 }

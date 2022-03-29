@@ -16,6 +16,15 @@ public class Team {
      */
     protected Team(){}
 
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", teamName='" + teamName + '\'' +
+                ", score=" + score +
+                '}';
+    }
+
     /**
      * Checks the equality of two teams. All parameters are considered.
      * @param o The object to compare to.
