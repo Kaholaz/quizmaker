@@ -1,6 +1,5 @@
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

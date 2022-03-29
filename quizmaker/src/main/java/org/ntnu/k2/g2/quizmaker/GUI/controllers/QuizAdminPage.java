@@ -1,19 +1,22 @@
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.util.ResourceBundle;
+import java.awt.Desktop;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.ListPagesFactory;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
 
 public class QuizAdminPage {
 
@@ -35,9 +38,6 @@ public class QuizAdminPage {
     @FXML // fx:id="editQuestions"
     private Button editQuestions; // Value injected by FXMLLoader
 
-    @FXML // fx:id="editScores"
-    private Button editScores; // Value injected by FXMLLoader
-
     @FXML // fx:id="editTeams"
     private Button editTeams; // Value injected by FXMLLoader
 
@@ -56,11 +56,27 @@ public class QuizAdminPage {
     @FXML // fx:id="sumTeams"
     private Text sumTeams; // Value injected by FXMLLoader
 
-    private static Quiz quiz;
+    @FXML
+    private Button changeState;
 
     @FXML
-    void editScores(ActionEvent event) {
+    private Text errorMsg;
 
+    private Quiz quiz = QuizHandlerSingelton.getQuiz();
+
+    @FXML
+    void onChangeState(ActionEvent event) {
+        QuizRegister quizRegister = new QuizRegister();
+
+        try {
+            quiz.setActive(!quiz.isActive());
+            quizRegister.saveQuiz(quiz);
+            QuizHandlerSingelton.setQuiz(quiz);
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorMsg.setText("Could not change Quiz state");
+        }
+        GUI.setSceneFromNode(errorMsg, "/GUI/listQuizzesPage.fxml");
     }
 
     @FXML
@@ -69,67 +85,80 @@ public class QuizAdminPage {
         String path = "/GUI/listArchivedQuizzesPage.fxml";
 
         if (quiz.isActive()) {
-            path = "/GUI/listActiveQuizzesPage.fxml";
+            path = "/GUI/listQuizzesPage.fxml";
         }
         GUI.setSceneFromNode(back, path);
     }
 
     @FXML
-    void onDetails(ActionEvent event){
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ListPagesFactory.class.getResource("/GUI/quizDetailsPage.fxml"));
-        Parent root = GUI.checkFXMLLoader(loader);
-        QuizDetailsPage quizDetailsPage = loader.getController();
-        quizDetailsPage.setQuiz(quiz);
-        Stage stage = (Stage) details.getScene().getWindow();
-        stage.setScene(new Scene(root));
+    void onDetails(ActionEvent event) {
+        QuizHandlerSingelton.setQuiz(quiz);
+        GUI.setSceneFromNode(details, "/GUI/quizDetailsPage.fxml");
     }
 
     @FXML
-    void onEditQuestion(ActionEvent event){
-        QuestionEditorPage.returnPage = "/GUI/quizAdminPage.fxml";
+    void onEditQuestion(ActionEvent event) {
         GUI.setSceneFromNode(editQuestions, "/GUI/questionEditorPage.fxml");
     }
 
     @FXML
     void onEditTeams(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/teamEditorPage.fxml"));
-        Parent root = GUI.checkFXMLLoader(loader);
-        TeamEditorPage teamEditorPage = loader.getController();
-        teamEditorPage.setQuiz(quiz);
-        Scene scene = details.getScene();
-        Stage stage = (Stage) scene.getWindow();
-        stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                Desktop.getDesktop().browse(new URI(quiz.getUrl()));
+
+            } catch (URISyntaxException | IOException e) {
+                e.printStackTrace();
+                errorMsg.setText("Could not load URL from quiz.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorMsg.setText("An unexpected error occurred");
+            }
+            retrieveScores.setStyle("-fx-background-color: yellow;");
+
+        } else {
+            errorMsg.setText("Could not load default browser.");
+
+        }
+
     }
+
+    /**
+     * Opens new Stage and sets quiz by the controller on the page.
+     *
+     * @param event Action event
+     */
 
     @FXML
     void onExportQA(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ListPagesFactory.class.getResource("/GUI/exportPage.fxml"));
-        Parent root = GUI.checkFXMLLoader(loader);
-        ExportPage exportQAPage = loader.getController();
-        exportQAPage.setQuiz(quiz);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-
+        QuizHandlerSingelton.setQuiz(quiz);
+        GUI.createNewStage(exportQA, "/GUI/exportPage.fxml");
     }
+
+    /**
+     * @param event
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
 
     @FXML
     void onRetrieveScores(ActionEvent event) {
-        //Not yet implemented
+        try {
+            QuizResultManager.importResults(quiz);
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorMsg.setText("Could not retrieve scores.");
+        }
+
+        update();
+        errorMsg.setStyle("-fx-backgroud-color: lightblue;");
+        errorMsg.setText("Import successfull");
     }
 
     void update() {
         quizName.setText(quiz.getName());
         sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
-    }
-
-    public void setQuiz(Quiz quiz) {
-        QuizAdminPage.quiz = quiz;
-        update();
     }
 
     @FXML
@@ -139,13 +168,12 @@ public class QuizAdminPage {
         assert details != null : "fx:id=\"details\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert difficulty != null : "fx:id=\"difficulty\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert editQuestions != null : "fx:id=\"editQuestions\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
-        assert editScores != null : "fx:id=\"editScores\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert editTeams != null : "fx:id=\"editTeams\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert exportQA != null : "fx:id=\"exportQA\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert quizName != null : "fx:id=\"quizName\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert retrieveScores != null : "fx:id=\"retrieveScores\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert sumQuestions != null : "fx:id=\"sumQuestions\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
+        update();
     }
-
 }

@@ -72,7 +72,7 @@
                </HBox.margin>
                <children>
                   <Pane prefHeight="320.0" prefWidth="5.0" HBox.hgrow="ALWAYS" />
-                  <GridPane alignment="CENTER" prefHeight="220.0" prefWidth="181.0" stylesheets="@css/clickable.css" HBox.hgrow="ALWAYS">
+                  <GridPane alignment="CENTER" prefHeight="256.0" prefWidth="178.0" stylesheets="@css/clickable.css" HBox.hgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -84,12 +84,12 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit questions">
+                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" prefHeight="192.0" prefWidth="176.0" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit questions">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin></Button>
-                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit teams" GridPane.rowIndex="1" />
-                        <Button fx:id="editScores" mnemonicParsing="false" onAction="#editScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit scores" GridPane.rowIndex="2" />
+                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="button-big" stylesheets="@css/clickable.css" text="Edit teams and score" GridPane.rowIndex="1" />
+                        <Button fx:id="changeState" mnemonicParsing="false" onAction="#onChangeState" styleClass="button-big" stylesheets="@css/clickable.css" text="Send to archive/active" GridPane.rowIndex="2" />
                         <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Retrieve scores" GridPane.rowIndex="3" />
                         <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" styleClass="button-big" stylesheets="@css/clickable.css" text="Export Q&amp;A" GridPane.rowIndex="4" />
                      </children>
@@ -112,4 +112,13 @@
          </children>
       </HBox>
    </top>
+   <bottom>
+      <Text fx:id="errorMsg" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="TOP_CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+   </bottom>
 </BorderPane>
