@@ -89,17 +89,6 @@ public class QuizRegister {
     }
 
     /**
-     * Saves an ArrayList of quizzes and all changes to its contents to the database.
-     *
-     * @param quizzes The quizzes to save to the database.
-     * @return An ArrayList of all quizzes that were properly saved.
-     */
-    public ArrayList<Quiz> saveQuizzes(ArrayList<Quiz> quizzes) {
-        // Save all quizzes that were properly saved
-        return new ArrayList<>(quizzes.stream().map(this::saveQuiz).filter(Objects::nonNull).toList());
-    }
-
-    /**
      * Saves a team to the database. To use this method, the team object should already be an entry in the database.
      * If it is not, one should instead use the method newTeam to create a new team with a relation to a quiz.
      *
