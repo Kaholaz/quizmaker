@@ -1,22 +1,11 @@
 package org.ntnu.k2.g2.quizmaker.GUI;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.GUI.controllers.ExportPage;
-import org.ntnu.k2.g2.quizmaker.GUI.controllers.QuizAdminPage;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
 
 public class GUI extends Application {
 
@@ -24,8 +13,6 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
 
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
-        //primaryStage.setResizable(false);
     }
 
     public static void setSceneFromNode(Node node, String path) {
@@ -40,7 +27,6 @@ public class GUI extends Application {
         Parent root = GUI.checkFXMLLoader(loader);
 
         Scene scene = new Scene(root, prev.getWidth(), prev.getHeight());
-
         return scene;
     }
 
@@ -54,6 +40,18 @@ public class GUI extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
         Parent root = checkFXMLLoader(loader);
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
+
+    public static void setSceneFromRescource(String currentPath, String path) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(GUI.class.getResource(path));
+        Parent root = checkFXMLLoader(loader);
+        FXMLLoader prev = new FXMLLoader();
+        prev.setLocation(GUI.class.getResource(currentPath));
+        Stage stage = (Stage) GUI.checkFXMLLoader(prev).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
 

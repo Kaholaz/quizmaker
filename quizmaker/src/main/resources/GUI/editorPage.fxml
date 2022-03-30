@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.TeamEditorPage">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.EditorPage">
    <center>
         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/clickable.css" vbarPolicy="ALWAYS">
             <content>
@@ -21,7 +21,8 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" />
             <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" styleClass="button-small" stylesheets="@css/main.css" text="Back" />
+            <Button fx:id="save" mnemonicParsing="false" onAction="#onSave" prefHeight="27.0" prefWidth="57.0" text="Save" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" text="Back" />
          </children>
       </HBox>
    </top>
