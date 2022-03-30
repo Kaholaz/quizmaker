@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
 
 public class CreateNewQuizPage {
@@ -35,7 +36,7 @@ public class CreateNewQuizPage {
         // TODO: Check if a quiz with the name already exists
 
         // Set the states for the question editor page
-        QuestionEditorPage.quiz = createdQuiz;
+        QuizHandlerSingelton.setQuiz(createdQuiz);
         QuestionEditorPage.returnPage = "/GUI/mainPage.fxml";
 
         // Redirect to question editor

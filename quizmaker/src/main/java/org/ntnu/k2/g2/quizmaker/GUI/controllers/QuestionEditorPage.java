@@ -15,17 +15,11 @@ import org.ntnu.k2.g2.quizmaker.Data.Question;
 import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
 import static org.ntnu.k2.g2.quizmaker.GUI.factory.QuestionEditorFactory.createQuestionPane;
 
 public class QuestionEditorPage {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
     @FXML // fx:id="archive"
     private Button save; // Value injected by FXMLLoader
 
@@ -34,14 +28,6 @@ public class QuestionEditorPage {
 
     @FXML // fx:id="vBox"
     private VBox vBox; // Value injected by FXMLLoader
-
-    // This is like a "state". This property can be set to the quiz that should be displayed. The question editor
-    // will show all questions from this quiz. The quiz state can be set whenever in whichever file and is implemented
-    // so that you can choose which quiz to render before directing the user to the quiz creator page.
-    // For example... If someone clicks the "Create New Quiz" button, a new Quiz should be
-    // created, then this variable should be set to that quiz instance, and then finally the user can be redirected
-    // to this page.
-    public static Quiz quiz;
 
     // This is also a "state". This is the page that the back button will return to.
     // TODO: Implement checks when setting to this variable
@@ -59,7 +45,7 @@ public class QuestionEditorPage {
             String newQuestion = questionTextArea.getText();
             String newAnswer = answerTextArea.getText();
 
-            Question questionToChange = (Question) quiz.getQuestions().values().toArray()[i];
+            Question questionToChange = (Question) QuizHandlerSingelton.getQuiz().getQuestions().values().toArray()[i];
             questionToChange.setQuestion(newQuestion);
             questionToChange.setAnswer(newAnswer);
         }
@@ -73,7 +59,7 @@ public class QuestionEditorPage {
     @FXML
     void onBtnCreateNewQuestionClick(ActionEvent event) {
         QuizRegister register = new QuizRegister();
-        Question newQuestion = register.newQuestion(quiz);
+        Question newQuestion = register.newQuestion(QuizHandlerSingelton.getQuiz());
         vBox.getChildren().add(createQuestionPane(newQuestion));
     }
 
@@ -86,7 +72,7 @@ public class QuestionEditorPage {
     }
 
     private void loadQuestionsToVBox() {
-        quiz.getQuestions().forEach((id, question) -> {
+        QuizHandlerSingelton.getQuiz().getQuestions().forEach((id, question) -> {
             vBox.getChildren().add(createQuestionPane(question));
         });
     }
