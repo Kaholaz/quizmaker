@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class TeamEditorPage {
+public class EditorPage {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
