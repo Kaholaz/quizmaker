@@ -4,15 +4,12 @@ import org.ntnu.k2.g2.quizmaker.Data.Quiz;
 
 public class QuizHandlerSingelton {
     private static Quiz currentQuiz;
-    private static Quiz previousQuiz;
     private static boolean active;
 
     private QuizHandlerSingelton() {
-
     }
 
     public static void setQuiz(Quiz quiz) {
-        previousQuiz = currentQuiz;
         active = quiz.isActive();
         currentQuiz = quiz;
     }
@@ -29,16 +26,8 @@ public class QuizHandlerSingelton {
         QuizHandlerSingelton.active = active;
     }
 
-    public static Quiz getPreviousQuiz() {
-        return previousQuiz;
-    }
     public static void clear() {
-        previousQuiz = null;
         currentQuiz = null;
-
+        active = true;
     }
-
-
-
-
 }

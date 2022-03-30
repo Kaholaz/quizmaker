@@ -34,7 +34,6 @@ public class CreateNewQuizPage {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnSubmit != null : "fx:id=\"btnSubmit\" was not injected: check your FXML file 'createNewQuizPage.fxml'.";
-
     }
 
 }

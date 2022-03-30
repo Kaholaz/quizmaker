@@ -21,7 +21,8 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" />
             <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" styleClass="button-small" stylesheets="@css/main.css" text="Back" />
+            <Button fx:id="save" mnemonicParsing="false" onAction="#onSave" prefHeight="27.0" prefWidth="57.0" text="Save" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" text="Back" />
          </children>
       </HBox>
    </top>

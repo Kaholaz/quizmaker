@@ -57,7 +57,12 @@
                   </GridPane>
                   <HBox fillHeight="false" prefHeight="44.0" prefWidth="271.0">
                      <children>
-                        <Pane prefHeight="121.0" prefWidth="152.0" />
+                        <Pane prefHeight="121.0" prefWidth="152.0" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="delete" mnemonicParsing="false" onAction="#onDelete" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Delete" textFill="#fc0303">
+                           <HBox.margin>
+                              <Insets right="20.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                   </HBox>
                </children>

@@ -88,7 +88,7 @@ public class QuizAdminPage {
         if (quiz.isActive()) {
             path = "/GUI/listQuizzesPage.fxml";
         }
-        GUI.setSceneFromNode(back, path);
+        GUI.setSceneFromNode(errorMsg, path);
     }
 
     @FXML
@@ -152,7 +152,7 @@ public class QuizAdminPage {
         }
 
         update();
-        errorMsg.setStyle("-fx-backgroud-color: lightblue;");
+        retrieveScores.setStyle("-fx-backgroud-color: lightblue;");
         errorMsg.setText("Import successfull");
     }
 
