@@ -1,16 +1,22 @@
-/**
- * Sample Skeleton for 'quizCreatorPage.fxml' Controller Class
- */
-
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import org.ntnu.k2.g2.quizmaker.Data.Question;
+import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+
+import static org.ntnu.k2.g2.quizmaker.GUI.factory.QuestionEditorFactory.createQuestionPane;
 
 public class QuestionEditorPage {
 
@@ -29,19 +35,46 @@ public class QuestionEditorPage {
     @FXML // fx:id="vBox"
     private VBox vBox; // Value injected by FXMLLoader
 
+    // This is like a "state". This property can be set to the quiz that should be displayed. The question editor
+    // will show all questions from this quiz. The quiz state can be set whenever in whichever file and is implemented
+    // so that you can choose which quiz to render before directing the user to the quiz creator page.
+    // For example... If someone clicks the "Create New Quiz" button, a new Quiz should be
+    // created, then this variable should be set to that quiz instance, and then finally the user can be redirected
+    // to this page.
+    public static Quiz quiz;
+
+    // This is also a "state". This is the page that the back button will return to.
+    // TODO: Implement checks when setting to this variable
+    public static String returnPage = "/GUI/mainPage.fxml";
+
     @FXML
     void onSave(ActionEvent event) {
+        for (int i = 0; i < vBox.getChildren().size(); i++) {
+            Pane questionPane = (Pane) vBox.getChildren().get(i);
+            Set<Node> textAreas = questionPane.lookupAll("TextArea");
 
+            TextArea questionTextArea = (TextArea) textAreas.toArray()[0];
+            TextArea answerTextArea = (TextArea) textAreas.toArray()[1];
+
+            String newQuestion = questionTextArea.getText();
+            String newAnswer = answerTextArea.getText();
+
+            Question questionToChange = (Question) quiz.getQuestions().values().toArray()[i];
+            questionToChange.setQuestion(newQuestion);
+            questionToChange.setAnswer(newAnswer);
+        }
     }
 
     @FXML
     void onBack(ActionEvent event) {
-        GUI.setSceneFromNode(save, "/GUI/mainPage.fxml");
+        GUI.setSceneFromNode(save, returnPage);
     }
 
     @FXML
     void onBtnCreateNewQuestionClick(ActionEvent event) {
-        GUI.setSceneFromNode(save, "/GUI/questionEditorPage.fxml");
+        QuizRegister register = new QuizRegister();
+        Question newQuestion = register.newQuestion(quiz);
+        vBox.getChildren().add(createQuestionPane(newQuestion));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -49,7 +82,12 @@ public class QuestionEditorPage {
         assert save != null : "fx:id=\"save\" was not injected: check your FXML file 'quizCreatorPage.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'quizCreatorPage.fxml'.";
         assert vBox != null : "fx:id=\"vBox\" was not injected: check your FXML file 'quizCreatorPage.fxml'.";
-
+        loadQuestionsToVBox();
     }
 
+    private void loadQuestionsToVBox() {
+        quiz.getQuestions().forEach((id, question) -> {
+            vBox.getChildren().add(createQuestionPane(question));
+        });
+    }
 }

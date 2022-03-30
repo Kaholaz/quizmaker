@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'quizAdminPage.fxml' Controller Class
- */
-
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import java.io.IOException;
@@ -168,7 +164,7 @@ public class QuizAdminPage {
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() throws IOException {
+    void initialize() {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert details != null : "fx:id=\"details\" was not injected: check your FXML file 'quizAdminPage.fxml'.";
         assert difficulty != null : "fx:id=\"difficulty\" was not injected: check your FXML file 'quizAdminPage.fxml'.";

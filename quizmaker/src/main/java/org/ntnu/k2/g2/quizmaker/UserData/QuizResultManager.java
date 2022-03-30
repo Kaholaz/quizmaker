@@ -23,6 +23,7 @@ public class QuizResultManager {
 
         String sheetId = resultSheet.createSheet(quiz.getName());
         quiz.setSheetId(sheetId);
+        resultSheet.addRowValues(sheetId, "Teams", "Scores", "1");
 
         return sheetId;
     }
@@ -47,7 +48,7 @@ public class QuizResultManager {
      * @return True if the operation was successful, false if not.
      */
     public static boolean deleteResultSheet(Quiz quiz) {
-        /**
+        /*
          * TODO: make it possible to remove a result sheet
          */
         return false;
