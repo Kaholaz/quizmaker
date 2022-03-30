@@ -77,7 +77,7 @@ public class QuizAdminPage {
             errorMsg.setText("Could not change Quiz state");
         }
 
-        GUI.setSceneFromNode(errorMsg, "/GUI/listQuizzesPage.fxml");
+        GUI.setSceneFromNode(back, "/GUI/listQuizzesPage.fxml");
     }
 
     @FXML
@@ -88,7 +88,7 @@ public class QuizAdminPage {
         if (quiz.isActive()) {
             path = "/GUI/listQuizzesPage.fxml";
         }
-        GUI.setSceneFromNode(errorMsg, path);
+        GUI.setSceneFromNode(back, path);
     }
 
     @FXML

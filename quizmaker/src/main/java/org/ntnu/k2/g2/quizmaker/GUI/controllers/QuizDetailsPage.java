@@ -56,7 +56,7 @@ public class QuizDetailsPage {
     private final Quiz quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
-    void onBack(ActionEvent event) throws IOException {
+    void onBack(ActionEvent event) {
         GUI.setSceneFromNode(back, "/GUI/quizAdminPage.fxml");
     }
 
