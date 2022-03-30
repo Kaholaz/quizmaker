@@ -3,7 +3,7 @@ package org.ntnu.k2.g2.quizmaker.GUI.factory;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.Data.Question;
+import org.ntnu.k2.g2.quizmaker.data.Question;
 
 public class QuestionEditorFactory {
     /**

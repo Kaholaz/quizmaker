@@ -1,7 +1,7 @@
 package org.ntnu.k2.g2.quizmaker.UserData;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
-import org.ntnu.k2.g2.quizmaker.Data.Team;
+import org.ntnu.k2.g2.quizmaker.data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.data.Team;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

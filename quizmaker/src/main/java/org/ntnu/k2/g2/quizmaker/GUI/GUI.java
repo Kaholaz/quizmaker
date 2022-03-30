@@ -1,22 +1,11 @@
 package org.ntnu.k2.g2.quizmaker.GUI;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.GUI.controllers.ExportPage;
-import org.ntnu.k2.g2.quizmaker.GUI.controllers.QuizAdminPage;
-import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
 
 public class GUI extends Application {
 

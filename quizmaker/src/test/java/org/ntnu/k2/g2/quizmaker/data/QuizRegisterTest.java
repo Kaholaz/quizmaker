@@ -1,4 +1,4 @@
-package org.ntnu.k2.g2.quizmaker.Data;
+package org.ntnu.k2.g2.quizmaker.data;
 
 import junit.framework.TestCase;
 
@@ -24,7 +24,7 @@ public class QuizRegisterTest extends TestCase {
         for (Quiz quiz : quizzes) {
             quizRegister.removeQuiz(quiz);
         }
-        QuizRegister.DatabaseConnection.getDbPath().delete();
+        DatabaseConnection.getDbPath().delete();
     }
 
     private static void populateDatabase() {
