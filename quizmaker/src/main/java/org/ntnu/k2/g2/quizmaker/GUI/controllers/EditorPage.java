@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class TeamEditorPage {
+public class EditorPage {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -33,11 +33,19 @@ public class TeamEditorPage {
     @FXML // fx:id="vBox"
     private VBox vBox; // Value injected by FXMLLoader
 
+    @FXML // fx:id="save"
+    private Button save; // Value injected by FXMLLoader
+
     private final Quiz quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
         GUI.setSceneFromNode(back, "/GUI/listQuizzesPage.fxml");
+    }
+
+    @FXML
+    void onSave() {
+
     }
 
     @FXML
@@ -50,6 +58,6 @@ public class TeamEditorPage {
 
     void update() {
         HashMap<Integer, Team> teams = quiz.getTeams();
-        teams.forEach((count, team) -> vBox.getChildren().add(GUIFactory.makeEditPaneForTeams(team, quiz)));
+        teams.forEach((count, team) -> vBox.getChildren().add(GUIFactory.makeEditPaneForTeams(team, quiz, save)));
     }
 }

@@ -7,21 +7,19 @@ import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
-import java.io.IOException;
 
 public class MainPage {
 
     @FXML
     public Button btnNewQuiz, btnListQuizzes;
 
-    public void onListQuizzesBtnClicked(ActionEvent actionEvent) throws IOException {
+    public void onListQuizzesBtnClicked(ActionEvent actionEvent) {
         QuizHandlerSingelton.setActive(true);
         GUI.setSceneFromNode(btnListQuizzes, "/GUI/listQuizzesPage.fxml");
     }
 
-    public void onCreateNewQuizBtnClicked() throws IOException {
+    public void onCreateNewQuizBtnClicked() {
         GUI.setSceneFromNode(btnNewQuiz, "/GUI/createNewQuizPage.fxml");
-
     }
 
     @FXML
