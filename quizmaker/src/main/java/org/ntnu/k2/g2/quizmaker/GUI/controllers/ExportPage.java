@@ -46,30 +46,42 @@ public class ExportPage {
         Stage stage = (Stage) export.getScene().getWindow();
         File file = directoryChooser.showDialog(stage);
         String msg = "Export successful";
+        int i = 0;
         //make with script?
         try {
             if (c1.isSelected()) {
                 quiz.exportAnswersheetWithoutQuestions(file.toString());
+                i++;
             }
             if (c2.isSelected()) {
                 quiz.exportAnswersheetWithQuestions(file.toString());
+                i++;
             }
             if (c3.isSelected()) {
                 quiz.exportAnswersheetWithoutQuestions(file.toString());
+                i++;
             }
             if (c4.isSelected()) {
                 quiz.exportAnswersheetWithoutQuestions(file.toString());
+                i++;
             }
             if (c5.isSelected()) {
                 quiz.exportAnswersWithQuestions(file.toString());
+                i++;
             }
             if (c6.isSelected()) {
                 quiz.exportAnswersWithoutQuestions(file.toString());
+                i++;
             }
         } catch (Exception e) {
             msg = "Export Unsuccessful";
         }
-        exportMsg.setText(msg);
+        if (i > 0) {
+            exportMsg.setText(msg);
+        } else {
+            exportMsg.setText("Nothing was exported.");
+        }
+
     }
 
     @FXML

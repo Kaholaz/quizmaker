@@ -51,6 +51,7 @@ public class ListQuizzesPage {
 
     @FXML
     void onBack(ActionEvent event) {
+        QuizHandlerSingelton.clear();
         GUI.setSceneFromNode(back, "/GUI/mainPage.fxml");
     }
 

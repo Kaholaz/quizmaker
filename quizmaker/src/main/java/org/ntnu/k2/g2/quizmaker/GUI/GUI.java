@@ -13,8 +13,6 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
 
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
-        //primaryStage.setResizable(false);
     }
 
     public static void setSceneFromNode(Node node, String path) {
@@ -29,7 +27,6 @@ public class GUI extends Application {
         Parent root = GUI.checkFXMLLoader(loader);
 
         Scene scene = new Scene(root, prev.getWidth(), prev.getHeight());
-
         return scene;
     }
 
@@ -43,6 +40,18 @@ public class GUI extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
         Parent root = checkFXMLLoader(loader);
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
+
+    public static void setSceneFromRescource(String currentPath, String path) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(GUI.class.getResource(path));
+        Parent root = checkFXMLLoader(loader);
+        FXMLLoader prev = new FXMLLoader();
+        prev.setLocation(GUI.class.getResource(currentPath));
+        Stage stage = (Stage) GUI.checkFXMLLoader(prev).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
 

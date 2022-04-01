@@ -34,7 +34,7 @@ public class GUIFactory {
         return hBox;
     }
 
-    public static HBox makeEditPaneForTeams(TeamModel team, QuizModel quiz) {
+    public static HBox makeEditPaneForTeams(TeamModel team, QuizModel quiz, Button save) {
         QuizRegister quizRegister = new QuizRegister();
 
         HBox hBox = new HBox();
@@ -43,9 +43,9 @@ public class GUIFactory {
         Button button = new Button("Delete");
 
         button.setOnAction(actionEvent -> {
-            quizRegister.removeTeam(quiz, team.getId());
-            hBox.getChildren().clear();
-        }
+                    quizRegister.removeTeam(quiz, team.getId());
+                    hBox.getChildren().clear();
+                }
         );
 
         textField.setText(Integer.toString(team.getScore()));
@@ -53,11 +53,9 @@ public class GUIFactory {
             if (!newValue.matches("\\d*")) {
                 textField.setText(newValue.replaceAll("[^\\d]", ""));
             }
-
-            team.setScore(Integer.parseInt(textField.getText()));
-            //expensive to do sql requests on every keytype
-            quizRegister.saveTeam(team);
         });
+
+        save.setOnAction(e -> team.setScore(Integer.parseInt(textField.getText())));
 
         hBox.setStyle("-fx-padding: 4px;");
         hBox.getChildren().addAll(teamName, textField, button);

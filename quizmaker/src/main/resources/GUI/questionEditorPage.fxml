@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.QuestionEditorPage">
     <top>
         <HBox prefHeight="0.0" prefWidth="200.0" styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
@@ -21,9 +20,9 @@
         </HBox>
     </top>
     <center>
-        <ScrollPane hbarPolicy="NEVER" hmin="20.0" prefHeight="292.0" prefWidth="439.0" styleClass="scrollPane" stylesheets="@css/clickable.css" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+        <ScrollPane hbarPolicy="NEVER" hmin="20.0" prefHeight="292.0" prefWidth="439.0" styleClass="scrollPane" stylesheets="@css/clickable.css" BorderPane.alignment="CENTER">
             <content>
-                <VBox fx:id="vBox" prefHeight="291.0" prefWidth="585.0" />
+                <VBox fx:id="vBox" prefWidth="585.0" />
             </content>
         </ScrollPane>
     </center>

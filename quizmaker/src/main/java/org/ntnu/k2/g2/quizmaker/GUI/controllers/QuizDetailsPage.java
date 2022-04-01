@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
@@ -49,11 +50,22 @@ public class QuizDetailsPage {
     @FXML // fx:id="lastChange"
     private Text lastChanged; // Value injected by FXMLLoader
 
+    @FXML // fx:id="delete"
+    private Button delete; // Value injected by FXMLLoader
+
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
-    void onBack(ActionEvent event) throws IOException {
+    void onBack(ActionEvent event) {
         GUI.setSceneFromNode(back, "/GUI/quizAdminPage.fxml");
+    }
+
+    @FXML
+    void onDelete() {
+        QuizRegister quizRegister = new QuizRegister();
+        quizRegister.removeQuiz(quiz);
+        QuizHandlerSingelton.clear();
+        GUI.setSceneFromNode(delete, "/GUI/listQuizzesPage.fxml");
     }
 
     @FXML
@@ -82,4 +94,6 @@ public class QuizDetailsPage {
             i++;
         }
     }
+
+
 }

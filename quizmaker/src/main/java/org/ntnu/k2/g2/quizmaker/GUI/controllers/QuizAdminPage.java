@@ -76,7 +76,8 @@ public class QuizAdminPage {
             e.printStackTrace();
             errorMsg.setText("Could not change Quiz state");
         }
-        GUI.setSceneFromNode(errorMsg, "/GUI/listQuizzesPage.fxml");
+
+        GUI.setSceneFromNode(back, "/GUI/listQuizzesPage.fxml");
     }
 
     @FXML
@@ -151,7 +152,7 @@ public class QuizAdminPage {
         }
 
         update();
-        errorMsg.setStyle("-fx-backgroud-color: lightblue;");
+        retrieveScores.setStyle("-fx-backgroud-color: lightblue;");
         errorMsg.setText("Import successfull");
     }
 
