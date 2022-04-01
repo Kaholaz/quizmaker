@@ -18,11 +18,11 @@ class QuestionDAO {
      * @param result The ResultSet of an SQL query.
      * @return The question
      */
-    private Question getQuestionFromResultSet(ResultSet result) {
-        Question question = null;
+    private QuestionModel getQuestionFromResultSet(ResultSet result) {
+        QuestionModel question = null;
         try {
             if (result.next()) {
-                question = new Question();
+                question = new QuestionModel();
                 question.setId(result.getInt("id"));
                 question.setQuestion(result.getString("question"));
                 question.setAnswer(result.getString("answer"));
@@ -61,12 +61,12 @@ class QuestionDAO {
      * @param result The ResultSet of and SQL query
      * @return An ArrayList of all questions extracted from the ResultSet.
      */
-    private HashMap<Integer, Question> getQuestionsFromResultSet(ResultSet result) {
-        HashMap<Integer, Question> questions = new HashMap<>();
+    private HashMap<Integer, QuestionModel> getQuestionsFromResultSet(ResultSet result) {
+        HashMap<Integer, QuestionModel> questions = new HashMap<>();
 
         try {
             while (result.next()) {
-                Question question = new Question();
+                QuestionModel question = new QuestionModel();
                 question.setId(result.getInt("id"));
                 question.setQuestion(result.getString("question"));
                 question.setAnswer(result.getString("answer"));
@@ -87,11 +87,11 @@ class QuestionDAO {
      * @param id The id of the question.
      * @return The question with this ID. If there is no question that matches the ID, a null pointer is returned.
      */
-    public Question getQuestionById(int id) {
+    public QuestionModel getQuestionById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
-        Question question = null;
+        QuestionModel question = null;
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -109,11 +109,11 @@ class QuestionDAO {
         return question;
     }
 
-    public HashMap<Integer, Question> getQuestionsByQuizId(int quizId) {
+    public HashMap<Integer, QuestionModel> getQuestionsByQuizId(int quizId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
-        HashMap<Integer, Question> questions = null;
+        HashMap<Integer, QuestionModel> questions = null;
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -166,7 +166,7 @@ class QuestionDAO {
      * @param quizId   The id of the quiz this question is part of.
      * @return The question as it is now saved in the database.
      */
-    public Question updateQuestion(Question question, int quizId) {
+    public QuestionModel updateQuestion(QuestionModel question, int quizId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -207,7 +207,7 @@ class QuestionDAO {
      * @param question The question to update in the database
      * @return The question as it is now saved in the database.
      */
-    public Question updateQuestion(Question question) {
+    public QuestionModel updateQuestion(QuestionModel question) {
         int quizId = getQuizIdByQuestionId(question.getId());
         if (quizId == -1) return null;
         return updateQuestion(question, quizId);

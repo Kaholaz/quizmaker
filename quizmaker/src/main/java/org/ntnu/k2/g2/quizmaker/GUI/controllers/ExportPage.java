@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.ntnu.k2.g2.quizmaker.data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
 import java.io.File;
@@ -38,7 +38,7 @@ public class ExportPage {
     @FXML
     private CheckBox c1, c2, c3, c4, c5, c6;
 
-    private final Quiz quiz = QuizHandlerSingelton.getQuiz();
+    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     private void onExport() {

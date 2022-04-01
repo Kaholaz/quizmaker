@@ -22,11 +22,11 @@ class QuizDAO {
      * @param result The ResultSet of an SQL query.
      * @return A quiz based on the result of the SQL query.
      */
-    private Quiz getQuizFromResultSet(ResultSet result) {
-        Quiz quiz = null;
+    private QuizModel getQuizFromResultSet(ResultSet result) {
+        QuizModel quiz = null;
         try {
             if (result.next()) {
-                quiz = new Quiz();
+                quiz = new QuizModel();
                 quiz.setId(result.getInt("id"));
                 quiz.setName(result.getString("name"));
                 quiz.setActive(result.getBoolean("active"));
@@ -49,11 +49,11 @@ class QuizDAO {
      * @param result The ResultSet of an SQL property
      * @return An ArrayList of all extracted quizzes form the ResultSet.
      */
-    private ArrayList<Quiz> getQuizzesFromResultSet(ResultSet result) {
-        ArrayList<Quiz> quizzes = new ArrayList<>();
+    private ArrayList<QuizModel> getQuizzesFromResultSet(ResultSet result) {
+        ArrayList<QuizModel> quizzes = new ArrayList<>();
         try {
             while (result.next()) {
-                Quiz quiz = new Quiz();
+                QuizModel quiz = new QuizModel();
                 quiz.setId(result.getInt("id"));
                 quiz.setName(result.getString("name"));
                 quiz.setActive(result.getBoolean("active"));
@@ -77,11 +77,11 @@ class QuizDAO {
      * @param id The id of the quiz.
      * @return The quiz with the id in the database. If no quiz is found, null is returned.
      */
-    public Quiz getQuizById(int id) {
+    public QuizModel getQuizById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
-        Quiz quiz = null;
+        QuizModel quiz = null;
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -111,11 +111,11 @@ class QuizDAO {
      *
      * @return An ArrayList containing all quizzes in the database. Returns an empty list if there are no entries.
      */
-    public ArrayList<Quiz> getAllQuizzes() {
+    public ArrayList<QuizModel> getAllQuizzes() {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
-        ArrayList<Quiz> quizzes = new ArrayList<>();
+        ArrayList<QuizModel> quizzes = new ArrayList<>();
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -146,7 +146,7 @@ class QuizDAO {
      * @param quiz The quiz to save to the database.
      * @return The quiz as it is saved in the database after the update is done.
      */
-    public Quiz updateQuiz(Quiz quiz) {
+    public QuizModel updateQuiz(QuizModel quiz) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -171,8 +171,8 @@ class QuizDAO {
             preparedStatement.setString(4, quiz.getLastChanged().toString());
 
             // New teams and questions
-            HashMap<Integer, Team> newTeams = quiz.getTeams();
-            HashMap<Integer, Question> newQuestions = quiz.getQuestions();
+            HashMap<Integer, TeamModel> newTeams = quiz.getTeams();
+            HashMap<Integer, QuestionModel> newQuestions = quiz.getQuestions();
 
             // Executes query and gets the new quiz
             int resultRows = preparedStatement.executeUpdate();
@@ -189,7 +189,7 @@ class QuizDAO {
             final int quizId = quiz.getId();
 
             // Make updates to the team and question tables to reflect the quiz object
-            Quiz oldQuizData = getQuizById(quizId);
+            QuizModel oldQuizData = getQuizById(quizId);
             QuestionDAO questionDAO = new QuestionDAO();
             TeamDAO teamDAO = new TeamDAO();
 
@@ -232,7 +232,7 @@ class QuizDAO {
         boolean result = false;
 
         try {
-            Quiz quiz = getQuizById(id);
+            QuizModel quiz = getQuizById(id);
 
             // remove all questions
             QuestionDAO questionDAO = new QuestionDAO();

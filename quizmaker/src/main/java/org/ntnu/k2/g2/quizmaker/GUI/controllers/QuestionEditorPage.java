@@ -11,8 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.data.Question;
-import org.ntnu.k2.g2.quizmaker.data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 
@@ -41,7 +41,7 @@ public class QuestionEditorPage {
     // For example... If someone clicks the "Create New Quiz" button, a new Quiz should be
     // created, then this variable should be set to that quiz instance, and then finally the user can be redirected
     // to this page.
-    public static Quiz quiz;
+    public static QuizModel quiz;
 
     // This is also a "state". This is the page that the back button will return to.
     // TODO: Implement checks when setting to this variable
@@ -59,7 +59,7 @@ public class QuestionEditorPage {
             String newQuestion = questionTextArea.getText();
             String newAnswer = answerTextArea.getText();
 
-            Question questionToChange = (Question) quiz.getQuestions().values().toArray()[i];
+            QuestionModel questionToChange = (QuestionModel) quiz.getQuestions().values().toArray()[i];
             questionToChange.setQuestion(newQuestion);
             questionToChange.setAnswer(newAnswer);
         }
@@ -73,7 +73,7 @@ public class QuestionEditorPage {
     @FXML
     void onBtnCreateNewQuestionClick(ActionEvent event) {
         QuizRegister register = new QuizRegister();
-        Question newQuestion = register.newQuestion(quiz);
+        QuestionModel newQuestion = register.newQuestion(quiz);
         vBox.getChildren().add(createQuestionPane(newQuestion));
     }
 

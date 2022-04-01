@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A class used to represent a team.
  */
-public class Team {
+public class TeamModel {
     private String teamName;
     private int score;
     private int id = -1;
@@ -14,7 +14,7 @@ public class Team {
      * Constructs a new Team-instance. This method is only used by the QuizRegister.
      * New teams should be created using the QuizRegister::newTeam method.
      */
-    protected Team(){}
+    protected TeamModel(){}
 
     @Override
     public String toString() {
@@ -35,7 +35,7 @@ public class Team {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
+        TeamModel team = (TeamModel) o;
         return score == team.score && id == team.id && Objects.equals(teamName, team.teamName);
     }
 

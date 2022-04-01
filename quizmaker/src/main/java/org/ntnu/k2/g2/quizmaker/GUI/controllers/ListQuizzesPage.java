@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
@@ -65,7 +65,7 @@ public class ListQuizzesPage {
 
     void update() {
         QuizRegister quizRegister = new QuizRegister();
-        ArrayList<Quiz> quizzes;
+        ArrayList<QuizModel> quizzes;
 
         if (QuizHandlerSingelton.isActive()) {
             quizzes = quizRegister.getActiveQuizzes();

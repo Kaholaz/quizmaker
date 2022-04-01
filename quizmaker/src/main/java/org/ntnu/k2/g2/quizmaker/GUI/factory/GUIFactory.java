@@ -6,9 +6,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
-import org.ntnu.k2.g2.quizmaker.data.Team;
+import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GUIFactory {
 
-    public static HBox listQuestionItem(Quiz quiz) {
+    public static HBox listQuestionItem(QuizModel quiz) {
         HBox hBox = new HBox();
         Button admin = new Button(quiz.getName());
 
@@ -34,7 +34,7 @@ public class GUIFactory {
         return hBox;
     }
 
-    public static HBox makeEditPaneForTeams(Team team, Quiz quiz) {
+    public static HBox makeEditPaneForTeams(TeamModel team, QuizModel quiz) {
         QuizRegister quizRegister = new QuizRegister();
 
         HBox hBox = new HBox();

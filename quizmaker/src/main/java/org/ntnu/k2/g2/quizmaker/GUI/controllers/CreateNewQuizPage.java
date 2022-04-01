@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.ntnu.k2.g2.quizmaker.data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 
@@ -29,7 +29,7 @@ public class CreateNewQuizPage {
     void onSubmitBtnClicked(ActionEvent event) {
         // Create the Quiz instance
         QuizRegister register = new QuizRegister();
-        Quiz createdQuiz = register.newQuiz();
+        QuizModel createdQuiz = register.newQuiz();
         createdQuiz.setName(quizNameInputField.getText());
 
         // TODO: Check if a quiz with the name already exists

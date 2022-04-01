@@ -8,8 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.data.Quiz;
-import org.ntnu.k2.g2.quizmaker.data.Team;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
@@ -33,7 +33,7 @@ public class TeamEditorPage {
     @FXML // fx:id="vBox"
     private VBox vBox; // Value injected by FXMLLoader
 
-    private final Quiz quiz = QuizHandlerSingelton.getQuiz();
+    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
@@ -49,7 +49,7 @@ public class TeamEditorPage {
     }
 
     void update() {
-        HashMap<Integer, Team> teams = quiz.getTeams();
+        HashMap<Integer, TeamModel> teams = quiz.getTeams();
         teams.forEach((count, team) -> vBox.getChildren().add(GUIFactory.makeEditPaneForTeams(team, quiz)));
     }
 }

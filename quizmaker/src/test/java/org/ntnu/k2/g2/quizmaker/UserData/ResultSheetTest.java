@@ -6,7 +6,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.testing.http.HttpTesting;
 import com.google.api.client.testing.http.MockHttpTransport;
 import junit.framework.TestCase;
-import org.ntnu.k2.g2.quizmaker.data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
 import java.io.IOException;
@@ -30,14 +30,14 @@ public class ResultSheetTest extends TestCase {
 
     public void testCreateSheetWithDatabase() throws IOException, GeneralSecurityException {
         QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.newQuiz();
+        QuizModel quiz = quizRegister.newQuiz();
         quiz.setName("TestCreateSheetWithDatabase");
         QuizResultManager.createResultSheet(quiz);
     }
 
     public void testImportResultSheet() {
         QuizRegister quizRegister = new QuizRegister();
-        Quiz quiz = quizRegister.newQuiz();
+        QuizModel quiz = quizRegister.newQuiz();
         quiz.setName("Test quiz");
 
         ResultSheet resultSheet = new ResultSheet();
