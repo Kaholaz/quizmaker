@@ -1,11 +1,11 @@
-package org.ntnu.k2.g2.quizmaker.Data;
+package org.ntnu.k2.g2.quizmaker.data;
 
 import java.util.Objects;
 
 /**
  * A class the represents a question
  */
-public class Question {
+public class QuestionModel {
     private String question;
     private String answer;
     private int id = -1;
@@ -16,7 +16,7 @@ public class Question {
      * The QuizRegister makes sure that the created instance is added to the database and assigned the right attributes
      * (Question id and Quiz id)
      */
-    protected Question(){}
+    protected QuestionModel(){}
 
     @Override
     public String toString() {
@@ -37,7 +37,7 @@ public class Question {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Question question1 = (Question) o;
+        QuestionModel question1 = (QuestionModel) o;
         return id == question1.id && Objects.equals(question, question1.question) && Objects.equals(answer, question1.answer);
     }
 

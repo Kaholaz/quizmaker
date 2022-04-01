@@ -1,32 +1,22 @@
 package org.ntnu.k2.g2.quizmaker.GUI.factory;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
-import org.ntnu.k2.g2.quizmaker.Data.Team;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.GUI.controllers.QuizAdminPage;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GUIFactory {
 
-    public static HBox listQuestionItem(Quiz quiz) {
+    public static HBox listQuestionItem(QuizModel quiz) {
         HBox hBox = new HBox();
         Button admin = new Button(quiz.getName());
 
@@ -44,7 +34,7 @@ public class GUIFactory {
         return hBox;
     }
 
-    public static HBox makeEditPaneForTeams(Team team, Quiz quiz, Button save) {
+    public static HBox makeEditPaneForTeams(TeamModel team, QuizModel quiz, Button save) {
         QuizRegister quizRegister = new QuizRegister();
 
         HBox hBox = new HBox();

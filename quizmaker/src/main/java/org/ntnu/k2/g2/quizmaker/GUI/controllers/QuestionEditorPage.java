@@ -1,7 +1,5 @@
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.event.ActionEvent;
@@ -11,9 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.Data.Question;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
@@ -45,7 +42,7 @@ public class QuestionEditorPage {
             String newQuestion = questionTextArea.getText();
             String newAnswer = answerTextArea.getText();
 
-            Question questionToChange = (Question) QuizHandlerSingelton.getQuiz().getQuestions().values().toArray()[i];
+            QuestionModel questionToChange = (QuestionModel) QuizHandlerSingelton.getQuiz().getQuestions().values().toArray()[i];
             questionToChange.setQuestion(newQuestion);
             questionToChange.setAnswer(newAnswer);
         }
@@ -59,7 +56,7 @@ public class QuestionEditorPage {
     @FXML
     void onBtnCreateNewQuestionClick(ActionEvent event) {
         QuizRegister register = new QuizRegister();
-        Question newQuestion = register.newQuestion(QuizHandlerSingelton.getQuiz());
+        QuestionModel newQuestion = register.newQuestion(QuizHandlerSingelton.getQuiz());
         vBox.getChildren().add(createQuestionPane(newQuestion));
     }
 

@@ -1,20 +1,20 @@
 package org.ntnu.k2.g2.quizmaker.GUI;
 
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 public class QuizHandlerSingelton {
-    private static Quiz currentQuiz;
+    private static QuizModel currentQuiz;
     private static boolean active;
 
     private QuizHandlerSingelton() {
     }
 
-    public static void setQuiz(Quiz quiz) {
+    public static void setQuiz(QuizModel quiz) {
         active = quiz.isActive();
         currentQuiz = quiz;
     }
 
-    public static Quiz getQuiz() {
+    public static QuizModel getQuiz() {
         return currentQuiz;
     }
 
