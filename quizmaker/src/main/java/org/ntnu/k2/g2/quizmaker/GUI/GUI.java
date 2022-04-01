@@ -6,8 +6,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 public class GUI extends Application {
+
+    /**
+     * Main method of the GUI, and starts the application by applying the mainpage
+     * to the primaryStage.
+     *
+     * @param primaryStage primary window of the application
+     */
 
     @Override
     public void start(Stage primaryStage) {
@@ -15,49 +23,80 @@ public class GUI extends Application {
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
     }
 
+    /**
+     * Sets a scene by getting the current stage from a given node
+     * and replacing the scene. The paths default is /resources.
+     *
+     * @param node that can extract the current stage
+     * @param path for the next scene
+     */
+
     public static void setSceneFromNode(Node node, String path) {
         Stage stage = (Stage) node.getScene().getWindow();
-        stage.setScene(createScene(node, path));
-    }
-
-    public static Scene createScene(Node node, String path) {
         FXMLLoader loader = new FXMLLoader();
+
         Scene prev = node.getScene();
         loader.setLocation(GUI.class.getResource(path));
         Parent root = GUI.checkFXMLLoader(loader);
-
         Scene scene = new Scene(root, prev.getWidth(), prev.getHeight());
-        return scene;
+
+        stage.setScene(scene);
     }
 
-    public static void createNewStage(Node node, String path) {
+    /**
+     * Create a new stage (window). The path default is /resources.
+     *
+     * @param path to next scene
+     */
+
+    public static void createNewStage(String path) {
         Stage stage = new Stage();
-        stage.setScene(createScene(node, path));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(GUI.class.getResource(path));
+        stage.setScene(new Scene(checkFXMLLoader(loader)));
         stage.show();
     }
+
+    /**
+     * Change the scene of a given stage. The path default is /resources.
+     *
+     * @param stage stage that is switching scene
+     * @param path  path of the new scene
+     */
 
     public static void setSceneFromStage(Stage stage, String path) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
-        Parent root = checkFXMLLoader(loader);
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(checkFXMLLoader(loader)));
         stage.show();
-
     }
 
-    public static void setSceneFromRescource(String currentPath, String path) {
+    /**
+     * Set the scene of the stage by extracting the stage from an event.
+     * This might be a better solution if there is no node to extract the stage from.
+     *
+     * @param actionEvent a javafx event
+     * @param path        the path of the new scene
+     */
+
+    public static void setSceneFromActionEvent(ActionEvent actionEvent, String path) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
         Parent root = checkFXMLLoader(loader);
-        FXMLLoader prev = new FXMLLoader();
-        prev.setLocation(GUI.class.getResource(currentPath));
-        Stage stage = (Stage) GUI.checkFXMLLoader(prev).getScene().getWindow();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
-
     }
 
-    public static Parent checkFXMLLoader(FXMLLoader loader) {
+    /**
+     * This is a helper method that checks the loader for exceptions and returns
+     * the Parent if successful. This is for easy troubleshooting.
+     *
+     * @param loader the FXMLloader that is being checked
+     * @return the loaded Parent
+     */
+
+    protected static Parent checkFXMLLoader(FXMLLoader loader) {
         Parent root = null;
 
         try {
@@ -74,5 +113,4 @@ public class GUI extends Application {
 
         return root;
     }
-
 }

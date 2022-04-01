@@ -77,7 +77,7 @@ public class QuizAdminPage {
             errorMsg.setText("Could not change Quiz state");
         }
 
-        GUI.setSceneFromNode(back, "/GUI/listQuizzesPage.fxml");
+        GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
     }
 
     @FXML
@@ -133,7 +133,7 @@ public class QuizAdminPage {
     @FXML
     void onExportQA(ActionEvent event) {
         QuizHandlerSingelton.setQuiz(quiz);
-        GUI.createNewStage(exportQA, "/GUI/exportPage.fxml");
+        GUI.createNewStage("/GUI/exportPage.fxml");
     }
 
     /**
