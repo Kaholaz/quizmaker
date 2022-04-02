@@ -2,6 +2,7 @@ package org.ntnu.k2.g2.quizmaker.data;
 
 import junit.framework.TestCase;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class QuizRegisterTest extends TestCase {
         ArrayList<QuizModel> quizzes = quizRegister.getQuizList();
         for (QuizModel quiz : quizzes) {
             quizRegister.removeQuiz(quiz);
+        }
+        try {
+            DatabaseConnection.getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         DatabaseConnection.getDbPath().delete();
     }
