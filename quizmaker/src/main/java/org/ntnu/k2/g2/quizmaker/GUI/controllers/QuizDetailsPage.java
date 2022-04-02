@@ -22,13 +22,6 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class QuizDetailsPage {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
     @FXML // fx:id="back"
     private Button back; // Value injected by FXMLLoader
 
@@ -55,17 +48,51 @@ public class QuizDetailsPage {
 
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
+    /**
+     * Function called when the back button has been pressed.
+     * Goes back the quizAdminPage.
+     */
+
     @FXML
-    void onBack(ActionEvent event) {
+    void onBack() {
         GUI.setSceneFromNode(back, "/GUI/quizAdminPage.fxml");
     }
+
+    /**
+     * Function called when the delete button has been pressed.
+     * The quiz is deleted from the database.
+     */
 
     @FXML
     void onDelete() {
         QuizRegister quizRegister = new QuizRegister();
-        quizRegister.removeQuiz(quiz);
-        QuizHandlerSingelton.clear();
-        GUI.setSceneFromNode(delete, "/GUI/listQuizzesPage.fxml");
+        if (quizRegister.removeQuiz(quiz)) {
+            QuizHandlerSingelton.clear();
+            GUI.setSceneFromNode(delete, "/GUI/listQuizzesPage.fxml");
+        } else {
+            //print error message here
+        }
+    }
+
+    /**
+     * updates the quiz fields on the page.
+     */
+
+    void update() {
+        sumQuestions.setText(String.valueOf(quiz.getQuestions().size()));
+        lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
+        sumTeams.setText(String.valueOf(quiz.getTeams().size()));
+        quizName.setText(quiz.getName());
+
+        Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
+        int i = 0;
+
+        rankingGrid.getChildren().clear();
+
+        while (teamsSorted.hasNext()) {
+            rankingGrid.addRow(i, GUIFactory.basicText(teamsSorted.next().getTeamName()));
+            i++;
+        }
     }
 
     @FXML
@@ -79,21 +106,4 @@ public class QuizDetailsPage {
         assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
         update();
     }
-
-    void update() {
-        sumQuestions.setText(String.valueOf(quiz.getQuestions().size()));
-        lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
-        sumTeams.setText(String.valueOf(quiz.getTeams().size()));
-        quizName.setText(quiz.getName());
-
-        Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
-        int i = 0;
-
-        while (teamsSorted.hasNext()) {
-            rankingGrid.addRow(i, GUIFactory.basicText(teamsSorted.next().getTeamName()));
-            i++;
-        }
-    }
-
-
 }

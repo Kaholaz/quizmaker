@@ -19,13 +19,6 @@ import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
 
 public class QuizAdminPage {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
     @FXML // fx:id="back"
     private Button back; // Value injected by FXMLLoader
 
@@ -64,6 +57,12 @@ public class QuizAdminPage {
 
     private QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
+    /**
+     * Changes between viewing active - and archived quizzes when the change state button
+     * has been pressed.
+     *
+     * @param event - click event
+     */
     @FXML
     void onChangeState(ActionEvent event) {
         QuizRegister quizRegister = new QuizRegister();
@@ -80,81 +79,95 @@ public class QuizAdminPage {
         GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
     }
 
+    /**
+     * Redirects back to listView and checks the singleton for
+     * whether the quiz is active or archived.
+     */
+
     @FXML
-    void onBack(ActionEvent event) {
+    void onBack() {
         //if check if is quiz is archived or active
         String path = "/GUI/listArchivedQuizzesPage.fxml";
 
         if (quiz.isActive()) {
             path = "/GUI/listQuizzesPage.fxml";
         }
+
         GUI.setSceneFromNode(back, path);
     }
 
+    /**
+     * Opens  the details page
+     */
+
     @FXML
-    void onDetails(ActionEvent event) {
-        QuizHandlerSingelton.setQuiz(quiz);
+    void onDetails() {
         GUI.setSceneFromNode(details, "/GUI/quizDetailsPage.fxml");
     }
 
     @FXML
-    void onEditQuestion(ActionEvent event) {
+    void onEditQuestion() {
         GUI.setSceneFromNode(editQuestions, "/GUI/questionEditorPage.fxml");
     }
 
+    /**
+     * Opens the default browser, and open up the URL to the google sheet
+     * of the quiz
+     */
+
     @FXML
-    void onEditTeams(ActionEvent event) {
+    void onEditTeams() {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
                 Desktop.getDesktop().browse(new URI(quiz.getUrl()));
 
             } catch (URISyntaxException | IOException e) {
                 e.printStackTrace();
-                errorMsg.setText("Could not load URL from quiz.");
+                errorMsg.setText("Could not load URL from quiz: " + e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
-                errorMsg.setText("An unexpected error occurred");
+                errorMsg.setText("An unexpected error occurred: " + e.getMessage());
             }
             retrieveScores.setStyle("-fx-background-color: yellow;");
 
         } else {
-            errorMsg.setText("Could not load default browser.");
-
+            errorMsg.setText("Could not load default browser. Your desktop might not be supported.");
         }
-
     }
 
     /**
-     * Opens new Stage and sets quiz by the controller on the page.
-     *
-     * @param event Action event
+     * Opens new Stage and sets the scene to the exportPage.fxml
      */
 
     @FXML
-    void onExportQA(ActionEvent event) {
-        QuizHandlerSingelton.setQuiz(quiz);
+    void onExportQA() {
         GUI.createNewStage("/GUI/exportPage.fxml");
     }
 
     /**
-     * @param event
-     * @throws IOException
-     * @throws GeneralSecurityException
+     * Retrieve scores from the Google API.
+     * If the retrieve scores button has been pressed.
      */
 
     @FXML
-    void onRetrieveScores(ActionEvent event) {
+    void onRetrieveScores() {
         try {
             QuizResultManager.importResults(quiz);
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
+            errorMsg.setText("Could not retrieve scores: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            errorMsg.setText("Could not retrieve scores.");
+            errorMsg.setText("An unexpected error occurred.");
         }
-
         update();
         retrieveScores.setStyle("-fx-backgroud-color: lightblue;");
-        errorMsg.setText("Import successfull");
+        errorMsg.setText("Import successful.");
     }
+
+    /**
+     * Updates information of the quiz fields.
+     */
 
     void update() {
         quizName.setText(quiz.getName());
