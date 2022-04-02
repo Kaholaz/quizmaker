@@ -1,7 +1,7 @@
 package org.ntnu.k2.g2.quizmaker.UserData;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
-import org.ntnu.k2.g2.quizmaker.Data.Team;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -15,7 +15,7 @@ public class QuizResultManager {
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    public static String createResultSheet(Quiz quiz) throws GeneralSecurityException, IOException {
+    public static String createResultSheet(QuizModel quiz) throws GeneralSecurityException, IOException {
         if (quiz.getSheetId() != null) {
             return quiz.getSheetId();
         }
@@ -34,7 +34,7 @@ public class QuizResultManager {
      * @param quiz The quiz whose result sheet to change.
      * @return True if the operation was successful, false if not.
      */
-    public static boolean changeResultSheetName(Quiz quiz) {
+    public static boolean changeResultSheetName(QuizModel quiz) {
         /*
         TODO: Make it possible to change the name of a result sheet
          */
@@ -47,7 +47,7 @@ public class QuizResultManager {
      * @param quiz The quiz whose result sheet to delete.
      * @return True if the operation was successful, false if not.
      */
-    public static boolean deleteResultSheet(Quiz quiz) {
+    public static boolean deleteResultSheet(QuizModel quiz) {
         /*
          * TODO: make it possible to remove a result sheet
          */
@@ -59,7 +59,7 @@ public class QuizResultManager {
      * This method retrieves the scores with the Google API and
      * @param quiz The quiz to import the results for.
      */
-    public static Quiz importResults(Quiz quiz) throws GeneralSecurityException, IOException {
+    public static QuizModel importResults(QuizModel quiz) throws GeneralSecurityException, IOException {
         QuizRegister quizRegister = new QuizRegister();
         ResultSheet resultSheet = new ResultSheet();
 
@@ -70,7 +70,7 @@ public class QuizResultManager {
             String teamName = row.get(0).toString();
             int score = Integer.parseInt((String) row.get(1));
 
-            Team team = quizRegister.newTeam(quiz);
+            TeamModel team = quizRegister.newTeam(quiz);
             team.setTeamName(teamName);
             team.setScore(score);
         }

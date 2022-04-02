@@ -9,9 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
-import org.ntnu.k2.g2.quizmaker.Data.Team;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.TeamModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
@@ -53,7 +53,7 @@ public class QuizDetailsPage {
     @FXML // fx:id="delete"
     private Button delete; // Value injected by FXMLLoader
 
-    private final Quiz quiz = QuizHandlerSingelton.getQuiz();
+    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onBack(ActionEvent event) {
@@ -86,7 +86,7 @@ public class QuizDetailsPage {
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
 
-        Iterator<Team> teamsSorted = quiz.getTeamsSortedByScore();
+        Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
         int i = 0;
 
         while (teamsSorted.hasNext()) {

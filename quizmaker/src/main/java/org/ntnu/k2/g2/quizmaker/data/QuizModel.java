@@ -1,4 +1,4 @@
-package org.ntnu.k2.g2.quizmaker.Data;
+package org.ntnu.k2.g2.quizmaker.data;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
 
-public class Quiz {
+public class QuizModel {
     private String name;
     private final String SHEET_URL = "https://docs.google.com/spreadsheets/d/";
     private String sheetId;
@@ -22,10 +22,10 @@ public class Quiz {
     private int id = -1;
     private LocalDateTime lastChanged;
 
-    private HashMap<Integer, Team> teams = new HashMap<>();
-    private HashMap<Integer, Question> questions = new HashMap<>();
+    private HashMap<Integer, TeamModel> teams = new HashMap<>();
+    private HashMap<Integer, QuestionModel> questions = new HashMap<>();
 
-    protected Quiz(){}
+    protected QuizModel(){}
 
     @Override
     public String toString() {
@@ -50,7 +50,7 @@ public class Quiz {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Quiz quiz = (Quiz) o;
+        QuizModel quiz = (QuizModel) o;
         return id == quiz.id && Objects.equals(name, quiz.name) && Objects.equals(lastChanged, quiz.lastChanged)
                 && Objects.equals(teams, quiz.teams) && Objects.equals(questions, quiz.questions);
     }
@@ -87,7 +87,7 @@ public class Quiz {
      * the value is the team object.
      * @return The teams that are registered to this quiz.
      */
-    public HashMap<Integer, Team> getTeams() {
+    public HashMap<Integer, TeamModel> getTeams() {
         return teams;
     }
 
@@ -95,9 +95,9 @@ public class Quiz {
      * Get all teams that are part of a team, sorted in descending order according to their score.
      * @return The teams of the quiz in descending order according to their score.
      */
-    public Iterator<Team> getTeamsSortedByScore() {
+    public Iterator<TeamModel> getTeamsSortedByScore() {
         return teams.values().stream().sorted(
-                        Comparator.comparingInt(Team::getScore).reversed())
+                        Comparator.comparingInt(TeamModel::getScore).reversed())
                 .iterator();
     }
 
@@ -106,7 +106,7 @@ public class Quiz {
      * @param teams The new HashMap of the teams. The key is the id of the team, while the value is the corresponding
      *              team object.
      */
-    protected void setTeams(HashMap<Integer, Team> teams) {
+    protected void setTeams(HashMap<Integer, TeamModel> teams) {
         this.teams = teams;
     }
 
@@ -116,7 +116,7 @@ public class Quiz {
      * the value is the question object.
      * @return The questions that are registered to this quiz.
      */
-    public HashMap<Integer, Question> getQuestions() {
+    public HashMap<Integer, QuestionModel> getQuestions() {
         return questions;
     }
 
@@ -125,7 +125,7 @@ public class Quiz {
      * @param questions The new HashMap of the teams. The key is the id of the question, while the value is the
      *              corresponding question object.
      */
-    protected void setQuestions(HashMap<Integer, Question> questions) {
+    protected void setQuestions(HashMap<Integer, QuestionModel> questions) {
         this.questions = questions;
     }
 
@@ -220,10 +220,10 @@ public class Quiz {
         document.add(paragraph1);
         PdfCanvas canvas = new PdfCanvas(pdfPage);
 
-        HashMap<Integer, Question> questions = getQuestions();
+        HashMap<Integer, QuestionModel> questions = getQuestions();
         int counter = 1;
 
-        for (Question q : questions.values()) {
+        for (QuestionModel q : questions.values()) {
             String header = "Question " + counter + ": ";
             String question = q.getQuestion();
             String answer = "\nAnswer: ";
@@ -264,10 +264,10 @@ public class Quiz {
         document.add(paragraph1);
         PdfCanvas canvas = new PdfCanvas(pdfPage);
 
-        HashMap<Integer, Question> questions = getQuestions();
+        HashMap<Integer, QuestionModel> questions = getQuestions();
         int counter = 1;
 
-        for (Question q : questions.values()) {
+        for (QuestionModel q : questions.values()) {
             String header = "Question " + counter + ": ";
             String answer = "\nAnswer: ";
             Paragraph quest = new Paragraph();
@@ -304,10 +304,10 @@ public class Quiz {
         Paragraph paragraph1 = new Paragraph(title);
         document.add(paragraph1);
 
-        HashMap<Integer, Question> questions = getQuestions();
+        HashMap<Integer, QuestionModel> questions = getQuestions();
         int counter = 1;
 
-        for (Question q : questions.values()) {
+        for (QuestionModel q : questions.values()) {
             String header = "Question " + counter + ": ";
             String question = q.getQuestion();
             String answer = "\nAnswer: " + q.getAnswer();
@@ -343,10 +343,10 @@ public class Quiz {
         Paragraph paragraph1 = new Paragraph(title);
         document.add(paragraph1);
 
-        HashMap<Integer, Question> questions = getQuestions();
+        HashMap<Integer, QuestionModel> questions = getQuestions();
         int counter = 1;
 
-        for (Question q : questions.values()) {
+        for (QuestionModel q : questions.values()) {
             String header = "Question " + counter + ": ";
             String answer = "\nAnswer: " + q.getAnswer();
             Paragraph quest = new Paragraph();

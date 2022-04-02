@@ -3,7 +3,7 @@ package org.ntnu.k2.g2.quizmaker.GUI.factory;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.Data.Question;
+import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 
 public class QuestionEditorFactory {
     /**
@@ -11,7 +11,7 @@ public class QuestionEditorFactory {
      *
      * @param question The question to create a Pane from.
      */
-    public static Pane createQuestionPane(Question question) {
+    public static Pane createQuestionPane(QuestionModel question) {
         Pane questionPane = new Pane();
         questionPane.setPrefHeight(150);
 

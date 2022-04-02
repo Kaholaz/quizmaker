@@ -12,8 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.Data.Quiz;
-import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
@@ -62,7 +62,7 @@ public class QuizAdminPage {
     @FXML
     private Text errorMsg;
 
-    private Quiz quiz = QuizHandlerSingelton.getQuiz();
+    private QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     @FXML
     void onChangeState(ActionEvent event) {
