@@ -1,13 +1,5 @@
-package org.ntnu.k2.g2.quizmaker.Data;
+package org.ntnu.k2.g2.quizmaker.data;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;

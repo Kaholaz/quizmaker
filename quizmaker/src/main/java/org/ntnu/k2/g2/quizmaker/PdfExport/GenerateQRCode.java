@@ -6,7 +6,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.ntnu.k2.g2.quizmaker.Data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

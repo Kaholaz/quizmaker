@@ -1,11 +1,8 @@
-package org.ntnu.k2.g2.quizmaker.Data;
+package org.ntnu.k2.g2.quizmaker.data;
 
-import com.google.zxing.WriterException;
 import junit.framework.TestCase;
-import org.ntnu.k2.g2.quizmaker.PdfExport.GenerateQRCode;
 import org.ntnu.k2.g2.quizmaker.PdfExport.PdfManager;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

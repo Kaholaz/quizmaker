@@ -11,12 +11,9 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 
-import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.UnitValue;
-import com.itextpdf.layout.property.VerticalAlignment;
-import org.ntnu.k2.g2.quizmaker.Data.QuestionModel;
-import org.ntnu.k2.g2.quizmaker.Data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

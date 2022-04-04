@@ -1,6 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.GUI;
 
-import org.ntnu.k2.g2.quizmaker.Data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 public class QuizHandlerSingelton {
     private static QuizModel currentQuiz;
