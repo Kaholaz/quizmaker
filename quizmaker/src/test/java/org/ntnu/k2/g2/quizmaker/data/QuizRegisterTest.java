@@ -143,6 +143,7 @@ public class QuizRegisterTest extends TestCase {
         QuestionModel question = quizRegister.getQuestion(4);
         question.setQuestion("New Question");
         question.setAnswer("New Answer");
+        question.setScore(69);
 
         QuestionModel returnQuestion = quizRegister.saveQuestion(question);
         QuestionModel savedQuestion = quizRegister.getQuestion(4);

@@ -23,6 +23,7 @@ public class QuestionModel {
     public String toString() {
         return "Question{" +
                 "id="  + id +
+                ", score=" + score +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 '}';
@@ -39,7 +40,8 @@ public class QuestionModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuestionModel question1 = (QuestionModel) o;
-        return id == question1.id && Objects.equals(question, question1.question) && Objects.equals(answer, question1.answer);
+        return id == question1.id && score==question1.score &&
+                Objects.equals(question, question1.question) && Objects.equals(answer, question1.answer);
     }
 
     /**
@@ -48,7 +50,7 @@ public class QuestionModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(question, answer, id);
+        return Objects.hash(question, score, answer, id);
     }
 
     /**
@@ -100,7 +102,7 @@ public class QuestionModel {
         if (score < 0) {
             throw new IllegalArgumentException("The score needs to be greater than or equal to zero.");
         }
-        
+
         this.score = score;
     }
 
