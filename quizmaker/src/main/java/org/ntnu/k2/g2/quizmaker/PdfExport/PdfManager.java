@@ -2,9 +2,7 @@ package org.ntnu.k2.g2.quizmaker.PdfExport;
 
 import com.google.zxing.WriterException;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
@@ -45,6 +43,7 @@ public class PdfManager {
             e.printStackTrace();
         }
 
+        assert writer != null;
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
