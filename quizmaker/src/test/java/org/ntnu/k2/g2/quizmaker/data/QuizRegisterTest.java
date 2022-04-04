@@ -295,10 +295,12 @@ public class QuizRegisterTest extends TestCase {
             QuestionModel question = quizRegister.newQuestion(testQuiz);
             if (i % 2 == 0) {
                 question.setQuestion("Dette er et ekstremt langt spørsmål som tar helt sinnsykt mye plass?");
+                question.setAnswer("Dette er et kort svar");
             } else {
                 question.setQuestion("Dette er et kort spørsmål?");
+                question.setAnswer("Dette er et veldig langt, omfattende og komplisert svar som egentlig kunne vært formulert mye bedre");
             }
-            question.setAnswer(String.format("A%d", i));
+
         }
 
         PdfManager.exportAnswersheetWithQuestions(testQuiz,"src/main/resources/PdfExport");
