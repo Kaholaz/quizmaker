@@ -1,68 +1,58 @@
-
-/**
- * Sample Skeleton for 'listQuizzesPage.fxml' Controller Class
- */
-
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
-import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
+
+/**
+ * Controller for listQuizzesPages. It lists quizzes in a scrollpane.
+ */
 
 public class ListQuizzesPage {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="archive"
-    private Button archive; // Value injected by FXMLLoader
-
-    @FXML // fx:id="back"
-    private Button back; // Value injected by FXMLLoader
-
     @FXML // fx:id="quizzesContainer"
     private VBox vBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="scrollPane"
-    private ScrollPane scrollPane; // Value injected by FXMLLoader
 
     @FXML // fx:id="switchStatus"
     private Button switchStatus; // Value injected by FXMLLoader
 
+    /**
+     * Switches the active status and updates the page.
+     */
+
     @FXML
-    void onSwitchStatus(ActionEvent event) {
+    void onSwitchStatus() {
         QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
         update();
     }
 
+    /**
+     * Redirects to the mainPage and clears the Singleton.
+     *
+     * @param event - click event
+     */
     @FXML
     void onBack(ActionEvent event) {
         QuizHandlerSingelton.clear();
-        GUI.setSceneFromNode(back, "/GUI/mainPage.fxml");
+        GUI.setSceneFromActionEvent(event, "/GUI/mainPage.fxml");
     }
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'listQuizzesPage.fxml'.";
-        assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'listQuizzesPage.fxml'.";
-
-        this.update();
+        update();
     }
+
+    /**
+     * Updates the list from the database and checks if the active status has changed.
+     */
 
     void update() {
         QuizRegister quizRegister = new QuizRegister();
@@ -75,7 +65,9 @@ public class ListQuizzesPage {
             switchStatus.setText("Active");
             quizzes = quizRegister.getArchivedQuizzes();
         }
+
         vBox.getChildren().clear();
+
         quizzes.forEach(quiz -> vBox.getChildren().add(GUIFactory.listQuestionItem(quiz)));
 
     }

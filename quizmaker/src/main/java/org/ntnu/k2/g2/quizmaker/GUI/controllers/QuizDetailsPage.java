@@ -1,32 +1,29 @@
-/**
- * Sample Skeleton for 'quizDetailsPage.fxml' Controller Class
- */
-
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
-import org.ntnu.k2.g2.quizmaker.data.TeamModel;
-import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Iterator;
-import java.util.ResourceBundle;
+
+/**
+ * Controller class for the quizDetailsPage. It shows the details of each quiz,
+ * and the ranking the teams.
+ */
 
 public class QuizDetailsPage {
-    @FXML // fx:id="back"
-    private Button back; // Value injected by FXMLLoader
-
     @FXML // fx:id="difficulty"
     private Text difficulty; // Value injected by FXMLLoader
+
+    @FXML // fx:id="average"
+    private Text average; // Value injected by FXMLLoader
 
     @FXML // fx:id="quizName"
     private Text quizName; // Value injected by FXMLLoader
@@ -43,9 +40,6 @@ public class QuizDetailsPage {
     @FXML // fx:id="lastChange"
     private Text lastChanged; // Value injected by FXMLLoader
 
-    @FXML // fx:id="delete"
-    private Button delete; // Value injected by FXMLLoader
-
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     /**
@@ -54,8 +48,8 @@ public class QuizDetailsPage {
      */
 
     @FXML
-    void onBack() {
-        GUI.setSceneFromNode(back, "/GUI/quizAdminPage.fxml");
+    void onBack(ActionEvent event) {
+        GUI.setSceneFromActionEvent(event, "/GUI/quizAdminPage.fxml");
     }
 
     /**
@@ -64,18 +58,18 @@ public class QuizDetailsPage {
      */
 
     @FXML
-    void onDelete() {
+    void onDelete(ActionEvent event) {
         QuizRegister quizRegister = new QuizRegister();
         if (quizRegister.removeQuiz(quiz)) {
             QuizHandlerSingelton.clear();
-            GUI.setSceneFromNode(delete, "/GUI/listQuizzesPage.fxml");
+            GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
         } else {
-            //print error message here
+            //TODO: print error message here
         }
     }
 
     /**
-     * updates the quiz fields on the page.
+     * updates the quiz fields on the page, and the rankingGrid.
      */
 
     void update() {
@@ -83,6 +77,8 @@ public class QuizDetailsPage {
         lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
+        difficulty.setText("Not implemented");
+        average.setText("Not implemented");
 
         Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
         int i = 0;
@@ -98,12 +94,6 @@ public class QuizDetailsPage {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
-        assert difficulty != null : "fx:id=\"difficulty\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
-        assert quizName != null : "fx:id=\"quizName\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
-        assert rankingGrid != null : "fx:id=\"rankingGrid\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
-        assert sumQuestions != null : "fx:id=\"sumQuestions\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
-        assert sumTeams != null : "fx:id=\"sumTeams\" was not injected: check your FXML file 'quizDetailsPage.fxml'.";
         update();
     }
 }

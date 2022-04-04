@@ -8,6 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+/**
+ * This is the main GUI class of the application. The class
+ * has also many helper methods that can be used in Controller classes.
+ */
+
 public class GUI extends Application {
 
     /**
@@ -19,7 +24,6 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
     }
 
@@ -110,7 +114,6 @@ public class GUI extends Application {
         } catch (Exception e) {
             System.out.println("A different, unexpected exception was thrown while loading the FXML file...\n\n" + e.getClass() + ": " + e.getMessage());
         }
-
         return root;
     }
 }
