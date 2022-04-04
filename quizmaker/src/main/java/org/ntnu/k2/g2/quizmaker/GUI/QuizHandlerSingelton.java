@@ -59,12 +59,14 @@ public class QuizHandlerSingelton {
 
     /**
      * Set the active status. This is used when a quiz can not be added,
-     * but changing the status is necessary.
+     * but changing the status is necessary. WARNING:
+     * This also clears the currentQuiz
      *
      * @param active boolean for active status
      */
 
     public static void setActive(boolean active) {
+        currentQuiz = null;
         QuizHandlerSingelton.active = active;
     }
 
