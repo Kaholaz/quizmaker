@@ -118,6 +118,7 @@ class DatabaseConnection {
             statement.execute("""
                     CREATE TABLE IF NOT EXISTS questions (
                       id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      score INTEGER,
                       question TEXT,
                       answer TEXT,
                       quizId INTEGER,

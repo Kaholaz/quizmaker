@@ -23,6 +23,7 @@ class QuestionDAO {
         try {
             if (result.next()) {
                 question = new QuestionModel();
+                question.setScore(result.getInt("score"));
                 question.setId(result.getInt("id"));
                 question.setQuestion(result.getString("question"));
                 question.setAnswer(result.getString("answer"));
@@ -67,6 +68,7 @@ class QuestionDAO {
         try {
             while (result.next()) {
                 QuestionModel question = new QuestionModel();
+                question.setScore(result.getInt("score"));
                 question.setId(result.getInt("id"));
                 question.setQuestion(result.getString("question"));
                 question.setAnswer(result.getString("answer"));
@@ -175,15 +177,16 @@ class QuestionDAO {
             connection = DatabaseConnection.getConnection();
             if (question.getId() == -1) {
                 preparedStatement = connection.prepareStatement(
-                        "INSERT INTO questions (question, answer, quizId) VALUES (?, ?, ?);");
-                preparedStatement.setInt(3, quizId);
+                        "INSERT INTO questions (question, answer, score, quizId) VALUES (?, ?, ?, ?);");
+                preparedStatement.setInt(4, quizId);
             } else {
                 preparedStatement = connection.prepareStatement(
-                        "UPDATE questions SET question=?, answer=? WHERE id=?");
-                preparedStatement.setInt(3, question.getId());
+                        "UPDATE questions SET question=?, answer=?, score=? WHERE id=?");
+                preparedStatement.setInt(4, question.getId());
             }
             preparedStatement.setString(1, question.getQuestion());
             preparedStatement.setString(2, question.getAnswer());
+            preparedStatement.setInt(3, question.getScore());
 
             int resultRows = preparedStatement.executeUpdate();
             if (question.getId() == -1 && resultRows == 1) {

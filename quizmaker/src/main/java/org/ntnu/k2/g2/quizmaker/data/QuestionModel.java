@@ -8,6 +8,7 @@ import java.util.Objects;
 public class QuestionModel {
     private String question;
     private String answer;
+    private int score = 1; // default score per question is 1
     private int id = -1;
 
     /**
@@ -78,6 +79,29 @@ public class QuestionModel {
      */
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    /**
+     * Gets the maximum score that can be attained from this question.
+     * This value is defaulted to 1.
+     * @return The maximum score that can be attained form this question.
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * Gets the maximum score that can be attained from this question.
+     * This value is defaulted to 1.
+     * @param score The new maximum score that can be attained form the question.
+     * @throws IllegalArgumentException Throws an exception if the score is lower than 0
+     */
+    public void setScore(int score) throws IllegalArgumentException {
+        if (score < 0) {
+            throw new IllegalArgumentException("The score needs to be greater than or equal to zero.");
+        }
+        
+        this.score = score;
     }
 
     /**
