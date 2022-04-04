@@ -1,19 +1,26 @@
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
+/**
+ * Controller for the mainPage
+ */
 
 public class MainPage {
 
     @FXML
     public Button btnNewQuiz, btnListQuizzes;
 
-    public void onListQuizzesBtnClicked(ActionEvent actionEvent) {
+    /**
+     * Redirects to listQuizzesPage and sets the Singleton active status to true.
+     */
+
+    @FXML
+    void onListQuizzesBtnClicked() {
         QuizHandlerSingelton.setActive(true);
         GUI.setSceneFromNode(btnListQuizzes, "/GUI/listQuizzesPage.fxml");
     }
@@ -26,7 +33,7 @@ public class MainPage {
     void initialize() {
         QuizRegister quizRegister = new QuizRegister();
         if (quizRegister.getQuizList().isEmpty()) {
-            quizRegister.populateDatabase(5,5,5);
+            quizRegister.populateDatabase(5, 5, 5);
         }
     }
 }
