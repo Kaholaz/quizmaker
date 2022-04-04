@@ -1,4 +1,4 @@
-package org.ntnu.k2.g2.quizmaker.data;
+package org.ntnu.k2.g2.quizmaker.Data;
 
 import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
 

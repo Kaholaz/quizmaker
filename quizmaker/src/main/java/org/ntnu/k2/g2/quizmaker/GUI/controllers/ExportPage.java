@@ -11,7 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.PdfExport.PdfManager;
+import org.ntnu.k2.g2.quizmaker.Data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
 import java.io.File;
@@ -50,27 +51,27 @@ public class ExportPage {
         //make with script?
         try {
             if (c1.isSelected()) {
-                quiz.exportAnswersheetWithoutQuestions(file.toString());
+                PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
                 i++;
             }
             if (c2.isSelected()) {
-                quiz.exportAnswersheetWithQuestions(file.toString());
+                PdfManager.exportAnswersheetWithQuestions(quiz,file.toString());
                 i++;
             }
             if (c3.isSelected()) {
-                quiz.exportAnswersheetWithoutQuestions(file.toString());
+                PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
                 i++;
             }
             if (c4.isSelected()) {
-                quiz.exportAnswersheetWithoutQuestions(file.toString());
+                PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
                 i++;
             }
             if (c5.isSelected()) {
-                quiz.exportAnswersWithQuestions(file.toString());
+                PdfManager.exportAnswersWithQuestions(quiz,file.toString());
                 i++;
             }
             if (c6.isSelected()) {
-                quiz.exportAnswersWithoutQuestions(file.toString());
+                PdfManager.exportAnswersWithoutQuestions(quiz,file.toString());
                 i++;
             }
         } catch (Exception e) {

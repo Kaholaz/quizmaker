@@ -6,9 +6,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
-import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
-import org.ntnu.k2.g2.quizmaker.data.TeamModel;
+import org.ntnu.k2.g2.quizmaker.Data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.Data.TeamModel;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 

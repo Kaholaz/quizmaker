@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
-import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.Data.QuestionModel;
+import org.ntnu.k2.g2.quizmaker.Data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 

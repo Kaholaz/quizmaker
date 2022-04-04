@@ -1,7 +1,11 @@
-package org.ntnu.k2.g2.quizmaker.data;
+package org.ntnu.k2.g2.quizmaker.Data;
 
+import com.google.zxing.WriterException;
 import junit.framework.TestCase;
+import org.ntnu.k2.g2.quizmaker.PdfExport.GenerateQRCode;
+import org.ntnu.k2.g2.quizmaker.PdfExport.PdfManager;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -286,11 +290,23 @@ public class QuizRegisterTest extends TestCase {
 
     public void testPdfExport() {
         QuizRegister quizRegister = new QuizRegister();
-        QuizModel testQuiz = quizRegister.getQuiz(1);
+        QuizModel testQuiz = quizRegister.newQuiz(true);
 
-        testQuiz.exportAnswersheetWithQuestions("src/main/resources");
-        testQuiz.exportAnswersheetWithoutQuestions("src/main/resources");
-        testQuiz.exportAnswersWithQuestions("src/main/resources");
-        testQuiz.exportAnswersWithoutQuestions("src/main/resources");
+        testQuiz.setName("Test quiz");
+
+        for (int i = 1; i <= 20; ++i) {
+            QuestionModel question = quizRegister.newQuestion(testQuiz);
+            if (i % 2 == 0) {
+                question.setQuestion("Dette er et ekstremt langt spørsmål som tar helt sinnsykt mye plass?");
+            } else {
+                question.setQuestion("Dette er et kort spørsmål?");
+            }
+            question.setAnswer(String.format("A%d", i));
+        }
+
+        PdfManager.exportAnswersheetWithQuestions(testQuiz,"src/main/resources/PdfExport");
+        PdfManager.exportAnswersheetWithoutQuestions(testQuiz,"src/main/resources/PdfExport");
+        PdfManager.exportAnswersWithQuestions(testQuiz,"src/main/resources/PdfExport");
+        PdfManager.exportAnswersWithoutQuestions(testQuiz,"src/main/resources/PdfExport");
     }
 }
