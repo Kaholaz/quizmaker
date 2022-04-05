@@ -14,6 +14,8 @@ open module org.ntnu.k2.g2.quizmaker {
     requires kernel;
     requires layout;
     requires java.desktop;
+    requires core;
+    requires io;
 
     exports org.ntnu.k2.g2.quizmaker;
 }
