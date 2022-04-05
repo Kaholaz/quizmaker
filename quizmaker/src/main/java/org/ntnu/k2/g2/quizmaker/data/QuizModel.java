@@ -1,13 +1,5 @@
 package org.ntnu.k2.g2.quizmaker.data;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -196,7 +188,7 @@ public class QuizModel {
     public void setActive(boolean active) {
         this.active = active;
     }
-
+    
     /**
      * @return The maximum score a team can attain on this quiz.
      */
@@ -221,167 +213,5 @@ public class QuizModel {
         }
 
         return ((double) getCombinedTeamScore()) / (teams.size() * getMaxScore());
-    }
-
-    /**
-     * Creates an answersheet with questions for the quiz as a pdf saved locally on the computer.
-     * Local destination can be changed in dest variable.
-     * @param destination Chosen destination for the export to be saved
-     */
-    public void exportAnswersheetWithQuestions(String destination) {
-        String title = getName();
-        PdfWriter writer = null;
-        String dest = destination + "/" + title + " - Answersheet With Questions.pdf";
-        try {
-            writer = new PdfWriter(dest);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
-        PdfPage pdfPage = pdf.addNewPage();
-
-        Paragraph paragraph1 = new Paragraph(title);
-        document.add(paragraph1);
-        PdfCanvas canvas = new PdfCanvas(pdfPage);
-
-        HashMap<Integer, QuestionModel> questions = getQuestions();
-        int counter = 1;
-
-        for (QuestionModel q : questions.values()) {
-            String header = "Question " + counter + ": ";
-            String question = q.getQuestion();
-            String answer = "\nAnswer: ";
-            Paragraph quest = new Paragraph();
-            quest.add(header);
-            quest.add(question);
-            quest.add(answer);
-            document.add(quest);
-            canvas.moveTo(80,787 - counter*44);
-            canvas.lineTo(550,787 - counter*44);
-            counter++;
-        }
-        canvas.closePathStroke();
-
-        document.close();
-    }
-
-    /**
-     * Creates an answersheet without questions for the quiz as a pdf saved locally on the computer.
-     * Local destination can be changed in dest variable.
-     * @param destination Chosen destination for the export to be saved
-     */
-    public void exportAnswersheetWithoutQuestions(String destination) {
-        String title = getName();
-        PdfWriter writer = null;
-        String dest = destination + "/" + title + " - Answersheet Without Questions.pdf";
-        try {
-            writer = new PdfWriter(dest);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
-        PdfPage pdfPage = pdf.addNewPage();
-
-        Paragraph paragraph1 = new Paragraph(title);
-        document.add(paragraph1);
-        PdfCanvas canvas = new PdfCanvas(pdfPage);
-
-        HashMap<Integer, QuestionModel> questions = getQuestions();
-        int counter = 1;
-
-        for (QuestionModel q : questions.values()) {
-            String header = "Question " + counter + ": ";
-            String answer = "\nAnswer: ";
-            Paragraph quest = new Paragraph();
-            quest.add(header);
-            quest.add(answer);
-            document.add(quest);
-            canvas.moveTo(80,787 - counter*44);
-            canvas.lineTo(550,787 - counter*44);
-            counter++;
-        }
-        canvas.closePathStroke();
-
-        document.close();
-    }
-
-    /**
-     * Creates a sheet with answers and questions for the quiz as a pdf saved locally on the computer.
-     * Local destination can be changed in dest variable.
-     * @param destination Chosen destination for the export to be saved
-     */
-    public void exportAnswersWithQuestions(String destination) {
-        String title = getName();
-        String dest = destination + "/" + title + " - Answers With Questions.pdf";
-        PdfWriter writer = null;
-        try {
-            writer = new PdfWriter(dest);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
-
-        Paragraph paragraph1 = new Paragraph(title);
-        document.add(paragraph1);
-
-        HashMap<Integer, QuestionModel> questions = getQuestions();
-        int counter = 1;
-
-        for (QuestionModel q : questions.values()) {
-            String header = "Question " + counter + ": ";
-            String question = q.getQuestion();
-            String answer = "\nAnswer: " + q.getAnswer();
-            Paragraph quest = new Paragraph();
-            quest.add(header);
-            quest.add(question);
-            quest.add(answer);
-            document.add(quest);
-            counter++;
-        }
-
-        document.close();
-    }
-
-    /**
-     * Creates a sheet with answers for the quiz as a pdf saved locally on the computer.
-     * Local destination can be changed in dest variable.
-     * @param destination Chosen destination for the export to be saved
-     */
-    public void exportAnswersWithoutQuestions(String destination) {
-        String title = getName();
-        String dest = destination + "/" + title + " - Answers Without Questions.pdf";
-        PdfWriter writer = null;
-        try {
-            writer = new PdfWriter(dest);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
-
-        Paragraph paragraph1 = new Paragraph(title);
-        document.add(paragraph1);
-
-        HashMap<Integer, QuestionModel> questions = getQuestions();
-        int counter = 1;
-
-        for (QuestionModel q : questions.values()) {
-            String header = "Question " + counter + ": ";
-            String answer = "\nAnswer: " + q.getAnswer();
-            Paragraph quest = new Paragraph();
-            quest.add(header);
-            quest.add(answer);
-            document.add(quest);
-            counter++;
-        }
-
-        document.close();
     }
 }
