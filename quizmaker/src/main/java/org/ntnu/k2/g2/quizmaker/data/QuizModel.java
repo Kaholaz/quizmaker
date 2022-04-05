@@ -188,6 +188,30 @@ public class QuizModel {
     public void setActive(boolean active) {
         this.active = active;
     }
+    
+    /**
+     * @return The maximum score a team can attain on this quiz.
+     */
+    public int getMaxScore() {
+        return questions.values().stream().map(QuestionModel::getScore).reduce(0, Integer::sum);
+    }
 
+    /**
+     * @return The combined score of all teams competing in this quiz.
+     */
+    public int getCombinedTeamScore() {
+        return teams.values().stream().map(TeamModel::getScore).reduce(0, Integer::sum);
+    }
 
+    /**
+     * @return The difficulty on a scale from 0 (hardest) to 1 (easiest) if no teams are registered to this quiz,
+     *         -1 is returned.
+     */
+    public double getDifficulty() {
+        if (teams.isEmpty()) {
+            return -1d;
+        }
+
+        return ((double) getCombinedTeamScore()) / (teams.size() * getMaxScore());
+    }
 }

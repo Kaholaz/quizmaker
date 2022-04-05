@@ -4,7 +4,7 @@ import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * A class used to interact with the storage system of quizzes

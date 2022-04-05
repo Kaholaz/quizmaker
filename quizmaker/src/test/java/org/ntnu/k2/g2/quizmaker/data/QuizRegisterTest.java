@@ -42,6 +42,7 @@ public class QuizRegisterTest extends TestCase {
 
         for (int i = 1; i <= 5; ++i) {
             QuestionModel question = quizRegister.newQuestion(testQuiz);
+            question.setScore(i);
             question.setQuestion(String.format("Q%d", i));
             question.setAnswer(String.format("A%d", i));
         }
@@ -101,6 +102,7 @@ public class QuizRegisterTest extends TestCase {
 
         assertEquals("Q5", question.getQuestion());
         assertEquals("A5", question.getAnswer());
+        assertEquals(5, question.getScore());
         assertEquals(5, question.getId());
     }
 
@@ -142,6 +144,7 @@ public class QuizRegisterTest extends TestCase {
         QuestionModel question = quizRegister.getQuestion(4);
         question.setQuestion("New Question");
         question.setAnswer("New Answer");
+        question.setScore(69);
 
         QuestionModel returnQuestion = quizRegister.saveQuestion(question);
         QuestionModel savedQuestion = quizRegister.getQuestion(4);
