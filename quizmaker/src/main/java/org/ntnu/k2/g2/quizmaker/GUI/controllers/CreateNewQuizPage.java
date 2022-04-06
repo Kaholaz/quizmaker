@@ -28,12 +28,13 @@ public class CreateNewQuizPage {
 
     @FXML
     void onSubmitBtnClicked(ActionEvent event) {
+        // TODO: Check if a quiz with the name already exists
+
         // Create the Quiz instance
         QuizRegister register = new QuizRegister();
         QuizModel createdQuiz = register.newQuiz();
         createdQuiz.setName(quizNameInputField.getText());
-
-        // TODO: Check if a quiz with the name already exists
+        register.saveQuiz(createdQuiz);
 
         // Set the states for the question editor page
         QuizHandlerSingelton.setQuiz(createdQuiz);
