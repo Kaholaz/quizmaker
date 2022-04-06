@@ -57,7 +57,7 @@ public class QuestionEditorPage {
     void onBtnCreateNewQuestionClick(ActionEvent event) {
         QuizRegister register = new QuizRegister();
         QuestionModel newQuestion = register.newQuestion(QuizHandlerSingelton.getQuiz());
-        vBox.getChildren().add(createQuestionPane(newQuestion));
+        vBox.getChildren().add(createQuestionPane(newQuestion, QuizHandlerSingelton.getQuiz().getQuestions().values().size()));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -69,8 +69,9 @@ public class QuestionEditorPage {
     }
 
     private void loadQuestionsToVBox() {
-        QuizHandlerSingelton.getQuiz().getQuestions().forEach((id, question) -> {
-            vBox.getChildren().add(createQuestionPane(question));
-        });
+        int questionCounter = 1;
+        for (QuestionModel question : QuizHandlerSingelton.getQuiz().getQuestions().values()) {
+            vBox.getChildren().add(createQuestionPane(question, questionCounter++));
+        }
     }
 }
