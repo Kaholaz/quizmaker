@@ -34,7 +34,8 @@
     -fx-border-insets: 4px;
     -fx-background-insets: 4px;
 }
-.Text {
-    -fx-font-size: 14px;
+
+.text {
+    -fx-font-size: 15px;
 }
 

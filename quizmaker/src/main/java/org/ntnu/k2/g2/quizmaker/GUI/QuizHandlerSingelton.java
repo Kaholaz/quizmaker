@@ -42,7 +42,7 @@ public class QuizHandlerSingelton {
     }
 
     /**
-     * Get the active status. By default this is set true, but will be overridden
+     * Get the active status. By default, this is set true, but will be overridden
      * if the currentQuiz is not null.
      *
      * @return active status

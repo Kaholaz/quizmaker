@@ -61,19 +61,12 @@ public class QuizAdminPage {
     }
 
     /**
-     * Redirects back to listView and checks the singleton for
-     * whether the quiz is active or archived.
+     * Redirects back to listView.
      */
 
     @FXML
     void onBack(ActionEvent event) {
-        String path = "/GUI/listArchivedQuizzesPage.fxml";
-
-        if (quiz.isActive()) {
-            path = "/GUI/listQuizzesPage.fxml";
-        }
-
-        GUI.setSceneFromActionEvent(event, path);
+        GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
     }
 
     /**

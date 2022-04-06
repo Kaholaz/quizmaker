@@ -40,7 +40,6 @@ public class ListQuizzesPage {
      */
     @FXML
     void onBack(ActionEvent event) {
-        QuizHandlerSingelton.clear();
         GUI.setSceneFromActionEvent(event, "/GUI/mainPage.fxml");
     }
 

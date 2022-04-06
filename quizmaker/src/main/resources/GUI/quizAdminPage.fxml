@@ -106,8 +106,11 @@
    <top>
       <HBox styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker" wrappingWidth="60.310546875" />
-            <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker" wrappingWidth="84.310546875" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font></Text>
+            <Pane prefHeight="28.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" text="back" />
          </children>
       </HBox>

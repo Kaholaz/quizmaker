@@ -87,8 +87,9 @@ public class GUI extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
         Parent root = checkFXMLLoader(loader);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene prev = ((Node) actionEvent.getSource()).getScene();
+        Stage stage = (Stage)  prev.getWindow();
+        stage.setScene(new Scene(root, prev.getWidth(), prev.getHeight()));
         stage.show();
     }
 

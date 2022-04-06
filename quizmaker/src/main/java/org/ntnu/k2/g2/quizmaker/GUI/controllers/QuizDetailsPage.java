@@ -64,7 +64,7 @@ public class QuizDetailsPage {
             QuizHandlerSingelton.clear();
             GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
         } else {
-            //TODO: print error message here
+            System.out.println("failed.");
         }
     }
 
