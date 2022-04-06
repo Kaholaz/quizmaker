@@ -107,13 +107,19 @@ public class GUI extends Application {
         try {
             root = loader.load();
         } catch (java.io.IOException e) {
-            System.out.println("Could not load XML file...\n\n" + e.getMessage());
+            System.out.println("Could not load XML file... Check the controller class for " + e.getMessage());
+            System.out.println("Stack Trace:");
+            e.printStackTrace();
         } catch (IllegalStateException e) {
             System.out.println("Most likely, you mistyped the fxml resource path that you tried to load.");
             System.out.println("Remember to add / in the beginning of the path and give the path relative to the resources folder.");
             System.out.println("\n" + e.getClass() + ": " + e.getMessage());
+            System.out.println("Stack Trace:");
+            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("A different, unexpected exception was thrown while loading the FXML file...\n\n" + e.getClass() + ": " + e.getMessage());
+            System.out.println("Stack Trace:");
+            e.printStackTrace();
         }
         return root;
     }
