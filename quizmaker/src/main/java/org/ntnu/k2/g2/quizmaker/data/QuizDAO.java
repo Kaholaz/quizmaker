@@ -250,11 +250,11 @@ class QuizDAO {
                     "DELETE FROM quizzes WHERE id=?");
             preparedStatement.setInt(1, id);
 
-            result = preparedStatement.execute();
+            preparedStatement.execute();
+            result = true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-
             DatabaseConnection.closePreparedStatement(preparedStatement);
         }
         return result;

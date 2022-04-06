@@ -185,7 +185,7 @@ public class QuizRegisterTest extends TestCase {
         QuizRegister quizRegister = new QuizRegister();
 
         QuizModel quiz = quizRegister.getQuiz(1);
-        quizRegister.removeQuiz(quiz);
+        assertEquals(true, quizRegister.removeQuiz(quiz));
 
         ArrayList<QuizModel> quizzes = quizRegister.getQuizList();
         assertEquals(0, quizzes.size());
