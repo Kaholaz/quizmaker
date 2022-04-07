@@ -1,8 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.data;
 
 import junit.framework.TestCase;
-import org.ntnu.k2.g2.quizmaker.PdfExport.PdfManager;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

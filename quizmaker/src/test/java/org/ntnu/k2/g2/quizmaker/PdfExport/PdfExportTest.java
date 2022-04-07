@@ -5,6 +5,8 @@ import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
+import java.io.File;
+
 public class PdfExportTest extends TestCase {
     public void testPdfExport() {
         QuizRegister quizRegister = new QuizRegister();
@@ -23,11 +25,15 @@ public class PdfExportTest extends TestCase {
 
         }
 
-        PdfManager.exportAnswersheetWithQuestionsQR(testQuiz,"src/main/resources/PdfExport");
-        PdfManager.exportAnswersheetWithQuestions(testQuiz,"src/main/resources/PdfExport");
-        PdfManager.exportAnswersheetWithoutQuestionsQR(testQuiz,"src/main/resources/PdfExport");
-        PdfManager.exportAnswersheetWithoutQuestions(testQuiz,"src/main/resources/PdfExport");
-        PdfManager.exportAnswersWithQuestions(testQuiz,"src/main/resources/PdfExport");
-        PdfManager.exportAnswersWithoutQuestions(testQuiz,"src/main/resources/PdfExport");
+        String destination = "src/main/resources/PdfExport";
+        File destionation_file = new File(destination);
+        destionation_file.mkdir();
+
+        PdfManager.exportAnswersheetWithQuestionsQR(testQuiz,destination);
+        PdfManager.exportAnswersheetWithQuestions(testQuiz,destination);
+        PdfManager.exportAnswersheetWithoutQuestionsQR(testQuiz,destination);
+        PdfManager.exportAnswersheetWithoutQuestions(testQuiz,destination);
+        PdfManager.exportAnswersWithQuestions(testQuiz,destination);
+        PdfManager.exportAnswersWithoutQuestions(testQuiz,destination);
     }
 }

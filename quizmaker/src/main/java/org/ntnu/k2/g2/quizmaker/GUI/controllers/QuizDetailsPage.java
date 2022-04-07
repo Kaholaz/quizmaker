@@ -2,6 +2,10 @@ package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
@@ -29,7 +33,7 @@ public class QuizDetailsPage {
     private Text quizName; // Value injected by FXMLLoader
 
     @FXML // fx:id="rankingGrid"
-    private GridPane rankingGrid; // Value injected by FXMLLoader
+    private TableView<TeamModel> ranking; // Value injected by FXMLLoader
 
     @FXML // fx:id="sumQuestions"
     private Text sumQuestions; // Value injected by FXMLLoader
@@ -64,7 +68,7 @@ public class QuizDetailsPage {
             QuizHandlerSingelton.clear();
             GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
         } else {
-            //TODO: print error message here
+            System.out.println("failed.");
         }
     }
 
@@ -83,17 +87,21 @@ public class QuizDetailsPage {
         Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
         int i = 0;
 
-        rankingGrid.getChildren().clear();
-
         while (teamsSorted.hasNext()) {
-            rankingGrid.addRow(i, GUIFactory.basicText(teamsSorted.next().getTeamName()));
-            i++;
+            ranking.getItems().add(teamsSorted.next());
         }
+    }
+
+    void initTable() {
+        TableColumn<TeamModel, String> name = new TableColumn<>("Navn");
+        name.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        ranking.getColumns().add(name);
     }
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         update();
+        initTable();
     }
 }

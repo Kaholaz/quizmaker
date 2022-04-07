@@ -47,7 +47,7 @@ public class GUIFactory {
     public static Text basicText(String string) {
         Text text = new Text();
         text.setText(string);
-        text.setStyle("-fx-padding: 4px;");
+        text.getStyleClass().add("text");
         return text;
     }
 }

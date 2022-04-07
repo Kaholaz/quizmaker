@@ -1,6 +1,8 @@
 package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
@@ -26,7 +28,17 @@ public class ExportPage {
     @FXML
     private CheckBox c1, c2, c3, c4, c5, c6;
 
+    @FXML // fx:id="close"
+    private Button close; // Value injected by FXMLLoader
+
+
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
+
+    @FXML
+    private void onClose(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
     /**
      * Checks the checkboxes. If they are selected it will import the selected option.
@@ -73,5 +85,6 @@ public class ExportPage {
         } else {
             exportMsg.setText("Nothing was exported.");
         }
+        close.setText("Lukk");
     }
 }
