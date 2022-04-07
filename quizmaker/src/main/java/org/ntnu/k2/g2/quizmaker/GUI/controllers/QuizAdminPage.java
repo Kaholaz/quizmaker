@@ -28,6 +28,9 @@ public class QuizAdminPage {
     @FXML // fx:id="retrieveScores"
     private Button retrieveScores; // Value injected by FXMLLoader
 
+    @FXML // fx:id="changeState"
+    private Button changeState; // Value injected by FXMLLoader
+
     @FXML // fx:id="sumQuestions"
     private Text sumQuestions; // Value injected by FXMLLoader
 
@@ -56,8 +59,8 @@ public class QuizAdminPage {
             e.printStackTrace();
             errorMsg.setText("En uventet feil oppstod: " + e.getMessage());
         }
+        update();
 
-        GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
     }
 
     /**
@@ -85,26 +88,48 @@ public class QuizAdminPage {
 
     /**
      * Opens the default browser, with the URL to the Google sheet
-     * of the quiz.
+     * of the quiz. It checks the os and uses the appropriate system commands to open
+     * a browser.
      */
 
     @FXML
     void onEditTeams() {
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+        String os = System.getProperty("os.name").toLowerCase();
+        Runtime rt = Runtime.getRuntime();
+        String url = quiz.getUrl();
+        String command = null;
+
+        if (os.contains("win")) {
+            command = "rundll32 url.dll,FileProtocolHandler " + url;
+        }
+
+        if (os.contains("nix") || os.contains("nux")) {
+            String[] browsers = {"google-chrome", "firefox", "mozilla", "opera"};
+
+            StringBuilder cmd = new StringBuilder();
+            for (int i = 0; i < browsers.length; i++)
+                if (i == 0)
+                    cmd.append(String.format("%s \"%s\"", browsers[i], url));
+                else
+                    cmd.append(String.format(" || %s \"%s\"", browsers[i], url));
+
+                try {
+                    rt.exec(new String[] { "sh", "-c", cmd.toString() });
+                } catch (IOException e) {
+                    errorMsg.setText("Kunne ikke åpne nettleser: " + e.getMessage());
+                }
+        }
+
+        if (os.contains("mac")) {
+            command = "open " + url;
+        }
+
+        if (command != null) {
             try {
-                Desktop.getDesktop().browse(new URI(quiz.getUrl()));
-
-            } catch (URISyntaxException | IOException e) {
-                e.printStackTrace();
-                errorMsg.setText("Kunne ikke åpne url: " + e.getMessage());
-            } catch (Exception e) {
-                e.printStackTrace();
-                errorMsg.setText("Det oppstod en uventet feil: " + e.getMessage());
+                rt.exec(command);
+            } catch (IOException e) {
+                errorMsg.setText("Kunne ikke åpne netleser: " + e.getMessage());
             }
-            retrieveScores.setStyle("-fx-background-color: yellow;");
-
-        } else {
-            errorMsg.setText("Kunne ikke åpne standardnettleser. Din maskin er kanskje ikke støttet.");
         }
     }
 
@@ -147,6 +172,11 @@ public class QuizAdminPage {
         quizName.setText(quiz.getName());
         sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
+        if (quiz.isActive()) {
+            changeState.setText("Send til arkiv");
+        } else {
+            changeState.setText("Send til aktiv");
+        }
     }
 
     @FXML

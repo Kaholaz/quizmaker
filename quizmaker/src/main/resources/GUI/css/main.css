@@ -62,11 +62,10 @@
 
 }
 
-.gridPane-basic {
-    -fx-font-size: 15px;
-}
-
 .gridPane-basic-elements {
     -fx-padding: 9px;
-    -fx-font-size: 16px;
+}
+
+.text {
+    -fx-font-size: 18px;
 }

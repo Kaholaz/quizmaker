@@ -20,13 +20,13 @@
    <top>
       <HBox styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="75.45932006835938" HBox.hgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Quiz-maker" wrappingWidth="124.79266357421875" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="14.0" />
                </font></Text>
             <Pane prefHeight="0.0" prefWidth="0.0" stylesheets="@css/menu.css" HBox.hgrow="ALWAYS" />
-            <Button fx:id="switchStatus" mnemonicParsing="false" onAction="#onSwitchStatus" stylesheets="@css/main.css" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" stylesheets="@css/menu.css" text="Back" />
+            <Button fx:id="switchStatus" mnemonicParsing="false" onAction="#onSwitchStatus" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" stylesheets="@css/menu.css" text="Tilbake" />
          </children>
       </HBox>
    </top>

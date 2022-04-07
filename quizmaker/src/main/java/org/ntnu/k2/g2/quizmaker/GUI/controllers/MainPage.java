@@ -28,12 +28,4 @@ public class MainPage {
     public void onCreateNewQuizBtnClicked() {
         GUI.setSceneFromNode(btnNewQuiz, "/GUI/createNewQuizPage.fxml");
     }
-
-    @FXML
-    void initialize() {
-        QuizRegister quizRegister = new QuizRegister();
-        if (quizRegister.getQuizList().isEmpty()) {
-            quizRegister.populateDatabase(5, 5, 5);
-        }
-    }
 }

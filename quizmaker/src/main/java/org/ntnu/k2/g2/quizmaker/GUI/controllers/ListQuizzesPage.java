@@ -59,9 +59,9 @@ public class ListQuizzesPage {
 
         if (QuizHandlerSingelton.isActive()) {
             quizzes = quizRegister.getActiveQuizzes();
-            switchStatus.setText("Archived");
+            switchStatus.setText("Arkivert");
         } else {
-            switchStatus.setText("Active");
+            switchStatus.setText("Aktive");
             quizzes = quizRegister.getArchivedQuizzes();
         }
 
