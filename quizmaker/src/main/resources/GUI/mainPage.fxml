@@ -12,9 +12,9 @@
    <center>
       <VBox prefHeight="196.0" prefWidth="200.0">
          <children>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="145.0" prefWidth="500.0" VBox.vgrow="NEVER">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="145.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker" wrappingWidth="221.03207397460938">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker" wrappingWidth="229.69882202148438" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="43.0" />
                      </font>
@@ -24,19 +24,21 @@
                   </Text>
                </children>
             </HBox>
+            <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="161.0" prefWidth="409.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Quizzer">
+                           <HBox.margin>
+                              <Insets right="100.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Ny quiz" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </center>
-   <bottom>
-      <HBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="166.0" prefWidth="500.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Quizzer">
-               <HBox.margin>
-                  <Insets right="100.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Ny quiz" />
-         </children>
-      </HBox>
-   </bottom>
 </BorderPane>
