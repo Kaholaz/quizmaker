@@ -137,8 +137,7 @@ public class ResultSheet {
     public void clearSheetValues(String sheetId) throws GeneralSecurityException, IOException {
         Sheets sheetsService = createSheetsService();
 
-        // There is a way to delete all values on the sheet, but it requires the
-        // name of the worksheet, like "Sheet1" or "Ark 1"
+        // Alternative range: <Worksheet name>
         String range = "A:F";
         ClearValuesRequest requestBody = new ClearValuesRequest();
         Sheets.Spreadsheets.Values.Clear request = sheetsService.spreadsheets().values().clear(sheetId, range, requestBody);
