@@ -1,9 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.data;
 
 import junit.framework.TestCase;
-import org.ntnu.k2.g2.quizmaker.PdfExport.PdfManager;
-
-import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -287,33 +284,5 @@ public class QuizRegisterTest extends TestCase {
 
         assertEquals("Team 2", quizzes.get(1).getTeams().get(5).getTeamName());
         assertEquals(2, quizzes.get(1).getTeams().get(5).getScore());
-    }
-
-    public void testPdfExport() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel testQuiz = quizRegister.newQuiz(true);
-
-        testQuiz.setName("Test quiz");
-
-        for (int i = 1; i <= 20; ++i) {
-            QuestionModel question = quizRegister.newQuestion(testQuiz);
-            if (i % 2 == 0) {
-                question.setQuestion("Dette er et ekstremt langt spørsmål som tar helt sinnsykt mye plass?");
-                question.setAnswer("Dette er et kort svar");
-            } else {
-                question.setQuestion("Dette er et kort spørsmål?");
-                question.setAnswer("Dette er et veldig langt, omfattende og komplisert svar som egentlig kunne vært formulert mye bedre");
-            }
-
-        }
-
-        String destination = "src/main/resources/PdfExport";
-        File destionation_file = new File(destination);
-        destionation_file.mkdir();
-
-        PdfManager.exportAnswersheetWithQuestions(testQuiz,destination);
-        PdfManager.exportAnswersheetWithoutQuestions(testQuiz,destination);
-        PdfManager.exportAnswersWithQuestions(testQuiz,destination);
-        PdfManager.exportAnswersWithoutQuestions(testQuiz,destination);
     }
 }

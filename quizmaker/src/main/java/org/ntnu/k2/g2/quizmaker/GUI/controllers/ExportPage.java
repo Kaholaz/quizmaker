@@ -54,7 +54,7 @@ public class ExportPage {
 
         try {
             if (c1.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
+                PdfManager.exportAnswersheetWithQuestionsQR(quiz,file.toString());
                 i++;
             }
             if (c2.isSelected()) {
@@ -62,7 +62,7 @@ public class ExportPage {
                 i++;
             }
             if (c3.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
+                PdfManager.exportAnswersheetWithoutQuestionsQR(quiz,file.toString());
                 i++;
             }
             if (c4.isSelected()) {
