@@ -17,21 +17,18 @@ import java.util.Hashtable;
 
 /**
  * Class that creates QR codes.
- * Most of the class is from here: https://www.journaldev.com/470/java-qr-code-generator-zxing-example
+ * The main shell of the class is from here: https://www.journaldev.com/470/java-qr-code-generator-zxing-example
+ *
  */
 
 public class GenerateQRCode {
-    public static void saveQR(QuizModel quiz) throws WriterException, IOException {
+    public static Image saveQR(QuizModel quiz) throws WriterException {
         String qrCodeText = quiz.getUrl();
-        String filePath = "src/main/resources/PdfExport/" + quiz.getName() + ".png";
         int size = 125;
-        String fileType = "png";
-        File qrFile = new File(filePath);
-        createQRImage(qrFile, qrCodeText, size, fileType);
+        return createQRImage(qrCodeText, size);
     }
 
-    private static void createQRImage(File qrFile, String qrCodeText, int size, String fileType)
-            throws WriterException, IOException {
+    private static Image createQRImage(String qrCodeText, int size) throws WriterException {
         // Create the ByteMatrix for the QR-Code that encodes the given String
         Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
@@ -55,6 +52,6 @@ public class GenerateQRCode {
                 }
             }
         }
-        ImageIO.write(image, fileType, qrFile);
+        return image;
     }
 }
