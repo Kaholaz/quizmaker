@@ -89,4 +89,21 @@ public class ResultSheetTest extends TestCase {
         int points = Integer.parseInt((String) row.get(1));
         assertTrue(points>0);
         assertNotNull(teamName);
-}}
+}
+    public void testClearSheet() throws GeneralSecurityException, IOException {
+        ResultSheet resultSheet = new ResultSheet();
+        String sheetId = resultSheet.createSheet("Sheet");
+
+        resultSheet.appendRowValues(sheetId,"Hello","3");
+        resultSheet.appendRowValues(sheetId,"Hello","3");
+        resultSheet.appendRowValues(sheetId,"Hello","3");
+        resultSheet.appendRowValues(sheetId,"Hello","3");
+
+        assertEquals(4,resultSheet.countRows(sheetId));
+
+        resultSheet.clearSheetValues(sheetId);
+
+        assertEquals(0,resultSheet.countRows(sheetId));
+    }
+
+}
