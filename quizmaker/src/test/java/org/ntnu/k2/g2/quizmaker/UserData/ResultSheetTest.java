@@ -30,31 +30,6 @@ public class ResultSheetTest extends TestCase {
         assertNotNull(sheetID);
     }
 
-    public void testCreateSheetWithDatabase() throws IOException, GeneralSecurityException {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
-        quiz.setName("TestCreateSheetWithDatabase");
-        QuizResultManager.createResultSheet(quiz);
-    }
-
-    public void testImportResultSheet() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
-        quiz.setName("Test quiz");
-
-        ResultSheet resultSheet = new ResultSheet();
-        try {
-            resultSheet.appendRowValues(quiz.getSheetId(), "Team1", "1");
-            resultSheet.appendRowValues(quiz.getSheetId(), "Team2", "2");
-            QuizResultManager.importResults(quiz);
-        }
-        catch (IOException | GeneralSecurityException e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(2, quiz.getTeams().size());
-    }
-
     public void testAppendRowValues() throws GeneralSecurityException, IOException {
         ResultSheet resultsheet = new ResultSheet();
         String sheetID = publicSpreadsheet1;
