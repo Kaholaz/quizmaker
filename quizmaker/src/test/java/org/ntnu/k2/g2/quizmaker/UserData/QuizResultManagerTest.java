@@ -26,6 +26,8 @@ public class QuizResultManagerTest extends TestCase {
 
         ResultSheet resultSheet = new ResultSheet();
         try {
+            // Result sheets are not created automatically in tests
+            QuizResultManager.createResultSheet(quiz);
             resultSheet.appendRowValues(quiz.getSheetId(), "Team1", "1");
             resultSheet.appendRowValues(quiz.getSheetId(), "Team2", "2");
             QuizResultManager.importResults(quiz);
@@ -35,5 +37,6 @@ public class QuizResultManagerTest extends TestCase {
         }
 
         assertEquals(2, quiz.getTeams().size());
+        assertEquals(3, quiz.getCombinedTeamScore());
     }
 }
