@@ -1,7 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.data;
 
 import junit.framework.TestCase;
-import org.ntnu.k2.g2.quizmaker.PdfExport.PdfManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class QuizRegisterTest extends TestCase {
 
     private static void populateDatabase() {
         QuizRegister quizRegister = new QuizRegister();
-        QuizModel testQuiz = quizRegister.newQuiz(true);
+        QuizModel testQuiz = quizRegister.newQuiz();
 
         testQuiz.setName("Test Quiz");
 
@@ -217,7 +216,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testRemoveTeamNotInDatabaseReturnsFalse() {
         QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz(true);
+        QuizModel quiz = quizRegister.newQuiz();
 
         TeamModel team = quizRegister.newTeam(quiz);
         quizRegister.removeTeam(quiz, team.getId());
@@ -227,7 +226,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testRemoveQuestionNotInDatabaseReturnsFalse() {
         QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz(true);
+        QuizModel quiz = quizRegister.newQuiz();
 
         QuestionModel question = quizRegister.newQuestion(quiz);
         quizRegister.removeTeam(quiz, question.getId());
@@ -237,7 +236,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testSaveTeamNotInDataBaseReturnsNull() {
         QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz(true);
+        QuizModel quiz = quizRegister.newQuiz();
 
         TeamModel team = quizRegister.newTeam(quiz);
         quizRegister.removeTeam(quiz, team.getId());
@@ -247,7 +246,7 @@ public class QuizRegisterTest extends TestCase {
 
     public void testSaveQuestionNotInDataBaseReturnsNull() {
         QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz(true);
+        QuizModel quiz = quizRegister.newQuiz();
 
         QuestionModel question = quizRegister.newQuestion(quiz);
         quizRegister.removeQuestion(quiz, question.getId());
@@ -260,7 +259,6 @@ public class QuizRegisterTest extends TestCase {
         quizRegister.populateDatabase(1,2,3);
 
         QuizModel quiz = quizRegister.getQuiz(2);
-        System.out.println(quiz);
         quiz.setActive(false);
 
         quizRegister.saveQuiz(quiz);

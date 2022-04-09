@@ -16,7 +16,7 @@ class DatabaseConnection {
     private static final String DB_NAME = "quizMaker.data";
     private static final String DB_NAME_TEST_PREFIX = "test_";
 
-    private static final boolean test = isTest();
+    private static final boolean test = Util.isTest();
 
     /**
      * Creates a new database instance.
@@ -63,22 +63,6 @@ class DatabaseConnection {
         File path = new File(DB_PATH);
         String db_name = (test ? DB_NAME_TEST_PREFIX : "").concat(DB_NAME);
         return new File(path, db_name);
-    }
-
-    /**
-     * Checks whenever or not the database is running inside a test by searching through the stack trace.
-     * This method is used to determine what database URL to use.
-     *
-     * @return True if the database is running inside a test, false if not.
-     */
-    private static boolean isTest() {
-        StackTraceElement[] stackTraces = Thread.currentThread().getStackTrace();
-        for (StackTraceElement element : stackTraces) {
-            if (element.getClassName().startsWith("org.junit.")) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

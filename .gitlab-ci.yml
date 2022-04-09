@@ -24,6 +24,6 @@ unit-test-job:   # This job runs in the test stage.
     - echo "Running unit tests..."
     - cd quizmaker
     - pwd
-    - mvn clean test -Dtest=\!ResultSheetTest*
+    - mvn clean test -Dtest=\!ResultSheetTest*,\!QuizResultManagerTest*
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
