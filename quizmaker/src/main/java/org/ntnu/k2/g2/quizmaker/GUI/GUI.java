@@ -1,12 +1,13 @@
 package org.ntnu.k2.g2.quizmaker.GUI;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
 /**
  * This is the main GUI class of the application. The class
@@ -14,6 +15,9 @@ import javafx.event.ActionEvent;
  */
 
 public class GUI extends Application {
+
+    private static final int STAGE_MIN_HEIGHT = 400;
+    private static final int STAGE_MIN_WIDTH = 500;
 
     /**
      * Main method of the GUI, and starts the application by applying the mainpage
@@ -25,6 +29,11 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
+        QuizRegister quizRegister = new QuizRegister();
+        if (quizRegister.getQuizList().isEmpty()) {
+            quizRegister.populateDatabase(5, 100, 100);
+        }
+        primaryStage.setTitle("QuizMaker");
     }
 
     /**
@@ -43,6 +52,7 @@ public class GUI extends Application {
         loader.setLocation(GUI.class.getResource(path));
         Parent root = GUI.checkFXMLLoader(loader);
         Scene scene = new Scene(root, prev.getWidth(), prev.getHeight());
+
 
         stage.setScene(scene);
     }
@@ -72,6 +82,9 @@ public class GUI extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
         stage.setScene(new Scene(checkFXMLLoader(loader)));
+        stage.setMinHeight(STAGE_MIN_HEIGHT);
+        stage.setMinWidth(STAGE_MIN_WIDTH);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -87,8 +100,9 @@ public class GUI extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
         Parent root = checkFXMLLoader(loader);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene prev = ((Node) actionEvent.getSource()).getScene();
+        Stage stage = (Stage) prev.getWindow();
+        stage.setScene(new Scene(root, prev.getWidth(), prev.getHeight()));
         stage.show();
     }
 

@@ -40,7 +40,6 @@ public class ListQuizzesPage {
      */
     @FXML
     void onBack(ActionEvent event) {
-        QuizHandlerSingelton.clear();
         GUI.setSceneFromActionEvent(event, "/GUI/mainPage.fxml");
     }
 
@@ -60,9 +59,9 @@ public class ListQuizzesPage {
 
         if (QuizHandlerSingelton.isActive()) {
             quizzes = quizRegister.getActiveQuizzes();
-            switchStatus.setText("Archived");
+            switchStatus.setText("Arkivert");
         } else {
-            switchStatus.setText("Active");
+            switchStatus.setText("Aktive");
             quizzes = quizRegister.getArchivedQuizzes();
         }
 
