@@ -70,11 +70,11 @@ public class ExportPage {
                 i++;
             }
             if (c5.isSelected()) {
-                PdfManager.exportAnswersWithQuestions(quiz,file.toString());
+                PdfManager.exportSolutionWithQuestions(quiz,file.toString());
                 i++;
             }
             if (c6.isSelected()) {
-                PdfManager.exportAnswersWithoutQuestions(quiz,file.toString());
+                PdfManager.exportSolutionWithoutQuestions(quiz,file.toString());
                 i++;
             }
         } catch (Exception e) {

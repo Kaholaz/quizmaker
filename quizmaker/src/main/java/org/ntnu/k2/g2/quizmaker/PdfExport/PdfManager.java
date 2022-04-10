@@ -67,7 +67,7 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questions.values()) {
-            String header = counter + ") ";
+            String header = counter + ") (" + q.getScore() + " poeng) ";
             String question = q.getQuestion();
             String answer = "\nSvar:_____________________________________________";
             Paragraph quest = new Paragraph();
@@ -114,7 +114,7 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questions.values()) {
-            String header = counter + ") ";
+            String header = counter + ") (" + q.getScore() + " poeng) ";
             String question = q.getQuestion();
             String answer = "\nSvar:_____________________________________________";
             Paragraph quest = new Paragraph();
@@ -176,7 +176,7 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questions.values()) {
-            String header = counter + ") ";
+            String header = counter + ") (" + q.getScore() + " poeng) ";
             String answer = "\nSvar:_____________________________________________";
             Paragraph quest = new Paragraph();
             quest.add(header);
@@ -220,7 +220,7 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questions.values()) {
-            String header = counter + ") ";
+            String header = counter + ") (" + q.getScore() + " poeng) ";
             String answer = "\nSvar:_____________________________________________";
             Paragraph quest = new Paragraph();
             quest.add(header);
@@ -235,11 +235,11 @@ public class PdfManager {
     }
 
     /**
-     * Creates a sheet with answers and questions for the quiz as a pdf saved locally on the computer.
+     * Creates a sheet with solutions and questions for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
      * @param destination Chosen destination for the export to be saved
      */
-    public static void exportAnswersWithQuestions(QuizModel quiz, String destination) {
+    public static void exportSolutionWithQuestions(QuizModel quiz, String destination) {
         String title = quiz.getName();
         PdfWriter writer = null;
         String dest = destination + "/" + title + " - Fasit med spørsmål.pdf";
@@ -252,24 +252,7 @@ public class PdfManager {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-
-        ImageData data = null;
-        try {
-            data = ImageDataFactory.create(GenerateQRCode.saveQR(quiz), Color.BLACK);
-        } catch (IOException | WriterException e) {
-            e.printStackTrace();
-        }
-        Image qrCode = new Image(data);
-        qrCode.setFixedPosition(465,716);
-        document.add(qrCode);
-
-        Paragraph qrDescription = new Paragraph("Skann denne for å åpne svarskjema:");
-        qrDescription.setWidth(93);
-        qrDescription.setTextAlignment(TextAlignment.RIGHT);
-        qrDescription.setFixedPosition(385,765,qrDescription.getWidth());
-        document.add(qrDescription);
-
-        Paragraph paragraph1 = new Paragraph(title);
+        Paragraph paragraph1 = new Paragraph(title + " - Fasit");
         paragraph1.setWidth(345);
         paragraph1.setFontSize(30);
         document.add(paragraph1);
@@ -281,7 +264,7 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questions.values()) {
-            String header = counter + ") ";
+            String header = counter + ") (" + q.getScore() + " poeng) ";
             String question = q.getQuestion();
             String answer = "\nSvar: " + q.getAnswer();
             Paragraph quest = new Paragraph();
@@ -298,11 +281,11 @@ public class PdfManager {
     }
 
     /**
-     * Creates a sheet with answers for the quiz as a pdf saved locally on the computer.
+     * Creates a sheet with solution for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
      * @param destination Chosen destination for the export to be saved
      */
-    public static void exportAnswersWithoutQuestions(QuizModel quiz, String destination) {
+    public static void exportSolutionWithoutQuestions(QuizModel quiz, String destination) {
         String title = quiz.getName();
         PdfWriter writer = null;
         String dest = destination + "/" + title + " - Fasit uten spørsmål.pdf";
@@ -315,23 +298,7 @@ public class PdfManager {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        ImageData data = null;
-        try {
-            data = ImageDataFactory.create(GenerateQRCode.saveQR(quiz), Color.BLACK);
-        } catch (IOException | WriterException e) {
-            e.printStackTrace();
-        }
-        Image qrCode = new Image(data);
-        qrCode.setFixedPosition(465,716);
-        document.add(qrCode);
-
-        Paragraph qrDescription = new Paragraph("Skann denne for å åpne svarskjema:");
-        qrDescription.setWidth(93);
-        qrDescription.setTextAlignment(TextAlignment.RIGHT);
-        qrDescription.setFixedPosition(385,765,qrDescription.getWidth());
-        document.add(qrDescription);
-
-        Paragraph paragraph1 = new Paragraph(title);
+        Paragraph paragraph1 = new Paragraph(title + " - Fasit");
         paragraph1.setWidth(345);
         paragraph1.setFontSize(30);
         document.add(paragraph1);
@@ -343,7 +310,7 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questions.values()) {
-            String header = counter + ") ";
+            String header = counter + ") (" + q.getScore() + " poeng) ";
             String answer = "\nSvar: " + q.getAnswer();
             Paragraph quest = new Paragraph();
             quest.add(header);

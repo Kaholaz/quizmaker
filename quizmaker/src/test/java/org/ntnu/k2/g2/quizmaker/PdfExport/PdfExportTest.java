@@ -33,7 +33,7 @@ public class PdfExportTest extends TestCase {
         PdfManager.exportAnswersheetWithQuestions(testQuiz,destination);
         PdfManager.exportAnswersheetWithoutQuestionsQR(testQuiz,destination);
         PdfManager.exportAnswersheetWithoutQuestions(testQuiz,destination);
-        PdfManager.exportAnswersWithQuestions(testQuiz,destination);
-        PdfManager.exportAnswersWithoutQuestions(testQuiz,destination);
+        PdfManager.exportSolutionWithQuestions(testQuiz,destination);
+        PdfManager.exportSolutionWithoutQuestions(testQuiz,destination);
     }
 }
