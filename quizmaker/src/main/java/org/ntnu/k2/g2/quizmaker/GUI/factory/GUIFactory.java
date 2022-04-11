@@ -1,9 +1,7 @@
 package org.ntnu.k2.g2.quizmaker.GUI.factory;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
@@ -49,5 +47,11 @@ public class GUIFactory {
         text.setText(string);
         text.getStyleClass().add("text");
         return text;
+    }
+
+    public static Alert createNewErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message,  ButtonType.CLOSE);
+        alert.showAndWait();
+        return alert;
     }
 }
