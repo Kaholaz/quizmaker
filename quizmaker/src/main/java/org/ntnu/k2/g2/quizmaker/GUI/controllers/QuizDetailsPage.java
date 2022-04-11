@@ -68,7 +68,7 @@ public class QuizDetailsPage {
             QuizHandlerSingelton.clear();
             GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
         } else {
-            System.out.println("failed.");
+            GUIFactory.createNewErrorAlert("Kunne ikke slette quiz.");
         }
     }
 

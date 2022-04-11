@@ -6,14 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 
 /**
@@ -46,10 +44,9 @@ public class QuizAdminPage {
      * Changes between viewing active - and archived quizzes when the change state button
      * has been pressed.
      *
-     * @param event - click event
      */
     @FXML
-    void onChangeState(ActionEvent event) {
+    void onChangeState() {
         QuizRegister quizRegister = new QuizRegister();
 
         try {
@@ -57,7 +54,7 @@ public class QuizAdminPage {
             quizRegister.saveQuiz(quiz);
         } catch (Exception e) {
             e.printStackTrace();
-            errorMsg.setText("En uventet feil oppstod: " + e.getMessage());
+            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage());
         }
         update();
 
@@ -116,7 +113,7 @@ public class QuizAdminPage {
                 try {
                     rt.exec(new String[] { "sh", "-c", cmd.toString() });
                 } catch (IOException e) {
-                    errorMsg.setText("Kunne ikke åpne nettleser: " + e.getMessage());
+                    GUIFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage());
                 }
         }
 
@@ -128,7 +125,7 @@ public class QuizAdminPage {
             try {
                 rt.exec(command);
             } catch (IOException e) {
-                errorMsg.setText("Kunne ikke åpne netleser: " + e.getMessage());
+                GUIFactory.createNewErrorAlert("Kunne ikke åpne netleser: " + e.getMessage());
             }
         }
     }
@@ -149,19 +146,20 @@ public class QuizAdminPage {
 
     @FXML
     void onRetrieveScores() {
-        String msg = "Importering vellykket";
         try {
             QuizResultManager.importResults(quiz);
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
-            msg = ("Kunne ikke hente data: " + e.getMessage());
+            GUIFactory.createNewErrorAlert("Kunne ikke hente data: " + e.getMessage());
+            return;
         } catch (Exception e) {
             e.printStackTrace();
-            msg = ("Det oppstod en uventet feil.");
+            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage());
+            return;
         }
         update();
         retrieveScores.setStyle("-fx-backgroud-color: lightblue;");
-        errorMsg.setText(msg);
+        errorMsg.setText("Importering vellykket");
     }
 
     /**
