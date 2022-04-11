@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.QuestionEditorPage">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.QuestionEditorPage">
     <top>
         <HBox prefHeight="0.0" prefWidth="200.0" styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" />
-                <Pane prefHeight="26.0" prefWidth="416.0" />
-                <Button fx:id="save" mnemonicParsing="false" onAction="#onSave" styleClass="button-small" stylesheets="@css/main.css" text="Save" />
-                <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" styleClass="button-small" stylesheets="@css/main.css" text="Back" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" HBox.hgrow="ALWAYS" />
+                <Pane prefHeight="26.0" prefWidth="416.0" HBox.hgrow="ALWAYS" />
+                <Button fx:id="save" minWidth="60.0" mnemonicParsing="false" onAction="#onSave" styleClass="button-small" stylesheets="@css/main.css" text="Lagre" />
+                <Button fx:id="back" minWidth="70.0" mnemonicParsing="false" onAction="#onBack" styleClass="button-small" stylesheets="@css/main.css" text="Tilbake" />
             </children>
         </HBox>
     </top>
@@ -26,11 +26,19 @@
             </content>
         </ScrollPane>
     </center>
-    <bottom>
-        <Pane prefHeight="64.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <children>
-                <Button layoutX="238.0" layoutY="20.0" mnemonicParsing="false" onAction="#onBtnCreateNewQuestionClick" text="Create new question" />
-            </children>
-        </Pane>
-    </bottom>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <VBox>
+               <children>
+                  <Pane VBox.vgrow="ALWAYS" />
+                      <Button mnemonicParsing="false" onAction="#onBtnCreateNewQuestionClick" text="Legg til nytt spørsmål" />
+                  <Pane VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>
