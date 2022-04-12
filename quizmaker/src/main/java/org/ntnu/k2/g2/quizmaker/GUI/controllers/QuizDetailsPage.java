@@ -81,8 +81,8 @@ public class QuizDetailsPage {
         lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
-        difficulty.setText("Not implemented");
-        average.setText("Not implemented");
+        difficulty.setText(QuizHandlerSingelton.getDifficulty());
+        average.setText(Double.toString(Math.round(quiz.getDifficulty())));
 
         Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
         int i = 0;
@@ -95,7 +95,11 @@ public class QuizDetailsPage {
     void initTable() {
         TableColumn<TeamModel, String> name = new TableColumn<>("Navn");
         name.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        TableColumn<TeamModel, String> score = new TableColumn<>("Score");
+        score.setCellValueFactory(new PropertyValueFactory<>("score"));
+
         ranking.getColumns().add(name);
+        ranking.getColumns().add(score);
     }
 
     @FXML
@@ -104,4 +108,5 @@ public class QuizDetailsPage {
         update();
         initTable();
     }
+
 }

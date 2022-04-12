@@ -78,4 +78,17 @@ public class QuizHandlerSingelton {
         currentQuiz = null;
         active = true;
     }
+
+    public static String getDifficulty() {
+        double diff = currentQuiz.getDifficulty();
+        if (diff > 0f && diff < 0.4) {
+           return "Lett";
+        } else if (diff > 0.4 && diff < 0.7) {
+            return "Middels";
+        } else {
+            return "Høy";
+        }
+
+
+    }
 }
