@@ -24,7 +24,6 @@ public class QuizResultManager {
         String sheetId = resultSheet.createSheet(quiz.getName());
         quiz.setSheetId(sheetId);
         resultSheet.addRowValues(sheetId, "Teams", "Scores", "1");
-
         return sheetId;
     }
 
@@ -35,22 +34,16 @@ public class QuizResultManager {
      * @return True if the operation was successful, false if not.
      */
     public static boolean changeResultSheetName(QuizModel quiz) {
-        /*
-        TODO: Make it possible to change the name of a result sheet
-         */
-        return false;
-    }
+        ResultSheet resultSheet = new ResultSheet();
 
-    /**
-     * Removes a quiz's associated result sheet. This removes the result sheet of the quiz based on what
-     * quiz.getSheetId() returns.
-     * @param quiz The quiz whose result sheet to delete.
-     * @return True if the operation was successful, false if not.
-     */
-    public static boolean deleteResultSheet(QuizModel quiz) {
-        /*
-         * TODO: make it possible to remove a result sheet
-         */
+        String newName = quiz.getName();
+        String sheetId = quiz.getSheetId();
+
+        try {
+            return resultSheet.setSheetTitle(sheetId,newName);
+        }catch (GeneralSecurityException | IOException e){
+            e.printStackTrace();
+        }
         return false;
     }
 
