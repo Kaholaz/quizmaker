@@ -128,5 +128,23 @@ public class ResultSheet {
         List<List<Object>> results = response.getValues();
         return results;
     }
+    /**
+     * Removes all values from the spreadsheet from column A to F
+     * @param sheetId id of the spreadsheet
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public void clearSheetValues(String sheetId) throws GeneralSecurityException, IOException {
+        Sheets sheetsService = createSheetsService();
+
+        // Alternative range: <Worksheet name>
+        String range = "A:F";
+        ClearValuesRequest requestBody = new ClearValuesRequest();
+        Sheets.Spreadsheets.Values.Clear request = sheetsService.spreadsheets().values().clear(sheetId, range, requestBody);
+
+        ClearValuesResponse response = request.execute();
+    }
+
+
 }
 

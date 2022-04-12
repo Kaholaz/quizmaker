@@ -116,25 +116,14 @@ public class QuizRegister {
 
     /**
      * Create a new quiz.
-     *
      * @return The new quiz.
      */
     public QuizModel newQuiz() {
-        return newQuiz(false);
-    }
-
-    /**
-     * Create a new quiz.
-     *
-     * @param isTest If this flag is set to true, new quizzes are created without a result sheet.
-     *               This is to be used in testing.
-     * @return The new quiz.
-     */
-    protected QuizModel newQuiz(boolean isTest) {
         QuizModel quiz = new QuizModel();
         quiz.setName("new quiz");
 
-        if (!isTest) {
+        // A result sheet is not generated within testing
+        if (!Util.isTest()) {
             try {
                 QuizResultManager.createResultSheet(quiz);
             } catch (GeneralSecurityException | IOException e) {
