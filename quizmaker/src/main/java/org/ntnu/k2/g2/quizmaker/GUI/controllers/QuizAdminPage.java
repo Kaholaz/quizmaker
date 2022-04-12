@@ -38,6 +38,9 @@ public class QuizAdminPage {
     @FXML
     private Text errorMsg;
 
+    @FXML
+    private Text difficulty;
+
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     /**
@@ -109,7 +112,6 @@ public class QuizAdminPage {
                     cmd.append(String.format("%s \"%s\"", browsers[i], url));
                 else
                     cmd.append(String.format(" || %s \"%s\"", browsers[i], url));
-
                 try {
                     rt.exec(new String[] { "sh", "-c", cmd.toString() });
                 } catch (IOException e) {
@@ -170,6 +172,7 @@ public class QuizAdminPage {
         quizName.setText(quiz.getName());
         sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
+        difficulty.setText(QuizHandlerSingelton.getDifficulty());
         if (quiz.isActive()) {
             changeState.setText("Send til arkiv");
         } else {

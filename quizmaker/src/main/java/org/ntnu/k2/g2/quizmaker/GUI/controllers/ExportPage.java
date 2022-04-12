@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 import org.ntnu.k2.g2.quizmaker.PdfExport.PdfManager;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
@@ -49,7 +50,7 @@ public class ExportPage {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Stage stage = (Stage) export.getScene().getWindow();
         File file = directoryChooser.showDialog(stage);
-        String msg = "Export successful";
+        String msg = "Eksportering vellykket";
         int i = 0;
 
         try {
@@ -78,12 +79,12 @@ public class ExportPage {
                 i++;
             }
         } catch (Exception e) {
-            msg = "Export Unsuccessful" + e.getMessage();
+            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage());
         }
         if (i > 0) {
             exportMsg.setText(msg);
         } else {
-            exportMsg.setText("Nothing was exported.");
+            exportMsg.setText("Ingenting ble eksportert");
         }
         close.setText("Lukk");
     }
