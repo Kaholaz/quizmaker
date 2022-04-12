@@ -95,4 +95,20 @@ public class ResultSheetTest extends TestCase {
         assertEquals(0,resultSheet.countRows(sheetId));
     }
 
+
+    public void testGetName() throws GeneralSecurityException, IOException {
+        ResultSheet resultSheet = new ResultSheet();
+        String sheetId = resultSheet.createSheet("My Name");
+
+        assertEquals("My Name",resultSheet.getSheetTitle(sheetId));
+    }
+
+    public void testSetName() throws GeneralSecurityException, IOException {
+        ResultSheet resultSheet = new ResultSheet();
+        String sheetId = resultSheet.createSheet("Old Name");
+        resultSheet.setSheetTitle("New name",sheetId);
+
+        assertEquals("New name",resultSheet.getSheetTitle(sheetId));
+    }
+
 }
