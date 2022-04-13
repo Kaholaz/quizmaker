@@ -8,6 +8,7 @@ import com.google.api.services.sheets.v4.model.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,6 +44,50 @@ public class ResultSheet {
         Spreadsheet response = request.execute();
 
         return response.getSpreadsheetId();
+    }
+
+    /**
+     * Gets the title of the spreadsheet
+     * @param sheetId id of the spreadsheet
+     * @return title of the spreadsheet
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public String getSheetTitle(String sheetId) throws GeneralSecurityException, IOException {
+        Sheets sheetService = createSheetsService();
+
+        Sheets.Spreadsheets.Get getRequest = sheetService.spreadsheets().get(sheetId).setIncludeGridData(false);
+        Spreadsheet response = getRequest.execute();
+
+        String title = response.getProperties().getTitle();
+
+        return title;
+    }
+
+    /**
+     * Changes the title of the spreadsheet
+     * @param sheetTitle tile of the spreadsheet
+     * @param sheetId id of the spreadsheet
+     * @throws GeneralSecurityException
+     * @throws IOException
+     * @return
+     */
+
+    public boolean setSheetTitle(String sheetTitle, String sheetId) throws GeneralSecurityException, IOException {
+        Sheets sheetsService = createSheetsService();
+
+        List<Request> request = new ArrayList<>();
+
+        request.add(new Request().setUpdateSpreadsheetProperties(new UpdateSpreadsheetPropertiesRequest()
+                .setProperties(new SpreadsheetProperties().setTitle(sheetTitle)).setFields("title")));
+
+        BatchUpdateSpreadsheetRequest body = new BatchUpdateSpreadsheetRequest().setRequests(request);
+
+        Sheets.Spreadsheets.BatchUpdate batchUpdate = sheetsService.spreadsheets().batchUpdate(sheetId,body);
+
+        BatchUpdateSpreadsheetResponse response = batchUpdate.execute();
+
+        return true;
     }
 
     /**

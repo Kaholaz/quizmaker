@@ -172,7 +172,6 @@ public class QuizRegister {
      * @return True if the operation was successful, false if not.
      */
     public boolean removeQuiz(QuizModel quiz) {
-        QuizResultManager.deleteResultSheet(quiz);
 
         QuizDAO quizDAO = new QuizDAO();
         return quizDAO.removeQuizById(quiz.getId());
