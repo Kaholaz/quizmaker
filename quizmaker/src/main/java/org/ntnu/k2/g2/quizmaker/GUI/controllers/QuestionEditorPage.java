@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -26,31 +27,39 @@ public class QuestionEditorPage {
     @FXML // fx:id="vBox"
     private VBox vBox; // Value injected by FXMLLoader
 
-    // This is also a "state". This is the page that the back button will return to.
-    // TODO: Implement checks when setting to this variable
-    public static String returnPage = "/GUI/mainPage.fxml";
-
     @FXML
     void onSave(ActionEvent event) {
+        // For each question "set" (question-answer pair)
         for (int i = 0; i < vBox.getChildren().size(); i++) {
+            // Get the pane and search for all text inputs
             Pane questionPane = (Pane) vBox.getChildren().get(i);
             Set<Node> textAreas = questionPane.lookupAll("TextArea");
 
+            // Assume that the first text area is the question text area and the second is the answer text area
             TextArea questionTextArea = (TextArea) textAreas.toArray()[0];
             TextArea answerTextArea = (TextArea) textAreas.toArray()[1];
 
+            // Get string values
             String newQuestion = questionTextArea.getText();
             String newAnswer = answerTextArea.getText();
 
+            // Get the question we're changing from the Quiz.
             QuestionModel questionToChange = (QuestionModel) QuizHandlerSingelton.getQuiz().getQuestions().values().toArray()[i];
             questionToChange.setQuestion(newQuestion);
             questionToChange.setAnswer(newAnswer);
         }
+
+        // Save the quiz to the database
+        QuizRegister register = new QuizRegister();
+        register.saveQuiz(QuizHandlerSingelton.getQuiz());
+
+        // Go back to quiz page
+        GUI.setSceneFromNode(save, "/GUI/quizAdminPage.fxml");
     }
 
     @FXML
     void onBack(ActionEvent event) {
-        GUI.setSceneFromNode(save, returnPage);
+        GUI.setSceneFromNode(save, "/GUI/quizAdminPage.fxml");
     }
 
     @FXML
