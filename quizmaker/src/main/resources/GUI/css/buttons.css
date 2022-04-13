@@ -18,8 +18,18 @@
     -fx-border-type: solid;
     -fx-border-width: 2px;
     -fx-font-size: 16px;
+}
 
-    -fx-cursor: hand;
+.navbar-button {
+    -fx-padding: 3px 10px;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+
+    -fx-font-size: 16px;
+    -fx-pref-height: 20px;
+
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 .check-box .box {

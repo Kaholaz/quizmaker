@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
@@ -15,19 +17,35 @@
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" HBox.hgrow="ALWAYS" />
                 <Pane prefHeight="26.0" prefWidth="416.0" HBox.hgrow="ALWAYS" />
-                <Button fx:id="save" minWidth="60.0" mnemonicParsing="false" onAction="#onSave" styleClass="button-small" stylesheets="@css/main.css" text="Lagre">
+                <Button fx:id="save" minWidth="60.0" mnemonicParsing="false" onAction="#onSave" text="Lagre">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
-                <Button fx:id="back" minWidth="70.0" mnemonicParsing="false" onAction="#onBack" styleClass="button-small" stylesheets="@css/main.css" text="Tilbake">
+               </cursor>
+               <stylesheets>
+                  <URL value="@css/buttons.css" />
+                  <URL value="@css/clickable-nodes.css" />
+               </stylesheets>
+               <styleClass>
+                  <String fx:value="navbar-button" />
+                  <String fx:value="clickable-node-gray" />
+               </styleClass></Button>
+                <Button fx:id="back" minWidth="70.0" mnemonicParsing="false" onAction="#onBack" text="Tilbake">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
+               </cursor>
+               <stylesheets>
+                  <URL value="@css/buttons.css" />
+                  <URL value="@css/clickable-nodes.css" />
+               </stylesheets>
+               <styleClass>
+                  <String fx:value="navbar-button" />
+                  <String fx:value="clickable-node-gray" />
+               </styleClass></Button>
             </children>
         </HBox>
     </top>
     <center>
-        <ScrollPane hbarPolicy="NEVER" hmin="20.0" prefHeight="292.0" prefWidth="439.0" styleClass="scrollPane" stylesheets="@css/clickable.css" BorderPane.alignment="CENTER">
+        <ScrollPane hbarPolicy="NEVER" hmin="20.0" prefHeight="292.0" prefWidth="439.0" styleClass="scrollPane" BorderPane.alignment="CENTER">
             <content>
             <HBox>
                <children>
