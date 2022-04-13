@@ -38,7 +38,6 @@ public class CreateNewQuizPage {
 
         // Set the states for the question editor page
         QuizHandlerSingelton.setQuiz(createdQuiz);
-        QuestionEditorPage.returnPage = "/GUI/mainPage.fxml";
 
         // Redirect to question editor
         GUI.setSceneFromNode(btnSubmit, "/GUI/questionEditorPage.fxml");
