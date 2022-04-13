@@ -18,7 +18,7 @@
          </BorderPane.margin>
          <children>
             <Pane prefHeight="350.0" prefWidth="19.0" HBox.hgrow="ALWAYS" />
-            <VBox fx:id="vBox" stylesheets="@css/clickable.css" HBox.hgrow="ALWAYS">
+            <VBox fx:id="vBox" HBox.hgrow="ALWAYS">
                <children>
                   <CheckBox fx:id="c1" mnemonicParsing="false" styleClass="text" text="Spørsmål med blanke svarfelt med QR-kode" VBox.vgrow="ALWAYS" />
                   <CheckBox fx:id="c2" mnemonicParsing="false" styleClass="text" text="Spørsmål med blanke svarfelt uten QR-kode" />
@@ -47,12 +47,12 @@
                </HBox.margin>
             </Text>
             <Pane prefHeight="43.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="close" mnemonicParsing="false" onAction="#onClose" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Avbryt">
+            <Button fx:id="close" mnemonicParsing="false" onAction="#onClose" styleClass="medium-button" stylesheets="@css/buttons.css" text="Avbryt">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="export" mnemonicParsing="false" onAction="#onExport" prefHeight="43.0" prefWidth="115.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Eksporter" />
+            <Button fx:id="export" mnemonicParsing="false" onAction="#onExport" prefHeight="43.0" prefWidth="115.0" styleClass="medium-button" stylesheets="@css/buttons.css" text="Eksporter" />
          </children>
       </HBox>
    </bottom>

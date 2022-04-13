@@ -28,7 +28,7 @@
                      </font>
                   </Text>
                   <Pane prefHeight="8.0" prefWidth="281.0" VBox.vgrow="ALWAYS" />
-                  <GridPane prefHeight="90.0" prefWidth="299.0" styleClass="gridPane-basic" stylesheets="@css/clickable.css" VBox.vgrow="ALWAYS">
+                  <GridPane prefHeight="90.0" prefWidth="299.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="156.33331298828125" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00002034505206" minWidth="10.0" prefWidth="66.00002034505206" />
@@ -54,7 +54,7 @@
                   <HBox prefHeight="4.0" prefWidth="273.0">
                      <children>
                         <Pane prefHeight="75.0" prefWidth="158.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" prefHeight="25.0" prefWidth="111.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Detaljer">
+                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" styleClass="medium-button" stylesheets="@css/buttons.css" text="Detaljer">
                            <HBox.margin>
                               <Insets bottom="20.0" right="10.0" top="50.0" />
                            </HBox.margin>
@@ -71,7 +71,7 @@
                   <Insets right="50.0" />
                </HBox.margin>
                <children>
-                  <GridPane alignment="CENTER" prefHeight="317.0" prefWidth="170.0" stylesheets="@css/clickable.css" HBox.hgrow="ALWAYS">
+                  <GridPane alignment="CENTER" prefHeight="317.0" prefWidth="170.0" HBox.hgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -83,14 +83,14 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" prefHeight="192.0" prefWidth="176.0" styleClass="button-big" stylesheets="@css/clickable.css" text="Rediger spørsmål">
+                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" prefHeight="192.0" prefWidth="176.0" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Rediger spørsmål">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin></Button>
-                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="button-big" stylesheets="@css/clickable.css" text="Rediger lag og poeng" GridPane.rowIndex="1" />
-                        <Button fx:id="changeState" mnemonicParsing="false" onAction="#onChangeState" styleClass="button-big" stylesheets="@css/clickable.css" text="Send til " GridPane.rowIndex="2" />
-                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Importer data" GridPane.rowIndex="3" />
-                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" styleClass="button-big" stylesheets="@css/clickable.css" text="Eksporter Q&amp;A" GridPane.rowIndex="4" />
+                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Rediger lag og poeng" GridPane.rowIndex="1" />
+                        <Button fx:id="changeState" mnemonicParsing="false" onAction="#onChangeState" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Send til " GridPane.rowIndex="2" />
+                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Importer data" GridPane.rowIndex="3" />
+                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Eksporter Q&amp;A" GridPane.rowIndex="4" />
                      </children>
                      <HBox.margin>
                         <Insets bottom="25.0" left="10.0" top="15.0" />

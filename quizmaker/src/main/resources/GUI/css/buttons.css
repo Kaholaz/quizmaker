@@ -1,4 +1,4 @@
-.button-big {
+.big-gridpane-button-lightblue {
     -fx-pref-width: Infinity;
     -fx-pref-height: 70px;
     -fx-border-insets: 4px;
@@ -8,24 +8,18 @@
     -fx-border-width: 2px;
     -fx-font-size: 16px;
     -fx-background-color: lightblue;
-    -fx-cursor: hand;
 }
 
-.button-big:hover {
-    -fx-background-color: white;
-}
+.medium-button {
+    -fx-pref-width: 120px;
+    -fx-pref-height: 25px;
 
-.button-stealth {
-    -fx-background: white;
     -fx-border-color: black;
     -fx-border-type: solid;
     -fx-border-width: 2px;
     -fx-font-size: 16px;
-    -fx-cursor: hand;
-}
 
-.button-stealth:hover {
-    -fx-background-color: lightblue;
+    -fx-cursor: hand;
 }
 
 .check-box .box {
@@ -53,7 +47,7 @@
 }
 
 .listQuiz {
-    -fx-pref-width: 200000px;
+    -fx-pref-width: Infinity;
     -fx-padding: 30px;
     -fx-border-insets: 4px;
     -fx-background-insets: 4px;

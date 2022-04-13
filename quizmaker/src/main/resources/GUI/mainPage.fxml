@@ -28,12 +28,12 @@
                <children>
                   <HBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="161.0" prefWidth="409.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Quizzer">
+                        <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" styleClass="medium-button" stylesheets="@css/buttons.css" text="Quizzer">
                            <HBox.margin>
                               <Insets right="100.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Ny quiz" />
+                        <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" styleClass="medium-button" stylesheets="@css/buttons.css" text="Ny quiz" />
                      </children>
                   </HBox>
                </children>
