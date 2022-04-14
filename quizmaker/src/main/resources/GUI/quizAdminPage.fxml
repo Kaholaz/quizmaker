@@ -56,10 +56,18 @@
                   <HBox prefHeight="4.0" prefWidth="273.0">
                      <children>
                         <Pane prefHeight="75.0" prefWidth="158.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" styleClass="medium-button" stylesheets="@css/buttons.css" text="Detaljer">
+                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" text="Detaljer">
                            <HBox.margin>
                               <Insets bottom="20.0" right="10.0" top="50.0" />
                            </HBox.margin>
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="medium-button" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass>
                         </Button>
                      </children>
                   </HBox>
@@ -85,14 +93,54 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" prefHeight="192.0" prefWidth="176.0" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Rediger spørsmål">
+                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" prefHeight="192.0" prefWidth="176.0" text="Rediger spørsmål">
                            <GridPane.margin>
                               <Insets />
-                           </GridPane.margin></Button>
-                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Rediger lag og poeng" GridPane.rowIndex="1" />
-                        <Button fx:id="changeState" mnemonicParsing="false" onAction="#onChangeState" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Send til " GridPane.rowIndex="2" />
-                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Importer data" GridPane.rowIndex="3" />
-                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" styleClass="big-gridpane-button-lightblue" stylesheets="@css/buttons.css" text="Eksporter Q&amp;A" GridPane.rowIndex="4" />
+                           </GridPane.margin>
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" text="Rediger lag og poeng" GridPane.rowIndex="1">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="changeState" mnemonicParsing="false" onAction="#onChangeState" text="Send til " GridPane.rowIndex="2">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" text="Importer data" GridPane.rowIndex="3">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" text="Eksporter Q&amp;A" GridPane.rowIndex="4">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
                      </children>
                      <HBox.margin>
                         <Insets bottom="25.0" left="10.0" top="15.0" />

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
@@ -28,12 +30,28 @@
                <children>
                   <HBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="161.0" prefWidth="409.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" styleClass="medium-button" stylesheets="@css/buttons.css" text="Quizzer">
+                        <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" text="Quizzer">
                            <HBox.margin>
                               <Insets right="100.0" />
                            </HBox.margin>
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="medium-button" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass>
                         </Button>
-                        <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" styleClass="medium-button" stylesheets="@css/buttons.css" text="Ny quiz" />
+                        <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" text="Ny quiz">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="medium-button" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
                      </children>
                   </HBox>
                </children>

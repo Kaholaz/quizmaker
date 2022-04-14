@@ -64,7 +64,15 @@
             <VBox>
                <children>
                   <Pane VBox.vgrow="ALWAYS" />
-                      <Button mnemonicParsing="false" onAction="#onBtnCreateNewQuestionClick" text="Legg til nytt spørsmål" />
+                      <Button mnemonicParsing="false" onAction="#onBtnCreateNewQuestionClick" style="-fx-pref-width: 200px;" text="Legg til nytt spørsmål">
+                     <stylesheets>
+                        <URL value="@css/buttons.css" />
+                        <URL value="@css/clickable-nodes.css" />
+                     </stylesheets>
+                     <styleClass>
+                        <String fx:value="medium-button" />
+                        <String fx:value="clickable-node-gray" />
+                     </styleClass></Button>
                   <Pane VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
