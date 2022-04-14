@@ -35,6 +35,7 @@ public class GUIFactory {
 
         // Add styling
         admin.getStylesheets().add("/GUI/css/lists.css");
+        admin.getStylesheets().add("/GUI/css/clickable-nodes.css");
         admin.getStyleClass().add("full-width-list-element");
         admin.getStyleClass().add("clickable-node-lightgreen");
 

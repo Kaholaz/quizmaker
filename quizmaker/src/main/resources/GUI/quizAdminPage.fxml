@@ -19,7 +19,7 @@
       <HBox prefHeight="320.0" prefWidth="539.0">
          <children>
             <Pane prefHeight="320.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
-            <VBox prefHeight="290.0" prefWidth="421.0" styleClass="main-container" stylesheets="@css/main.css" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="290.0" prefWidth="421.0" styleClass="padded-container-lightgray" stylesheets="@css/containers.css" HBox.hgrow="ALWAYS">
                <children>
                   <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" text="Quizname">
                      <VBox.margin>
