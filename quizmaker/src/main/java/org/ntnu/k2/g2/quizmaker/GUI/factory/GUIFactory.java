@@ -21,25 +21,24 @@ public class GUIFactory {
     /**
      * Creates a big button for one question in listViewPages.
      *
-     * @param quiz that is being displayed
-     * @return Button element
+     * @param quiz  that is being displayed
+     * @return a button element styled to occupy the full width.
      */
-    public static HBox listQuestionItem(QuizModel quiz) {
-        HBox hBox = new HBox();
+    public static Button listQuestionItem(QuizModel quiz) {
         Button admin = new Button(quiz.getName());
 
-        admin.setId(String.valueOf(quiz.getId()));
-
+        // Add on-click event
         admin.setOnAction((ActionEvent e) -> {
             QuizHandlerSingelton.setQuiz(quiz);
             GUI.setSceneFromNode(admin, "/GUI/quizAdminPage.fxml");
         });
 
-        admin.getStyleClass().add("listQuiz");
+        // Add styling
+        admin.getStylesheets().add("/GUI/css/lists.css");
+        admin.getStyleClass().add("full-width-list-element");
+        admin.getStyleClass().add("clickable-node-lightgreen");
 
-        hBox.getChildren().add(admin);
-
-        return hBox;
+        return admin;
     }
 
     public static Text basicText(String string) {

@@ -1,3 +1,4 @@
+/* This file includes styles for buttons */
 .big-gridpane-button-lightblue {
     -fx-pref-width: Infinity;
     -fx-pref-height: 70px;
@@ -54,21 +55,4 @@
 .check-box:selected .box {
 
     -fx-background-color: #28a3f4;
-}
-
-.listQuiz {
-    -fx-pref-width: Infinity;
-    -fx-padding: 30px;
-    -fx-border-insets: 4px;
-    -fx-background-insets: 4px;
-    -fx-font-size: 22px;
-    -fx-border-color: black;
-    -fx-border-type: solid;
-    -fx-border-width: 2px;
-    -fx-background-color: lightgrey;
-    -fx-cursor: hand;
-}
-
-.listQuiz:hover {
-    -fx-background-color: lightgreen;
 }

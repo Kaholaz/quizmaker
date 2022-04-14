@@ -27,7 +27,7 @@
                   <Font size="14.0" />
                </font></Text>
             <Pane prefHeight="0.0" prefWidth="0.0" stylesheets="@css/menu.css" HBox.hgrow="ALWAYS" />
-            <Button fx:id="switchStatus" mnemonicParsing="false" text="Active">
+            <Button fx:id="switchStatus" mnemonicParsing="false" onAction="#onSwitchStatus" text="Active">
                <stylesheets>
                   <URL value="@css/buttons.css" />
                   <URL value="@css/clickable-nodes.css" />
