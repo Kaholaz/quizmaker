@@ -29,10 +29,6 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         setSceneFromStage(primaryStage, "/GUI/mainPage.fxml");
-        QuizRegister quizRegister = new QuizRegister();
-        if (quizRegister.getQuizList().isEmpty()) {
-            quizRegister.populateDatabase(5, 100, 100);
-        }
         primaryStage.setTitle("QuizMaker");
     }
 
