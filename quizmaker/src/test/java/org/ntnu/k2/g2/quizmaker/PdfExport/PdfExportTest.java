@@ -9,12 +9,11 @@ import java.io.File;
 
 public class PdfExportTest extends TestCase {
     public void testPdfExport() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel testQuiz = quizRegister.newQuiz();
+        QuizModel testQuiz = QuizRegister.newQuiz();
         testQuiz.setName("Test quiz");
 
         for (int i = 1; i <= 20; ++i) {
-            QuestionModel question = quizRegister.newQuestion(testQuiz);
+            QuestionModel question = QuizRegister.newQuestion(testQuiz);
             if (i % 2 == 0) {
                 question.setQuestion("Dette er et ekstremt langt spørsmål som tar helt sinnsykt mye plass?");
                 question.setAnswer("Dette er et kort svar");

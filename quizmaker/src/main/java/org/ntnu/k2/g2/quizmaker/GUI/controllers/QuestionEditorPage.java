@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -50,8 +49,7 @@ public class QuestionEditorPage {
         }
 
         // Save the quiz to the database
-        QuizRegister register = new QuizRegister();
-        register.saveQuiz(QuizHandlerSingelton.getQuiz());
+        QuizRegister.saveQuiz(QuizHandlerSingelton.getQuiz());
 
         // Go back to quiz page
         GUI.setSceneFromNode(save, "/GUI/quizAdminPage.fxml");
@@ -64,8 +62,7 @@ public class QuestionEditorPage {
 
     @FXML
     void onBtnCreateNewQuestionClick(ActionEvent event) {
-        QuizRegister register = new QuizRegister();
-        QuestionModel newQuestion = register.newQuestion(QuizHandlerSingelton.getQuiz());
+        QuestionModel newQuestion = QuizRegister.newQuestion(QuizHandlerSingelton.getQuiz());
         vBox.getChildren().add(createQuestionPane(newQuestion, QuizHandlerSingelton.getQuiz().getQuestions().values().size()));
     }
 

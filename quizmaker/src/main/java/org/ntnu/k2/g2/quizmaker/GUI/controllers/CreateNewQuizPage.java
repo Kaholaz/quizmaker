@@ -31,10 +31,9 @@ public class CreateNewQuizPage {
         // TODO: Check if a quiz with the name already exists
 
         // Create the Quiz instance
-        QuizRegister register = new QuizRegister();
-        QuizModel createdQuiz = register.newQuiz();
+        QuizModel createdQuiz = QuizRegister.newQuiz();
         createdQuiz.setName(quizNameInputField.getText());
-        register.saveQuiz(createdQuiz);
+        QuizRegister.saveQuiz(createdQuiz);
 
         // Set the states for the question editor page
         QuizHandlerSingelton.setQuiz(createdQuiz);

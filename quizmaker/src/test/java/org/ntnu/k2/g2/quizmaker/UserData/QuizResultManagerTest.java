@@ -13,15 +13,13 @@ public class QuizResultManagerTest extends TestCase {
     }
 
     public void testCreateSheetWithDatabase() throws IOException, GeneralSecurityException {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
+        QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("TestCreateSheetWithDatabase");
         QuizResultManager.createResultSheet(quiz);
     }
 
     public void testImportResultSheet() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
+        QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("Test quiz");
 
         ResultSheet resultSheet = new ResultSheet();

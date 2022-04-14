@@ -50,11 +50,9 @@ public class QuizAdminPage {
      */
     @FXML
     void onChangeState() {
-        QuizRegister quizRegister = new QuizRegister();
-
         try {
             quiz.setActive(!quiz.isActive());
-            quizRegister.saveQuiz(quiz);
+            QuizRegister.saveQuiz(quiz);
         } catch (Exception e) {
             e.printStackTrace();
             GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage());

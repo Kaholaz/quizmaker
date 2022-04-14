@@ -54,15 +54,14 @@ public class ListQuizzesPage {
      */
 
     void update() {
-        QuizRegister quizRegister = new QuizRegister();
         ArrayList<QuizModel> quizzes;
 
         if (QuizHandlerSingelton.isActive()) {
-            quizzes = quizRegister.getActiveQuizzes();
+            quizzes = QuizRegister.getActiveQuizzes();
             switchStatus.setText("Arkivert");
         } else {
             switchStatus.setText("Aktive");
-            quizzes = quizRegister.getArchivedQuizzes();
+            quizzes = QuizRegister.getArchivedQuizzes();
         }
 
         vBox.getChildren().clear();
