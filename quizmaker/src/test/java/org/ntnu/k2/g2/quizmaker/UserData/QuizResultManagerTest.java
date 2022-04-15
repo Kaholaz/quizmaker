@@ -9,6 +9,13 @@ import java.security.GeneralSecurityException;
 
 public class QuizResultManagerTest extends TestCase {
 
+    /**
+     * Spreadsheet containing 4 Teams with points.
+     * READ ONLY
+     * https://docs.google.com/spreadsheets/d/1WNHT9u2QELw9Z8CE8YO7CctHUt2XpaTl2DeHBxk3a7k
+     */
+    String publicSpreadsheet2 = "1WNHT9u2QELw9Z8CE8YO7CctHUt2XpaTl2DeHBxk3a7k";
+
     public void testChangeResultSheetName() {
     }
 
@@ -27,16 +34,14 @@ public class QuizResultManagerTest extends TestCase {
         ResultSheet resultSheet = new ResultSheet();
         try {
             // Result sheets are not created automatically in tests
-            QuizResultManager.createResultSheet(quiz);
-            resultSheet.appendRowValues(quiz.getSheetId(), "Team1", "1");
-            resultSheet.appendRowValues(quiz.getSheetId(), "Team2", "2");
+            quiz.setSheetId(publicSpreadsheet2);
             QuizResultManager.importResults(quiz);
         }
         catch (IOException | GeneralSecurityException e) {
             e.printStackTrace();
         }
 
-        assertEquals(2, quiz.getTeams().size());
-        assertEquals(3, quiz.getCombinedTeamScore());
+        assertEquals(4, quiz.getTeams().size());
+        assertEquals(10, quiz.getCombinedTeamScore());
     }
 }
