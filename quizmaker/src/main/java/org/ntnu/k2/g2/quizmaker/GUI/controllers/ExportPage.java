@@ -79,7 +79,7 @@ public class ExportPage {
                 i++;
             }
         } catch (Exception e) {
-            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage());
+            GUIFactory.createNewErrorAlert("En uventet feil oppstod: \n" + e.getMessage());
         }
         if (i > 0) {
             exportMsg.setText(msg);

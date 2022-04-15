@@ -79,7 +79,7 @@ public class QuizDetailsPage {
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
         difficulty.setText(QuizHandlerSingelton.getDifficulty());
-        average.setText(Double.toString(Math.round(quiz.getDifficulty())));
+        average.setText(Double.toString(Math.round(quiz.getDifficulty()*100))+ "%");
 
         Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
         int i = 0;

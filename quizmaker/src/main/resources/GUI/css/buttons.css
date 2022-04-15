@@ -1,0 +1,36 @@
+/* This file includes styles for buttons */
+.big-gridpane-button-lightblue {
+    -fx-pref-width: Infinity;
+    -fx-pref-height: 70px;
+    -fx-border-insets: 4px;
+    -fx-background-insets: 4px;
+    -fx-border-color: black;
+    -fx-border-type: solid;
+    -fx-border-width: 2px;
+    -fx-font-size: 16px;
+    -fx-background-color: lightblue;
+}
+
+.medium-button {
+    -fx-pref-width: 120px;
+    -fx-pref-height: 25px;
+
+    -fx-border-radius: 2px;
+    -fx-border-color: black;
+    -fx-border-type: solid;
+    -fx-border-width: 2px;
+
+    -fx-font-size: 16px;
+}
+
+.navbar-button {
+    -fx-padding: 3px 10px;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+
+    -fx-font-size: 16px;
+    -fx-pref-height: 20px;
+
+    -fx-border-radius: 2px;
+    -fx-background-radius: 5px;
+}

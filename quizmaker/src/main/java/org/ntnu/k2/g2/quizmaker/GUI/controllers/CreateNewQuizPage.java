@@ -28,8 +28,6 @@ public class CreateNewQuizPage {
 
     @FXML
     void onSubmitBtnClicked(ActionEvent event) {
-        // TODO: Check if a quiz with the name already exists
-
         // Create the Quiz instance
         QuizModel createdQuiz = QuizRegister.newQuiz();
         createdQuiz.setName(quizNameInputField.getText());
