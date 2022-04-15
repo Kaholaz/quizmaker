@@ -2,8 +2,10 @@ package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
@@ -152,14 +154,15 @@ public class QuizAdminPage {
             QuizResultManager.importResults(quiz);
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("Kunne ikke hente data: " + e.getMessage());
+            GUIFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage());
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage());
+            GUIFactory.createNewErrorAlert("En uventet feil oppstod:\n " + e.getMessage());
             return;
         }
         update();
+
         retrieveScores.setStyle("-fx-backgroud-color: lightblue;");
         errorMsg.setText("Importering vellykket");
     }
