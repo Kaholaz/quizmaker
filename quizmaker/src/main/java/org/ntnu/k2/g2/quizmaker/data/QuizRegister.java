@@ -13,9 +13,8 @@ public class QuizRegister {
     /**
      * @return A complete representation of the database represented by an arraylist of quizzes
      */
-    public ArrayList<QuizModel> getQuizList() {
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.getAllQuizzes();
+    public static ArrayList<QuizModel> getQuizList() {
+        return QuizDAO.getAllQuizzes();
     }
 
     /**
@@ -23,7 +22,7 @@ public class QuizRegister {
      *
      * @return An ArrayList of all active quizzes.
      */
-    public ArrayList<QuizModel> getActiveQuizzes() {
+    public static ArrayList<QuizModel> getActiveQuizzes() {
         return new ArrayList<>(getQuizList().stream().filter(QuizModel::isActive).toList());
     }
 
@@ -32,7 +31,7 @@ public class QuizRegister {
      *
      * @return An ArrayList of al inactive/archived quizzes.
      */
-    public ArrayList<QuizModel> getArchivedQuizzes() {
+    public static ArrayList<QuizModel> getArchivedQuizzes() {
         return new ArrayList<>(getQuizList().stream().filter(quiz -> !quiz.isActive()).toList());
     }
 
@@ -43,9 +42,8 @@ public class QuizRegister {
      * @return A quiz object representation of the entry in the database.
      * {@code null} is returned if no quiz matching the query is found in the database.
      */
-    public QuizModel getQuiz(int id) {
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.getQuizById(id);
+    public static QuizModel getQuiz(int id) {
+        return QuizDAO.getQuizById(id);
     }
 
     /**
@@ -55,9 +53,8 @@ public class QuizRegister {
      * @return A team object representation of the entry in the database.
      * {@code null} is returned if no team matching the query is found in the database.
      */
-    public TeamModel getTeam(int id) {
-        TeamDAO teamDAO = new TeamDAO();
-        return teamDAO.getTeamById(id);
+    public static TeamModel getTeam(int id) {
+        return TeamDAO.getTeamById(id);
     }
 
     /**
@@ -67,9 +64,8 @@ public class QuizRegister {
      * @return A question object representation of the entry in the database.
      * {@code null} is returned if no question matching the query is found in the database.
      */
-    public QuestionModel getQuestion(int id) {
-        QuestionDAO questionDAO = new QuestionDAO();
-        return questionDAO.getQuestionById(id);
+    public static QuestionModel getQuestion(int id) {
+        return QuestionDAO.getQuestionById(id);
     }
 
     /**
@@ -79,13 +75,12 @@ public class QuizRegister {
      * @return A quiz object representation of the entry in the database AFTER it has been updated.
      * {@code null} is returned if something went wrong when the quiz was saved.
      */
-    public QuizModel saveQuiz(QuizModel quiz) {
-        QuizDAO quizDAO = new QuizDAO();
-        QuizModel outQuiz = quizDAO.updateQuiz(quiz);
+    public static QuizModel saveQuiz(QuizModel quiz) {
+        QuizModel outQuiz = QuizDAO.updateQuiz(quiz);
         if (!quiz.getName().equals(outQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
-        return quizDAO.updateQuiz(quiz);
+        return QuizDAO.updateQuiz(quiz);
     }
 
     /**
@@ -96,9 +91,8 @@ public class QuizRegister {
      * @return A team object representation of the entry in the database AFTER it has been updated.
      * {@code null} is returned if something went wrong when the team was saved.
      */
-    public TeamModel saveTeam(TeamModel team) {
-        TeamDAO teamDAO = new TeamDAO();
-        return teamDAO.updateTeam(team);
+    public static TeamModel saveTeam(TeamModel team) {
+        return TeamDAO.updateTeam(team);
     }
 
     /**
@@ -109,16 +103,15 @@ public class QuizRegister {
      * @return A question object representation of the entry in the database AFTER it has been updated.
      * {@code null} is returned if something went wrong when the question was saved.
      */
-    public QuestionModel saveQuestion(QuestionModel question) {
-        QuestionDAO questionDAO = new QuestionDAO();
-        return questionDAO.updateQuestion(question);
+    public static QuestionModel saveQuestion(QuestionModel question) {
+        return QuestionDAO.updateQuestion(question);
     }
 
     /**
      * Create a new quiz.
      * @return The new quiz.
      */
-    public QuizModel newQuiz() {
+    public static QuizModel newQuiz() {
         QuizModel quiz = new QuizModel();
         quiz.setName("new quiz");
 
@@ -131,8 +124,7 @@ public class QuizRegister {
             }
         }
 
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.updateQuiz(quiz);
+        return QuizDAO.updateQuiz(quiz);
     }
 
     /**
@@ -143,9 +135,8 @@ public class QuizRegister {
      * @return A team object representation of the entry in the database AFTER it has been added to the database.
      * {@code null} is returned if something went wrong when the team was added to the database.
      */
-    public TeamModel newTeam(QuizModel quiz) {
-        TeamDAO teamDAO = new TeamDAO();
-        TeamModel team = teamDAO.updateTeam(new TeamModel(), quiz.getId());
+    public static TeamModel newTeam(QuizModel quiz) {
+        TeamModel team = TeamDAO.updateTeam(new TeamModel(), quiz.getId());
         quiz.getTeams().put(team.getId(), team);
         return team;
     }
@@ -158,9 +149,8 @@ public class QuizRegister {
      * @return A question object representation of the entry in the database AFTER it has been added to the database.
      * {@code null} is returned if something went wrong when the question was added to the database.
      */
-    public QuestionModel newQuestion(QuizModel quiz) {
-        QuestionDAO questionDAO = new QuestionDAO();
-        QuestionModel question = questionDAO.updateQuestion(new QuestionModel(), quiz.getId());
+    public static QuestionModel newQuestion(QuizModel quiz) {
+        QuestionModel question = QuestionDAO.updateQuestion(new QuestionModel(), quiz.getId());
         quiz.getQuestions().put(question.getId(), question);
         return question;
     }
@@ -171,10 +161,8 @@ public class QuizRegister {
      * @param quiz The quiz to remove from the database.
      * @return True if the operation was successful, false if not.
      */
-    public boolean removeQuiz(QuizModel quiz) {
-
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.removeQuizById(quiz.getId());
+    public static boolean removeQuiz(QuizModel quiz) {
+        return QuizDAO.removeQuizById(quiz.getId());
     }
 
     /**
@@ -184,11 +172,10 @@ public class QuizRegister {
      * @param teamId The id of the team to remove.
      * @return True if the operation was successful, false if not.
      */
-    public boolean removeTeam(QuizModel quiz, int teamId) {
+    public static boolean removeTeam(QuizModel quiz, int teamId) {
         quiz.getTeams().remove(teamId);
 
-        TeamDAO teamDAO = new TeamDAO();
-        return teamDAO.removeTeamById(teamId);
+        return TeamDAO.removeTeamById(teamId);
     }
 
     /**
@@ -198,11 +185,10 @@ public class QuizRegister {
      * @param questionId The id of the team to remove.
      * @return True if the operation was successful, false if not.
      */
-    public boolean removeQuestion(QuizModel quiz, int questionId) {
+    public static boolean removeQuestion(QuizModel quiz, int questionId) {
         quiz.getQuestions().remove(questionId);
 
-        QuestionDAO questionDAO = new QuestionDAO();
-        return questionDAO.removeQuestionById(questionId);
+        return QuestionDAO.removeQuestionById(questionId);
     }
 
     /**
@@ -213,7 +199,7 @@ public class QuizRegister {
      * @param questions The number of questions to fill each quiz with.
      * @return An ArrayList of all the quizzes that were added to the database.
      */
-    public ArrayList<QuizModel> populateDatabase(int quizzes, int teams, int questions) {
+    public static ArrayList<QuizModel> populateDatabase(int quizzes, int teams, int questions) {
         ArrayList<QuizModel> quizArrayList = new ArrayList<>();
 
         for (int i = 1; i <= quizzes; ++i) {

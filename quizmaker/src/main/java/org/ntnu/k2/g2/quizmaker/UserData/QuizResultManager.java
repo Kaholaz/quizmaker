@@ -8,7 +8,6 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 
 public class QuizResultManager {
-
     /**
      * This method creates an associated result sheet for a quiz
      * @param quiz The quiz to create the result sheet for.
@@ -53,7 +52,6 @@ public class QuizResultManager {
      * @param quiz The quiz to import the results for.
      */
     public static QuizModel importResults(QuizModel quiz) throws GeneralSecurityException, IOException {
-        QuizRegister quizRegister = new QuizRegister();
         ResultSheet resultSheet = new ResultSheet();
 
         quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));
@@ -63,18 +61,12 @@ public class QuizResultManager {
             String teamName = row.get(0).toString();
             int score = Integer.parseInt((String) row.get(1));
 
-            TeamModel team = quizRegister.newTeam(quiz);
+            TeamModel team = QuizRegister.newTeam(quiz);
             team.setTeamName(teamName);
             team.setScore(score);
         }
 
-        quizRegister.saveQuiz(quiz);
+        QuizRegister.saveQuiz(quiz);
         return quiz;
     }
-
-
-
-
-
-
 }
