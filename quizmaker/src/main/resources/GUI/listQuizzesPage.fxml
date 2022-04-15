@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -9,11 +11,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane stylesheets="@css/clickable.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListQuizzesPage">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.ListQuizzesPage">
    <center>
-        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" styleClass="scrollPane" stylesheets="@css/clickable.css" vbarPolicy="ALWAYS">
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" vbarPolicy="ALWAYS">
             <content>
-            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="687.0" stylesheets="@css/clickable.css" />
+            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="687.0" />
             </content>
         </ScrollPane>
    </center>
@@ -25,8 +27,26 @@
                   <Font size="14.0" />
                </font></Text>
             <Pane prefHeight="0.0" prefWidth="0.0" stylesheets="@css/menu.css" HBox.hgrow="ALWAYS" />
-            <Button fx:id="switchStatus" mnemonicParsing="false" onAction="#onSwitchStatus" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" stylesheets="@css/menu.css" text="Tilbake" />
+            <Button fx:id="switchStatus" mnemonicParsing="false" onAction="#onSwitchStatus" text="Active">
+               <stylesheets>
+                  <URL value="@css/buttons.css" />
+                  <URL value="@css/clickable-nodes.css" />
+               </stylesheets>
+               <styleClass>
+                  <String fx:value="navbar-button" />
+                  <String fx:value="clickable-node-gray" />
+               </styleClass>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onBack" text="Tilbake">
+               <stylesheets>
+                  <URL value="@css/buttons.css" />
+                  <URL value="@css/clickable-nodes.css" />
+               </stylesheets>
+               <styleClass>
+                  <String fx:value="navbar-button" />
+                  <String fx:value="clickable-node-gray" />
+               </styleClass>
+            </Button>
          </children>
       </HBox>
    </top>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,7 +19,7 @@
       <HBox prefHeight="320.0" prefWidth="539.0">
          <children>
             <Pane prefHeight="320.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
-            <VBox prefHeight="290.0" prefWidth="421.0" styleClass="main-container" stylesheets="@css/main.css" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="290.0" prefWidth="421.0" styleClass="padded-container-lightgray" stylesheets="@css/containers.css" HBox.hgrow="ALWAYS">
                <children>
                   <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" text="Quizname">
                      <VBox.margin>
@@ -28,7 +30,7 @@
                      </font>
                   </Text>
                   <Pane prefHeight="8.0" prefWidth="281.0" VBox.vgrow="ALWAYS" />
-                  <GridPane prefHeight="90.0" prefWidth="299.0" styleClass="gridPane-basic" stylesheets="@css/clickable.css" VBox.vgrow="ALWAYS">
+                  <GridPane prefHeight="90.0" prefWidth="299.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="156.33331298828125" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00002034505206" minWidth="10.0" prefWidth="66.00002034505206" />
@@ -54,10 +56,18 @@
                   <HBox prefHeight="4.0" prefWidth="273.0">
                      <children>
                         <Pane prefHeight="75.0" prefWidth="158.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" prefHeight="25.0" prefWidth="111.0" styleClass="button-stealth" stylesheets="@css/clickable.css" text="Detaljer">
+                        <Button fx:id="details" mnemonicParsing="false" onAction="#onDetails" text="Detaljer">
                            <HBox.margin>
                               <Insets bottom="20.0" right="10.0" top="50.0" />
                            </HBox.margin>
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="medium-button" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass>
                         </Button>
                      </children>
                   </HBox>
@@ -71,7 +81,7 @@
                   <Insets right="50.0" />
                </HBox.margin>
                <children>
-                  <GridPane alignment="CENTER" prefHeight="317.0" prefWidth="170.0" stylesheets="@css/clickable.css" HBox.hgrow="ALWAYS">
+                  <GridPane alignment="CENTER" prefHeight="317.0" prefWidth="170.0" HBox.hgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -83,14 +93,54 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" prefHeight="192.0" prefWidth="176.0" styleClass="button-big" stylesheets="@css/clickable.css" text="Rediger spørsmål">
+                        <Button fx:id="editQuestions" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditQuestion" prefHeight="192.0" prefWidth="176.0" text="Rediger spørsmål">
                            <GridPane.margin>
                               <Insets />
-                           </GridPane.margin></Button>
-                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" styleClass="button-big" stylesheets="@css/clickable.css" text="Rediger lag og poeng" GridPane.rowIndex="1" />
-                        <Button fx:id="changeState" mnemonicParsing="false" onAction="#onChangeState" styleClass="button-big" stylesheets="@css/clickable.css" text="Send til " GridPane.rowIndex="2" />
-                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" styleClass="button-big" stylesheets="@css/clickable.css" text="Importer data" GridPane.rowIndex="3" />
-                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" styleClass="button-big" stylesheets="@css/clickable.css" text="Eksporter Q&amp;A" GridPane.rowIndex="4" />
+                           </GridPane.margin>
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="editTeams" mnemonicParsing="false" onAction="#onEditTeams" text="Rediger lag og poeng" GridPane.rowIndex="1">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="changeState" mnemonicParsing="false" onAction="#onChangeState" text="Send til " GridPane.rowIndex="2">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="retrieveScores" mnemonicParsing="false" onAction="#onRetrieveScores" text="Importer data" GridPane.rowIndex="3">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
+                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" text="Eksporter Q&amp;A" GridPane.rowIndex="4">
+                           <stylesheets>
+                              <URL value="@css/buttons.css" />
+                              <URL value="@css/clickable-nodes.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="big-gridpane-button-lightblue" />
+                              <String fx:value="clickable-node-gray" />
+                           </styleClass></Button>
                      </children>
                      <HBox.margin>
                         <Insets bottom="25.0" left="10.0" top="15.0" />
@@ -110,7 +160,15 @@
                   <Font size="16.0" />
                </font></Text>
             <Pane prefHeight="28.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" text="Tilbake" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" text="Tilbake">
+               <stylesheets>
+                  <URL value="@css/buttons.css" />
+                  <URL value="@css/clickable-nodes.css" />
+               </stylesheets>
+               <styleClass>
+                  <String fx:value="navbar-button" />
+                  <String fx:value="clickable-node-gray" />
+               </styleClass></Button>
          </children>
       </HBox>
    </top>
