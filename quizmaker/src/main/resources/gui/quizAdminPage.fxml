@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.QuizAdminPage">
+<BorderPane fx:id="borderPane" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.QuizAdminPage">
    <center>
       <HBox prefHeight="320.0" prefWidth="539.0">
          <children>
@@ -152,26 +152,6 @@
          </children>
       </HBox>
    </center>
-   <top>
-      <HBox styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Quiz maker" wrappingWidth="126.97721862792969" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="16.0" />
-               </font></Text>
-            <Pane prefHeight="28.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" text="Tilbake">
-               <stylesheets>
-                  <URL value="@css/buttons.css" />
-                  <URL value="@css/clickable-nodes.css" />
-               </stylesheets>
-               <styleClass>
-                  <String fx:value="navbar-button" />
-                  <String fx:value="clickable-node-gray" />
-               </styleClass></Button>
-         </children>
-      </HBox>
-   </top>
    <bottom>
       <Text fx:id="errorMsg" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="TOP_CENTER">
          <BorderPane.margin>

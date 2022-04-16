@@ -3,6 +3,8 @@ package org.ntnu.k2.g2.quizmaker.gui.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
@@ -41,6 +43,9 @@ public class QuizAdminPage {
     @FXML
     private Text difficulty;
 
+    @FXML
+    private BorderPane borderPane;
+
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     /**
@@ -62,26 +67,17 @@ public class QuizAdminPage {
     }
 
     /**
-     * Redirects back to listView.
-     */
-
-    @FXML
-    void onBack(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/gui/listQuizzesPage.fxml");
-    }
-
-    /**
      * Opens  the details page
      */
 
     @FXML
     void onDetails(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/gui/quizDetailsPage.fxml");
+        GUI.setSceneFromActionEvent(event, "/GUI/quizDetailsPage.fxml");
     }
 
     @FXML
     void onEditQuestion(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/gui/questionEditorPage.fxml");
+        GUI.setSceneFromActionEvent(event, "/GUI/questionEditorPage.fxml");
     }
 
     /**
@@ -136,7 +132,7 @@ public class QuizAdminPage {
 
     @FXML
     void onExportQA() {
-        GUI.createNewStage("/gui/exportPage.fxml");
+        GUI.createNewStage("/GUI/exportPage.fxml");
     }
 
     /**
@@ -182,6 +178,8 @@ public class QuizAdminPage {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        HBox navbar = GUIFactory.createNavBar("/GUI/listQuizzesPage.fxml");
+        borderPane.setTop(navbar);
         update();
     }
 }
