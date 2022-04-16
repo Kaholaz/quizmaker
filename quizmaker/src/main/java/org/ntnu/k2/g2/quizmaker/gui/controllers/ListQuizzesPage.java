@@ -37,7 +37,7 @@ public class ListQuizzesPage {
             QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
             update();
         });
-        HBox navbar = createNavBar("/GUI/mainPage.fxml", switchStatusButton);
+        HBox navbar = createNavBar("/gui/mainPage.fxml", switchStatusButton);
         borderPane.setTop(navbar);
 
         update();

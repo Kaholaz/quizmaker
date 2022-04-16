@@ -95,7 +95,7 @@ public class QuizDetailsPage {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        HBox navbar = GUIFactory.createNavBar("/GUI/quizAdminPage.fxml");
+        HBox navbar = GUIFactory.createNavBar("/gui/quizAdminPage.fxml");
         borderPane.setTop(navbar);
 
         update();

@@ -31,12 +31,12 @@ public class GUIFactory {
         // Add on-click event
         admin.setOnAction((ActionEvent e) -> {
             QuizHandlerSingelton.setQuiz(quiz);
-            GUI.setSceneFromNode(admin, "/GUI/quizAdminPage.fxml");
+            GUI.setSceneFromNode(admin, "/gui/quizAdminPage.fxml");
         });
 
         // Add styling
-        admin.getStylesheets().add("/GUI/css/lists.css");
-        admin.getStylesheets().add("/GUI/css/clickable-nodes.css");
+        admin.getStylesheets().add("/gui/css/lists.css");
+        admin.getStylesheets().add("/gui/css/clickable-nodes.css");
         admin.getStyleClass().add("full-width-list-element");
         admin.getStyleClass().add("clickable-node-lightgreen");
 
@@ -73,8 +73,8 @@ public class GUIFactory {
         // Add all the buttons to be added:
         for (Button button : buttons) {
             // Add styling
-            button.getStylesheets().add("/GUI/css/buttons.css");
-            button.getStylesheets().add("/GUI/css/clickable-nodes.css");
+            button.getStylesheets().add("/gui/css/buttons.css");
+            button.getStylesheets().add("/gui/css/clickable-nodes.css");
             button.getStyleClass().add("navbar-button");
             button.getStyleClass().add("clickable-node-gray");
 
@@ -93,8 +93,8 @@ public class GUIFactory {
             });
 
             // Add styling
-            backButton.getStylesheets().add("/GUI/css/buttons.css");
-            backButton.getStylesheets().add("/GUI/css/clickable-nodes.css");
+            backButton.getStylesheets().add("/gui/css/buttons.css");
+            backButton.getStylesheets().add("/gui/css/clickable-nodes.css");
             backButton.getStyleClass().add("navbar-button");
             backButton.getStyleClass().add("clickable-node-gray");
 
@@ -103,7 +103,7 @@ public class GUIFactory {
         }
 
         // Style the navbar
-        navbar.getStylesheets().add("/GUI/css/menu.css");
+        navbar.getStylesheets().add("/gui/css/menu.css");
         navbar.getStyleClass().add("menu-bar");
         navbar.setAlignment(Pos.CENTER_LEFT);
 

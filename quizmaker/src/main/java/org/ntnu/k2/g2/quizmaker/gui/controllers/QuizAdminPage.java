@@ -72,12 +72,12 @@ public class QuizAdminPage {
 
     @FXML
     void onDetails(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/GUI/quizDetailsPage.fxml");
+        GUI.setSceneFromActionEvent(event, "/gui/quizDetailsPage.fxml");
     }
 
     @FXML
     void onEditQuestion(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/GUI/questionEditorPage.fxml");
+        GUI.setSceneFromActionEvent(event, "/gui/questionEditorPage.fxml");
     }
 
     /**

@@ -52,7 +52,7 @@ public class QuestionEditorPage {
         QuizRegister.saveQuiz(QuizHandlerSingelton.getQuiz());
 
         // Go back to quiz page
-        GUI.setSceneFromNode(borderPane, "/GUI/quizAdminPage.fxml");
+        GUI.setSceneFromNode(borderPane, "/gui/quizAdminPage.fxml");
     }
 
     @FXML
@@ -67,7 +67,7 @@ public class QuestionEditorPage {
         Button saveButton = new Button();
         saveButton.setText("Lagre");
         saveButton.setOnAction((ActionEvent e) -> onSave(e));
-        HBox navbar = GUIFactory.createNavBar("/GUI/quizAdminPage.fxml", saveButton);
+        HBox navbar = GUIFactory.createNavBar("/gui/quizAdminPage.fxml", saveButton);
 
         // Add the navbar
         borderPane.setTop(navbar);
