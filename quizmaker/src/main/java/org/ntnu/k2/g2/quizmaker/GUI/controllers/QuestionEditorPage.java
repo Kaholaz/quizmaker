@@ -65,6 +65,7 @@ public class QuestionEditorPage {
     void initialize() {
         // Create save button
         Button saveButton = new Button();
+        saveButton.setText("Lagre");
         saveButton.setOnAction((ActionEvent e) -> onSave(e));
         HBox navbar = GUIFactory.createNavBar("/GUI/quizAdminPage.fxml", saveButton);
 
