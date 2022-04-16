@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
@@ -42,23 +44,16 @@ public class QuizDetailsPage {
     @FXML // fx:id="lastChange"
     private Text lastChanged; // Value injected by FXMLLoader
 
+    @FXML
+    private BorderPane borderPane;
+
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
-    /**
-     * Function called when the back button has been pressed.
-     * Goes back the quizAdminPage.
-     */
-
-    @FXML
-    void onBack(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/GUI/quizAdminPage.fxml");
-    }
 
     /**
      * Function called when the delete button has been pressed.
      * The quiz is deleted from the database.
      */
-
     @FXML
     void onDelete(ActionEvent event) {
         if (QuizRegister.removeQuiz(quiz)) {
@@ -72,7 +67,6 @@ public class QuizDetailsPage {
     /**
      * updates the quiz fields on the page, and the rankingGrid.
      */
-
     void update() {
         sumQuestions.setText(String.valueOf(quiz.getQuestions().size()));
         lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
@@ -99,11 +93,12 @@ public class QuizDetailsPage {
         ranking.getColumns().add(score);
     }
 
-    @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        HBox navbar = GUIFactory.createNavBar("/GUI/quizAdminPage.fxml");
+        borderPane.setTop(navbar);
+
         update();
         initTable();
     }
-
 }
