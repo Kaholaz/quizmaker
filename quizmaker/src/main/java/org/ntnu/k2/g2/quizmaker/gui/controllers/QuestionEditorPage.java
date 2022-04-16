@@ -14,7 +14,7 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
 
-import static org.ntnu.k2.g2.quizmaker.gui.factory.QuestionEditorFactory.createQuestionPane;
+import static org.ntnu.k2.g2.quizmaker.gui.factories.QuestionEditorFactory.createQuestionPane;
 
 public class QuestionEditorPage {
     @FXML // fx:id="archive"

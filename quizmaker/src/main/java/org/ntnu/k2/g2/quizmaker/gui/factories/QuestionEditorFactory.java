@@ -1,4 +1,4 @@
-package org.ntnu.k2.g2.quizmaker.gui.factory;
+package org.ntnu.k2.g2.quizmaker.gui.factories;
 
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
