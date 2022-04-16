@@ -4,8 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
@@ -43,6 +44,9 @@ public class QuizAdminPage {
     @FXML
     private Text difficulty;
 
+    @FXML
+    private BorderPane borderPane;
+
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     /**
@@ -61,15 +65,6 @@ public class QuizAdminPage {
         }
         update();
 
-    }
-
-    /**
-     * Redirects back to listView.
-     */
-
-    @FXML
-    void onBack(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/GUI/listQuizzesPage.fxml");
     }
 
     /**
@@ -184,6 +179,8 @@ public class QuizAdminPage {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        HBox navbar = GUIFactory.createNavBar("/GUI/listQuizzesPage.fxml");
+        borderPane.setTop(navbar);
         update();
     }
 }
