@@ -20,7 +20,7 @@
       <HBox prefHeight="320.0" prefWidth="539.0">
          <children>
             <Pane prefHeight="320.0" prefWidth="49.0" HBox.hgrow="ALWAYS" />
-            <VBox prefHeight="270.0" prefWidth="310.0" styleClass="main-container" stylesheets="@css/main.css" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="270.0" prefWidth="310.0" styleClass="padded-container-lightgray" HBox.hgrow="ALWAYS">
                <children>
                   <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Quizname">
                      <VBox.margin>
@@ -58,7 +58,7 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </GridPane>
-                  <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="44.0" prefWidth="271.0" VBox.vgrow="ALWAYS">
+                  <HBox alignment="BOTTOM_RIGHT" fillHeight="false" prefHeight="44.0" prefWidth="271.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Pane prefHeight="0.0" prefWidth="185.0" HBox.hgrow="ALWAYS" />
                         <Button fx:id="delete" alignment="CENTER" mnemonicParsing="false" onAction="#onDelete" prefHeight="43.0" prefWidth="82.0" text="Delete" textFill="#fc0303">
@@ -80,6 +80,10 @@
                <HBox.margin>
                   <Insets bottom="30.0" left="30.0" top="20.0" />
                </HBox.margin>
+               <stylesheets>
+                  <URL value="@css/main.css" />
+                  <URL value="@css/containers.css" />
+               </stylesheets>
             </VBox>
             <VBox prefHeight="270.0" prefWidth="151.0" stylesheets="@css/main.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
