@@ -18,7 +18,7 @@ class QuestionDAO {
      * @param result The ResultSet of an SQL query.
      * @return The question
      */
-    private QuestionModel getQuestionFromResultSet(ResultSet result) {
+    private static QuestionModel getQuestionFromResultSet(ResultSet result) {
         QuestionModel question = null;
         try {
             if (result.next()) {
@@ -42,7 +42,7 @@ class QuestionDAO {
      * @param result The ResultSet from an SQL query.
      * @return The quiz id of the team returned by the SQL query.
      */
-    private int getQuizIdByResultSet(ResultSet result) {
+    private static int getQuizIdByResultSet(ResultSet result) {
         int quizId = -1;
         try {
             if (result.next()) {
@@ -62,7 +62,7 @@ class QuestionDAO {
      * @param result The ResultSet of and SQL query
      * @return An ArrayList of all questions extracted from the ResultSet.
      */
-    private HashMap<Integer, QuestionModel> getQuestionsFromResultSet(ResultSet result) {
+    private static HashMap<Integer, QuestionModel> getQuestionsFromResultSet(ResultSet result) {
         HashMap<Integer, QuestionModel> questions = new HashMap<>();
 
         try {
@@ -89,7 +89,7 @@ class QuestionDAO {
      * @param id The id of the question.
      * @return The question with this ID. If there is no question that matches the ID, a null pointer is returned.
      */
-    public QuestionModel getQuestionById(int id) {
+    public static QuestionModel getQuestionById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -111,7 +111,7 @@ class QuestionDAO {
         return question;
     }
 
-    public HashMap<Integer, QuestionModel> getQuestionsByQuizId(int quizId) {
+    public static HashMap<Integer, QuestionModel> getQuestionsByQuizId(int quizId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -139,7 +139,7 @@ class QuestionDAO {
      * @param questionId The id of the question.
      * @return The quiz id of the quiz where the question is a component. Returns -1 if the questionId is not found.
      */
-    public int getQuizIdByQuestionId(int questionId) {
+    public static int getQuizIdByQuestionId(int questionId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -168,7 +168,7 @@ class QuestionDAO {
      * @param quizId   The id of the quiz this question is part of.
      * @return The question as it is now saved in the database.
      */
-    public QuestionModel updateQuestion(QuestionModel question, int quizId) {
+    public static QuestionModel updateQuestion(QuestionModel question, int quizId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -210,7 +210,7 @@ class QuestionDAO {
      * @param question The question to update in the database
      * @return The question as it is now saved in the database.
      */
-    public QuestionModel updateQuestion(QuestionModel question) {
+    public static QuestionModel updateQuestion(QuestionModel question) {
         int quizId = getQuizIdByQuestionId(question.getId());
         if (quizId == -1) return null;
         return updateQuestion(question, quizId);
@@ -223,7 +223,7 @@ class QuestionDAO {
      * @param id The id of the question.
      * @return True if the question was removed successfully, false if not.
      */
-    public boolean removeQuestionById(int id) {
+    public static boolean removeQuestionById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         boolean result = false;

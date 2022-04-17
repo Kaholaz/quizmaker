@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
@@ -27,12 +29,14 @@ public class CreateNewQuizPage {
     private TextField quizNameInputField; // Value injected by FXMLLoader
 
     @FXML
+    private BorderPane borderPane;
+
+    @FXML
     void onSubmitBtnClicked(ActionEvent event) {
         // Create the Quiz instance
-        QuizRegister register = new QuizRegister();
-        QuizModel createdQuiz = register.newQuiz();
+        QuizModel createdQuiz = QuizRegister.newQuiz();
         createdQuiz.setName(quizNameInputField.getText());
-        register.saveQuiz(createdQuiz);
+        QuizRegister.saveQuiz(createdQuiz);
 
         // Set the states for the question editor page
         QuizHandlerSingelton.setQuiz(createdQuiz);
@@ -43,8 +47,6 @@ public class CreateNewQuizPage {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert btnSubmit != null : "fx:id=\"btnSubmit\" was not injected: check your FXML file 'createNewQuizPage.fxml'.";
-
+        borderPane.setTop(GUIFactory.createNavBar("/GUI/mainPage.fxml"));
     }
-
 }

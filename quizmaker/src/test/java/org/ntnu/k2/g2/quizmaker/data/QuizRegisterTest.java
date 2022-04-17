@@ -19,10 +19,9 @@ public class QuizRegisterTest extends TestCase {
     }
 
     private static void deleteDatabase() {
-        QuizRegister quizRegister = new QuizRegister();
-        ArrayList<QuizModel> quizzes = quizRegister.getQuizList();
+        ArrayList<QuizModel> quizzes = QuizRegister.getQuizList();
         for (QuizModel quiz : quizzes) {
-            quizRegister.removeQuiz(quiz);
+            QuizRegister.removeQuiz(quiz);
         }
         try {
             DatabaseConnection.getConnection().close();
@@ -33,36 +32,33 @@ public class QuizRegisterTest extends TestCase {
     }
 
     private static void populateDatabase() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel testQuiz = quizRegister.newQuiz();
+        QuizModel testQuiz = QuizRegister.newQuiz();
 
         testQuiz.setName("Test Quiz");
 
         for (int i = 1; i <= 5; ++i) {
-            QuestionModel question = quizRegister.newQuestion(testQuiz);
+            QuestionModel question = QuizRegister.newQuestion(testQuiz);
             question.setScore(i);
             question.setQuestion(String.format("Q%d", i));
             question.setAnswer(String.format("A%d", i));
         }
 
         for (int i = 1; i <= 3; ++i) {
-            TeamModel team = quizRegister.newTeam(testQuiz);
+            TeamModel team = QuizRegister.newTeam(testQuiz);
             team.setTeamName(String.format("T%d", i));
             team.setScore(i);
         }
 
-        quizRegister.saveQuiz(testQuiz);
+        QuizRegister.saveQuiz(testQuiz);
     }
 
     public void testGetQuizList() {
-        QuizRegister quizRegister = new QuizRegister();
-        ArrayList<QuizModel> quizzes = quizRegister.getQuizList();
+        ArrayList<QuizModel> quizzes = QuizRegister.getQuizList();
         assertEquals(1, quizzes.size());
     }
 
     public void testGetQuiz() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel testQuiz = quizRegister.getQuiz(1);
+        QuizModel testQuiz = QuizRegister.getQuiz(1);
 
         assertEquals( "Test Quiz", testQuiz.getName());
         assertEquals(5, testQuiz.getQuestions().size());
@@ -72,15 +68,13 @@ public class QuizRegisterTest extends TestCase {
     }
 
     public void testGetQuizReturnsNullOnInvalidId() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel testQuiz = quizRegister.getQuiz(100);
+        QuizModel testQuiz = QuizRegister.getQuiz(100);
 
         assertNull(testQuiz);
     }
 
     public void testGetTeam() {
-        QuizRegister quizRegister = new QuizRegister();
-        TeamModel team = quizRegister.getTeam(2);
+        TeamModel team = QuizRegister.getTeam(2);
 
         assertEquals("T2", team.getTeamName());
         assertEquals(2, team.getScore());
@@ -88,15 +82,13 @@ public class QuizRegisterTest extends TestCase {
     }
 
     public void testGetTeamReturnsNullOnInvalidId() {
-        QuizRegister quizRegister = new QuizRegister();
-        TeamModel team = quizRegister.getTeam(100);
+        TeamModel team = QuizRegister.getTeam(100);
 
         assertNull(team);
     }
 
     public void testGetQuestion() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuestionModel question = quizRegister.getQuestion(5);
+        QuestionModel question = QuizRegister.getQuestion(5);
 
         assertEquals("Q5", question.getQuestion());
         assertEquals("A5", question.getAnswer());
@@ -105,172 +97,154 @@ public class QuizRegisterTest extends TestCase {
     }
 
     public void testGetQuestionReturnsNullOnInvalidId() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuestionModel question = quizRegister.getQuestion(100);
+        QuestionModel question = QuizRegister.getQuestion(100);
 
         assertNull(question);
     }
 
     public void testSaveQuiz() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.getQuiz(1);
+        QuizModel quiz = QuizRegister.getQuiz(1);
         quiz.setActive(false);
         quiz.setName("Altered name");
 
-        QuizModel returnQuiz = quizRegister.saveQuiz(quiz);
-        QuizModel savedQuiz = quizRegister.getQuiz(1);
+        QuizModel returnQuiz = QuizRegister.saveQuiz(quiz);
+        QuizModel savedQuiz = QuizRegister.getQuiz(1);
 
         assertEquals(quiz, returnQuiz);
         assertEquals(quiz, savedQuiz);
     }
 
     public void testSaveTeam() {
-        QuizRegister quizRegister = new QuizRegister();
-        TeamModel team = quizRegister.getTeam(3);
+        TeamModel team = QuizRegister.getTeam(3);
         team.setScore(69);
         team.setTeamName("Altered team name");
 
-        TeamModel returnTeam = quizRegister.saveTeam(team);
-        TeamModel savedTeam = quizRegister.getTeam(3);
+        TeamModel returnTeam = QuizRegister.saveTeam(team);
+        TeamModel savedTeam = QuizRegister.getTeam(3);
 
         assertEquals(team, returnTeam);
         assertEquals(team, savedTeam);
     }
 
     public void testSaveQuestion() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuestionModel question = quizRegister.getQuestion(4);
+        QuestionModel question = QuizRegister.getQuestion(4);
         question.setQuestion("New Question");
         question.setAnswer("New Answer");
         question.setScore(69);
 
-        QuestionModel returnQuestion = quizRegister.saveQuestion(question);
-        QuestionModel savedQuestion = quizRegister.getQuestion(4);
+        QuestionModel returnQuestion = QuizRegister.saveQuestion(question);
+        QuestionModel savedQuestion = QuizRegister.getQuestion(4);
 
         assertEquals(question, returnQuestion);
         assertEquals(question, savedQuestion);
     }
 
     public void testSaveQuizAltersTeams() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.getQuiz(1);
+        QuizModel quiz = QuizRegister.getQuiz(1);
 
         quiz.getTeams().remove(2);
         quiz.getTeams().get(3).setTeamName("Test");
 
-        quiz = quizRegister.saveQuiz(quiz);
+        quiz = QuizRegister.saveQuiz(quiz);
 
         assertFalse(quiz.getTeams().containsKey(2));
-        assertNull(quizRegister.getTeam(2));
-        assertEquals(quizRegister.getTeam(3), quiz.getTeams().get(3));
+        assertNull(QuizRegister.getTeam(2));
+        assertEquals(QuizRegister.getTeam(3), quiz.getTeams().get(3));
     }
 
     public void testSaveQuizAltersQuestions() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.getQuiz(1);
+        QuizModel quiz = QuizRegister.getQuiz(1);
 
         quiz.getQuestions().remove(3);
         quiz.getQuestions().get(4).setQuestion("Test");
 
-        quiz = quizRegister.saveQuiz(quiz);
+        quiz = QuizRegister.saveQuiz(quiz);
 
         assertFalse(quiz.getQuestions().containsKey(3));
-        assertNull(quizRegister.getQuestion(3));
-        assertEquals(quizRegister.getQuestion(4), quiz.getQuestions().get(4));
+        assertNull(QuizRegister.getQuestion(3));
+        assertEquals(QuizRegister.getQuestion(4), quiz.getQuestions().get(4));
     }
 
     public void testRemoveQuiz() {
-        QuizRegister quizRegister = new QuizRegister();
+        QuizModel quiz = QuizRegister.getQuiz(1);
+        assertTrue(QuizRegister.removeQuiz(quiz));
 
-        QuizModel quiz = quizRegister.getQuiz(1);
-        assertEquals(true, quizRegister.removeQuiz(quiz));
-
-        ArrayList<QuizModel> quizzes = quizRegister.getQuizList();
+        ArrayList<QuizModel> quizzes = QuizRegister.getQuizList();
         assertEquals(0, quizzes.size());
-        assertNull(quizRegister.getQuestion(1));
-        assertNull(quizRegister.getTeam(1));
+        assertNull(QuizRegister.getQuestion(1));
+        assertNull(QuizRegister.getTeam(1));
     }
 
     public void testRemoveTeam() {
-        QuizRegister quizRegister = new QuizRegister();
-
-        QuizModel quiz = quizRegister.getQuiz(1);
-        quizRegister.removeTeam(quiz, 1);
+        QuizModel quiz = QuizRegister.getQuiz(1);
+        QuizRegister.removeTeam(quiz, 1);
 
         assertEquals(2, quiz.getTeams().size());
-        assertNull(quizRegister.getTeam(1));
-        assertEquals(quiz.getTeams().get(2), quizRegister.getTeam(2));
+        assertNull(QuizRegister.getTeam(1));
+        assertEquals(quiz.getTeams().get(2), QuizRegister.getTeam(2));
     }
 
     public void testRemoveQuestion() {
-        QuizRegister quizRegister = new QuizRegister();
-
-        QuizModel quiz = quizRegister.getQuiz(1);
-        quizRegister.removeQuestion(quiz, 2);
+        QuizModel quiz = QuizRegister.getQuiz(1);
+        QuizRegister.removeQuestion(quiz, 2);
 
         assertEquals(4, quiz.getQuestions().size());
-        assertNull(quizRegister.getQuestion(2));
-        assertEquals(quiz.getQuestions().get(1), quizRegister.getQuestion(1));
+        assertNull(QuizRegister.getQuestion(2));
+        assertEquals(quiz.getQuestions().get(1), QuizRegister.getQuestion(1));
     }
 
     public void testRemoveTeamNotInDatabaseReturnsFalse() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
+        QuizModel quiz = QuizRegister.newQuiz();
 
-        TeamModel team = quizRegister.newTeam(quiz);
-        quizRegister.removeTeam(quiz, team.getId());
+        TeamModel team = QuizRegister.newTeam(quiz);
+        QuizRegister.removeTeam(quiz, team.getId());
 
-        assertFalse(quizRegister.removeTeam(quiz, team.getId()));
+        assertFalse(QuizRegister.removeTeam(quiz, team.getId()));
     }
 
     public void testRemoveQuestionNotInDatabaseReturnsFalse() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
+        QuizModel quiz = QuizRegister.newQuiz();
 
-        QuestionModel question = quizRegister.newQuestion(quiz);
-        quizRegister.removeTeam(quiz, question.getId());
+        QuestionModel question = QuizRegister.newQuestion(quiz);
+        QuizRegister.removeTeam(quiz, question.getId());
 
-        assertFalse(quizRegister.removeTeam(quiz, question.getId()));
+        assertFalse(QuizRegister.removeTeam(quiz, question.getId()));
     }
 
     public void testSaveTeamNotInDataBaseReturnsNull() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
+        QuizModel quiz = QuizRegister.newQuiz();
 
-        TeamModel team = quizRegister.newTeam(quiz);
-        quizRegister.removeTeam(quiz, team.getId());
+        TeamModel team = QuizRegister.newTeam(quiz);
+        QuizRegister.removeTeam(quiz, team.getId());
 
-        assertNull(quizRegister.saveTeam(team));
+        assertNull(QuizRegister.saveTeam(team));
     }
 
     public void testSaveQuestionNotInDataBaseReturnsNull() {
-        QuizRegister quizRegister = new QuizRegister();
-        QuizModel quiz = quizRegister.newQuiz();
+        QuizModel quiz = QuizRegister.newQuiz();
 
-        QuestionModel question = quizRegister.newQuestion(quiz);
-        quizRegister.removeQuestion(quiz, question.getId());
+        QuestionModel question = QuizRegister.newQuestion(quiz);
+        QuizRegister.removeQuestion(quiz, question.getId());
 
-        assertNull(quizRegister.saveQuestion(question));
+        assertNull(QuizRegister.saveQuestion(question));
     }
 
     public void testGetArchivedQuizzes() {
-        QuizRegister quizRegister = new QuizRegister();
-        quizRegister.populateDatabase(1,2,3);
+        QuizRegister.populateDatabase(1,2,3);
 
-        QuizModel quiz = quizRegister.getQuiz(2);
+        QuizModel quiz = QuizRegister.getQuiz(2);
         quiz.setActive(false);
 
-        quizRegister.saveQuiz(quiz);
+        QuizRegister.saveQuiz(quiz);
 
-        assertEquals(List.of(quizRegister.getQuiz(1)),quizRegister.getActiveQuizzes());
-        assertEquals(List.of(quizRegister.getQuiz(2)), quizRegister.getArchivedQuizzes());
+        assertEquals(List.of(QuizRegister.getQuiz(1)),QuizRegister.getActiveQuizzes());
+        assertEquals(List.of(QuizRegister.getQuiz(2)), QuizRegister.getArchivedQuizzes());
     }
 
     public void testPopulateDatabase() {
-        QuizRegister quizRegister= new QuizRegister();
-        quizRegister.populateDatabase(1, 2, 3);
+        QuizRegister.populateDatabase(1, 2, 3);
 
-        ArrayList<QuizModel> quizzes = quizRegister.getQuizList();
+        ArrayList<QuizModel> quizzes = QuizRegister.getQuizList();
 
         assertEquals(2, quizzes.size());
         assertEquals(2, quizzes.get(1).getTeams().size());

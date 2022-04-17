@@ -2,48 +2,14 @@
 
 <?import java.lang.String?>
 <?import java.net.URL?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.QuestionEditorPage">
-    <top>
-        <HBox prefHeight="0.0" prefWidth="200.0" styleClass="menu-bar" stylesheets="@css/menu.css" BorderPane.alignment="CENTER">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Quiz-maker" wrappingWidth="72.1259765625" HBox.hgrow="ALWAYS" />
-                <Pane prefHeight="26.0" prefWidth="416.0" HBox.hgrow="ALWAYS" />
-                <Button fx:id="save" minWidth="60.0" mnemonicParsing="false" onAction="#onSave" text="Lagre">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <stylesheets>
-                  <URL value="@css/buttons.css" />
-                  <URL value="@css/clickable-nodes.css" />
-               </stylesheets>
-               <styleClass>
-                  <String fx:value="navbar-button" />
-                  <String fx:value="clickable-node-gray" />
-               </styleClass></Button>
-                <Button fx:id="back" minWidth="70.0" mnemonicParsing="false" onAction="#onBack" text="Tilbake">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <stylesheets>
-                  <URL value="@css/buttons.css" />
-                  <URL value="@css/clickable-nodes.css" />
-               </stylesheets>
-               <styleClass>
-                  <String fx:value="navbar-button" />
-                  <String fx:value="clickable-node-gray" />
-               </styleClass></Button>
-            </children>
-        </HBox>
-    </top>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.GUI.controllers.QuestionEditorPage">
     <center>
         <ScrollPane hbarPolicy="NEVER" hmin="20.0" prefHeight="292.0" prefWidth="439.0" styleClass="scrollPane" BorderPane.alignment="CENTER">
             <content>
@@ -64,7 +30,15 @@
             <VBox>
                <children>
                   <Pane VBox.vgrow="ALWAYS" />
-                      <Button mnemonicParsing="false" onAction="#onBtnCreateNewQuestionClick" text="Legg til nytt spørsmål" />
+                      <Button mnemonicParsing="false" onAction="#onBtnCreateNewQuestionClick" style="-fx-pref-width: 200px;" text="Legg til nytt spørsmål">
+                     <stylesheets>
+                        <URL value="@css/buttons.css" />
+                        <URL value="@css/clickable-nodes.css" />
+                     </stylesheets>
+                     <styleClass>
+                        <String fx:value="medium-button" />
+                        <String fx:value="clickable-node-gray" />
+                     </styleClass></Button>
                   <Pane VBox.vgrow="ALWAYS" />
                </children>
             </VBox>

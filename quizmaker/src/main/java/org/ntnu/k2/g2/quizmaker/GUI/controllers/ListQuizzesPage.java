@@ -3,8 +3,9 @@ package org.ntnu.k2.g2.quizmaker.GUI.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
@@ -12,40 +13,32 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
 import java.util.ArrayList;
 
+import static org.ntnu.k2.g2.quizmaker.GUI.factory.GUIFactory.createNavBar;
+
 /**
  * Controller for listQuizzesPages. It lists quizzes in a scrollpane.
  */
 
 public class ListQuizzesPage {
-    @FXML // fx:id="quizzesContainer"
+    @FXML
     private VBox vBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="switchStatus"
-    private Button switchStatus; // Value injected by FXMLLoader
-
-    /**
-     * Switches the active status and updates the page.
-     */
-
     @FXML
-    void onSwitchStatus() {
-        QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
-        update();
-    }
+    private BorderPane borderPane; // Value injected by FXMLLoader
 
-    /**
-     * Redirects to the mainPage and clears the Singleton.
-     *
-     * @param event - click event
-     */
-    @FXML
-    void onBack(ActionEvent event) {
-        GUI.setSceneFromActionEvent(event, "/GUI/mainPage.fxml");
-    }
+    private Button switchStatusButton;
 
-    @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        // Create navbar with switch status button
+        switchStatusButton = new Button();
+        switchStatusButton.setOnAction((ActionEvent e) -> {
+            QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
+            update();
+        });
+        HBox navbar = createNavBar("/GUI/mainPage.fxml", switchStatusButton);
+        borderPane.setTop(navbar);
+
         update();
     }
 
@@ -54,20 +47,18 @@ public class ListQuizzesPage {
      */
 
     void update() {
-        QuizRegister quizRegister = new QuizRegister();
         ArrayList<QuizModel> quizzes;
 
         if (QuizHandlerSingelton.isActive()) {
-            quizzes = quizRegister.getActiveQuizzes();
-            switchStatus.setText("Arkivert");
+            quizzes = QuizRegister.getActiveQuizzes();
+            switchStatusButton.setText("Arkivert");
         } else {
-            switchStatus.setText("Aktive");
-            quizzes = quizRegister.getArchivedQuizzes();
+            switchStatusButton.setText("Aktive");
+            quizzes = QuizRegister.getArchivedQuizzes();
         }
 
         vBox.getChildren().clear();
 
         quizzes.forEach(quiz -> vBox.getChildren().add(GUIFactory.listQuestionItem(quiz)));
-
     }
 }
