@@ -35,6 +35,12 @@ public class ExportPage {
 
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
+    /**
+     * Closes the stage when the user is finished
+     *
+     * @param event triggering event from button
+     */
+
     @FXML
     private void onClose(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

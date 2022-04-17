@@ -1,4 +1,12 @@
 /* This file contains basic styles used across all pages for small non-categorizable things */
 .text {
-    -fx-font-size: 18px;
+    -fx-font-size: 20px;
+}
+
+.title {
+    -fx-font-size: 40px;
+}
+
+.sub-title {
+    -fx-font-size: 25px;
 }

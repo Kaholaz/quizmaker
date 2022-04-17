@@ -14,9 +14,9 @@
    <center>
       <VBox prefHeight="196.0" prefWidth="200.0">
          <children>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="145.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="145.0" prefWidth="500.0" stylesheets="@css/main.css" VBox.vgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz maker" wrappingWidth="229.69882202148438" HBox.hgrow="ALWAYS">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Quiz maker" textAlignment="CENTER" wrappingWidth="362.6988220214844" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="43.0" />
                      </font>

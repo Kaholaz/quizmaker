@@ -52,9 +52,7 @@ public class GUIFactory {
     }
 
     public static Alert createNewErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message,  ButtonType.CLOSE);
-        alert.showAndWait();
-        return alert;
+        return new Alert(Alert.AlertType.ERROR, message,  ButtonType.CLOSE);
     }
 
     public static HBox createNavBar(String backPage, Button... buttons) {
