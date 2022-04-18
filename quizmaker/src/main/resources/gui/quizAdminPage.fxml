@@ -21,7 +21,7 @@
             <Pane prefHeight="320.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
             <VBox prefHeight="290.0" prefWidth="421.0" styleClass="padded-container-lightgray" stylesheets="@css/containers.css" HBox.hgrow="ALWAYS">
                <children>
-                  <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" text="Quizname">
+                  <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Quizname">
                      <VBox.margin>
                         <Insets left="30.0" />
                      </VBox.margin>
@@ -29,19 +29,18 @@
                         <Font size="37.0" />
                      </font>
                   </Text>
-                  <Pane prefHeight="8.0" prefWidth="281.0" VBox.vgrow="ALWAYS" />
-                  <GridPane prefHeight="90.0" prefWidth="299.0" VBox.vgrow="ALWAYS">
+                  <GridPane prefHeight="90.0" prefWidth="299.0" styleClass="grid-pane" VBox.vgrow="NEVER">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="156.33331298828125" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00002034505206" minWidth="10.0" prefWidth="66.00002034505206" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="200.0" minWidth="10.0" prefWidth="190.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="176.0" minWidth="10.0" prefWidth="53.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                     </rowConstraints>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Antall spørsmål:" wrappingWidth="141.59112548828125" GridPane.hgrow="ALWAYS" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Antall spørsmål:" wrappingWidth="141.59112548828125" GridPane.hgrow="NEVER" GridPane.vgrow="ALWAYS" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Antall lag:" wrappingWidth="115.9765625" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Vanskelighetsgrad:" wrappingWidth="177.9999656677246" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <Text fx:id="sumTeams" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />

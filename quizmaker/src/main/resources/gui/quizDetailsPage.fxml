@@ -20,9 +20,9 @@
       <HBox prefHeight="320.0" prefWidth="539.0">
          <children>
             <Pane prefHeight="320.0" prefWidth="49.0" HBox.hgrow="ALWAYS" />
-            <VBox prefHeight="270.0" prefWidth="310.0" styleClass="main-container" stylesheets="@css/main.css" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="270.0" prefWidth="310.0" styleClass="padded-container-lightgray" HBox.hgrow="ALWAYS">
                <children>
-                  <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" text="Quizname">
+                  <Text fx:id="quizName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Quizname">
                      <VBox.margin>
                         <Insets left="20.0" />
                      </VBox.margin>
@@ -30,17 +30,17 @@
                         <Font size="37.0" />
                      </font>
                   </Text>
-                  <GridPane prefHeight="201.0" prefWidth="267.0" VBox.vgrow="ALWAYS">
+                  <GridPane prefHeight="201.0" prefWidth="267.0" VBox.vgrow="NEVER">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.33331298828125" minWidth="10.0" prefWidth="152.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="65.33333333333331" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="220.0" minWidth="10.0" prefWidth="220.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="105.0" minWidth="10.0" prefWidth="98.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="36.0" vgrow="NEVER" />
+                      <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="37.0" vgrow="NEVER" />
+                      <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="47.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                     </rowConstraints>
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Antall spørsmål:" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
@@ -58,7 +58,7 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </GridPane>
-                  <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="44.0" prefWidth="271.0" VBox.vgrow="ALWAYS">
+                  <HBox alignment="BOTTOM_RIGHT" fillHeight="false" prefHeight="44.0" prefWidth="271.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Pane prefHeight="0.0" prefWidth="185.0" HBox.hgrow="ALWAYS" />
                         <Button fx:id="delete" alignment="CENTER" mnemonicParsing="false" onAction="#onDelete" prefHeight="43.0" prefWidth="82.0" text="Delete" textFill="#fc0303">
@@ -80,13 +80,17 @@
                <HBox.margin>
                   <Insets bottom="30.0" left="30.0" top="20.0" />
                </HBox.margin>
+               <stylesheets>
+                  <URL value="@css/main.css" />
+                  <URL value="@css/containers.css" />
+               </stylesheets>
             </VBox>
-            <VBox prefHeight="270.0" prefWidth="151.0" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="270.0" prefWidth="151.0" stylesheets="@css/main.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="30.0" left="10.0" top="20.0" />
                </HBox.margin>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ranking:" VBox.vgrow="NEVER">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-title" text="Ranking:" wrappingWidth="141.59228515625" VBox.vgrow="NEVER">
                      <font>
                         <Font size="21.0" />
                      </font>

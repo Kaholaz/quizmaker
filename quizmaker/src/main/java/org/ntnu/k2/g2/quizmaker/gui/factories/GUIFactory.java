@@ -51,9 +51,7 @@ public class GUIFactory {
     }
 
     public static Alert createNewErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message,  ButtonType.CLOSE);
-        alert.showAndWait();
-        return alert;
+        return new Alert(Alert.AlertType.ERROR, message,  ButtonType.CLOSE);
     }
 
     public static HBox createNavBar(String backPage, Button... buttons) {
@@ -88,9 +86,7 @@ public class GUIFactory {
             backButton.setText("Tilbake");
 
             // Make back button take you back
-            backButton.setOnAction((ActionEvent e) -> {
-                GUI.setSceneFromNode(backButton, backPage);
-            });
+            backButton.setOnAction((ActionEvent e) -> GUI.setSceneFromNode(backButton, backPage));
 
             // Add styling
             backButton.getStylesheets().add("/gui/css/buttons.css");

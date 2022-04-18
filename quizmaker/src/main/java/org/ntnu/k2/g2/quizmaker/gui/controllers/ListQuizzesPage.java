@@ -1,6 +1,5 @@
 package org.ntnu.k2.g2.quizmaker.gui.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -21,21 +20,26 @@ import static org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory.createNavBar;
 
 public class ListQuizzesPage {
     @FXML
-    private VBox vBox; // Value injected by FXMLLoader
+    private VBox quizContainer; // Value injected by FXMLLoader
 
     @FXML
-    private BorderPane borderPane; // Value injected by FXMLLoader
+    private BorderPane borderPane;
 
     private Button switchStatusButton;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * Initializes the page. Creates a navbar and updates the gui elements according to the database.
+     */
+
+    @FXML
     void initialize() {
         // Create navbar with switch status button
         switchStatusButton = new Button();
-        switchStatusButton.setOnAction((ActionEvent e) -> {
+        switchStatusButton.setOnAction(event -> {
             QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
             update();
         });
+
         HBox navbar = createNavBar("/gui/mainPage.fxml", switchStatusButton);
         borderPane.setTop(navbar);
 
@@ -43,12 +47,16 @@ public class ListQuizzesPage {
     }
 
     /**
-     * Updates the list from the database and checks if the active status has changed.
+     * Updates the list from the database. The quizzes updated is dependent on the isActive status.
      */
 
     void update() {
+        //clear the container before adding
+        quizContainer.getChildren().clear();
+
         ArrayList<QuizModel> quizzes;
 
+        //Get the quizzes from the database
         if (QuizHandlerSingelton.isActive()) {
             quizzes = QuizRegister.getActiveQuizzes();
             switchStatusButton.setText("Arkivert");
@@ -57,8 +65,7 @@ public class ListQuizzesPage {
             quizzes = QuizRegister.getArchivedQuizzes();
         }
 
-        vBox.getChildren().clear();
-
-        quizzes.forEach(quiz -> vBox.getChildren().add(GUIFactory.listQuestionItem(quiz)));
+        //add all the quizzes
+        quizzes.forEach(quiz -> quizContainer.getChildren().add(GUIFactory.listQuestionItem(quiz)));
     }
 }

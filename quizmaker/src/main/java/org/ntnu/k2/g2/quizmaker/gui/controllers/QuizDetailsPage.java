@@ -54,27 +54,35 @@ public class QuizDetailsPage {
      * Function called when the delete button has been pressed.
      * The quiz is deleted from the database.
      */
+
     @FXML
     void onDelete(ActionEvent event) {
         if (QuizRegister.removeQuiz(quiz)) {
             QuizHandlerSingelton.clear();
             GUI.setSceneFromActionEvent(event, "/gui/listQuizzesPage.fxml");
         } else {
-            GUIFactory.createNewErrorAlert("Kunne ikke slette quiz.");
+            GUIFactory.createNewErrorAlert("Kunne ikke slette quiz.").show();
         }
     }
 
     /**
-     * updates the quiz fields on the page, and the rankingGrid.
+     * updates the quiz fields on the page, and the rankingGrid, according to the quiz in the singleton.
      */
+
     void update() {
+        //update the details gridpane
         sumQuestions.setText(String.valueOf(quiz.getQuestions().size()));
         lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
         difficulty.setText(QuizHandlerSingelton.getDifficulty());
-        average.setText(Double.toString(Math.round(quiz.getDifficulty()*100))+ "%");
+        if (quiz.getDifficulty() == -1) {
+            difficulty.setText("---");
+        } else {
+            average.setText(Double.toString(Math.round(quiz.getDifficulty()*100))+ "%");
+        }
 
+        //update the team tableview
         Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
         int i = 0;
 
@@ -82,6 +90,10 @@ public class QuizDetailsPage {
             ranking.getItems().add(teamsSorted.next());
         }
     }
+
+    /**
+     * Initializes the tableview. There are two columns, one for score and one for teamname.
+     */
 
     void initTable() {
         TableColumn<TeamModel, String> name = new TableColumn<>("Navn");
@@ -93,7 +105,11 @@ public class QuizDetailsPage {
         ranking.getColumns().add(score);
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * Initializes the page
+     */
+
+    @FXML
     void initialize() {
         HBox navbar = GUIFactory.createNavBar("/gui/quizAdminPage.fxml");
         borderPane.setTop(navbar);

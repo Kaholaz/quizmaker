@@ -8,7 +8,7 @@
    <center>
         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" vbarPolicy="ALWAYS">
             <content>
-            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="687.0" />
+            <VBox fx:id="quizContainer" prefHeight="200.0" prefWidth="687.0" />
             </content>
         </ScrollPane>
    </center>

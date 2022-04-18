@@ -47,6 +47,6 @@ public class CreateNewQuizPage {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        borderPane.setTop(GUIFactory.createNavBar("/GUI/mainPage.fxml"));
+        borderPane.setTop(GUIFactory.createNavBar("/gui/mainPage.fxml"));
     }
 }

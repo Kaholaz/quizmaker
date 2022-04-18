@@ -7,3 +7,6 @@ or one "thing". e.g. Quiz details on the left side of the quizAdminPage.
     -fx-background-color: lightgray;
     -fx-padding: 4px;
 }
+
+.grid-pane {
+}

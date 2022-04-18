@@ -6,8 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
 /**
  * This is the main gui class of the application. The class
@@ -28,12 +28,9 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        setSceneFromStage(primaryStage, "/gui/mainPage.fxml");
-        
-        if (QuizRegister.getQuizList().isEmpty()) {
-            QuizRegister.populateDatabase(5, 100, 100);
-        }
+        primaryStage.getIcons().add(new Image(String.valueOf(GUI.class.getResource("/gui/media/team-logo.png"))));
         primaryStage.setTitle("QuizMaker");
+        setSceneFromStage(primaryStage, "/gui/mainPage.fxml");
     }
 
     /**

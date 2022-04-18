@@ -51,8 +51,8 @@ public class QuizAdminPage {
     /**
      * Changes between viewing active - and archived quizzes when the change state button
      * has been pressed.
-     *
      */
+
     @FXML
     void onChangeState() {
         try {
@@ -60,14 +60,13 @@ public class QuizAdminPage {
             QuizRegister.saveQuiz(quiz);
         } catch (Exception e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage());
+            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage()).show();
         }
         update();
-
     }
 
     /**
-     * Opens  the details page
+     * Redirects to the quizDetailspage
      */
 
     @FXML
@@ -109,7 +108,7 @@ public class QuizAdminPage {
                 try {
                     rt.exec(new String[] { "sh", "-c", cmd.toString() });
                 } catch (IOException e) {
-                    GUIFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage());
+                    GUIFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
                 }
         }
 
@@ -121,7 +120,7 @@ public class QuizAdminPage {
             try {
                 rt.exec(command);
             } catch (IOException e) {
-                GUIFactory.createNewErrorAlert("Kunne ikke åpne netleser: " + e.getMessage());
+                GUIFactory.createNewErrorAlert("Kunne ikke åpne netleser: " + e.getMessage()).show();
             }
         }
     }
@@ -132,7 +131,7 @@ public class QuizAdminPage {
 
     @FXML
     void onExportQA() {
-        GUI.createNewStage("/GUI/exportPage.fxml");
+        GUI.createNewStage("/gui/exportPage.fxml");
     }
 
     /**
@@ -146,11 +145,11 @@ public class QuizAdminPage {
             QuizResultManager.importResults(quiz);
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage());
+            GUIFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("En uventet feil oppstod:\n " + e.getMessage());
+            GUIFactory.createNewErrorAlert("En uventet feil oppstod:\n " + e.getMessage()).show();
             return;
         }
         update();
@@ -160,14 +159,17 @@ public class QuizAdminPage {
     }
 
     /**
-     * Updates information of the quiz fields.
+     * Updates the GUI elements according to the quiz.
      */
 
     void update() {
+        //change the details info
         quizName.setText(quiz.getName());
         sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
         difficulty.setText(QuizHandlerSingelton.getDifficulty());
+
+        //change the active status button text
         if (quiz.isActive()) {
             changeState.setText("Send til arkiv");
         } else {
@@ -175,10 +177,12 @@ public class QuizAdminPage {
         }
     }
 
+    /**
+     * Initializes the page. It creates a topbar and updates the gui elements to the quiz in the singleton.
+     */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        HBox navbar = GUIFactory.createNavBar("/GUI/listQuizzesPage.fxml");
+        HBox navbar = GUIFactory.createNavBar("/gui/listQuizzesPage.fxml");
         borderPane.setTop(navbar);
         update();
     }
