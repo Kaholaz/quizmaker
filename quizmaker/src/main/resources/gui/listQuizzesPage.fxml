@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -12,4 +13,8 @@
             </content>
         </ScrollPane>
    </center>
+   <stylesheets>
+      <URL value="@css/menu.css" />
+      <URL value="@css/main.css" />
+   </stylesheets>
 </BorderPane>
