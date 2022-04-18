@@ -1,7 +1,7 @@
 package org.ntnu.k2.g2.quizmaker;
 
 import javafx.application.Application;
-import org.ntnu.k2.g2.quizmaker.GUI.GUI;
+import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import javax.swing.JOptionPane;
 
