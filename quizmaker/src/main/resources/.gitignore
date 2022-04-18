@@ -1,6 +1,6 @@
 *.data
 json
 
-UserData
+userdata
 *.pdf
 *.json
