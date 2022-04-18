@@ -1,4 +1,4 @@
-package org.ntnu.k2.g2.quizmaker.exporting;
+package org.ntnu.k2.g2.quizmaker.pdfexport;
 
 import junit.framework.TestCase;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;

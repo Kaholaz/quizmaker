@@ -10,7 +10,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
-import org.ntnu.k2.g2.quizmaker.exporting.PdfManager;
+import org.ntnu.k2.g2.quizmaker.pdfexport.PdfManager;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 import java.io.File;
