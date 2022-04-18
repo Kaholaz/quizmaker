@@ -13,6 +13,8 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.GUI.GUI;
 import org.ntnu.k2.g2.quizmaker.GUI.QuizHandlerSingelton;
 
+import static org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager.changeResultSheetName;
+
 
 public class CreateNewQuizPage {
 
@@ -36,6 +38,10 @@ public class CreateNewQuizPage {
         // Create the Quiz instance
         QuizModel createdQuiz = QuizRegister.newQuiz();
         createdQuiz.setName(quizNameInputField.getText());
+
+        //changes the name of the spreadsheet to reflect quiz name
+        changeResultSheetName(createdQuiz);
+
         QuizRegister.saveQuiz(createdQuiz);
 
         // Set the states for the question editor page

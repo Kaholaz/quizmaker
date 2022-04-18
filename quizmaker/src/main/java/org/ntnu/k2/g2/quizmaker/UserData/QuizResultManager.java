@@ -39,7 +39,7 @@ public class QuizResultManager {
         String sheetId = quiz.getSheetId();
 
         try {
-            return resultSheet.setSheetTitle(sheetId,newName);
+            return resultSheet.setSheetTitle(newName,sheetId);
         }catch (GeneralSecurityException | IOException e){
             e.printStackTrace();
         }
