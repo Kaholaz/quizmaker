@@ -24,7 +24,7 @@ public class PdfExportTest extends TestCase {
 
         }
 
-        String destination = "src/main/resources/exporttests";
+        String destination = "src/main/resources/pdfexport";
         File destionation_file = new File(destination);
         destionation_file.mkdir();
 
