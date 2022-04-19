@@ -35,8 +35,8 @@ public class GUIFactory {
         });
 
         // Add styling
-        admin.getStylesheets().add("/gui/css/lists.css");
         admin.getStylesheets().add("/gui/css/clickable-nodes.css");
+        admin.getStylesheets().add("/gui/css/buttons.css");
         admin.getStyleClass().add("full-width-list-element");
         admin.getStyleClass().add("clickable-node-lightgreen");
 

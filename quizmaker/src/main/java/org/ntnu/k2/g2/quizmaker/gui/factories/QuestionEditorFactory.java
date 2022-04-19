@@ -14,6 +14,8 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
 
+import java.util.Objects;
+
 public class QuestionEditorFactory {
     /**
      * Creates a javafx Pane that can be used to show a Question in for example a list.
@@ -37,16 +39,20 @@ public class QuestionEditorFactory {
         buttonContainer.setAlignment(Pos.BOTTOM_RIGHT);
 
         // Create text labels that show where the question is and where the answer is
-        Text questionLabel = GUIFactory.basicText("Question " + questionNumber + ":");
-        Text answerLabel = GUIFactory.basicText("Answer:");
-        Text pointsLabel = GUIFactory.basicText("Points");
+        Text questionLabel = GUIFactory.basicText("Spørsmål " + questionNumber + ":");
+        Text answerLabel = GUIFactory.basicText("Svar: ");
+        Text pointsLabel = GUIFactory.basicText("Poeng: ");
 
         // Set the text fields with the question and answer
         TextField questionTextArea = GUIFactory.createTextField(question.getQuestion());
         TextField answerTextArea = GUIFactory.createTextField(question.getAnswer());
         TextField pointsField = GUIFactory.createNumberOnlyTextField(question.getScore());
 
-        pointsField.setOnKeyTyped(actionEvent -> question.setScore(Integer.parseInt(pointsField.getText())));
+        pointsField.setOnKeyTyped(actionEvent -> {
+            if (!Objects.equals(pointsField.getText(), "")) {
+                question.setScore(Integer.parseInt(pointsField.getText()));
+            }
+        });
         questionTextArea.setOnKeyTyped(actionEvent -> question.setQuestion(questionTextArea.getText()));
         answerTextArea.setOnKeyTyped(actionEvent ->  question.setAnswer(answerTextArea.getText()));
 

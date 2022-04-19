@@ -18,30 +18,33 @@ import java.util.List;
 
 import static org.ntnu.k2.g2.quizmaker.gui.factories.QuestionEditorFactory.createQuestionPane;
 
+/**
+ * Controller for the questionEditorPage. Allows user to edit questions.
+ *
+ */
 
 public class QuestionEditorPage {
-    @FXML // fx:id="vBox"
-    private VBox vBox; // Value injected by FXMLLoader
+    @FXML
+    private VBox vBox;
 
     @FXML
     private BorderPane borderPane;
 
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
-    private QuestionModel target;
+    /**
+     * Creates a new question, and binds it to the quiz. A new pane will be generated.
+     */
 
     @FXML
-    void onSave(ActionEvent event) {
-        QuizRegister.saveQuiz(quiz);
-        GUI.setSceneFromActionEvent(event, "/gui/quizAdminPage.fxml");
+    void onCreateNewQuestion() {
+        QuestionModel question = QuizRegister.newQuestion(quiz);
+        vBox.getChildren().add(createQuestionPane(question, quiz.getQuestions().size()));
     }
 
-    @FXML
-    void onBtnCreateNewQuestionClick() {
-        QuestionModel newQuestion = QuizRegister.newQuestion(quiz);
-        vBox.getChildren().add(createQuestionPane(newQuestion, quiz.getQuestions().size()));
-    }
-
+    /**
+     * Initializes the page by generating all panes with quizzes and a navbar.
+     */
     @FXML
     void initialize() {
         // Create save button
@@ -57,6 +60,10 @@ public class QuestionEditorPage {
         loadQuestionsToVBox();
     }
 
+    /**
+     * Helper method that loops through all the questions and creates questionpanes.
+     */
+
     private void loadQuestionsToVBox() {
         vBox.getChildren().clear();
         List<QuestionModel> sorted = quiz.getQuestions().values().stream().sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
@@ -64,5 +71,20 @@ public class QuestionEditorPage {
             QuestionModel question = sorted.get(i);
             vBox.getChildren().add(createQuestionPane(question, i + 1));
         }
+    }
+
+    /**
+     * Saves all the edited questions to the database.
+     *
+     * @param event
+     */
+
+    void onSave(ActionEvent event) {
+        try {
+            QuizRegister.saveQuiz(quiz);
+        } catch (Exception e) {
+            GUIFactory.createNewErrorAlert("Could not save the quiz... \n" + e.getMessage());
+        }
+        GUI.setSceneFromActionEvent(event, "/gui/quizAdminPage.fxml");
     }
 }

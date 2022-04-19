@@ -13,20 +13,17 @@ import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
 
+/**
+ * Controller for the newQuizPage. Allows the user to create a new quiz.
+ */
 
 public class CreateNewQuizPage {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    @FXML
+    private Button btnSubmit;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="btnSubmit"
-    private Button btnSubmit; // Value injected by FXMLLoader
-
-    @FXML // fx:id="quizNameInputField"
-    private TextField quizNameInputField; // Value injected by FXMLLoader
+    @FXML
+    private TextField quizNameInputField;
 
     @FXML
     private BorderPane borderPane;
@@ -34,8 +31,15 @@ public class CreateNewQuizPage {
     @FXML
     void onSubmitBtnClicked(ActionEvent event) {
         // Create the Quiz instance
-        QuizModel createdQuiz = QuizRegister.newQuiz();
-        createdQuiz.setName(quizNameInputField.getText());
+        QuizModel createdQuiz;
+        try {
+            createdQuiz = QuizRegister.newQuiz();
+            createdQuiz.setName(quizNameInputField.getText());
+        } catch (Exception e) {
+            GUIFactory.createNewErrorAlert("An unexpected error occured... \n" + e.getMessage());
+            GUI.setSceneFromActionEvent(event, "gui/mainPage.fxml");
+            return;
+        }
         QuizRegister.saveQuiz(createdQuiz);
 
         // Set the states for the question editor page
@@ -45,7 +49,10 @@ public class CreateNewQuizPage {
         GUI.setSceneFromNode(btnSubmit, "/gui/questionEditorPage.fxml");
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * Initializes the page. Creates a navbar on top of the page.
+     */
+    @FXML
     void initialize() {
         borderPane.setTop(GUIFactory.createNavBar("/gui/mainPage.fxml"));
     }

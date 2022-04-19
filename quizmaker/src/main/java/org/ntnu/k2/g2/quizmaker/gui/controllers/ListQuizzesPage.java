@@ -5,17 +5,17 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
 
 import java.util.ArrayList;
 
 import static org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory.createNavBar;
 
 /**
- * Controller for listQuizzesPages. It lists quizzes in a scrollpane.
+ * Controller for listQuizzesPages. Used for pages where quizzes are listed.
  */
 
 public class ListQuizzesPage {

@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 /**
  * Controller class for the quizDetailsPage. It shows the details of each quiz,
- * and the ranking the teams.
+ * and the ranking of the teams.
  */
 
 public class QuizDetailsPage {
