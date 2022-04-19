@@ -34,3 +34,15 @@
     -fx-border-radius: 2px;
     -fx-background-radius: 5px;
 }
+
+.full-width-list-element {
+    -fx-pref-width: Infinity;
+    -fx-padding: 30px;
+    -fx-border-insets: 4px;
+    -fx-background-insets: 4px;
+    -fx-font-size: 28px;
+    -fx-border-color: black;
+    -fx-border-type: solid;
+    -fx-border-width: 2px;
+    -fx-background-color: lightgrey;
+}

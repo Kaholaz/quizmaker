@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 public class GUI extends Application {
 
-    private static final int STAGE_MIN_HEIGHT = 400;
+    private static final int STAGE_MIN_HEIGHT = 500;
     private static final int STAGE_MIN_WIDTH = 500;
 
     /**

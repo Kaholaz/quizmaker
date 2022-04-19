@@ -1,85 +1,90 @@
 package org.ntnu.k2.g2.quizmaker.gui.controllers;
 
-import java.util.Set;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
+
+import java.util.Comparator;
+import java.util.List;
 
 import static org.ntnu.k2.g2.quizmaker.gui.factories.QuestionEditorFactory.createQuestionPane;
 
+/**
+ * Controller for the questionEditorPage. Allows user to edit questions.
+ *
+ */
+
 public class QuestionEditorPage {
-    @FXML // fx:id="vBox"
-    private VBox vBox; // Value injected by FXMLLoader
+    @FXML
+    private VBox vBox;
 
     @FXML
     private BorderPane borderPane;
 
-    @FXML
-    void onSave(ActionEvent event) {
-        // For each question "set" (question-answer pair)
-        for (int i = 0; i < vBox.getChildren().size(); i++) {
-            // Get the pane and search for all text inputs
-            Pane questionPane = (Pane) vBox.getChildren().get(i);
-            Set<Node> textAreas = questionPane.lookupAll("TextArea");
+    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
-            // Assume that the first text area is the question text area and the second is the answer text area
-            TextArea questionTextArea = (TextArea) textAreas.toArray()[0];
-            TextArea answerTextArea = (TextArea) textAreas.toArray()[1];
-
-            // Get string values
-            String newQuestion = questionTextArea.getText();
-            String newAnswer = answerTextArea.getText();
-
-            // Get the question we're changing from the Quiz.
-            QuestionModel questionToChange = (QuestionModel) QuizHandlerSingelton.getQuiz().getQuestions().values().toArray()[i];
-            questionToChange.setQuestion(newQuestion);
-            questionToChange.setAnswer(newAnswer);
-        }
-
-        // Save the quiz to the database
-        QuizRegister.saveQuiz(QuizHandlerSingelton.getQuiz());
-
-        // Go back to quiz page
-        GUI.setSceneFromNode(borderPane, "/gui/quizAdminPage.fxml");
-    }
+    /**
+     * Creates a new question, and binds it to the quiz. A new pane will be generated.
+     */
 
     @FXML
-    void onBtnCreateNewQuestionClick(ActionEvent event) {
-        QuestionModel newQuestion = QuizRegister.newQuestion(QuizHandlerSingelton.getQuiz());
-        vBox.getChildren().add(createQuestionPane(newQuestion, QuizHandlerSingelton.getQuiz().getQuestions().values().size()));
+    void onCreateNewQuestion() {
+        QuestionModel question = QuizRegister.newQuestion(quiz);
+        vBox.getChildren().add(createQuestionPane(question, quiz.getQuestions().size()));
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * Initializes the page by generating all panes with quizzes and a navbar.
+     */
+    @FXML
     void initialize() {
         // Create save button
         Button saveButton = new Button();
         saveButton.setText("Lagre");
-        saveButton.setOnAction((ActionEvent e) -> onSave(e));
+        saveButton.setOnAction(this::onSave);
         HBox navbar = GUIFactory.createNavBar("/gui/quizAdminPage.fxml", saveButton);
 
-        // Add the navbar
+        //Add the navbar
         borderPane.setTop(navbar);
 
         // Load questions to VBox
         loadQuestionsToVBox();
     }
 
+    /**
+     * Helper method that loops through all the questions and creates questionpanes.
+     */
+
     private void loadQuestionsToVBox() {
-        int questionCounter = 1;
-        for (QuestionModel question : QuizHandlerSingelton.getQuiz().getQuestions().values()) {
-            vBox.getChildren().add(createQuestionPane(question, questionCounter++));
+        vBox.getChildren().clear();
+        List<QuestionModel> sorted = quiz.getQuestions().values().stream().sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
+        for (int i = 0; i < sorted.size(); i++) {
+            QuestionModel question = sorted.get(i);
+            vBox.getChildren().add(createQuestionPane(question, i + 1));
         }
+    }
+
+    /**
+     * Saves all the edited questions to the database.
+     *
+     * @param event
+     */
+
+    void onSave(ActionEvent event) {
+        try {
+            QuizRegister.saveQuiz(quiz);
+        } catch (Exception e) {
+            GUIFactory.createNewErrorAlert("Could not save the quiz... \n" + e.getMessage());
+        }
+        GUI.setSceneFromActionEvent(event, "/gui/quizAdminPage.fxml");
     }
 }
