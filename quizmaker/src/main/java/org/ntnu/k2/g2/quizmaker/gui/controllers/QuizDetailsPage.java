@@ -10,10 +10,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
+import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.util.Iterator;
 
@@ -61,7 +62,7 @@ public class QuizDetailsPage {
             QuizHandlerSingelton.clear();
             GUI.setSceneFromActionEvent(event, "/gui/listQuizzesPage.fxml");
         } else {
-            GUIFactory.createNewErrorAlert("Kunne ikke slette quiz.").show();
+            AlertFactory.createNewErrorAlert("Kunne ikke slette quiz.").show();
         }
     }
 
@@ -111,7 +112,7 @@ public class QuizDetailsPage {
 
     @FXML
     void initialize() {
-        HBox navbar = GUIFactory.createNavBar("/gui/quizAdminPage.fxml");
+        HBox navbar = NavBarFactory.createTopBar("/gui/quizAdminPage.fxml");
         borderPane.setTop(navbar);
 
         update();

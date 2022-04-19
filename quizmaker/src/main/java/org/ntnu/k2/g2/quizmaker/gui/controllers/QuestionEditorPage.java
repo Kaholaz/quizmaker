@@ -11,12 +11,13 @@ import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
+import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.util.Comparator;
 import java.util.List;
 
-import static org.ntnu.k2.g2.quizmaker.gui.factories.QuestionEditorFactory.createQuestionPane;
+import static org.ntnu.k2.g2.quizmaker.gui.factories.ContainerFactory.createQuestionPane;
 
 /**
  * Controller for the questionEditorPage. Allows user to edit questions.
@@ -51,7 +52,7 @@ public class QuestionEditorPage {
         Button saveButton = new Button();
         saveButton.setText("Lagre");
         saveButton.setOnAction(this::onSave);
-        HBox navbar = GUIFactory.createNavBar("/gui/quizAdminPage.fxml", saveButton);
+        HBox navbar = NavBarFactory.createTopBar("/gui/quizAdminPage.fxml", saveButton);
 
         //Add the navbar
         borderPane.setTop(navbar);
@@ -83,7 +84,7 @@ public class QuestionEditorPage {
         try {
             QuizRegister.saveQuiz(quiz);
         } catch (Exception e) {
-            GUIFactory.createNewErrorAlert("Could not save the quiz... \n" + e.getMessage());
+            AlertFactory.createNewErrorAlert("Could not save the quiz... \n" + e.getMessage());
         }
         GUI.setSceneFromActionEvent(event, "/gui/quizAdminPage.fxml");
     }
