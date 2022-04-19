@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.pdfexport.PdfManager;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
@@ -85,7 +85,7 @@ public class ExportPage {
                 i++;
             }
         } catch (Exception e) {
-            GUIFactory.createNewErrorAlert("En uventet feil oppstod: \n" + e.getMessage());
+            AlertFactory.createNewErrorAlert("En uventet feil oppstod: \n" + e.getMessage());
         }
         if (i > 0) {
             exportMsg.setText(msg);

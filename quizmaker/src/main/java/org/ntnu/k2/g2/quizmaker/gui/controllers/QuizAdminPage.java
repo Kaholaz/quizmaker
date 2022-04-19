@@ -8,10 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.googlesheets.QuizResultManager;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -60,7 +61,7 @@ public class QuizAdminPage {
             QuizRegister.saveQuiz(quiz);
         } catch (Exception e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage()).show();
+            AlertFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage()).show();
         }
         update();
     }
@@ -108,7 +109,7 @@ public class QuizAdminPage {
                 try {
                     rt.exec(new String[] { "sh", "-c", cmd.toString() });
                 } catch (IOException e) {
-                    GUIFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
+                    AlertFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
                 }
         }
 
@@ -120,7 +121,7 @@ public class QuizAdminPage {
             try {
                 rt.exec(command);
             } catch (IOException e) {
-                GUIFactory.createNewErrorAlert("Kunne ikke åpne netleser: " + e.getMessage()).show();
+                AlertFactory.createNewErrorAlert("Kunne ikke åpne netleser: " + e.getMessage()).show();
             }
         }
     }
@@ -145,11 +146,11 @@ public class QuizAdminPage {
             QuizResultManager.importResults(quiz);
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
+            AlertFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
         } catch (Exception e) {
             e.printStackTrace();
-            GUIFactory.createNewErrorAlert("En uventet feil oppstod:\n " + e.getMessage()).show();
+            AlertFactory.createNewErrorAlert("En uventet feil oppstod:\n " + e.getMessage()).show();
             return;
         }
         update();
@@ -182,7 +183,7 @@ public class QuizAdminPage {
      */
     @FXML
     void initialize() {
-        HBox navbar = GUIFactory.createNavBar("/gui/listQuizzesPage.fxml");
+        HBox navbar = NavBarFactory.createTopBar("/gui/listQuizzesPage.fxml");
         borderPane.setTop(navbar);
         update();
     }

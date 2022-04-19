@@ -8,11 +8,11 @@ import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory;
+import org.ntnu.k2.g2.quizmaker.gui.factories.ButtonFactory;
 
 import java.util.ArrayList;
 
-import static org.ntnu.k2.g2.quizmaker.gui.factories.GUIFactory.createNavBar;
+import static org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory.createTopBar;
 
 /**
  * Controller for listQuizzesPages. Used for pages where quizzes are listed.
@@ -40,7 +40,7 @@ public class ListQuizzesPage {
             update();
         });
 
-        HBox navbar = createNavBar("/gui/mainPage.fxml", switchStatusButton);
+        HBox navbar = createTopBar("/gui/mainPage.fxml", switchStatusButton);
         borderPane.setTop(navbar);
 
         update();
@@ -66,6 +66,6 @@ public class ListQuizzesPage {
         }
 
         //add all the quizzes
-        quizzes.forEach(quiz -> quizContainer.getChildren().add(GUIFactory.listQuestionItem(quiz)));
+        quizzes.forEach(quiz -> quizContainer.getChildren().add(ButtonFactory.listQuestionButton(quiz)));
     }
 }
