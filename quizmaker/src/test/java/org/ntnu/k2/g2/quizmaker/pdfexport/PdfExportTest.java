@@ -1,13 +1,24 @@
 package org.ntnu.k2.g2.quizmaker.pdfexport;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Test;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
 import java.io.File;
 
-public class PdfExportTest extends TestCase {
+public class PdfExportTest {
+    @After
+    public void tearDown() {
+        String dest = "src/main/resources/pdfexport";
+        File dir = new File(dest);
+        for(File file: dir.listFiles()) {
+            if (!file.isDirectory()) file.delete();
+        }
+    }
+
+    @Test
     public void testPdfExport() {
         QuizModel testQuiz = QuizRegister.newQuiz();
         testQuiz.setName("Test quiz");
