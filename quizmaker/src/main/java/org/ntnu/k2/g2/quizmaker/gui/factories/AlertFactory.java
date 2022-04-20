@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
+import javax.swing.*;
+
 /**
  * Makes alert messages. Can either be a popup or an element.
  * All creation methods are static.
@@ -28,6 +30,14 @@ public class AlertFactory {
 
     public static Alert createNewErrorAlert(String message) {
         return new Alert(Alert.AlertType.ERROR, message,  ButtonType.CLOSE);
+    }
+    public static Alert createNewWarningAlert(String message) {
+        return new Alert(Alert.AlertType.WARNING, message,  ButtonType.CLOSE);
+    }
+
+    public static void showJOptionWarning(String string) {
+        JOptionPane.showMessageDialog(null, string,
+                "Hey!", JOptionPane.ERROR_MESSAGE);
     }
 
 }

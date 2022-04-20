@@ -8,6 +8,8 @@ import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ButtonDecorator;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.ButtonFactory;
 
 import java.util.ArrayList;
@@ -66,13 +68,20 @@ public class ListQuizzesPage {
         //Get the quizzes from the database
         if (QuizHandlerSingelton.isActive()) {
             quizzes = QuizRegister.getActiveQuizzes();
-            switchStatusButton.setText("Arkivert");
+            switchStatusButton.setText("Til inaktive");
+
         } else {
-            switchStatusButton.setText("Aktive");
+            switchStatusButton.setText("Til arkiv");
             quizzes = QuizRegister.getArchivedQuizzes();
         }
 
         //add all the quizzes
-        quizzes.forEach(quiz -> quizContainer.getChildren().add(ButtonFactory.listQuestionButton(quiz)));
+        quizzes.forEach(quiz -> {
+            Button button = ButtonFactory.listQuestionButton(quiz);
+            if (!quiz.isActive()) {
+                ButtonDecorator.makeArchived(button);
+            }
+            quizContainer.getChildren().add(button);
+        });
     }
 }

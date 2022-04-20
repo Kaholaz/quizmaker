@@ -9,6 +9,10 @@ or one "thing". e.g. Quiz details on the left side of the quizAdminPage.
     -fx-fill-width: true;
 }
 
+.menu {
+    -fx-background-image: url("gui/media/background-stock-image.jpg");
+}
+
 .grid-pane {
 }
 
@@ -17,4 +21,7 @@ or one "thing". e.g. Quiz details on the left side of the quizAdminPage.
     -fx-padding: 25px;
     -fx-background-insets: 0 5 5 5;
     -fx-border-insets: 0 5 5 5;
+    -fx-border-color: black;
+    -fx-border-type: solid;
+    -fx-border-width: 2px;
 }

@@ -7,10 +7,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
@@ -42,18 +42,20 @@ public class QuestionEditorPage {
     }
 
     /**
-     * Initializes the page by generating all panes with quizzes and a navbar.
+     * Initializes the page by generating all question panes and a navbar.
      */
     @FXML
     void initialize() {
-        // Create save button
-        Button saveButton = new Button();
-        saveButton.setText("Lagre");
-        saveButton.setOnAction(this::onSave);
-        HBox navbar = NavBarFactory.createTopBar("/gui/quizAdminPage.fxml", saveButton);
-
-        //Add the navbar
+        // Create navigation bar
+        HBox navbar = NavBarFactory.createTopBar("/gui/quizAdminPage.fxml");
         borderPane.setTop(navbar);
+
+        //set root color according to if the quiz is active or not
+        if (QuizHandlerSingelton.isActive()) {
+            ContainerDecorator.makeContainerActive(borderPane);
+        } else {
+            ContainerDecorator.makeContainerArchived(borderPane);
+        }
 
         // Load questions to VBox
         loadQuestionsToVBox();
@@ -81,7 +83,7 @@ public class QuestionEditorPage {
      *
      * @param event
      */
-
+    @FXML
     void onSave(ActionEvent event) {
         try {
             QuizRegister.saveQuiz(QuizHandlerSingelton.getQuiz());

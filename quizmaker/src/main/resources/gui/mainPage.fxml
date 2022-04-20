@@ -10,11 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.MainPage">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" styleClass="menu" stylesheets="@css/containers.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.MainPage">
    <center>
-      <VBox prefHeight="196.0" prefWidth="200.0">
+      <VBox fx:id="mainContainer" prefHeight="196.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="menu">
          <children>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="145.0" prefWidth="500.0" stylesheets="@css/main.css" VBox.vgrow="ALWAYS">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: transparent;" stylesheets="@css/main.css" VBox.vgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Quiz maker" textAlignment="CENTER" wrappingWidth="362.6988220214844" HBox.hgrow="ALWAYS">
                      <font>
@@ -26,7 +26,7 @@
                   </Text>
                </children>
             </HBox>
-            <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+            <VBox alignment="CENTER" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                <children>
                   <HBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="161.0" prefWidth="409.0" VBox.vgrow="ALWAYS">
                      <children>

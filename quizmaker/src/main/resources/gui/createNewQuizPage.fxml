@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.CreateNewQuizPage">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.CreateNewQuizPage">
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="mainContainer" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@css/main.css" BorderPane.alignment="CENTER">
          <children>
             <Pane VBox.vgrow="ALWAYS" />
             <HBox>
@@ -21,17 +21,17 @@
                   <Pane maxHeight="150.0" HBox.hgrow="ALWAYS" />
                   <AnchorPane minHeight="180.0">
                      <children>
-                        <Button fx:id="btnSubmit" layoutX="242.0" layoutY="111.0" mnemonicParsing="false" onAction="#onSubmitBtnClicked" text="Submit">
+                        <Button fx:id="btnSubmit" layoutX="249.0" layoutY="107.0" mnemonicParsing="false" onAction="#onSubmitBtnClicked" styleClass="medium-button" stylesheets="@css/buttons.css" text="Submit">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <TextField fx:id="quizNameInputField" layoutY="111.0" prefHeight="25.0" prefWidth="228.0" promptText="My very cool Quiz name">
+                        <TextField fx:id="quizNameInputField" layoutY="107.0" prefHeight="47.0" prefWidth="241.0" promptText="My very cool Quiz name" stylesheets="@css/main.css">
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor>
                         </TextField>
-                        <Text layoutX="6.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz Maker">
+                        <Text layoutX="39.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz Maker">
                            <font>
                               <Font size="56.0" />
                            </font>

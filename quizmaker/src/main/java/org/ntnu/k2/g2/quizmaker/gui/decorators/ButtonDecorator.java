@@ -38,6 +38,28 @@ public class ButtonDecorator {
      */
 
     public static void makeDefaultDeleteButton(Button button) {
-        button.setStyle("-fx-text-fill: red");
+        button.getStyleClass().clear();
+        button.getStyleClass().add("button-delete");
+    }
+
+    public static void makeDefaultGreenButton(Button button) {
+        button.getStyleClass().clear();
+        button.getStyleClass().add("button-green");
+    }
+
+    public static void makeArchived(Button button) {
+        button.setStyle("-fx-background-color: #E3BFBF");
+    }
+
+    public static void makeActive(Button button) {
+        button.setStyle("-fx-background-color: #E7E7E7");
+    }
+
+    public static void makeGray(Button button) {
+        button.setStyle("-fx-background-color: lightgrey");
+    }
+
+    public static void makeBlue(Button button) {
+        button.setStyle("-fx-background-color: lightblue");
     }
 }

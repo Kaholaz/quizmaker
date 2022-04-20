@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.pdfexport.PdfManager;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
@@ -77,8 +78,10 @@ public class ExportPage {
 
         // Set the appropriate export msg based on if anything was exported.
         if (exported) {
+            TextDecorator.makeTextGreen(exportMsg);
             exportMsg.setText("Eksportering vellykket");
         } else {
+            TextDecorator.makeTextRed(exportMsg);
             exportMsg.setText("Ingenting ble eksportert");
         }
 
