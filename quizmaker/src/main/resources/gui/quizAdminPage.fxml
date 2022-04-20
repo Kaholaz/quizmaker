@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -14,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPane" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.QuizAdminPage">
+<BorderPane fx:id="borderPane" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.QuizAdminPage">
    <center>
       <HBox prefHeight="320.0" prefWidth="539.0">
          <children>
@@ -131,7 +137,7 @@
                               <String fx:value="big-gridpane-button-lightblue" />
                               <String fx:value="clickable-node-gray" />
                            </styleClass></Button>
-                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" text="Eksporter Q&amp;A" GridPane.rowIndex="4">
+                        <Button fx:id="exportQA" mnemonicParsing="false" onAction="#onExportQA" text="Eksporter quiz til pdf" GridPane.rowIndex="4">
                            <stylesheets>
                               <URL value="@css/buttons.css" />
                               <URL value="@css/clickable-nodes.css" />
