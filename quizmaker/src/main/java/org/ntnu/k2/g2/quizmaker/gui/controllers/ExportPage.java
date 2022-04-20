@@ -27,7 +27,7 @@ public class ExportPage {
     private Text exportMsg;
 
     @FXML
-    private CheckBox c1, c2, c3, c4, c5, c6;
+    private CheckBox c1, c2, c3;
 
     @FXML // fx:id="close"
     private Button close; // Value injected by FXMLLoader
@@ -61,27 +61,15 @@ public class ExportPage {
 
         try {
             if (c1.isSelected()) {
-                PdfManager.exportAnswersheetWithQuestionsQR(quiz,file.toString());
-                i++;
-            }
-            if (c2.isSelected()) {
                 PdfManager.exportAnswersheetWithQuestions(quiz,file.toString());
                 i++;
             }
-            if (c3.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestionsQR(quiz,file.toString());
-                i++;
-            }
-            if (c4.isSelected()) {
+            if (c2.isSelected()) {
                 PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
                 i++;
             }
-            if (c5.isSelected()) {
-                PdfManager.exportSolutionWithQuestions(quiz,file.toString());
-                i++;
-            }
-            if (c6.isSelected()) {
-                PdfManager.exportSolutionWithoutQuestions(quiz,file.toString());
+            if (c3.isSelected()) {
+                PdfManager.exportSolution(quiz,file.toString());
                 i++;
             }
         } catch (Exception e) {
