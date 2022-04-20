@@ -8,7 +8,6 @@ import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
 /**
  * Controller for the mainPage
  */
-
 public class MainPage {
 
     @FXML
@@ -17,13 +16,15 @@ public class MainPage {
     /**
      * Redirects to listQuizzesPage and sets the Singleton active status to true.
      */
-
     @FXML
     void onListQuizzesBtnClicked() {
         QuizHandlerSingelton.setActive(true);
         GUI.setSceneFromNode(btnListQuizzes, "/gui/listQuizzesPage.fxml");
     }
 
+    /**
+     * Takes the user to createNewQuizPage
+     */
     public void onCreateNewQuizBtnClicked() {
         GUI.setSceneFromNode(btnNewQuiz, "/gui/createNewQuizPage.fxml");
     }

@@ -29,28 +29,35 @@ public class ListQuizzesPage {
 
     /**
      * Initializes the page. Creates a navbar and updates the gui elements according to the database.
+     * This method is called immediately after the fxml page is loaded.
      */
-
     @FXML
     void initialize() {
         // Create navbar with switch status button
         switchStatusButton = new Button();
         switchStatusButton.setOnAction(event -> {
             QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
-            update();
+            refreshQuizList();
         });
 
         HBox navbar = createTopBar("/gui/mainPage.fxml", switchStatusButton);
         borderPane.setTop(navbar);
 
-        update();
+        refreshQuizList();
     }
 
     /**
-     * Updates the list from the database. The quizzes updated is dependent on the isActive status.
+     * This method refreshes the quiz list.
+     * This is done in three steps:
+     * <ol>
+     *     <li>Clear all quizzes from the list.</li>
+     *     <li>Fetch the list of quizzes from the database.</li>
+     *     <li>Fill the quiz container with quiz elements according to the list of quizzes.</li>
+     * </ol>
+     *
+     * This method takes into account the quiz status of the QuizHandler.
      */
-
-    void update() {
+    void refreshQuizList() {
         //clear the container before adding
         quizContainer.getChildren().clear();
 

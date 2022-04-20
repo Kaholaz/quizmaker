@@ -31,16 +31,14 @@ public class QuestionEditorPage {
     @FXML
     private BorderPane borderPane;
 
-    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
-
     /**
      * Creates a new question, and binds it to the quiz. A new pane will be generated.
      */
 
     @FXML
     void onCreateNewQuestion() {
-        QuestionModel question = QuizRegister.newQuestion(quiz);
-        vBox.getChildren().add(createQuestionPane(question, quiz.getQuestions().size()));
+        QuestionModel question = QuizRegister.newQuestion(QuizHandlerSingelton.getQuiz());
+        vBox.getChildren().add(createQuestionPane(question, QuizHandlerSingelton.getQuiz().getQuestions().size()));
     }
 
     /**
@@ -62,15 +60,19 @@ public class QuestionEditorPage {
     }
 
     /**
-     * Helper method that loops through all the questions and creates questionpanes.
+     * Helper method that loops through all the questions and creates question-panes.
      */
-
     private void loadQuestionsToVBox() {
         vBox.getChildren().clear();
-        List<QuestionModel> sorted = quiz.getQuestions().values().stream().sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
-        for (int i = 0; i < sorted.size(); i++) {
-            QuestionModel question = sorted.get(i);
-            vBox.getChildren().add(createQuestionPane(question, i + 1));
+
+        // A list of all questions sorted by id (and by extension creation order)
+        List<QuestionModel> sorted = QuizHandlerSingelton.getQuiz()
+                .getQuestions().values().stream()
+                .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
+
+        for (int questionNumber = 1; questionNumber <= sorted.size(); questionNumber++) {
+            QuestionModel question = sorted.get(questionNumber - 1);
+            vBox.getChildren().add(createQuestionPane(question, questionNumber));
         }
     }
 
@@ -82,7 +84,7 @@ public class QuestionEditorPage {
 
     void onSave(ActionEvent event) {
         try {
-            QuizRegister.saveQuiz(quiz);
+            QuizRegister.saveQuiz(QuizHandlerSingelton.getQuiz());
         } catch (Exception e) {
             AlertFactory.createNewErrorAlert("Could not save the quiz... \n" + e.getMessage());
         }

@@ -27,6 +27,13 @@ public class CreateNewQuizPage {
     @FXML
     private BorderPane borderPane;
 
+    /**
+     * Event listener for when the create quiz button is pressed.
+     * This triggers the creation of the new quiz and changes the scene to the question editor for this quiz.
+     * This allows the users to add questions for the newly created quiz.
+     *
+     * @param event The event for when the create quiz button is pressed.
+     */
     @FXML
     void onSubmitBtnClicked(ActionEvent event) {
         // Create the Quiz instance
@@ -50,6 +57,7 @@ public class CreateNewQuizPage {
 
     /**
      * Initializes the page. Creates a navbar on top of the page.
+     * This method is called after the fxml page is loaded.
      */
     @FXML
     void initialize() {

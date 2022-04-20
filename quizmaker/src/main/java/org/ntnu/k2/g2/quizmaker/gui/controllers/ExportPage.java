@@ -36,11 +36,11 @@ public class ExportPage {
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     /**
-     * Closes the stage when the user is finished
+     * An event listener for when the user presses the close/cancel button.
+     * This causes the export window to close.
      *
-     * @param event triggering event from button
+     * @param event Triggering event from the button press.
      */
-
     @FXML
     private void onClose(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -48,38 +48,41 @@ public class ExportPage {
     }
 
     /**
-     * Checks the checkboxes. If they are selected it will import the selected option.
+     * Creates pdfs based on the checkboxes checked.
+     * Sets the appropriate messages after a successful export, or alerts the user if the export was unsuccessful.
      */
-
     @FXML
     private void onExport() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Stage stage = (Stage) export.getScene().getWindow();
         File file = directoryChooser.showDialog(stage);
-        String msg = "Eksportering vellykket";
-        int i = 0;
+        boolean exported = false;
 
         try {
             if (c1.isSelected()) {
                 PdfManager.exportAnswersheetWithQuestions(quiz,file.toString());
-                i++;
+                exported = true;
             }
             if (c2.isSelected()) {
                 PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
-                i++;
+                exported = true;
             }
             if (c3.isSelected()) {
                 PdfManager.exportSolution(quiz,file.toString());
-                i++;
+                exported = true;
             }
         } catch (Exception e) {
             AlertFactory.createNewErrorAlert("En uventet feil oppstod: \n" + e.getMessage());
         }
-        if (i > 0) {
-            exportMsg.setText(msg);
+
+        // Set the appropriate export msg based on if anything was exported.
+        if (exported) {
+            exportMsg.setText("Eksportering vellykket");
         } else {
             exportMsg.setText("Ingenting ble eksportert");
         }
+
+        // Changes the text on the cancel button to 'close'
         close.setText("Lukk");
     }
 }
