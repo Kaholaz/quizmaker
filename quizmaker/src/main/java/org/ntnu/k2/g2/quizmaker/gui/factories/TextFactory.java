@@ -1,5 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.gui.factories;
 
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -61,5 +62,12 @@ public class TextFactory {
             }
         });
         return textField;
+    }
+
+    public static Text createTitle(String s) {
+        Text text = new Text(s);
+        text.getStyleClass().clear();
+        text.getStyleClass().add("quiz-title");
+        return text;
     }
 }

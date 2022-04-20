@@ -1,7 +1,14 @@
 package org.ntnu.k2.g2.quizmaker.gui.controllers;
 
+import com.itextpdf.layout.property.Background;
+import com.itextpdf.layout.property.BackgroundImage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
 
@@ -13,6 +20,9 @@ public class MainPage {
 
     @FXML
     public Button btnNewQuiz, btnListQuizzes;
+
+    @FXML
+    public BorderPane borderPane;
 
     /**
      * Redirects to listQuizzesPage and sets the Singleton active status to true.

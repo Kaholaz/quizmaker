@@ -61,6 +61,7 @@ public class NavBarFactory {
         // If a back page is specified, add a back button.
         if (!backPage.isEmpty()) {
             Button backButton = ButtonFactory.createNavbarButton("Tilbake");
+            ButtonDecorator.makeNavBarButton(backButton);
 
             // Make back button take you back
             backButton.setOnAction(event -> GUI.setSceneFromNode(backButton, backPage));

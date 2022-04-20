@@ -5,14 +5,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ButtonDecorator;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.googlesheets.QuizResultManager;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
+import org.ntnu.k2.g2.quizmaker.gui.factories.TextFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -38,6 +43,9 @@ public class QuizAdminPage {
     @FXML // fx:id="sumTeams"
     private Text sumTeams; // Value injected by FXMLLoader
 
+    @FXML // fx:id="quizName"
+    private Text activeStatus; // Value injected by FXMLLoader
+
     @FXML
     private Text errorMsg;
 
@@ -46,6 +54,9 @@ public class QuizAdminPage {
 
     @FXML
     private BorderPane borderPane;
+
+    @FXML
+    private VBox quizContainer;
 
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
@@ -59,6 +70,12 @@ public class QuizAdminPage {
         try {
             quiz.setActive(!quiz.isActive());
             QuizRegister.saveQuiz(quiz);
+            String msg = "Quizzen er nå aktiv";
+            if (!quiz.isActive()) {
+               msg = "Quizzen er nå Inaktiv";
+            }
+            errorMsg.setText(msg);
+            ContainerDecorator.makeContainerArchived(borderPane);
         } catch (Exception e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("En uventet feil oppstod: " + e.getMessage()).show();
@@ -142,6 +159,10 @@ public class QuizAdminPage {
 
     @FXML
     void onRetrieveScores() {
+        if (!quiz.isActive()) {
+            AlertFactory.createNewErrorAlert("Kan ikke importere fra inaktiv quiz").show();
+            return;
+        }
         try {
             QuizResultManager.importResults(quiz);
         } catch (GeneralSecurityException | IOException e) {
@@ -170,11 +191,23 @@ public class QuizAdminPage {
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
         difficulty.setText(QuizHandlerSingelton.getDifficulty());
 
+        if (quiz.isActive()) {
+            activeStatus.setText("Aktiv");
+            TextDecorator.makeTextGreen(activeStatus);
+        } else {
+            activeStatus.setText("Inaktiv");
+            ButtonDecorator.makeGray(retrieveScores);
+            TextDecorator.makeTextRed(activeStatus);
+
+        }
+
         //change the active status button text
         if (quiz.isActive()) {
-            changeState.setText("Send til arkiv");
+            ContainerDecorator.makeContainerActive(borderPane);
+            changeState.setText("Arkiver quiz");
         } else {
-            changeState.setText("Send til aktiv");
+            ContainerDecorator.makeContainerArchived(borderPane);
+            changeState.setText("Åpne quiz");
         }
     }
 
