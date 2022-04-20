@@ -58,4 +58,8 @@ public class ButtonDecorator {
     public static void makeGray(Button button) {
         button.setStyle("-fx-background-color: lightgrey");
     }
+
+    public static void makeBlue(Button button) {
+        button.setStyle("-fx-background-color: lightblue");
+    }
 }

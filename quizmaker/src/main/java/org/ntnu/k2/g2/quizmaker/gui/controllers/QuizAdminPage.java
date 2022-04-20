@@ -7,17 +7,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
+import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.googlesheets.QuizResultManager;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.ButtonDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
-import org.ntnu.k2.g2.quizmaker.googlesheets.QuizResultManager;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
-import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
-import org.ntnu.k2.g2.quizmaker.gui.factories.TextFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -72,7 +71,7 @@ public class QuizAdminPage {
             QuizRegister.saveQuiz(quiz);
             String msg = "Quizzen er nå aktiv";
             if (!quiz.isActive()) {
-               msg = "Quizzen er nå Inaktiv";
+                msg = "Quizzen er nå Inaktiv";
             }
             errorMsg.setText(msg);
             ContainerDecorator.makeContainerArchived(borderPane);
@@ -123,11 +122,11 @@ public class QuizAdminPage {
                     cmd.append(String.format("%s \"%s\"", browsers[i], url));
                 else
                     cmd.append(String.format(" || %s \"%s\"", browsers[i], url));
-                try {
-                    rt.exec(new String[] { "sh", "-c", cmd.toString() });
-                } catch (IOException e) {
-                    AlertFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
-                }
+            try {
+                rt.exec(new String[]{"sh", "-c", cmd.toString()});
+            } catch (IOException e) {
+                AlertFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
+            }
         }
 
         if (os.contains("mac")) {
@@ -160,7 +159,7 @@ public class QuizAdminPage {
     @FXML
     void onRetrieveScores() {
         if (!quiz.isActive()) {
-            AlertFactory.createNewErrorAlert("Kan ikke importere fra inaktiv quiz").show();
+            AlertFactory.createNewWarningAlert("Kan ikke importere fra inaktiv quiz").show();
             return;
         }
         try {
@@ -193,6 +192,7 @@ public class QuizAdminPage {
 
         if (quiz.isActive()) {
             activeStatus.setText("Aktiv");
+            ButtonDecorator.makeBlue(retrieveScores);
             TextDecorator.makeTextGreen(activeStatus);
         } else {
             activeStatus.setText("Inaktiv");
