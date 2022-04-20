@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -12,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.ExportPage">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.ExportPage">
    <center>
       <HBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -22,15 +28,15 @@
             <Pane prefHeight="350.0" prefWidth="19.0" HBox.hgrow="ALWAYS" />
             <VBox fx:id="vBox" HBox.hgrow="ALWAYS">
                <children>
-                  <CheckBox fx:id="c1" mnemonicParsing="false" styleClass="text" text="Spørsmål med blanke svarfelt med QR-kode" VBox.vgrow="ALWAYS" />
-                  <CheckBox fx:id="c2" mnemonicParsing="false" styleClass="text" text="Spørsmål med blanke svarfelt uten QR-kode" />
-                  <CheckBox fx:id="c3" mnemonicParsing="false" styleClass="text" text="Blanke svarfelt uten spørsmål med QR-kode" />
-                  <CheckBox fx:id="c4" mnemonicParsing="false" styleClass="text" text="Blanke svarfelt uten spørsmål med QR-kode" />
-                  <CheckBox fx:id="c5" mnemonicParsing="false" styleClass="text" text="Alle spørsmål og svar" />
-                  <CheckBox fx:id="c6" mnemonicParsing="false" styleClass="text" text="Liste av alle svar">
+                  <Label text="Velg hva du ønsker å eksportere: ">
                      <font>
-                        <Font size="16.0" />
-                     </font></CheckBox>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="30.0" prefWidth="200.0" />
+                  <CheckBox fx:id="c1" mnemonicParsing="false" styleClass="text" text="Quizark med spørsmål" VBox.vgrow="ALWAYS" />
+                  <CheckBox fx:id="c2" mnemonicParsing="false" styleClass="text" text="Quizark uten spørsmål" />
+                  <CheckBox fx:id="c3" mnemonicParsing="false" styleClass="text" text="Fasit" />
                </children>
             </VBox>
             <Pane prefHeight="350.0" prefWidth="33.0" HBox.hgrow="ALWAYS" />
@@ -38,17 +44,24 @@
       </HBox>
    </center>
    <bottom>
-      <HBox BorderPane.alignment="TOP_RIGHT">
+      <HBox prefHeight="46.0" prefWidth="446.0" BorderPane.alignment="TOP_RIGHT">
          <BorderPane.margin>
             <Insets bottom="50.0" right="75.0" />
          </BorderPane.margin>
          <children>
-            <Text fx:id="exportMsg" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text">
-               <HBox.margin>
-                  <Insets left="100.0" />
-               </HBox.margin>
-            </Text>
-            <Pane prefHeight="47.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+            <Pane prefHeight="46.0" prefWidth="90.0" />
+            <VBox prefHeight="0.0" prefWidth="167.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0" />
+                  <Text fx:id="exportMsg" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="167.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Pane prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+            <Pane prefHeight="46.0" prefWidth="22.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="close" mnemonicParsing="false" onAction="#onClose" text="Avbryt">
                <HBox.margin>
                   <Insets right="5.0" />

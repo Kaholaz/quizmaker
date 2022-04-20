@@ -16,6 +16,7 @@ open module org.ntnu.k2.g2.quizmaker {
     requires java.desktop;
     requires core;
     requires io;
+    requires org.xerial.sqlitejdbc;
 
     exports org.ntnu.k2.g2.quizmaker;
 }
