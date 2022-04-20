@@ -7,9 +7,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
@@ -48,6 +51,12 @@ public class QuizDetailsPage {
     @FXML
     private BorderPane borderPane;
 
+    @FXML
+    private VBox quizContainer;
+
+    @FXML // fx:id="difficulty"
+    private Text activeStatus; // Value injected by FXMLLoader
+
     private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
 
@@ -77,6 +86,17 @@ public class QuizDetailsPage {
         sumTeams.setText(String.valueOf(quiz.getTeams().size()));
         quizName.setText(quiz.getName());
         difficulty.setText(QuizHandlerSingelton.getDifficulty());
+        difficulty.setText(QuizHandlerSingelton.getDifficulty());
+        if (quiz.isActive()) {
+            activeStatus.setText("Aktiv");
+            TextDecorator.makeTextGreen(activeStatus);
+            ContainerDecorator.makeContainerActive(borderPane);
+        } else {
+            ContainerDecorator.makeContainerArchived(borderPane);
+            activeStatus.setText("Inaktiv");
+            TextDecorator.makeTextRed(activeStatus);
+
+        }
         if (quiz.getDifficulty() == -1) {
             difficulty.setText("---");
         } else {

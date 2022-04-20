@@ -11,6 +11,7 @@ import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
@@ -50,15 +51,21 @@ public class QuestionEditorPage {
     void initialize() {
         // Create save button
         Button saveButton = new Button();
-        saveButton.setText("Lagre");
-        saveButton.setOnAction(this::onSave);
-        HBox navbar = NavBarFactory.createTopBar("/gui/quizAdminPage.fxml", saveButton);
+        HBox navbar = NavBarFactory.createTopBar("/gui/quizAdminPage.fxml");
+
+        //set root color for wether the quiz is active or not
+        if (quiz.isActive()) {
+            ContainerDecorator.makeContainerActive(borderPane);
+        } else {
+            ContainerDecorator.makeContainerArchived(borderPane);
+        }
 
         //Add the navbar
         borderPane.setTop(navbar);
 
         // Load questions to VBox
         loadQuestionsToVBox();
+
     }
 
     /**
@@ -80,6 +87,7 @@ public class QuestionEditorPage {
      * @param event
      */
 
+    @FXML
     void onSave(ActionEvent event) {
         try {
             QuizRegister.saveQuiz(quiz);
