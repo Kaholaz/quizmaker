@@ -1,0 +1,9 @@
+/*
+This file includes classes for styling list-related elements such as
+a VBox containing elements, or the elements within a VBox.
+ */
+
+/*
+A class for styling elements in a vbox that take up the full width of the parent container.
+Used in for example listQuizzesPage for each quiz displayed in the VBox.
+*/

@@ -1,9 +1,0 @@
-/*
-This file contains stylings related to containers. Containers in this context
-are nodes that are meant to look like the children they contain are related
-or one "thing". e.g. Quiz details on the left side of the quizAdminPage.
-*/
-.padded-container-lightgray {
-    -fx-background-color: lightgray;
-    -fx-padding: 4px;
-}

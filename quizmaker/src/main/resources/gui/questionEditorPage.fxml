@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.QuestionEditorPage">
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <HBox>
+               <children>
+                  <Pane prefHeight="334.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                  <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="334.0" prefWidth="461.0" HBox.hgrow="ALWAYS" />
+                  <Pane prefHeight="334.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="64.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateNewQuestion" prefHeight="48.0" prefWidth="194.0" styleClass="navbar-button" text="Legg til spørsmål" />
+         </children>
+      </HBox>
+   </bottom>
+   <stylesheets>
+      <URL value="@css/main.css" />
+      <URL value="@css/buttons.css" />
+   </stylesheets>
+</BorderPane>
