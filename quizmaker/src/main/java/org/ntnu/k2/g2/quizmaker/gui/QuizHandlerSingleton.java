@@ -20,6 +20,7 @@ public class QuizHandlerSingleton {
 
     /**
      * Set the quiz in the Singleton. This changes the active status as well.
+     * If there is no specific current quiz, current quiz can be set to null.
      * @param quiz The new current Quiz.
      */
     public static void setQuiz(QuizModel quiz) {
