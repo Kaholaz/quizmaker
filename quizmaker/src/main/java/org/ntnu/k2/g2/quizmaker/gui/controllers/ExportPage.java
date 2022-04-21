@@ -8,11 +8,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.pdfexport.PdfManager;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 import java.io.File;
 
@@ -32,9 +31,6 @@ public class ExportPage {
 
     @FXML // fx:id="close"
     private Button close; // Value injected by FXMLLoader
-
-
-    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
 
     /**
      * An event listener for when the user presses the close/cancel button.
@@ -56,20 +52,20 @@ public class ExportPage {
     private void onExport() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Stage stage = (Stage) export.getScene().getWindow();
-        File file = directoryChooser.showDialog(stage);
+        File exportPath = directoryChooser.showDialog(stage);
         boolean exported = false;
 
         try {
             if (c1.isSelected()) {
-                PdfManager.exportAnswersheetWithQuestions(quiz,file.toString());
+                PdfManager.exportAnswersheetWithQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
             if (c2.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
+                PdfManager.exportAnswersheetWithoutQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
             if (c3.isSelected()) {
-                PdfManager.exportSolution(quiz,file.toString());
+                PdfManager.exportSolution(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
         } catch (Exception e) {

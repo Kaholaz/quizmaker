@@ -1,16 +1,10 @@
 package org.ntnu.k2.g2.quizmaker.gui.controllers;
 
-import com.itextpdf.layout.property.Background;
-import com.itextpdf.layout.property.BackgroundImage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
 
 /**
  * Controller for the mainPage
@@ -24,18 +18,26 @@ public class MainPage {
     public BorderPane borderPane;
 
     /**
-     * Redirects to listQuizzesPage and sets the Singleton active status to true.
+     * Redirects to listQuizzesPage and sets the quiz handler's active status to true.
      */
     @FXML
     void onListQuizzesBtnClicked() {
-        QuizHandlerSingelton.setActive(true);
         GUI.setSceneFromNode(btnListQuizzes, "/gui/listQuizzesPage.fxml");
     }
 
     /**
      * Takes the user to createNewQuizPage
      */
-    public void onCreateNewQuizBtnClicked() {
+    @FXML
+    void onCreateNewQuizBtnClicked() {
         GUI.setSceneFromNode(btnNewQuiz, "/gui/createNewQuizPage.fxml");
+    }
+
+    /**
+     * Sets current quiz to null after loading the launch page.
+     */
+    @FXML
+    void initialize() {
+        QuizHandlerSingleton.setQuiz(null);
     }
 }

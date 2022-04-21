@@ -7,14 +7,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.ButtonDecorator;
-import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.ButtonFactory;
 
 import java.util.ArrayList;
 
-import static org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory.createTopBar;
+import static org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory.createTopNavigationBar;
 
 /**
  * Controller for listQuizzesPages. Used for pages where quizzes are listed.
@@ -35,14 +34,15 @@ public class ListQuizzesPage {
      */
     @FXML
     void initialize() {
-        // Create navbar with switch status button
+        // Switch status button for navigation bar
         switchStatusButton = new Button();
         switchStatusButton.setOnAction(event -> {
-            QuizHandlerSingelton.setActive(!QuizHandlerSingelton.isActive());
+            QuizHandlerSingleton.setActive(!QuizHandlerSingleton.isActive());
             refreshQuizList();
         });
 
-        HBox navbar = createTopBar("/gui/mainPage.fxml", switchStatusButton);
+        // Create navigation mar
+        HBox navbar = createTopNavigationBar("/gui/mainPage.fxml", switchStatusButton);
         borderPane.setTop(navbar);
 
         refreshQuizList();
@@ -52,7 +52,7 @@ public class ListQuizzesPage {
      * This method refreshes the quiz list.
      * This is done in three steps:
      * <ol>
-     *     <li>Clear all quizzes from the list.</li>
+     *     <li>Clear all quizzes from the gui.</li>
      *     <li>Fetch the list of quizzes from the database.</li>
      *     <li>Fill the quiz container with quiz elements according to the list of quizzes.</li>
      * </ol>
@@ -60,13 +60,13 @@ public class ListQuizzesPage {
      * This method takes into account the quiz status of the QuizHandler.
      */
     void refreshQuizList() {
-        //clear the container before adding
+        //clear the container before adding.
         quizContainer.getChildren().clear();
 
         ArrayList<QuizModel> quizzes;
 
-        //Get the quizzes from the database
-        if (QuizHandlerSingelton.isActive()) {
+        //Fetch quizzes from the database
+        if (QuizHandlerSingleton.isActive()) {
             quizzes = QuizRegister.getActiveQuizzes();
             switchStatusButton.setText("Til inaktive");
 
@@ -75,12 +75,18 @@ public class ListQuizzesPage {
             quizzes = QuizRegister.getArchivedQuizzes();
         }
 
-        //add all the quizzes
+        //Add all the quizzes to the container.
         quizzes.forEach(quiz -> {
-            Button button = ButtonFactory.listQuestionButton(quiz);
-            if (!quiz.isActive()) {
-                ButtonDecorator.makeArchived(button);
+            Button button = ButtonFactory.createQuestionListButton(quiz);
+
+            // The button is styled differently if the quiz is archived or not.
+            if (quiz.isActive()) {
+                ButtonDecorator.makeQuizButtonActive(button);
+            } else {
+                ButtonDecorator.makeQuizButtonArchived(button);
             }
+
+            // Adds the quiz button to the container.
             quizContainer.getChildren().add(button);
         });
     }
