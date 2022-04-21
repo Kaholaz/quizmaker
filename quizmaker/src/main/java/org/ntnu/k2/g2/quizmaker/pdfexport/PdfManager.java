@@ -1,14 +1,13 @@
 package org.ntnu.k2.g2.quizmaker.pdfexport;
 
 import com.google.zxing.WriterException;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-
 import com.itextpdf.layout.property.TextAlignment;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;

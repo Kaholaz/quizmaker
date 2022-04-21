@@ -9,12 +9,9 @@ or one "thing". e.g. Quiz details on the left side of the quizAdminPage.
     -fx-fill-width: true;
 }
 
-.menu {
-    -fx-background-image: url("gui/media/background-stock-image.jpg");
-}
+.menu {}
 
-.grid-pane {
-}
+.grid-pane {}
 
 .question-container {
     -fx-background-color: lightgrey;

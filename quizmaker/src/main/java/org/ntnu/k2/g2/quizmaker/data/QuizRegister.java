@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * A class used to interact with the storage system of quizzes
  */
-public class QuizRegister extends QuizModel {
+public class QuizRegister {
     /**
      * @return A complete representation of the database represented by an arraylist of quizzes
      */

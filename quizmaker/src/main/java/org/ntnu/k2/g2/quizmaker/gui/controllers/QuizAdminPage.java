@@ -11,7 +11,7 @@ import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.googlesheets.QuizResultManager;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.ButtonDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
@@ -57,22 +57,17 @@ public class QuizAdminPage {
     @FXML
     private VBox quizContainer;
 
-    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
+    private final QuizModel quiz = QuizHandlerSingleton.getQuiz();
 
     /**
-     * Changes between viewing active - and archived quizzes when the change state button
-     * has been pressed.
+     * Provides user-feedback when the quiz status is changed.
      */
-
     @FXML
     void onChangeState() {
         try {
             quiz.setActive(!quiz.isActive());
             QuizRegister.saveQuiz(quiz);
-            String msg = "Quizzen er nå aktiv";
-            if (!quiz.isActive()) {
-                msg = "Quizzen er nå Inaktiv";
-            }
+            String msg = quiz.isActive() ? "Quizzen er nå aktiv" : "Quizzen er nå Inaktiv";
             errorMsg.setText(msg);
             ContainerDecorator.makeContainerArchived(borderPane);
         } catch (Exception e) {
@@ -83,25 +78,28 @@ public class QuizAdminPage {
     }
 
     /**
-     * Redirects to the quizDetailspage
+     * Redirects to the quizDetailspage when the details button is pressed.
+     *
+     * @param event The action event when the button is pressed.
      */
-
     @FXML
     void onDetails(ActionEvent event) {
         GUI.setSceneFromActionEvent(event, "/gui/quizDetailsPage.fxml");
     }
 
+    /**
+     * Redirects to the questionEditorPage when the edit questions button is pressed.
+     * @param event The action event when the button is pressed.
+     */
     @FXML
     void onEditQuestion(ActionEvent event) {
         GUI.setSceneFromActionEvent(event, "/gui/questionEditorPage.fxml");
     }
 
     /**
-     * Opens the default browser, with the URL to the Google sheet
-     * of the quiz. It checks the os and uses the appropriate system commands to open
-     * a browser.
+     * Opens URL to the Google sheet of the quiz in the default web-browser.
+     * This is done by checking the os and calling the appropriate shell command to open a web-site.
      */
-
     @FXML
     void onEditTeams() {
         String os = System.getProperty("os.name").toLowerCase();
@@ -109,11 +107,16 @@ public class QuizAdminPage {
         String url = quiz.getUrl();
         String command = null;
 
+        // Windows
         if (os.contains("win")) {
             command = "rundll32 url.dll,FileProtocolHandler " + url;
         }
 
-        if (os.contains("nix") || os.contains("nux")) {
+        // Unix / Linux
+        else if (os.contains("nix") || os.contains("nux")) {
+            command = "xdg-open " + url;
+
+            /*
             String[] browsers = {"google-chrome", "firefox", "mozilla", "opera"};
 
             StringBuilder cmd = new StringBuilder();
@@ -127,8 +130,10 @@ public class QuizAdminPage {
             } catch (IOException e) {
                 AlertFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
             }
+             */
         }
 
+        // MacOS
         if (os.contains("mac")) {
             command = "open " + url;
         }
@@ -139,13 +144,15 @@ public class QuizAdminPage {
             } catch (IOException e) {
                 AlertFactory.createNewErrorAlert("Kunne ikke åpne netleser: " + e.getMessage()).show();
             }
+        } else {
+            AlertFactory.createNewErrorAlert("Operativsystemet ditt er ikke støttet for denne operasjonen!").show();
         }
     }
 
     /**
-     * Opens new Stage and sets the scene to the exportPage.fxml
+     * Opens new window and sets its scene to exportPage.fxml
+     * This method is called when the export quiz button is pressed.
      */
-
     @FXML
     void onExportQA() {
         GUI.createNewStage("/gui/exportPage.fxml");
@@ -180,15 +187,14 @@ public class QuizAdminPage {
     }
 
     /**
-     * Updates the GUI elements according to the quiz.
+     * Updates the GUI elements according to the current quiz.
      */
-
     void update() {
         //change the details info
         quizName.setText(quiz.getName());
         sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
-        difficulty.setText(QuizHandlerSingelton.getDifficulty());
+        difficulty.setText(QuizHandlerSingleton.getDifficulty());
 
         if (quiz.isActive()) {
             activeStatus.setText("Aktiv");
@@ -196,7 +202,7 @@ public class QuizAdminPage {
             TextDecorator.makeTextGreen(activeStatus);
         } else {
             activeStatus.setText("Inaktiv");
-            ButtonDecorator.makeGray(retrieveScores);
+            ButtonDecorator.makeDisabled(retrieveScores);
             TextDecorator.makeTextRed(activeStatus);
 
         }
@@ -212,11 +218,11 @@ public class QuizAdminPage {
     }
 
     /**
-     * Initializes the page. It creates a topbar and updates the gui elements to the quiz in the singleton.
+     * Initializes the page. It creates a navigation bar and updates the gui elements according to the quiz in the singleton.
      */
     @FXML
     void initialize() {
-        HBox navbar = NavBarFactory.createTopBar("/gui/listQuizzesPage.fxml");
+        HBox navbar = NavBarFactory.createTopNavigationBar("/gui/listQuizzesPage.fxml");
         borderPane.setTop(navbar);
         update();
     }
