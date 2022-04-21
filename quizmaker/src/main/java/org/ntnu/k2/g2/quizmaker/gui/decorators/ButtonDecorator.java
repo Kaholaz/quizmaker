@@ -12,7 +12,7 @@ public class ButtonDecorator {
     /**
      * This is a static class and should not be initialized.
      */
-    private ButtonDecorator() {}
+    private ButtonDecorator(){}
 
     /**
      * Converts a button to a navBavButton.

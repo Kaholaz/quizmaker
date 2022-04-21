@@ -12,9 +12,7 @@ public class TextFactory {
     /**
      * TextFactory is a static class so no constructor is needed.
      */
-    private TextFactory() {
-
-    }
+    private TextFactory(){}
 
     /**
      * Create small text. Used to display basic text elements in the GUI.

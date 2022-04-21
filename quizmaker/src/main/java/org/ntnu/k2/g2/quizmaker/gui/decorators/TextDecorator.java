@@ -11,7 +11,7 @@ public class TextDecorator {
     /**
      * This class is static and should not be instantiated.
      */
-    private TextDecorator() {}
+    private TextDecorator(){}
 
     /**
      * Makes text green.

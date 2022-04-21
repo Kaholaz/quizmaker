@@ -10,7 +10,7 @@ public class ContainerDecorator {
     /**
      * The class is static and should not be instansiated.
      */
-    private ContainerDecorator() {}
+    private ContainerDecorator(){}
 
     /**
      * Styles the background color for archived quizzes.

@@ -27,7 +27,7 @@ public class ContainerFactory {
     /**
      * Since the class is static, a constructor is not needed.
      */
-    private ContainerFactory() {}
+    private ContainerFactory(){}
 
     /**
      * Creates a javafx Pane that can be used to show a Question in for example a list.

@@ -16,9 +16,7 @@ public class ButtonFactory {
     /**
      *  The class is static, so the constructor is private.
      */
-    private ButtonFactory() {
-
-    }
+    private ButtonFactory(){}
 
     /**
      * Creates a big button for one question in listViewPages.

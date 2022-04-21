@@ -18,7 +18,7 @@ public class MainPage {
     public BorderPane borderPane;
 
     /**
-     * Redirects to listQuizzesPage and sets the quiz handler's active status to true.
+     * Redirects to listQuizzesPage and list all active quizzes.
      */
     @FXML
     void onListQuizzesBtnClicked() {

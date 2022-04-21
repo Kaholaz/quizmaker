@@ -29,7 +29,7 @@ public class NavBarFactory {
     /**
      * Since the class is static, no constructor is needed.
      */
-    private NavBarFactory() {}
+    private NavBarFactory(){}
 
     /**
     * Creates a top navigation bar. The backPage is optional.

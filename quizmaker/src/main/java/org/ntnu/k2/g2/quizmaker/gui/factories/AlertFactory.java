@@ -14,7 +14,7 @@ public class AlertFactory {
     /**
      * Since this class is static, a constructor is not needed.
      */
-    private AlertFactory() {}
+    private AlertFactory(){}
 
     /**
      * Creates an error alert popup. Error can only ble closed.
