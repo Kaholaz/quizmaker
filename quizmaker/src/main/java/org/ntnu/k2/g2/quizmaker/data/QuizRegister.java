@@ -85,7 +85,7 @@ public class QuizRegister {
         }
 
         // Quiz name changed
-        if (!quiz.getName().equals(oldQuiz.getName())) {
+        if (!Util.isTest() && !quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
 
