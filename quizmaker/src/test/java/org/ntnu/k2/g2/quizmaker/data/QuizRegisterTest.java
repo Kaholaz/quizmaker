@@ -104,7 +104,7 @@ public class QuizRegisterTest extends TestCase {
         assertNull(question);
     }
 
-    public void testSaveQuiz() {
+    public void testSaveQuiz() throws IOException {
         QuizModel quiz = QuizRegister.getQuiz(1);
         quiz.setActive(false);
         quiz.setName("Altered name");
@@ -141,7 +141,7 @@ public class QuizRegisterTest extends TestCase {
         assertEquals(question, savedQuestion);
     }
 
-    public void testSaveQuizAltersTeams() {
+    public void testSaveQuizAltersTeams() throws IOException {
         QuizModel quiz = QuizRegister.getQuiz(1);
 
         quiz.getTeams().remove(2);
@@ -154,7 +154,7 @@ public class QuizRegisterTest extends TestCase {
         assertEquals(QuizRegister.getTeam(3), quiz.getTeams().get(3));
     }
 
-    public void testSaveQuizAltersQuestions() {
+    public void testSaveQuizAltersQuestions() throws IOException {
         QuizModel quiz = QuizRegister.getQuiz(1);
 
         quiz.getQuestions().remove(3);

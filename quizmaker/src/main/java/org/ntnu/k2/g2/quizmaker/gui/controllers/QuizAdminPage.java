@@ -2,6 +2,7 @@ package org.ntnu.k2.g2.quizmaker.gui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Camera;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -106,6 +107,17 @@ public class QuizAdminPage {
         String url = quiz.getUrl();
         String command = null;
 
+        // The sheet was not instantiated. And we will try to create a new one.
+        if (quiz.getSheetId() == null) {
+            try {
+                QuizResultManager.createResultSheet(quiz);
+                url = quiz.getUrl();
+            } catch (IOException | GeneralSecurityException | NullPointerException e) {
+                AlertFactory.createNewWarningAlert("Det er ble ikke laget et regneark for denne quizzen!\nPrøv igjen senere når du er koblet til internettet.").show();
+                return;
+            }
+        }
+
         // Windows
         if (os.contains("win")) {
             command = "rundll32 url.dll,FileProtocolHandler " + url;
@@ -114,22 +126,6 @@ public class QuizAdminPage {
         // Unix / Linux
         else if (os.contains("nix") || os.contains("nux")) {
             command = "xdg-open " + url;
-
-            /*
-            String[] browsers = {"google-chrome", "firefox", "mozilla", "opera"};
-
-            StringBuilder cmd = new StringBuilder();
-            for (int i = 0; i < browsers.length; i++)
-                if (i == 0)
-                    cmd.append(String.format("%s \"%s\"", browsers[i], url));
-                else
-                    cmd.append(String.format(" || %s \"%s\"", browsers[i], url));
-            try {
-                rt.exec(new String[]{"sh", "-c", cmd.toString()});
-            } catch (IOException e) {
-                AlertFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
-            }
-             */
         }
 
         // MacOS
@@ -168,12 +164,19 @@ public class QuizAdminPage {
             AlertFactory.createNewWarningAlert("Kan ikke importere fra inaktiv quiz").show();
             return;
         }
+        if (quiz.getSheetId() == null) {
+            AlertFactory.createNewErrorAlert("Poeng-regnearket eksisterer ikke.\nPrøv igjen senere når du har tilgang til internett.");
+            return;
+        }
+
         try {
             QuizResultManager.importResults(quiz);
         } catch (IOException e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
+        } catch (NullPointerException e) {
+            AlertFactory.createNewErrorAlert("Kunne ikke hente data: \nRegnearket er tomt").show();
         } catch (Exception e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("En uventet feil oppstod:\n " + e.getMessage()).show();
@@ -201,7 +204,7 @@ public class QuizAdminPage {
             TextDecorator.makeTextGreen(activeStatus);
         } else {
             activeStatus.setText("Inaktiv");
-            ButtonDecorator.makeDisabled(retrieveScores);
+            ButtonDecorator.makeFullWidthListElementDisabled(retrieveScores);
             TextDecorator.makeTextRed(activeStatus);
 
         }
@@ -224,5 +227,15 @@ public class QuizAdminPage {
         HBox navbar = NavBarFactory.createTopNavigationBar("/gui/listQuizzesPage.fxml");
         borderPane.setTop(navbar);
         update();
+
+        // No sheet. Try to instantiate a new one.
+        if (quiz.getSheetId() == null) {
+            try {
+                QuizResultManager.createResultSheet(quiz);
+            }
+            catch (IOException | GeneralSecurityException | NullPointerException e) {
+                AlertFactory.showJOptionWarning("Det ble ikke laget et poeng-regneark til denne quizzen.\nPrøv igjen senere når du har tilgang til internett.");
+            }
+        }
     }
 }

@@ -69,9 +69,8 @@ public class ListQuizzesPage {
         if (QuizHandlerSingleton.isActive()) {
             quizzes = QuizRegister.getActiveQuizzes();
             switchStatusButton.setText("Til inaktive");
-
         } else {
-            switchStatusButton.setText("Til arkiv");
+            switchStatusButton.setText("Til aktive");
             quizzes = QuizRegister.getArchivedQuizzes();
         }
 

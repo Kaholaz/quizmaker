@@ -74,12 +74,21 @@ public class QuizRegister {
      * @param quiz The quiz to save to the database.
      * @return A quiz object representation of the entry in the database AFTER it has been updated.
      * {@code null} is returned if something went wrong when the quiz was saved.
+     * @throws IOException Throws an exception if something went wrong during the creation of the answer sheet.
      */
-    public static QuizModel saveQuiz(QuizModel quiz) {
-        QuizModel outQuiz = QuizDAO.updateQuiz(quiz);
-        if (!quiz.getName().equals(outQuiz.getName())) {
+    public static QuizModel saveQuiz(QuizModel quiz) throws IOException {
+        QuizModel oldQuiz = QuizDAO.getQuizById(quiz.getId());
+
+        // Quiz is not in the database
+        if (oldQuiz == null) {
+            return null;
+        }
+
+        // Quiz name changed
+        if (!quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
+
         return QuizDAO.updateQuiz(quiz);
     }
 

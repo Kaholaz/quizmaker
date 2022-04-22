@@ -4,7 +4,6 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 public class QuizResultManager {
@@ -20,8 +19,8 @@ public class QuizResultManager {
         ResultSheet resultSheet = new ResultSheet();
 
         String sheetId = resultSheet.createSheet(quiz.getName());
-        quiz.setSheetId(sheetId);
         resultSheet.addRowValues(sheetId, "Teams", "Scores", "1");
+        quiz.setSheetId(sheetId);
         return sheetId;
     }
 
@@ -31,18 +30,13 @@ public class QuizResultManager {
      * @param quiz The quiz whose result sheet to change.
      * @return True if the operation was successful, false if not.
      */
-    public static boolean changeResultSheetName(QuizModel quiz) {
+    public static boolean changeResultSheetName(QuizModel quiz) throws IOException {
         ResultSheet resultSheet = new ResultSheet();
 
         String newName = quiz.getName();
         String sheetId = quiz.getSheetId();
 
-        try {
-            return resultSheet.setSheetTitle(sheetId,newName);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return false;
+        return resultSheet.setSheetTitle(newName,sheetId);
     }
 
     /**
@@ -56,7 +50,7 @@ public class QuizResultManager {
         quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));
         var quizResult = resultSheet.fetchResultSheetValues(quiz.getSheetId());
 
-        for (List row : quizResult) {
+        for (List<Object> row : quizResult) {
             String teamName = row.get(0).toString();
             int score = Integer.parseInt((String) row.get(1));
 

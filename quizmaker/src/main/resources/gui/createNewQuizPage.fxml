@@ -21,7 +21,7 @@
                   <Pane maxHeight="150.0" HBox.hgrow="ALWAYS" />
                   <AnchorPane minHeight="180.0">
                      <children>
-                        <Button fx:id="btnSubmit" layoutX="249.0" layoutY="107.0" mnemonicParsing="false" onAction="#onSubmitBtnClicked" styleClass="medium-button" stylesheets="@css/buttons.css" text="Submit">
+                        <Button fx:id="btnSubmit" layoutX="249.0" layoutY="107.0" mnemonicParsing="false" onAction="#onSubmitBtnClicked" styleClass="medium-button" stylesheets="@css/buttons.css" text="Lag quiz">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
