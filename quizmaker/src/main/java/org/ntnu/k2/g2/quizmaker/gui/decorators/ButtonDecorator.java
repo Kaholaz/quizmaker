@@ -53,7 +53,7 @@ public class ButtonDecorator {
      * @param button The button to style.
      */
     public static void makeQuizButtonArchived(Button button) {
-        button.setStyle("-fx-background-color: #E3BFBF");
+        button.getStyleClass().add("full-width-list-element-archived");
     }
 
     /**
@@ -61,14 +61,14 @@ public class ButtonDecorator {
      * @param button The button to style.
      */
     public static void makeQuizButtonActive(Button button) {
-        button.setStyle("-fx-background-color: #E7E7E7");
+        button.getStyleClass().remove("full-width-list-element-archived");
     }
 
     /**
      * Style a button to look disabled.
      * @param button The button to style.
      */
-    public static void makeDisabled(Button button) {
+    public static void makeFullWidthListElementDisabled(Button button) {
         button.setStyle("-fx-background-color: lightgrey;-fx-text-fill: grey;-fx-border-color:grey;");
     }
 

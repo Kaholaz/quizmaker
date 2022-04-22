@@ -1,6 +1,7 @@
 package org.ntnu.k2.g2.quizmaker.gui.factories;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
@@ -33,11 +34,18 @@ public class ButtonFactory {
             GUI.setSceneFromNode(admin, "/gui/quizAdminPage.fxml");
         });
 
+        //Clear styling
+        admin.getStyleClass().clear();
+        admin.getStylesheets().clear();
+        admin.setStyle("");
+        admin.setAlignment(Pos.CENTER);
+
         // Add styling
         admin.getStylesheets().add("/gui/css/clickable-nodes.css");
         admin.getStylesheets().add("/gui/css/buttons.css");
         admin.getStyleClass().add("full-width-list-element");
         admin.getStyleClass().add("clickable-node-lightgreen");
+        admin.setStyle("-fx-font-size: 30px;");
 
         return admin;
     }
