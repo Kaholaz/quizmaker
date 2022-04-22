@@ -19,8 +19,21 @@ Ensure that you also have access to maven commands in a terminal/shell by typing
 2. Make sure you are on the correct branch
 3. Open a terminal and run `mvn dependency:resolve` in the projects root directory (this is also the folder in which you find the pom.xml file)
 4. Ensure your editor has reloaded the newly resolved maven dependencies (In IntelliJ there will be a "Maven" tab on the top right, then click the reload icon furthest to the left)
-5. You're ready to go!
 
+Access to the google API is also needed for the application to function properly. This can be done in one of two ways:
+1. Accsess to our google application
+If you want to get acces to our google aplication and the corresponding access tokens, please contact one of the maintainers of this project.
+2. Create your own google application
+If you want to create your own google application refer to the guides provided by Google. When you have your application has been created, make sure you have enabled the following APIs:
+   - Google sheets API
+   - Google drive API
+Once this is in order, you can create OAuth 2.0 Client ID by going to the API and Services dashboard -> credentials -> create credentials -> OAuth Client ID.
+Once you have created your OAuth Client ID, it can be downloaded as a JSON file. Save this file in a userdata file inside of the resources folder as 'google-credentials.json'.
+
+The application should now work as intended when run.
+
+### How to compile the application
+The application can be compiled to an uber jar-file packaged with all dependencies by running this the command `mvn clean package shade:shade`, or the command `mvn clean package shade:shade -DskipTests` if you want to compile without running the tests. These commands need to be run inside of the 'quizmaker' directory. A fully working compiled jar-file should now be present in the 'target' directory.
 
 ## Issue template
 When creating an issue, it is important that the issue is *specific* and has a *measurable goal*. It is ok to leave out details *as long as* you specify that
