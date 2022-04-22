@@ -47,6 +47,10 @@
     -fx-border-width: 2px;
 }
 
+.full-width-list-element-archived {
+    -fx-background-color: #E3BFBF;
+}
+
 .button-delete {
     -fx-padding: 7px 14px;
     -fx-border-insets: 4px;

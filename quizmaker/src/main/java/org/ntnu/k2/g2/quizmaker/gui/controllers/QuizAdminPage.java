@@ -115,22 +115,6 @@ public class QuizAdminPage {
         // Unix / Linux
         else if (os.contains("nix") || os.contains("nux")) {
             command = "xdg-open " + url;
-
-            /*
-            String[] browsers = {"google-chrome", "firefox", "mozilla", "opera"};
-
-            StringBuilder cmd = new StringBuilder();
-            for (int i = 0; i < browsers.length; i++)
-                if (i == 0)
-                    cmd.append(String.format("%s \"%s\"", browsers[i], url));
-                else
-                    cmd.append(String.format(" || %s \"%s\"", browsers[i], url));
-            try {
-                rt.exec(new String[]{"sh", "-c", cmd.toString()});
-            } catch (IOException e) {
-                AlertFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
-            }
-             */
         }
 
         // MacOS
@@ -202,7 +186,7 @@ public class QuizAdminPage {
             TextDecorator.makeTextGreen(activeStatus);
         } else {
             activeStatus.setText("Inaktiv");
-            ButtonDecorator.makeDisabled(retrieveScores);
+            ButtonDecorator.makeFullWidthListElementDisabled(retrieveScores);
             TextDecorator.makeTextRed(activeStatus);
 
         }
