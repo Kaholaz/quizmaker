@@ -1,6 +1,8 @@
 package org.ntnu.k2.g2.quizmaker.data;
 
 import junit.framework.TestCase;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ public class QuizRegisterTest extends TestCase {
         DatabaseConnection.getDbPath().delete();
     }
 
-    private static void populateDatabase() {
+    private static void populateDatabase() throws IOException {
         QuizModel testQuiz = QuizRegister.newQuiz();
 
         testQuiz.setName("Test Quiz");
@@ -193,7 +195,7 @@ public class QuizRegisterTest extends TestCase {
         assertEquals(quiz.getQuestions().get(1), QuizRegister.getQuestion(1));
     }
 
-    public void testRemoveTeamNotInDatabaseReturnsFalse() {
+    public void testRemoveTeamNotInDatabaseReturnsFalse() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
 
         TeamModel team = QuizRegister.newTeam(quiz);
@@ -202,7 +204,7 @@ public class QuizRegisterTest extends TestCase {
         assertFalse(QuizRegister.removeTeam(quiz, team.getId()));
     }
 
-    public void testRemoveQuestionNotInDatabaseReturnsFalse() {
+    public void testRemoveQuestionNotInDatabaseReturnsFalse() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
 
         QuestionModel question = QuizRegister.newQuestion(quiz);
@@ -211,7 +213,7 @@ public class QuizRegisterTest extends TestCase {
         assertFalse(QuizRegister.removeTeam(quiz, question.getId()));
     }
 
-    public void testSaveTeamNotInDataBaseReturnsNull() {
+    public void testSaveTeamNotInDataBaseReturnsNull() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
 
         TeamModel team = QuizRegister.newTeam(quiz);
@@ -220,7 +222,7 @@ public class QuizRegisterTest extends TestCase {
         assertNull(QuizRegister.saveTeam(team));
     }
 
-    public void testSaveQuestionNotInDataBaseReturnsNull() {
+    public void testSaveQuestionNotInDataBaseReturnsNull() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
 
         QuestionModel question = QuizRegister.newQuestion(quiz);
@@ -229,7 +231,7 @@ public class QuizRegisterTest extends TestCase {
         assertNull(QuizRegister.saveQuestion(question));
     }
 
-    public void testGetArchivedQuizzes() {
+    public void testGetArchivedQuizzes() throws IOException {
         QuizRegister.populateDatabase(1,2,3);
 
         QuizModel quiz = QuizRegister.getQuiz(2);
@@ -241,7 +243,7 @@ public class QuizRegisterTest extends TestCase {
         assertEquals(List.of(QuizRegister.getQuiz(2)), QuizRegister.getArchivedQuizzes());
     }
 
-    public void testPopulateDatabase() {
+    public void testPopulateDatabase() throws IOException {
         QuizRegister.populateDatabase(1, 2, 3);
 
         ArrayList<QuizModel> quizzes = QuizRegister.getQuizList();
