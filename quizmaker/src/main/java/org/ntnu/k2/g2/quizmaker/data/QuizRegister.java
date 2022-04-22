@@ -77,9 +77,17 @@ public class QuizRegister {
      */
     public static QuizModel saveQuiz(QuizModel quiz) {
         QuizModel oldQuiz = QuizDAO.getQuizById(quiz.getId());
+
+        // Quiz is not in the database
+        if (oldQuiz == null) {
+            return null;
+        }
+
+        // Quiz name changed
         if (!quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
+        
         return QuizDAO.updateQuiz(quiz);
     }
 
