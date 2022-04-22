@@ -11,10 +11,9 @@ public class QuizResultManager {
     /**
      * This method creates an associated result sheet for a quiz
      * @param quiz The quiz to create the result sheet for.
-     * @throws GeneralSecurityException
      * @throws IOException
      */
-    public static String createResultSheet(QuizModel quiz) throws GeneralSecurityException, IOException {
+    public static String createResultSheet(QuizModel quiz) throws IOException {
         if (quiz.getSheetId() != null) {
             return quiz.getSheetId();
         }
@@ -40,7 +39,7 @@ public class QuizResultManager {
 
         try {
             return resultSheet.setSheetTitle(sheetId,newName);
-        }catch (GeneralSecurityException | IOException e){
+        }catch (IOException e){
             e.printStackTrace();
         }
         return false;
@@ -51,7 +50,7 @@ public class QuizResultManager {
      * This method retrieves the scores with the Google API and
      * @param quiz The quiz to import the results for.
      */
-    public static QuizModel importResults(QuizModel quiz) throws GeneralSecurityException, IOException {
+    public static QuizModel importResults(QuizModel quiz) throws IOException {
         ResultSheet resultSheet = new ResultSheet();
 
         quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));

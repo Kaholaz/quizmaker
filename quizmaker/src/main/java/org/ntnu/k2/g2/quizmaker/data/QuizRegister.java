@@ -119,7 +119,7 @@ public class QuizRegister {
         if (!Util.isTest()) {
             try {
                 QuizResultManager.createResultSheet(quiz);
-            } catch (GeneralSecurityException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

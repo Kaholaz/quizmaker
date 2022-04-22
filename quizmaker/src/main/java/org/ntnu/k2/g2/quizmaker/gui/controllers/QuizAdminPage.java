@@ -19,7 +19,6 @@ import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 /**
  * Controller class for the AdminPage. This page is an interface for editing and
@@ -171,7 +170,7 @@ public class QuizAdminPage {
         }
         try {
             QuizResultManager.importResults(quiz);
-        } catch (GeneralSecurityException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
