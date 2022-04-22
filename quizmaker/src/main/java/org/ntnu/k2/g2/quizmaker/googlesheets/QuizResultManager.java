@@ -57,7 +57,7 @@ public class QuizResultManager {
         quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));
         var quizResult = resultSheet.fetchResultSheetValues(quiz.getSheetId());
 
-        for (List row : quizResult) {
+        for (List<Object> row : quizResult) {
             String teamName = row.get(0).toString();
             int score = Integer.parseInt((String) row.get(1));
 

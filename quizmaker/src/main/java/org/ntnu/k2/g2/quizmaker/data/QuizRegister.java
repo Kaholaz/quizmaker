@@ -87,7 +87,7 @@ public class QuizRegister {
         if (!quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
-        
+
         return QuizDAO.updateQuiz(quiz);
     }
 
