@@ -17,6 +17,7 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
     <javafx.version>13</javafx.version>
+    <main-class>org.ntnu.k2.g2.quizmaker.Main</main-class>
   </properties>
 
   <dependencies>
@@ -39,7 +40,7 @@
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
-      <version>3.36.0</version>
+      <version>3.36.0.3</version>
     </dependency>
     <dependency>
       <groupId>com.google.oauth-client</groupId>
@@ -132,7 +133,37 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>src/main/java/</classpathPrefix>
+                <mainClass>${main-class}</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <shadedArtifactAttached>true</shadedArtifactAttached>
+                <transformers>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <mainClass>${main-class}</mainClass>
+                  </transformer>
+                </transformers>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
@@ -155,7 +186,7 @@
           <artifactId>javafx-maven-plugin</artifactId>
           <version>0.0.3</version>
           <configuration>
-            <mainClass>org.ntnu.k2.g2.quizmaker.Main</mainClass>
+            <mainClass>${main-class}</mainClass>
             <release>${maven.compiler.target}</release>
             <jlinkImageName>hellofx</jlinkImageName>
             <launcher>launcher</launcher>

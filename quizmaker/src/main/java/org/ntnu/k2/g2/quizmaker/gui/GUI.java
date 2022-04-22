@@ -13,41 +13,37 @@ import javafx.stage.Stage;
  * This is the main gui class of the application. The class
  * has also many helper methods that can be used in Controller classes.
  */
-
 public class GUI extends Application {
 
-    private static final int STAGE_MIN_HEIGHT = 500;
-    private static final int STAGE_MIN_WIDTH = 500;
+    private static final int STAGE_MIN_HEIGHT = 450;
+    private static final int STAGE_MIN_WIDTH = 600;
 
     /**
-     * Main method of the gui, and starts the application by applying the mainpage
-     * to the primaryStage.
+     * Main method of the gui. This method starts the GUI application and sends the user to the launch page.
      *
      * @param primaryStage primary window of the application
      */
-
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.getIcons().add(new Image(String.valueOf(GUI.class.getResource("/gui/media/team-logo.png"))));
+        primaryStage.getIcons().add(new Image(String.valueOf(GUI.class.getResource("/gui/media/quiz-logo-transparent.png"))));
         primaryStage.setTitle("QuizMaker");
         setSceneFromStage(primaryStage, "/gui/mainPage.fxml");
     }
 
     /**
-     * Sets a scene by getting the current stage from a given node
-     * and replacing the scene. The paths default is /resources.
+     * Sets a scene by getting the current stage from a given nod and replacing the scene.
+     * The path should be expressed relative to the 'resources' folder.
      *
-     * @param node that can extract the current stage
-     * @param path for the next scene
+     * @param node A nod that can extract the current stage.
+     * @param path The path for the FXML sheet for the next scene.
      */
-
     public static void setSceneFromNode(Node node, String path) {
         Stage stage = (Stage) node.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
 
         Scene prev = node.getScene();
         loader.setLocation(GUI.class.getResource(path));
-        Parent root = GUI.checkFXMLLoader(loader);
+        Parent root = GUI.checkedFXMLLoader(loader);
         Scene scene = new Scene(root, prev.getWidth(), prev.getHeight());
 
 
@@ -55,30 +51,31 @@ public class GUI extends Application {
     }
 
     /**
-     * Create a new stage (window). The path default is /resources.
+     * Create a new stage (window).
+     * The path should be expressed relative to the 'resources' folder.
      *
-     * @param path to next scene
+     * @param path The path for the FXML document for the next scene.
      */
-
     public static void createNewStage(String path) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
-        stage.setScene(new Scene(checkFXMLLoader(loader)));
+        stage.setScene(new Scene(checkedFXMLLoader(loader)));
+        stage.getIcons().add(new Image(String.valueOf(GUI.class.getResource("/gui/media/quiz-logo-transparent.png"))));
         stage.show();
     }
 
     /**
-     * Change the scene of a given stage. The path default is /resources.
+     * Change the scene of a given stage.
+     * The path should be expressed relative to the 'resources' folder.
      *
-     * @param stage stage that is switching scene
-     * @param path  path of the new scene
+     * @param stage The stage to swap the scene of.
+     * @param path  The path of the FXML page of the new scene relative to the 'resources' folder.
      */
-
     public static void setSceneFromStage(Stage stage, String path) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
-        stage.setScene(new Scene(checkFXMLLoader(loader)));
+        stage.setScene(new Scene(checkedFXMLLoader(loader)));
         stage.setMinHeight(STAGE_MIN_HEIGHT);
         stage.setMinWidth(STAGE_MIN_WIDTH);
         stage.setMaximized(true);
@@ -88,15 +85,15 @@ public class GUI extends Application {
     /**
      * Set the scene of the stage by extracting the stage from an event.
      * This might be a better solution if there is no node to extract the stage from.
+     * The path should be expressed relative to the 'resources' folder.
      *
-     * @param actionEvent a javafx event
-     * @param path        the path of the new scene
+     * @param actionEvent A javaFX event to extract the stage from.
+     * @param path        The path of the FXML page of the new scene relative to the 'resources' folder.
      */
-
     public static void setSceneFromActionEvent(ActionEvent actionEvent, String path) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GUI.class.getResource(path));
-        Parent root = checkFXMLLoader(loader);
+        Parent root = checkedFXMLLoader(loader);
         Scene prev = ((Node) actionEvent.getSource()).getScene();
         Stage stage = (Stage) prev.getWindow();
         stage.setScene(new Scene(root, prev.getWidth(), prev.getHeight()));
@@ -105,13 +102,12 @@ public class GUI extends Application {
 
     /**
      * This is a helper method that checks the loader for exceptions and returns
-     * the Parent if successful. This is for easy troubleshooting.
+     * the Parent if successful. This makes it easier to troubleshoot errors.
      *
-     * @param loader the FXMLloader that is being checked
-     * @return the loaded Parent
+     * @param loader the FXMLLoader that is being loaded.
+     * @return The loaded Parent.
      */
-
-    protected static Parent checkFXMLLoader(FXMLLoader loader) {
+    protected static Parent checkedFXMLLoader(FXMLLoader loader) {
         Parent root = null;
 
         try {
@@ -130,6 +126,11 @@ public class GUI extends Application {
             System.out.println("A different, unexpected exception was thrown while loading the FXML file...\n\n" + e.getClass() + ": " + e.getMessage());
             System.out.println("Stack Trace:");
             e.printStackTrace();
+        }
+
+        // We don't want a NullPointerException down the line.
+        if (root == null) {
+            throw new IllegalStateException("Something when wrong during the loading of the FXML page");
         }
         return root;
     }

@@ -7,13 +7,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import org.ntnu.k2.g2.quizmaker.gui.GUI;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
-import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
+import org.ntnu.k2.g2.quizmaker.gui.GUI;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.ContainerDecorator;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
+import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.util.Iterator;
@@ -48,18 +50,20 @@ public class QuizDetailsPage {
     @FXML
     private BorderPane borderPane;
 
-    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
+    @FXML
+    private VBox quizContainer;
 
+    @FXML // fx:id="difficulty"
+    private Text activeStatus; // Value injected by FXMLLoader
 
     /**
      * Function called when the delete button has been pressed.
      * The quiz is deleted from the database.
      */
-
     @FXML
     void onDelete(ActionEvent event) {
-        if (QuizRegister.removeQuiz(quiz)) {
-            QuizHandlerSingelton.clear();
+        if (QuizRegister.removeQuiz(QuizHandlerSingleton.getQuiz())) {
+            QuizHandlerSingleton.setQuiz(null);
             GUI.setSceneFromActionEvent(event, "/gui/listQuizzesPage.fxml");
         } else {
             AlertFactory.createNewErrorAlert("Kunne ikke slette quiz.").show();
@@ -67,35 +71,43 @@ public class QuizDetailsPage {
     }
 
     /**
-     * updates the quiz fields on the page, and the rankingGrid, according to the quiz in the singleton.
+     * Sets all text fields, buttons on the page, and rankingGrid, according to the quiz in the singleton.
      */
-
-    void update() {
+    void refreshDetails() {
         //update the details gridpane
-        sumQuestions.setText(String.valueOf(quiz.getQuestions().size()));
-        lastChanged.setText(quiz.getLastChanged().toLocalDate().toString());
-        sumTeams.setText(String.valueOf(quiz.getTeams().size()));
-        quizName.setText(quiz.getName());
-        difficulty.setText(QuizHandlerSingelton.getDifficulty());
-        if (quiz.getDifficulty() == -1) {
-            difficulty.setText("---");
+        sumQuestions.setText(String.valueOf(QuizHandlerSingleton.getQuiz().getQuestions().size()));
+        lastChanged.setText(QuizHandlerSingleton.getQuiz().getLastChanged().toLocalDate().toString());
+        sumTeams.setText(String.valueOf(QuizHandlerSingleton.getQuiz().getTeams().size()));
+        quizName.setText(QuizHandlerSingleton.getQuiz().getName());
+        difficulty.setText(QuizHandlerSingleton.getDifficulty());
+
+        if (QuizHandlerSingleton.isActive()) {
+            activeStatus.setText("Aktiv");
+            TextDecorator.makeTextGreen(activeStatus);
+            ContainerDecorator.makeContainerActive(borderPane);
         } else {
-            average.setText(Double.toString(Math.round(quiz.getDifficulty()*100))+ "%");
+            ContainerDecorator.makeContainerArchived(borderPane);
+            activeStatus.setText("Inaktiv");
+            TextDecorator.makeTextRed(activeStatus);
         }
 
-        //update the team tableview
-        Iterator<TeamModel> teamsSorted = quiz.getTeamsSortedByScore();
-        int i = 0;
+        if (QuizHandlerSingleton.getQuiz().getDifficulty() == -1) {
+            difficulty.setText("---");
+        } else {
+            average.setText(Double.toString(Math.round(QuizHandlerSingleton.getQuiz().getDifficulty()*100))+ "%");
+        }
 
+        // Refill the ranking table
+        ranking.getItems().clear();
+        Iterator<TeamModel> teamsSorted = QuizHandlerSingleton.getQuiz().getTeamsSortedByScore();
         while (teamsSorted.hasNext()) {
             ranking.getItems().add(teamsSorted.next());
         }
     }
 
     /**
-     * Initializes the tableview. There are two columns, one for score and one for teamname.
+     * Initializes the tableview. There are two columns, one for score and one for team name.
      */
-
     void initTable() {
         TableColumn<TeamModel, String> name = new TableColumn<>("Navn");
         name.setCellValueFactory(new PropertyValueFactory<>("teamName"));
@@ -107,15 +119,14 @@ public class QuizDetailsPage {
     }
 
     /**
-     * Initializes the page
+     * Initializes the page. This method is called after the FXML page is loaded.
      */
-
     @FXML
     void initialize() {
-        HBox navbar = NavBarFactory.createTopBar("/gui/quizAdminPage.fxml");
+        HBox navbar = NavBarFactory.createTopNavigationBar("/gui/quizAdminPage.fxml");
         borderPane.setTop(navbar);
 
-        update();
+        refreshDetails();
         initTable();
     }
 }

@@ -11,7 +11,7 @@ import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.ButtonDecorator;
 
 import java.util.Objects;
@@ -22,16 +22,12 @@ import static org.ntnu.k2.g2.quizmaker.gui.factories.TextFactory.createNumberOnl
  * Creates various containers. The containers can have children nodes.
  * All creation methods are static
  */
-
 public class ContainerFactory {
 
     /**
-     *  Private constructor. No need for instantiation.
+     * Since the class is static, a constructor is not needed.
      */
-
-    private ContainerFactory() {
-
-    }
+    private ContainerFactory(){}
 
     /**
      * Creates a javafx Pane that can be used to show a Question in for example a list.
@@ -39,19 +35,18 @@ public class ContainerFactory {
      *
      * @param question The question to create a Pane from.
      */
-
     public static Pane createQuestionPane(QuestionModel question, int questionNumber) {
         VBox mainContainer = new VBox();
         HBox buttonContainer = new HBox();
-        QuizModel quiz = QuizHandlerSingelton.getQuiz();
+        QuizModel quiz = QuizHandlerSingleton.getQuiz();
 
-        Button deletebtn = ButtonFactory.createGrayButton("Slett");
-        ButtonDecorator.makeDefaultDeleteButton(deletebtn);
+        Button deleteBtn = ButtonFactory.createGrayButton("Slett");
+        ButtonDecorator.makeDefaultDeleteButton(deleteBtn);
 
 
-        deletebtn.setOnAction(event -> {
+        deleteBtn.setOnAction(event -> {
             QuizRegister.removeQuestion(quiz, question.getId());
-            GUI.setSceneFromNode(deletebtn, "/gui/questionEditorPage.fxml");
+            GUI.setSceneFromNode(deleteBtn, "/gui/questionEditorPage.fxml");
         });
 
         buttonContainer.setAlignment(Pos.BOTTOM_RIGHT);
@@ -75,7 +70,7 @@ public class ContainerFactory {
         answerTextArea.setOnKeyTyped(actionEvent ->  question.setAnswer(answerTextArea.getText()));
 
         // Add the text labels to the pane
-        buttonContainer.getChildren().add(deletebtn);
+        buttonContainer.getChildren().add(deleteBtn);
         mainContainer.getChildren().addAll(questionLabel, questionTextArea, answerLabel, answerTextArea, pointsLabel, pointsField, buttonContainer);
 
         mainContainer.getStylesheets().add("gui/css/containers.css");

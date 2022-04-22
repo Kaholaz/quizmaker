@@ -8,10 +8,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingelton;
+import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
+import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.pdfexport.PdfManager;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 import java.io.File;
 
@@ -27,20 +27,17 @@ public class ExportPage {
     private Text exportMsg;
 
     @FXML
-    private CheckBox c1, c2, c3, c4, c5, c6;
+    private CheckBox c1, c2, c3;
 
     @FXML // fx:id="close"
     private Button close; // Value injected by FXMLLoader
 
-
-    private final QuizModel quiz = QuizHandlerSingelton.getQuiz();
-
     /**
-     * Closes the stage when the user is finished
+     * An event listener for when the user presses the close/cancel button.
+     * This causes the export window to close.
      *
-     * @param event triggering event from button
+     * @param event Triggering event from the button press.
      */
-
     @FXML
     private void onClose(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -48,50 +45,43 @@ public class ExportPage {
     }
 
     /**
-     * Checks the checkboxes. If they are selected it will import the selected option.
+     * Creates pdfs based on the checkboxes checked.
+     * Sets the appropriate messages after a successful export, or alerts the user if the export was unsuccessful.
      */
-
     @FXML
     private void onExport() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Stage stage = (Stage) export.getScene().getWindow();
-        File file = directoryChooser.showDialog(stage);
-        String msg = "Eksportering vellykket";
-        int i = 0;
+        File exportPath = directoryChooser.showDialog(stage);
+        boolean exported = false;
 
         try {
             if (c1.isSelected()) {
-                PdfManager.exportAnswersheetWithQuestionsQR(quiz,file.toString());
-                i++;
+                PdfManager.exportAnswersheetWithQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                exported = true;
             }
             if (c2.isSelected()) {
-                PdfManager.exportAnswersheetWithQuestions(quiz,file.toString());
-                i++;
+                PdfManager.exportAnswersheetWithoutQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                exported = true;
             }
             if (c3.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestionsQR(quiz,file.toString());
-                i++;
-            }
-            if (c4.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestions(quiz,file.toString());
-                i++;
-            }
-            if (c5.isSelected()) {
-                PdfManager.exportSolutionWithQuestions(quiz,file.toString());
-                i++;
-            }
-            if (c6.isSelected()) {
-                PdfManager.exportSolutionWithoutQuestions(quiz,file.toString());
-                i++;
+                PdfManager.exportSolution(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                exported = true;
             }
         } catch (Exception e) {
             AlertFactory.createNewErrorAlert("En uventet feil oppstod: \n" + e.getMessage());
         }
-        if (i > 0) {
-            exportMsg.setText(msg);
+
+        // Set the appropriate export msg based on if anything was exported.
+        if (exported) {
+            TextDecorator.makeTextGreen(exportMsg);
+            exportMsg.setText("Eksportering vellykket");
         } else {
+            TextDecorator.makeTextRed(exportMsg);
             exportMsg.setText("Ingenting ble eksportert");
         }
+
+        // Changes the text on the cancel button to 'close'
         close.setText("Lukk");
     }
 }

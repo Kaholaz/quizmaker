@@ -9,7 +9,7 @@
 
 .clickable-node-lightgreen:hover {
     -fx-cursor: hand;
-    -fx-background-color: darkgray;
+    -fx-background-color: lightgray;
 }
 
 .clickable-node-lightgreen:pressed {
@@ -18,7 +18,7 @@
 
 .clickable-node-lightblue:hover {
     -fx-cursor: hand;
-    -fx-background-color: darkgray;
+    -fx-background-color: lightgray;
 }
 
 .clickable-node-lightblue:pressed {

@@ -21,8 +21,8 @@ public class QuizResultManager {
         ResultSheet resultSheet = new ResultSheet();
 
         String sheetId = resultSheet.createSheet(quiz.getName());
-        quiz.setSheetId(sheetId);
         resultSheet.addRowValues(sheetId, "Teams", "Scores", "1");
+        quiz.setSheetId(sheetId);
         return sheetId;
     }
 

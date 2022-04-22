@@ -39,11 +39,8 @@ public class PdfExportTest {
         File destionation_file = new File(destination);
         destionation_file.mkdir();
 
-        PdfManager.exportAnswersheetWithQuestionsQR(testQuiz,destination);
         PdfManager.exportAnswersheetWithQuestions(testQuiz,destination);
-        PdfManager.exportAnswersheetWithoutQuestionsQR(testQuiz,destination);
         PdfManager.exportAnswersheetWithoutQuestions(testQuiz,destination);
-        PdfManager.exportSolutionWithQuestions(testQuiz,destination);
-        PdfManager.exportSolutionWithoutQuestions(testQuiz,destination);
+        PdfManager.exportSolution(testQuiz,destination);
     }
 }
