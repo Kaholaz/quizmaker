@@ -8,6 +8,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.TextAlignment;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
@@ -15,9 +16,13 @@ import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.List;
 
-
+/**
+ * Class that handles export of quiz data to pdfs. That contains answer sheets and solutions.
+ * All methods in the class is static.
+ */
 public class PdfManager {
     /**
      * Creates an answersheet with questions and QR code for the quiz as a pdf saved locally on the computer.
@@ -62,17 +67,23 @@ public class PdfManager {
         Paragraph space = new Paragraph("\n");
         document.add(space);
 
-        HashMap<Integer, QuestionModel> questions = quiz.getQuestions();
+        // A list of all questions sorted by id (and by extension creation order)
+        List<QuestionModel> questionsSorted = quiz.getQuestions().values().stream()
+                .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
         int counter = 1;
 
-        for (QuestionModel q : questions.values()) {
-            String header = counter + ") (" + q.getScore() + " poeng) ";
+        for (QuestionModel q : questionsSorted) {
+            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ");
+            header.setBold();
             String question = q.getQuestion();
-            String answer = "\nSvar:_____________________________________________";
+            Text answer1 = new Text("\nSvar:");
+            answer1.setBold();
+            String answer2 = "_____________________________________________";
             Paragraph quest = new Paragraph();
             quest.add(header);
             quest.add(question);
-            quest.add(answer);
+            quest.add(answer1);
+            quest.add(answer2);
             quest.setFontSize(18);
             quest.setKeepTogether(true);
             document.add(quest);
@@ -124,15 +135,21 @@ public class PdfManager {
         Paragraph space = new Paragraph("\n");
         document.add(space);
 
-        HashMap<Integer, QuestionModel> questions = quiz.getQuestions();
+        // A list of all questions sorted by id (and by extension creation order)
+        List<QuestionModel> questionsSorted = quiz.getQuestions().values().stream()
+                .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
         int counter = 1;
 
-        for (QuestionModel q : questions.values()) {
-            String header = counter + ") (" + q.getScore() + " poeng) ";
-            String answer = "\nSvar:_____________________________________________";
+        for (QuestionModel q : questionsSorted) {
+            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ");
+            header.setBold();
+            Text answer1 = new Text("\nSvar:");
+            answer1.setBold();
+            String answer2 = "_____________________________________________";
             Paragraph quest = new Paragraph();
             quest.add(header);
-            quest.add(answer);
+            quest.add(answer1);
+            quest.add(answer2);
             quest.setFontSize(18);
             quest.setKeepTogether(true);
             document.add(quest);
@@ -168,17 +185,23 @@ public class PdfManager {
         Paragraph space = new Paragraph("\n");
         document.add(space);
 
-        HashMap<Integer, QuestionModel> questions = quiz.getQuestions();
+        // A list of all questions sorted by id (and by extension creation order)
+        List<QuestionModel> questionsSorted = quiz.getQuestions().values().stream()
+                .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
         int counter = 1;
 
-        for (QuestionModel q : questions.values()) {
-            String header = counter + ") (" + q.getScore() + " poeng) ";
+        for (QuestionModel q : questionsSorted) {
+            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ");
+            header.setBold();
             String question = q.getQuestion();
-            String answer = "\nSvar: " + q.getAnswer();
+            Text answer1 = new Text("\nSvar: ");
+            answer1.setBold();
+            String answer2 = q.getAnswer();
             Paragraph quest = new Paragraph();
             quest.add(header);
             quest.add(question);
-            quest.add(answer);
+            quest.add(answer1);
+            quest.add(answer2);
             quest.setFontSize(18);
             quest.setKeepTogether(true);
             document.add(quest);

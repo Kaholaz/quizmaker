@@ -15,7 +15,6 @@ import java.util.Hashtable;
 /**
  * Class that creates QR codes.
  * The main shell of the class is from here: https://www.journaldev.com/470/java-qr-code-generator-zxing-example
- *
  */
 
 public class GenerateQRCode {
