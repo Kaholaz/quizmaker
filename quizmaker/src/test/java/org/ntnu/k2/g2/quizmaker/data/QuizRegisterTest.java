@@ -11,7 +11,7 @@ public class QuizRegisterTest extends TestCase {
     /**
      * Runs before each testcase
      */
-    public void setUp() {
+    public void setUp() throws IOException {
         deleteDatabase();
         populateDatabase();
     }
