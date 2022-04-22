@@ -76,10 +76,18 @@ public class QuizRegister {
      * {@code null} is returned if something went wrong when the quiz was saved.
      */
     public static QuizModel saveQuiz(QuizModel quiz) {
-        QuizModel outQuiz = QuizDAO.updateQuiz(quiz);
-        if (!quiz.getName().equals(outQuiz.getName())) {
+        QuizModel oldQuiz = QuizDAO.getQuizById(quiz.getId());
+
+        // Quiz is not in the database
+        if (oldQuiz == null) {
+            return null;
+        }
+
+        // Quiz name changed
+        if (!quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
+
         return QuizDAO.updateQuiz(quiz);
     }
 

@@ -39,7 +39,7 @@ public class QuizResultManager {
         String sheetId = quiz.getSheetId();
 
         try {
-            return resultSheet.setSheetTitle(sheetId,newName);
+            return resultSheet.setSheetTitle(newName,sheetId);
         }catch (GeneralSecurityException | IOException e){
             e.printStackTrace();
         }
@@ -57,7 +57,7 @@ public class QuizResultManager {
         quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));
         var quizResult = resultSheet.fetchResultSheetValues(quiz.getSheetId());
 
-        for (List row : quizResult) {
+        for (List<Object> row : quizResult) {
             String teamName = row.get(0).toString();
             int score = Integer.parseInt((String) row.get(1));
 
