@@ -25,7 +25,7 @@ public class QuizResultManagerTest extends TestCase {
         QuizResultManager.createResultSheet(quiz);
     }
 
-    public void testImportResultSheet() {
+    public void testImportResultSheet() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("Test quiz");
 
