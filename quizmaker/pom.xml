@@ -6,18 +6,16 @@
 
   <groupId>org.ntnu.k2.g2</groupId>
   <artifactId>quizmaker</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-beta</version>
 
-  <name>quizmaker</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <name>QuizMaker</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <javafx.version>13</javafx.version>
-    <main-class>org.ntnu.k2.g2.quizmaker.Main</main-class>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <javafx.version>17</javafx.version>
+    <mainClass>org.ntnu.k2.g2.quizmaker.Main</mainClass>
   </properties>
 
   <dependencies>
@@ -159,7 +157,7 @@
                 <shadedArtifactAttached>true</shadedArtifactAttached>
                 <transformers>
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>${main-class}</mainClass>
+                    <mainClass>${mainClass}</mainClass>
                   </transformer>
                 </transformers>
               </configuration>
@@ -189,23 +187,12 @@
           <artifactId>javafx-maven-plugin</artifactId>
           <version>0.0.3</version>
           <configuration>
-            <mainClass>${main-class}</mainClass>
+            <mainClass>${mainClass}</mainClass>
             <release>${maven.compiler.target}</release>
-            <jlinkImageName>hellofx</jlinkImageName>
             <launcher>launcher</launcher>
           </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>16</source>
-          <target>16</target>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>
