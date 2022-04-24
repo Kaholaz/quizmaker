@@ -4,6 +4,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.Permission;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
 
@@ -38,6 +39,28 @@ public class ResultSheet {
         return new Drive.Builder(HTTP_TRANSPORT, jsonFactory, googleAuthenticator.getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+    }
+
+    /**
+     * Updates the spreadsheet to be public for everyone with a URL to the spreadsheet
+     * @param driveService drive service instance
+     * @param sheetId id of the spreadsheet
+     * @return created permission
+     */
+    public Permission makeSpreadsheetPublic(Drive driveService, String sheetId){
+        Permission permission = new Permission();
+
+        permission.setRole("writer");
+        permission.setType("anyone");
+
+        try{
+            return driveService.permissions().create(sheetId, permission).execute();
+        }
+        catch (IOException e){
+            System.out.println("Could not update spreadsheet permission");
+            System.out.println("Stacktrace:" + e);
+        }
+        return null;
     }
 
 
