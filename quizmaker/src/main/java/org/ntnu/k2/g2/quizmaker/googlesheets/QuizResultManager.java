@@ -1,4 +1,5 @@
 package org.ntnu.k2.g2.quizmaker.googlesheets;
+import com.google.api.services.drive.Drive;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
@@ -21,6 +22,11 @@ public class QuizResultManager {
         ResultSheet resultSheet = new ResultSheet();
 
         String sheetId = resultSheet.createSheet(quiz.getName());
+
+        //Updates spreadsheet permission
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.makeSpreadsheetPublic(driveService, sheetId);
+
         resultSheet.addRowValues(sheetId, "Teams", "Scores", "1");
         quiz.setSheetId(sheetId);
         return sheetId;
