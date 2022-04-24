@@ -65,6 +65,22 @@ public class ResultSheet {
 
 
     /**
+     * Deletes a spreadsheet
+     * @param driveService drive service
+     * @param sheetId id of the spreadsheet
+     */
+    static void deleteSheet(Drive driveService, String sheetId) {
+
+        try {
+            driveService.files().delete(sheetId).execute();
+        } catch (IOException e) {
+            System.out.println("Error when trying to delete spreadsheet " + sheetId);
+            System.out.println("Stacktrace: " + e);
+        }
+    }
+
+
+    /**
      * Creates an empty spreadsheet. Should be called using QuizResultManager and
      * createResultSheet()  method.
      * @param sheetTitle Title of the spreadsheet
