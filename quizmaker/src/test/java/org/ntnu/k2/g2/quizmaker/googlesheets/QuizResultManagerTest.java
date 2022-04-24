@@ -1,5 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.googlesheets;
 
+import com.google.api.services.drive.Drive;
 import junit.framework.TestCase;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
@@ -23,9 +24,13 @@ public class QuizResultManagerTest extends TestCase {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("TestCreateSheetWithDatabase");
         QuizResultManager.createResultSheet(quiz);
+
+        ResultSheet resultSheet = new ResultSheet();
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, quiz.getSheetId());
     }
 
-    public void testImportResultSheet() {
+    public void testImportResultSheet() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("Test quiz");
 

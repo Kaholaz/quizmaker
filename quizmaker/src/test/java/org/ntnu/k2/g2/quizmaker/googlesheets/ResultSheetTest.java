@@ -1,5 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.googlesheets;
 
+import com.google.api.services.drive.Drive;
 import junit.framework.TestCase;
 
 import java.io.IOException;
@@ -23,9 +24,12 @@ public class ResultSheetTest extends TestCase {
     String publicSpreadsheet2 = "1WNHT9u2QELw9Z8CE8YO7CctHUt2XpaTl2DeHBxk3a7k";
 
     public void testCreateSheet() throws IOException, GeneralSecurityException {
-        ResultSheet resultsheet = new ResultSheet();
-        String sheetID = resultsheet.createSheet("Test-sheet");
-        assertNotNull(sheetID);
+        ResultSheet resultSheet = new ResultSheet();
+        String sheetId = resultSheet.createSheet("Test-sheet");
+        assertNotNull(sheetId);
+
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, sheetId);
     }
 
     public void testAppendRowValues() throws GeneralSecurityException, IOException {
@@ -99,6 +103,8 @@ public class ResultSheetTest extends TestCase {
         String sheetId = resultSheet.createSheet("My Name");
 
         assertEquals("My Name",resultSheet.getSheetTitle(sheetId));
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, sheetId);
     }
 
     public void testSetName() throws GeneralSecurityException, IOException {
@@ -107,6 +113,9 @@ public class ResultSheetTest extends TestCase {
         resultSheet.setSheetTitle("New name",sheetId);
 
         assertEquals("New name",resultSheet.getSheetTitle(sheetId));
+
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, sheetId);
     }
 
 }

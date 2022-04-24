@@ -31,8 +31,14 @@ public class ResultSheet {
                 .build();
     }
 
-    public Drive createDriveService() throws IOException, GeneralSecurityException {
-        NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    public Drive createDriveService() throws IOException{
+        NetHttpTransport HTTP_TRANSPORT = null;
+        try {
+            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        } catch (GeneralSecurityException e) {
+            System.out.println("Error when creating newTrustedTransport");
+            e.printStackTrace();
+        }
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 
@@ -69,7 +75,7 @@ public class ResultSheet {
      * @param driveService drive service
      * @param sheetId id of the spreadsheet
      */
-    static void deleteSheet(Drive driveService, String sheetId) {
+    public void deleteSheet(Drive driveService, String sheetId) {
 
         try {
             driveService.files().delete(sheetId).execute();
