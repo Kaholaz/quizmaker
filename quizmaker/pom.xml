@@ -14,7 +14,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <javafx.version>17</javafx.version>
     <mainClass>org.ntnu.k2.g2.quizmaker.Main</mainClass>
   </properties>
 
@@ -139,7 +138,7 @@
               <manifest>
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>src/main/java/</classpathPrefix>
-                <mainClass>${main-class}</mainClass>
+                <mainClass>${mainClass}</mainClass>
               </manifest>
             </archive>
           </configuration>
