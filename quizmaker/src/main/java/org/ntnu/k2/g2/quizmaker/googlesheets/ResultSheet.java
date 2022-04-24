@@ -3,8 +3,10 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.drive.Drive;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
+
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -27,6 +29,17 @@ public class ResultSheet {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
+
+    public Drive createDriveService() throws IOException, GeneralSecurityException {
+        NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
+
+        return new Drive.Builder(HTTP_TRANSPORT, jsonFactory, googleAuthenticator.getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
+
 
     /**
      * Creates an empty spreadsheet. Should be called using QuizResultManager and
