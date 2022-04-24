@@ -21,14 +21,11 @@ Ensure that you also have access to maven commands in a terminal/shell by typing
 4. Ensure your editor has reloaded the newly resolved maven dependencies (In IntelliJ there will be a "Maven" tab on the top right, then click the reload icon furthest to the left)
 
 Access to the google API is also needed for the application to function properly. This can be done in one of two ways:
-1. Accsess to our google application
-If you want to get acces to our google aplication and the corresponding access tokens, please contact one of the maintainers of this project.
-2. Create your own google application
-If you want to create your own google application refer to the guides provided by Google. When you have your application has been created, make sure you have enabled the following APIs:
+1. **Access to our google application**  If you want to get access to our google aplication and the corresponding access tokens, please contact one of the maintainers of this project.
+2. **Create your own google application**  If you want to create your own google application refer to the guides provided by Google. When your application has been created, make sure you have enabled the following APIs:
    - Google sheets API
    - Google drive API
-Once this is in order, you can create OAuth 2.0 Client ID by going to the API and Services dashboard -> credentials -> create credentials -> OAuth Client ID.
-Once you have created your OAuth Client ID, it can be downloaded as a JSON file. Save this file in a userdata file inside of the resources folder as 'google-credentials.json'.
+Once this is in order, you can create OAuth 2.0 Client ID by going to the API and Services dashboard -> credentials -> create credentials -> OAuth Client ID. Once you have created your OAuth Client ID, it can be downloaded as a JSON file. Save this file in a userdata file inside of the resources folder as 'google-credentials.json'.
 
 The application should now work as intended when run.
 
