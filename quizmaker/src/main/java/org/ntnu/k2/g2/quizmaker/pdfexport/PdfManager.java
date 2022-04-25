@@ -3,6 +3,8 @@ package org.ntnu.k2.g2.quizmaker.pdfexport;
 import com.google.zxing.WriterException;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -10,6 +12,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.VerticalAlignment;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
@@ -49,19 +52,19 @@ public class PdfManager {
         } catch (IOException | WriterException e) {
             e.printStackTrace();
         }
-        Image qrCode = new Image(data);
-        qrCode.setFixedPosition(465,716);
+        Image qrCode = new Image(data)
+                .setFixedPosition(465,716);
         document.add(qrCode);
 
-        Paragraph qrDescription = new Paragraph("Skann for å registrere poeng:");
-        qrDescription.setWidth(105);
-        qrDescription.setTextAlignment(TextAlignment.RIGHT);
+        Paragraph qrDescription = new Paragraph("Skann for å registrere poeng:")
+                .setWidth(105)
+                .setTextAlignment(TextAlignment.RIGHT);
         qrDescription.setFixedPosition(373,765,qrDescription.getWidth());
         document.add(qrDescription);
 
-        Paragraph paragraph1 = new Paragraph(title);
-        paragraph1.setWidth(345);
-        paragraph1.setFontSize(30);
+        Paragraph paragraph1 = new Paragraph(title)
+                .setWidth(345)
+                .setFontSize(30);
         document.add(paragraph1);
 
         Paragraph space = new Paragraph("\n");
@@ -73,22 +76,27 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questionsSorted) {
-            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ");
-            header.setBold();
+            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ")
+                    .setBold();
             String question = q.getQuestion();
-            Text answer1 = new Text("\nSvar:");
-            answer1.setBold();
+            Text answer1 = new Text("\nSvar:")
+                    .setBold();
             String answer2 = "_____________________________________________";
-            Paragraph quest = new Paragraph();
-            quest.add(header);
-            quest.add(question);
-            quest.add(answer1);
-            quest.add(answer2);
-            quest.setFontSize(18);
-            quest.setKeepTogether(true);
+            Paragraph quest = new Paragraph()
+                    .add(header)
+                    .add(question)
+                    .add(answer1)
+                    .add(answer2)
+                    .setFontSize(18)
+                    .setKeepTogether(true);
             document.add(quest);
             counter++;
         }
+
+        Paragraph footer = new Paragraph("PDF created with iText 7 (www.itextpdf.com)")
+                .setFontSize(10);
+        footer.setFixedPosition(document.getLeftMargin(),20,footer.getWidth());
+        document.add(footer);
 
         document.close();
     }
@@ -117,19 +125,19 @@ public class PdfManager {
         } catch (IOException | WriterException e) {
             e.printStackTrace();
         }
-        Image qrCode = new Image(data);
-        qrCode.setFixedPosition(465,716);
+        Image qrCode = new Image(data)
+                .setFixedPosition(465,716);
         document.add(qrCode);
 
-        Paragraph qrDescription = new Paragraph("Skann for å registrere poeng:");
-        qrDescription.setWidth(93);
-        qrDescription.setTextAlignment(TextAlignment.RIGHT);
+        Paragraph qrDescription = new Paragraph("Skann for å registrere poeng:")
+                .setWidth(93)
+                .setTextAlignment(TextAlignment.RIGHT);
         qrDescription.setFixedPosition(385,765,qrDescription.getWidth());
         document.add(qrDescription);
 
-        Paragraph paragraph1 = new Paragraph(title);
-        paragraph1.setWidth(345);
-        paragraph1.setFontSize(30);
+        Paragraph paragraph1 = new Paragraph(title)
+                .setWidth(345)
+                .setFontSize(30);
         document.add(paragraph1);
 
         Paragraph space = new Paragraph("\n");
@@ -141,20 +149,25 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questionsSorted) {
-            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ");
-            header.setBold();
-            Text answer1 = new Text("\nSvar:");
-            answer1.setBold();
+            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ")
+                    .setBold();
+            Text answer1 = new Text("\nSvar:")
+                    .setBold();
             String answer2 = "_____________________________________________";
-            Paragraph quest = new Paragraph();
-            quest.add(header);
-            quest.add(answer1);
-            quest.add(answer2);
-            quest.setFontSize(18);
-            quest.setKeepTogether(true);
+            Paragraph quest = new Paragraph()
+                    .add(header)
+                    .add(answer1)
+                    .add(answer2)
+                    .setFontSize(18)
+                    .setKeepTogether(true);
             document.add(quest);
             counter++;
         }
+
+        Paragraph footer = new Paragraph("PDF created with iText 7 (www.itextpdf.com)")
+                .setFontSize(10);
+        footer.setFixedPosition(document.getLeftMargin(),20,footer.getWidth());
+        document.add(footer);
 
         document.close();
     }
@@ -177,9 +190,9 @@ public class PdfManager {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        Paragraph paragraph1 = new Paragraph(title + " - Fasit");
-        paragraph1.setWidth(345);
-        paragraph1.setFontSize(30);
+        Paragraph paragraph1 = new Paragraph(title + " - Fasit")
+                .setWidth(345)
+                .setFontSize(30);
         document.add(paragraph1);
 
         Paragraph space = new Paragraph("\n");
@@ -191,22 +204,27 @@ public class PdfManager {
         int counter = 1;
 
         for (QuestionModel q : questionsSorted) {
-            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ");
-            header.setBold();
+            Text header = new Text(counter + ") (" + q.getScore() + " poeng) ")
+                    .setBold();
             String question = q.getQuestion();
-            Text answer1 = new Text("\nSvar: ");
-            answer1.setBold();
+            Text answer1 = new Text("\nSvar: ")
+                    .setBold();
             String answer2 = q.getAnswer();
-            Paragraph quest = new Paragraph();
-            quest.add(header);
-            quest.add(question);
-            quest.add(answer1);
-            quest.add(answer2);
-            quest.setFontSize(18);
-            quest.setKeepTogether(true);
+            Paragraph quest = new Paragraph()
+                    .add(header)
+                    .add(question)
+                    .add(answer1)
+                    .add(answer2)
+                    .setFontSize(18)
+                    .setKeepTogether(true);
             document.add(quest);
             counter++;
         }
+
+        Paragraph footer = new Paragraph("PDF created with iText 7 (www.itextpdf.com)")
+                .setFontSize(10);
+        footer.setFixedPosition(document.getLeftMargin(),20,footer.getWidth());
+        document.add(footer);
 
         document.close();
     }
