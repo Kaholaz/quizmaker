@@ -2,7 +2,6 @@ package org.ntnu.k2.g2.quizmaker.gui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Camera;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,7 +19,6 @@ import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 /**
  * Controller class for the AdminPage. This page is an interface for editing and
@@ -33,6 +31,9 @@ public class QuizAdminPage {
 
     @FXML // fx:id="retrieveScores"
     private Button retrieveScores; // Value injected by FXMLLoader
+
+    @FXML
+    private Button editQuestions;
 
     @FXML // fx:id="changeState"
     private Button changeState; // Value injected by FXMLLoader
@@ -94,6 +95,10 @@ public class QuizAdminPage {
      */
     @FXML
     void onEditQuestion(ActionEvent event) {
+        if (!quiz.isActive()) {
+            AlertFactory.createNewWarningAlert("Kan ikke endre spørsmålene til en arkivert quiz.").show();
+            return;
+        }
         GUI.setSceneFromActionEvent(event, "/gui/questionEditorPage.fxml");
     }
 
@@ -113,7 +118,7 @@ public class QuizAdminPage {
             try {
                 QuizResultManager.createResultSheet(quiz);
                 url = quiz.getUrl();
-            } catch (IOException | GeneralSecurityException | NullPointerException e) {
+            } catch (IOException | NullPointerException e) {
                 AlertFactory.createNewWarningAlert("Det er ble ikke laget et regneark for denne quizzen!\nPrøv igjen senere når du er koblet til internettet.").show();
                 return;
             }
@@ -172,7 +177,7 @@ public class QuizAdminPage {
 
         try {
             QuizResultManager.importResults(quiz);
-        } catch (GeneralSecurityException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
@@ -201,13 +206,14 @@ public class QuizAdminPage {
 
         if (quiz.isActive()) {
             activeStatus.setText("Aktiv");
+            ButtonDecorator.makeBlue(editQuestions);
             ButtonDecorator.makeBlue(retrieveScores);
             TextDecorator.makeTextGreen(activeStatus);
         } else {
             activeStatus.setText("Inaktiv");
+            ButtonDecorator.makeFullWidthListElementDisabled(editQuestions);
             ButtonDecorator.makeFullWidthListElementDisabled(retrieveScores);
             TextDecorator.makeTextRed(activeStatus);
-
         }
 
         //change the active status button text
@@ -234,7 +240,7 @@ public class QuizAdminPage {
             try {
                 QuizResultManager.createResultSheet(quiz);
             }
-            catch (IOException | GeneralSecurityException | NullPointerException e) {
+            catch (IOException | NullPointerException e) {
                 AlertFactory.showJOptionWarning("Det ble ikke laget et poeng-regneark til denne quizzen.\nPrøv igjen senere når du har tilgang til internett.");
             }
         }

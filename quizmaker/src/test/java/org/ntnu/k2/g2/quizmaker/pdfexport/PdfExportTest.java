@@ -7,6 +7,7 @@ import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 
 import java.io.File;
+import java.io.IOException;
 
 public class PdfExportTest {
     @After
@@ -19,7 +20,7 @@ public class PdfExportTest {
     }
 
     @Test
-    public void testPdfExport() {
+    public void testPdfExport() throws IOException {
         QuizModel testQuiz = QuizRegister.newQuiz();
         testQuiz.setName("Test quiz");
 

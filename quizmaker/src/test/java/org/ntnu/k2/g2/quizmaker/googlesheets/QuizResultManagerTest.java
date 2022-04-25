@@ -20,7 +20,7 @@ public class QuizResultManagerTest extends TestCase {
     public void testChangeResultSheetName() {
     }
 
-    public void testCreateSheetWithDatabase() throws IOException, GeneralSecurityException {
+    public void testCreateSheetWithDatabase() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("TestCreateSheetWithDatabase");
         QuizResultManager.createResultSheet(quiz);
@@ -30,17 +30,16 @@ public class QuizResultManagerTest extends TestCase {
         resultSheet.deleteSheet(driveService, quiz.getSheetId());
     }
 
-    public void testImportResultSheet() {
+    public void testImportResultSheet() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("Test quiz");
 
-        ResultSheet resultSheet = new ResultSheet();
         try {
             // Result sheets are not created automatically in tests
             quiz.setSheetId(publicSpreadsheet2);
             QuizResultManager.importResults(quiz);
         }
-        catch (IOException | GeneralSecurityException e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
 

@@ -23,7 +23,7 @@ public class ResultSheetTest extends TestCase {
      */
     String publicSpreadsheet2 = "121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0";
 
-    public void testCreateSheet() throws IOException, GeneralSecurityException {
+    public void testCreateSheet() throws IOException {
         ResultSheet resultSheet = new ResultSheet();
         String sheetId = resultSheet.createSheet("Test-sheet");
         assertNotNull(sheetId);
@@ -32,14 +32,14 @@ public class ResultSheetTest extends TestCase {
         resultSheet.deleteSheet(driveService, sheetId);
     }
 
-    public void testAppendRowValues() throws GeneralSecurityException, IOException {
+    public void testAppendRowValues() throws IOException {
         ResultSheet resultsheet = new ResultSheet();
         String sheetID = publicSpreadsheet1;
 
         resultsheet.appendRowValues(sheetID,"Team XX", "9");
     }
 
-    public void testAddRowValuesOverwritesOldValue() throws GeneralSecurityException, IOException {
+    public void testAddRowValuesOverwritesOldValue() throws IOException {
         ResultSheet resultsheet = new ResultSheet();
         String sheetID = publicSpreadsheet1;
 
@@ -60,13 +60,13 @@ public class ResultSheetTest extends TestCase {
 
     }
 
-    public void testCountRows() throws GeneralSecurityException, IOException {
+    public void testCountRows() throws IOException {
         ResultSheet resultsheet = new ResultSheet();
         String sheetID = publicSpreadsheet2;
         assertEquals(5,resultsheet.countRows(sheetID));
     }
 
-    public void testFetchResultSheetValuesRow() throws GeneralSecurityException, IOException {
+    public void testFetchResultSheetValuesRow() throws IOException {
         ResultSheet resultsheet = new ResultSheet();
         String sheetID = publicSpreadsheet2;
 
@@ -79,7 +79,7 @@ public class ResultSheetTest extends TestCase {
         assertEquals(1, points);
         assertEquals("Team1",teamName);
 }
-    public void testClearSheet() throws GeneralSecurityException, IOException {
+    public void testClearSheet() throws IOException {
         ResultSheet resultSheet = new ResultSheet();
         String sheetId = publicSpreadsheet1;
 
@@ -98,7 +98,7 @@ public class ResultSheetTest extends TestCase {
     }
 
 
-    public void testGetName() throws GeneralSecurityException, IOException {
+    public void testGetName() throws IOException {
         ResultSheet resultSheet = new ResultSheet();
         String sheetId = resultSheet.createSheet("My Name");
 
@@ -107,7 +107,7 @@ public class ResultSheetTest extends TestCase {
         resultSheet.deleteSheet(driveService, sheetId);
     }
 
-    public void testSetName() throws GeneralSecurityException, IOException {
+    public void testSetName() throws IOException {
         ResultSheet resultSheet = new ResultSheet();
         String sheetId = resultSheet.createSheet("Old Name");
         resultSheet.setSheetTitle("New name",sheetId);

@@ -74,8 +74,9 @@ public class QuizRegister {
      * @param quiz The quiz to save to the database.
      * @return A quiz object representation of the entry in the database AFTER it has been updated.
      * {@code null} is returned if something went wrong when the quiz was saved.
+     * @throws IOException Throws an exception if something went wrong during the creation of the answer sheet.
      */
-    public static QuizModel saveQuiz(QuizModel quiz) {
+    public static QuizModel saveQuiz(QuizModel quiz) throws IOException {
         QuizModel oldQuiz = QuizDAO.getQuizById(quiz.getId());
 
         // Quiz is not in the database
@@ -83,8 +84,8 @@ public class QuizRegister {
             return null;
         }
 
-        // Quiz name changed
-        if (!quiz.getName().equals(oldQuiz.getName())) {
+        // Quiz name changed. Sheet is null will cause problems, so the sheet name will not be updated.
+        if (quiz.getSheetId() != null && !quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
 
@@ -118,18 +119,15 @@ public class QuizRegister {
     /**
      * Create a new quiz.
      * @return The new quiz.
+     * @throws IOException Throws an exception if something wrong happened when creating a result-sheet.
      */
-    public static QuizModel newQuiz() {
+    public static QuizModel newQuiz() throws IOException {
         QuizModel quiz = new QuizModel();
         quiz.setName("new quiz");
 
         // A result sheet is not generated within testing
         if (!Util.isTest()) {
-            try {
-                QuizResultManager.createResultSheet(quiz);
-            } catch (GeneralSecurityException | IOException e) {
-                e.printStackTrace();
-            }
+            QuizResultManager.createResultSheet(quiz);
         }
 
         return QuizDAO.updateQuiz(quiz);
@@ -206,8 +204,9 @@ public class QuizRegister {
      * @param teams     The number of teams to fill each quiz with.
      * @param questions The number of questions to fill each quiz with.
      * @return An ArrayList of all the quizzes that were added to the database.
+     * @throws IOException Throws an exception if something wrong happened when creating the result sheet.
      */
-    public static ArrayList<QuizModel> populateDatabase(int quizzes, int teams, int questions) {
+    public static ArrayList<QuizModel> populateDatabase(int quizzes, int teams, int questions) throws IOException {
         ArrayList<QuizModel> quizArrayList = new ArrayList<>();
 
         for (int i = 1; i <= quizzes; ++i) {

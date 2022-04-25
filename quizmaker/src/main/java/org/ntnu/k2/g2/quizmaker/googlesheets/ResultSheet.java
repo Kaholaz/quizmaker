@@ -9,6 +9,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -21,8 +22,15 @@ public class ResultSheet {
     public ResultSheet() {
     }
 
-    public Sheets createSheetsService() throws IOException, GeneralSecurityException {
-        NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    public Sheets createSheetsService() throws IOException{
+        NetHttpTransport HTTP_TRANSPORT = null;
+
+        try {
+            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        } catch (GeneralSecurityException e) { // Something is wrong with the tokes
+            System.out.println("Error when creating the Google Sheet service");
+            e.printStackTrace();
+        }
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 
@@ -52,8 +60,9 @@ public class ResultSheet {
      * @param driveService drive service instance
      * @param sheetId id of the spreadsheet
      * @return created permission
+     * @throws IOException Throws an exception if the sheet could not be made public
      */
-    public Permission makeSpreadsheetPublic(Drive driveService, String sheetId){
+    public Permission makeSpreadsheetPublic(Drive driveService, String sheetId) throws IOException {
         Permission permission = new Permission();
 
         permission.setRole("writer");
@@ -63,10 +72,8 @@ public class ResultSheet {
             return driveService.permissions().create(sheetId, permission).execute();
         }
         catch (IOException e){
-            System.out.println("Could not update spreadsheet permission");
-            System.out.println("Stacktrace:" + e);
+            throw new IOException("Kunne ikke gjøre regnearket offentlig: " + e);
         }
-        return null;
     }
 
 
@@ -92,9 +99,8 @@ public class ResultSheet {
      * @param sheetTitle Title of the spreadsheet
      * @return Spreadsheet-id (used in sheet URL:https://docs.google.com/spreadsheets/d/SHEET_ID)
      * @throws IOException
-     * @throws GeneralSecurityException
      */
-    public String createSheet(String sheetTitle) throws IOException, GeneralSecurityException {
+    public String createSheet(String sheetTitle) throws IOException {
         Spreadsheet spreadsheet = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(sheetTitle));
         Sheets sheetsService = createSheetsService();
         Sheets.Spreadsheets.Create request = sheetsService.spreadsheets().create(spreadsheet);
@@ -108,10 +114,9 @@ public class ResultSheet {
      * Gets the title of the spreadsheet
      * @param sheetId id of the spreadsheet
      * @return title of the spreadsheet
-     * @throws GeneralSecurityException
      * @throws IOException
      */
-    public String getSheetTitle(String sheetId) throws GeneralSecurityException, IOException {
+    public String getSheetTitle(String sheetId) throws IOException {
         Sheets sheetService = createSheetsService();
 
         Sheets.Spreadsheets.Get getRequest = sheetService.spreadsheets().get(sheetId).setIncludeGridData(false);
@@ -126,12 +131,11 @@ public class ResultSheet {
      * Changes the title of the spreadsheet
      * @param sheetTitle tile of the spreadsheet
      * @param sheetId id of the spreadsheet
-     * @throws GeneralSecurityException
      * @throws IOException
      * @return
      */
 
-    public boolean setSheetTitle(String sheetTitle, String sheetId) throws GeneralSecurityException, IOException {
+    public boolean setSheetTitle(String sheetTitle, String sheetId) throws IOException {
         Sheets sheetsService = createSheetsService();
 
         List<Request> request = new ArrayList<>();
@@ -153,10 +157,9 @@ public class ResultSheet {
      * @param sheetId id of the spreadsheet
      * @param valueA cell value for column A
      * @param valueB cell value for column B
-     * @throws GeneralSecurityException
      * @throws IOException
      */
-    public void appendRowValues(String sheetId, String valueA, String valueB) throws GeneralSecurityException, IOException {
+    public void appendRowValues(String sheetId, String valueA, String valueB) throws IOException {
         Sheets sheetsService = createSheetsService();
 
         ValueRange body = new ValueRange().setValues(List.of(Arrays.asList(valueA, valueB)));
@@ -177,7 +180,7 @@ public class ResultSheet {
      * @param valueA value of cell in column A
      * @param valueB value of cell in column B
      */
-    public void addRowValues(String sheetId, String valueA, String valueB, String rowNumber) throws GeneralSecurityException, IOException {
+    public void addRowValues(String sheetId, String valueA, String valueB, String rowNumber) throws IOException {
         Sheets sheetsService = createSheetsService();
         String range = "A" + rowNumber;
 
@@ -193,9 +196,8 @@ public class ResultSheet {
      * @param sheetId spreadsheet id
      * @return number of filled rows
      * @throws IOException
-     * @throws GeneralSecurityException
      */
-    public int countRows(String sheetId) throws IOException, GeneralSecurityException {
+    public int countRows(String sheetId) throws IOException {
         Sheets SheetService = createSheetsService();
         final String range = "A1:B";
 
@@ -217,9 +219,8 @@ public class ResultSheet {
      * @param sheetId id of the spreadsheet
      * @return list containing spreadsheet values
      * @throws IOException
-     * @throws GeneralSecurityException
      */
-    public List<List<Object>> fetchResultSheetValues(String sheetId) throws IOException, GeneralSecurityException {
+    public List<List<Object>> fetchResultSheetValues(String sheetId) throws IOException {
         Sheets SheetService = createSheetsService();
         final String range = "A2:B";
 
@@ -234,10 +235,9 @@ public class ResultSheet {
     /**
      * Removes all values from the spreadsheet from column A to F
      * @param sheetId id of the spreadsheet
-     * @throws GeneralSecurityException
      * @throws IOException
      */
-    public void clearSheetValues(String sheetId) throws GeneralSecurityException, IOException {
+    public void clearSheetValues(String sheetId) throws IOException {
         Sheets sheetsService = createSheetsService();
 
         // Alternative range: <Worksheet name>
