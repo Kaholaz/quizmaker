@@ -5,17 +5,15 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 public class QuizResultManager {
     /**
      * This method creates an associated result sheet for a quiz
      * @param quiz The quiz to create the result sheet for.
-     * @throws GeneralSecurityException
      * @throws IOException
      */
-    public static String createResultSheet(QuizModel quiz) throws GeneralSecurityException, IOException {
+    public static String createResultSheet(QuizModel quiz) throws IOException {
         if (quiz.getSheetId() != null) {
             return quiz.getSheetId();
         }
@@ -38,18 +36,13 @@ public class QuizResultManager {
      * @param quiz The quiz whose result sheet to change.
      * @return True if the operation was successful, false if not.
      */
-    public static boolean changeResultSheetName(QuizModel quiz) {
+    public static boolean changeResultSheetName(QuizModel quiz) throws IOException {
         ResultSheet resultSheet = new ResultSheet();
 
         String newName = quiz.getName();
         String sheetId = quiz.getSheetId();
 
-        try {
-            return resultSheet.setSheetTitle(newName,sheetId);
-        }catch (GeneralSecurityException | IOException e){
-            e.printStackTrace();
-        }
-        return false;
+        return resultSheet.setSheetTitle(newName,sheetId);
     }
 
     /**
@@ -57,7 +50,7 @@ public class QuizResultManager {
      * This method retrieves the scores with the Google API and
      * @param quiz The quiz to import the results for.
      */
-    public static QuizModel importResults(QuizModel quiz) throws GeneralSecurityException, IOException {
+    public static QuizModel importResults(QuizModel quiz) throws IOException {
         ResultSheet resultSheet = new ResultSheet();
 
         quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));

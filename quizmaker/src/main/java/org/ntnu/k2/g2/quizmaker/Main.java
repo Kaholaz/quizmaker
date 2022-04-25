@@ -5,6 +5,8 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         try {
@@ -17,7 +19,12 @@ public class Main {
         //TODO: fjern i prod
         if (QuizRegister.getQuizList().isEmpty()) {
             AlertFactory.showJOptionWarning("Generer quizzer. Dette kan ta et par sekunder.");
-            QuizRegister.populateDatabase(5, 100, 100);
+            try {
+                QuizRegister.populateDatabase(5, 20, 10);
+            }
+            catch (IOException e) {
+                AlertFactory.showJOptionWarning("Noe galt skjedde da quizzene ble generert!");
+            }
         }
         Application.launch(GUI.class, args);
     }

@@ -2,7 +2,6 @@ package org.ntnu.k2.g2.quizmaker.gui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Camera;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,7 +19,6 @@ import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 /**
  * Controller class for the AdminPage. This page is an interface for editing and
@@ -120,7 +118,7 @@ public class QuizAdminPage {
             try {
                 QuizResultManager.createResultSheet(quiz);
                 url = quiz.getUrl();
-            } catch (IOException | GeneralSecurityException | NullPointerException e) {
+            } catch (IOException | NullPointerException e) {
                 AlertFactory.createNewWarningAlert("Det er ble ikke laget et regneark for denne quizzen!\nPrøv igjen senere når du er koblet til internettet.").show();
                 return;
             }
@@ -179,7 +177,7 @@ public class QuizAdminPage {
 
         try {
             QuizResultManager.importResults(quiz);
-        } catch (GeneralSecurityException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
@@ -242,7 +240,7 @@ public class QuizAdminPage {
             try {
                 QuizResultManager.createResultSheet(quiz);
             }
-            catch (IOException | GeneralSecurityException | NullPointerException e) {
+            catch (IOException | NullPointerException e) {
                 AlertFactory.showJOptionWarning("Det ble ikke laget et poeng-regneark til denne quizzen.\nPrøv igjen senere når du har tilgang til internett.");
             }
         }
