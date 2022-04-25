@@ -84,8 +84,8 @@ public class QuizRegister {
             return null;
         }
 
-        // Quiz name changed
-        if (!Util.isTest() && !quiz.getName().equals(oldQuiz.getName())) {
+        // Quiz name changed. Sheet is null will cause problems, so the sheet name will not be updated.
+        if (quiz.getSheetId() != null && !quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
 
