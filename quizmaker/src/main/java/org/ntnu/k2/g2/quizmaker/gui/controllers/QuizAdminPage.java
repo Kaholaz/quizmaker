@@ -34,6 +34,9 @@ public class QuizAdminPage {
     @FXML // fx:id="retrieveScores"
     private Button retrieveScores; // Value injected by FXMLLoader
 
+    @FXML
+    private Button editQuestions;
+
     @FXML // fx:id="changeState"
     private Button changeState; // Value injected by FXMLLoader
 
@@ -94,6 +97,10 @@ public class QuizAdminPage {
      */
     @FXML
     void onEditQuestion(ActionEvent event) {
+        if (!quiz.isActive()) {
+            AlertFactory.createNewWarningAlert("Kan ikke endre spørsmålene til en arkivert quiz.").show();
+            return;
+        }
         GUI.setSceneFromActionEvent(event, "/gui/questionEditorPage.fxml");
     }
 
@@ -201,13 +208,14 @@ public class QuizAdminPage {
 
         if (quiz.isActive()) {
             activeStatus.setText("Aktiv");
+            ButtonDecorator.makeBlue(editQuestions);
             ButtonDecorator.makeBlue(retrieveScores);
             TextDecorator.makeTextGreen(activeStatus);
         } else {
             activeStatus.setText("Inaktiv");
+            ButtonDecorator.makeFullWidthListElementDisabled(editQuestions);
             ButtonDecorator.makeFullWidthListElementDisabled(retrieveScores);
             TextDecorator.makeTextRed(activeStatus);
-
         }
 
         //change the active status button text
