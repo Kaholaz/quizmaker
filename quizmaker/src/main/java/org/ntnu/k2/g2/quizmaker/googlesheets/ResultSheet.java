@@ -3,8 +3,11 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.Permission;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
+
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -27,6 +30,38 @@ public class ResultSheet {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
+
+    public Drive createDriveService() throws IOException, GeneralSecurityException {
+        NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
+
+        return new Drive.Builder(HTTP_TRANSPORT, jsonFactory, googleAuthenticator.getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
+
+    /**
+     * Updates the spreadsheet to be public for everyone with a URL to the spreadsheet
+     * @param driveService drive service instance
+     * @param sheetId id of the spreadsheet
+     * @return created permission
+     * @throws IOException Throws an exception if the sheet could not be made public
+     */
+    public Permission makeSpreadsheetPublic(Drive driveService, String sheetId) throws IOException {
+        Permission permission = new Permission();
+
+        permission.setRole("writer");
+        permission.setType("anyone");
+
+        try{
+            return driveService.permissions().create(sheetId, permission).execute();
+        }
+        catch (IOException e){
+            throw new IOException("Kunne ikke gjøre regnearket offentlig: " + e);
+        }
+    }
+
 
     /**
      * Creates an empty spreadsheet. Should be called using QuizResultManager and
