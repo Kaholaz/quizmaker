@@ -168,6 +168,13 @@ public class QuizRegister {
      * @return True if the operation was successful, false if not.
      */
     public static boolean removeQuiz(QuizModel quiz) {
+        if (quiz.getSheetId() != null && !Util.isTest() /* Do not remove the test sheets*/ ) {
+            try {
+                QuizResultManager.removeResultSheet(quiz);
+            } catch (IOException e) {
+                return false;
+            }
+        }
         return QuizDAO.removeQuizById(quiz.getId());
     }
 

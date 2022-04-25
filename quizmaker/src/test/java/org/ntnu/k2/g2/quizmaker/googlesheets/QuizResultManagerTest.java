@@ -32,7 +32,6 @@ public class QuizResultManagerTest extends TestCase {
 
     public void testImportResultSheet() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
-        quiz.setName("Test quiz");
 
         try {
             // Result sheets are not created automatically in tests
