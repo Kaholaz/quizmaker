@@ -23,7 +23,7 @@ public class Main {
                 QuizRegister.populateDatabase(5, 20, 10);
             }
             catch (IOException e) {
-                AlertFactory.showJOptionWarning("Noe galt skjedde når quizzene ble generert!");
+                AlertFactory.showJOptionWarning("Noe galt skjedde da quizzene ble generert!");
             }
         }
         Application.launch(GUI.class, args);
