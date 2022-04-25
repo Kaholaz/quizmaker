@@ -68,4 +68,18 @@ public class QuizResultManager {
         QuizRegister.saveQuiz(quiz);
         return quiz;
     }
+
+    /**
+     * Removes a sheet from a Google Drive.
+     * @param quiz The quiz' result sheet to remove.
+     * @return true if the operation was successful.
+     * @throws IOException Throws an exception if the operation was unsuccessful.
+     */
+    public static boolean removeResultSheet(QuizModel quiz) throws IOException {
+        ResultSheet resultSheet = new ResultSheet();
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, quiz.getSheetId());
+        quiz.setSheetId(null);
+        return true;
+    }
 }
