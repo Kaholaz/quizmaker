@@ -1,5 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.googlesheets;
 
+import com.google.api.services.drive.Drive;
 import junit.framework.TestCase;
 
 import java.io.IOException;
@@ -11,21 +12,24 @@ public class ResultSheetTest extends TestCase {
     //Public sheets to be used in tests
     /**
      * Spreadsheet with read/write rights
-     * https://docs.google.com/spreadsheets/d/11MG2HsYNGL5VFpdaRkGlvE8EqtqlYAI13IBF9fw2K8o
+     * https://docs.google.com/spreadsheets/d/1KeuOymxKNfPnre6eEobFb1GEwoCdPIKUHP0K_YUexpg
      */
-    String publicSpreadsheet1 = "11MG2HsYNGL5VFpdaRkGlvE8EqtqlYAI13IBF9fw2K8o";
+    String publicSpreadsheet1 = "1KeuOymxKNfPnre6eEobFb1GEwoCdPIKUHP0K_YUexpg";
 
     /**
      * Spreadsheet containing 4 Teams with points.
      * READ ONLY
-     * https://docs.google.com/spreadsheets/d/1WNHT9u2QELw9Z8CE8YO7CctHUt2XpaTl2DeHBxk3a7k
+     * https://docs.google.com/spreadsheets/d/121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0
      */
-    String publicSpreadsheet2 = "1WNHT9u2QELw9Z8CE8YO7CctHUt2XpaTl2DeHBxk3a7k";
+    String publicSpreadsheet2 = "121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0";
 
     public void testCreateSheet() throws IOException {
-        ResultSheet resultsheet = new ResultSheet();
-        String sheetID = resultsheet.createSheet("Test-sheet");
-        assertNotNull(sheetID);
+        ResultSheet resultSheet = new ResultSheet();
+        String sheetId = resultSheet.createSheet("Test-sheet");
+        assertNotNull(sheetId);
+
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, sheetId);
     }
 
     public void testAppendRowValues() throws IOException {
@@ -99,6 +103,8 @@ public class ResultSheetTest extends TestCase {
         String sheetId = resultSheet.createSheet("My Name");
 
         assertEquals("My Name",resultSheet.getSheetTitle(sheetId));
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, sheetId);
     }
 
     public void testSetName() throws IOException {
@@ -107,6 +113,9 @@ public class ResultSheetTest extends TestCase {
         resultSheet.setSheetTitle("New name",sheetId);
 
         assertEquals("New name",resultSheet.getSheetTitle(sheetId));
+
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, sheetId);
     }
 
 }

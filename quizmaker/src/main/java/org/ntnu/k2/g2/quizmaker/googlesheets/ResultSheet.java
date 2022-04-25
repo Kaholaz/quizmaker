@@ -9,6 +9,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class ResultSheet {
 
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        } catch (GeneralSecurityException e) {
+        } catch (GeneralSecurityException e) { // Something is wrong with the tokes
+            System.out.println("Error when creating the Google Sheet service");
             e.printStackTrace();
         }
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
@@ -37,8 +39,14 @@ public class ResultSheet {
                 .build();
     }
 
-    public Drive createDriveService() throws IOException, GeneralSecurityException {
-        NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    public Drive createDriveService() throws IOException{
+        NetHttpTransport HTTP_TRANSPORT = null;
+        try {
+            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        } catch (GeneralSecurityException e) {
+            System.out.println("Error when creating newTrustedTransport");
+            e.printStackTrace();
+        }
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 
@@ -65,6 +73,22 @@ public class ResultSheet {
         }
         catch (IOException e){
             throw new IOException("Kunne ikke gjøre regnearket offentlig: " + e);
+        }
+    }
+
+
+    /**
+     * Deletes a spreadsheet
+     * @param driveService drive service
+     * @param sheetId id of the spreadsheet
+     */
+    public void deleteSheet(Drive driveService, String sheetId) {
+
+        try {
+            driveService.files().delete(sheetId).execute();
+        } catch (IOException e) {
+            System.out.println("Error when trying to delete spreadsheet " + sheetId);
+            System.out.println("Stacktrace: " + e);
         }
     }
 

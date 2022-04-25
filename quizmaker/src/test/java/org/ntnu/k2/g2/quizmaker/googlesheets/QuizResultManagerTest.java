@@ -1,5 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.googlesheets;
 
+import com.google.api.services.drive.Drive;
 import junit.framework.TestCase;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
@@ -12,9 +13,9 @@ public class QuizResultManagerTest extends TestCase {
     /**
      * Spreadsheet containing 4 Teams with points.
      * READ ONLY
-     * https://docs.google.com/spreadsheets/d/1WNHT9u2QELw9Z8CE8YO7CctHUt2XpaTl2DeHBxk3a7k
+     * https://docs.google.com/spreadsheets/d/121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0
      */
-    final String publicSpreadsheet2 = "1WNHT9u2QELw9Z8CE8YO7CctHUt2XpaTl2DeHBxk3a7k";
+    String publicSpreadsheet2 = "121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0";
 
     public void testChangeResultSheetName() {
     }
@@ -23,6 +24,10 @@ public class QuizResultManagerTest extends TestCase {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("TestCreateSheetWithDatabase");
         QuizResultManager.createResultSheet(quiz);
+
+        ResultSheet resultSheet = new ResultSheet();
+        Drive driveService = resultSheet.createDriveService();
+        resultSheet.deleteSheet(driveService, quiz.getSheetId());
     }
 
     public void testImportResultSheet() throws IOException {
