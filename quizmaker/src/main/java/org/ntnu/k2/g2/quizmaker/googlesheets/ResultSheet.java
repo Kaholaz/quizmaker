@@ -46,8 +46,9 @@ public class ResultSheet {
      * @param driveService drive service instance
      * @param sheetId id of the spreadsheet
      * @return created permission
+     * @throws IOException Throws an exception if the sheet could not be made public
      */
-    public Permission makeSpreadsheetPublic(Drive driveService, String sheetId){
+    public Permission makeSpreadsheetPublic(Drive driveService, String sheetId) throws IOException {
         Permission permission = new Permission();
 
         permission.setRole("writer");
@@ -57,10 +58,8 @@ public class ResultSheet {
             return driveService.permissions().create(sheetId, permission).execute();
         }
         catch (IOException e){
-            System.out.println("Could not update spreadsheet permission");
-            System.out.println("Stacktrace:" + e);
+            throw new IOException("Kunne ikke gjøre regnearket offentlig: " + e);
         }
-        return null;
     }
 
 
