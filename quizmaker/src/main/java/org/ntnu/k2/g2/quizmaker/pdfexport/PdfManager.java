@@ -3,8 +3,6 @@ package org.ntnu.k2.g2.quizmaker.pdfexport;
 import com.google.zxing.WriterException;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -12,7 +10,6 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
 import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
@@ -48,7 +45,7 @@ public class PdfManager {
 
         ImageData data = null;
         try {
-            data = ImageDataFactory.create(GenerateQRCode.saveQR(quiz), Color.BLACK);
+            data = ImageDataFactory.create(QRCodeGenerator.saveQR(quiz), Color.BLACK);
         } catch (IOException | WriterException e) {
             e.printStackTrace();
         }
@@ -70,6 +67,10 @@ public class PdfManager {
         Paragraph space = new Paragraph("\n");
         document.add(space);
 
+        Paragraph teamname = new Paragraph("Lagnavn:____________________________________________")
+                .setFontSize(18);
+        document.add(teamname);
+
         // A list of all questions sorted by id (and by extension creation order)
         List<QuestionModel> questionsSorted = quiz.getQuestions().values().stream()
                 .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
@@ -78,10 +79,17 @@ public class PdfManager {
         for (QuestionModel q : questionsSorted) {
             Text header = new Text(counter + ") (" + q.getScore() + " poeng) ")
                     .setBold();
+
             String question = q.getQuestion();
+            if (question == null) {
+                question = "";
+            }
+
             Text answer1 = new Text("\nSvar:")
                     .setBold();
-            String answer2 = "_____________________________________________";
+
+            String answer2 = "_______________________________________________";
+
             Paragraph quest = new Paragraph()
                     .add(header)
                     .add(question)
@@ -92,6 +100,12 @@ public class PdfManager {
             document.add(quest);
             counter++;
         }
+
+        document.add(space);
+
+        Paragraph score = new Paragraph("Poengsum:___/" + quiz.getMaxScore())
+                .setFontSize(18);
+        document.add(score);
 
         Paragraph footer = new Paragraph("PDF created with iText 7 (www.itextpdf.com)")
                 .setFontSize(10);
@@ -121,7 +135,7 @@ public class PdfManager {
 
         ImageData data = null;
         try {
-            data = ImageDataFactory.create(GenerateQRCode.saveQR(quiz), Color.BLACK);
+            data = ImageDataFactory.create(QRCodeGenerator.saveQR(quiz), Color.BLACK);
         } catch (IOException | WriterException e) {
             e.printStackTrace();
         }
@@ -143,6 +157,10 @@ public class PdfManager {
         Paragraph space = new Paragraph("\n");
         document.add(space);
 
+        Paragraph teamname = new Paragraph("Lagnavn:____________________________________________")
+                .setFontSize(18);
+        document.add(teamname);
+
         // A list of all questions sorted by id (and by extension creation order)
         List<QuestionModel> questionsSorted = quiz.getQuestions().values().stream()
                 .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
@@ -151,9 +169,12 @@ public class PdfManager {
         for (QuestionModel q : questionsSorted) {
             Text header = new Text(counter + ") (" + q.getScore() + " poeng) ")
                     .setBold();
+
             Text answer1 = new Text("\nSvar:")
                     .setBold();
-            String answer2 = "_____________________________________________";
+
+            String answer2 = "_______________________________________________";
+
             Paragraph quest = new Paragraph()
                     .add(header)
                     .add(answer1)
@@ -163,6 +184,12 @@ public class PdfManager {
             document.add(quest);
             counter++;
         }
+
+        document.add(space);
+
+        Paragraph score = new Paragraph("Poengsum:___/" + quiz.getMaxScore())
+                .setFontSize(18);
+        document.add(score);
 
         Paragraph footer = new Paragraph("PDF created with iText 7 (www.itextpdf.com)")
                 .setFontSize(10);
@@ -206,10 +233,20 @@ public class PdfManager {
         for (QuestionModel q : questionsSorted) {
             Text header = new Text(counter + ") (" + q.getScore() + " poeng) ")
                     .setBold();
+
             String question = q.getQuestion();
+            if (question == null) {
+                question = "";
+            }
+
             Text answer1 = new Text("\nSvar: ")
                     .setBold();
+
             String answer2 = q.getAnswer();
+            if (answer2 == null) {
+                answer2 = "";
+            }
+
             Paragraph quest = new Paragraph()
                     .add(header)
                     .add(question)
@@ -220,6 +257,12 @@ public class PdfManager {
             document.add(quest);
             counter++;
         }
+
+        document.add(space);
+
+        Paragraph score = new Paragraph("Max poengsum: " + quiz.getMaxScore())
+                .setFontSize(18);
+        document.add(score);
 
         Paragraph footer = new Paragraph("PDF created with iText 7 (www.itextpdf.com)")
                 .setFontSize(10);
