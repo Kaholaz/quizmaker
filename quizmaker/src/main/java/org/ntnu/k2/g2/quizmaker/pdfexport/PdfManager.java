@@ -45,7 +45,7 @@ public class PdfManager {
 
         ImageData data = null;
         try {
-            data = ImageDataFactory.create(GenerateQRCode.saveQR(quiz), Color.BLACK);
+            data = ImageDataFactory.create(QRCodeGenerator.saveQR(quiz), Color.BLACK);
         } catch (IOException | WriterException e) {
             e.printStackTrace();
         }
@@ -135,7 +135,7 @@ public class PdfManager {
 
         ImageData data = null;
         try {
-            data = ImageDataFactory.create(GenerateQRCode.saveQR(quiz), Color.BLACK);
+            data = ImageDataFactory.create(QRCodeGenerator.saveQR(quiz), Color.BLACK);
         } catch (IOException | WriterException e) {
             e.printStackTrace();
         }

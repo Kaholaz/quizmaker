@@ -17,7 +17,7 @@ import java.util.Hashtable;
  * The main shell of the class is from here: https://www.journaldev.com/470/java-qr-code-generator-zxing-example
  */
 
-public class GenerateQRCode {
+public class QRCodeGenerator {
     public static Image saveQR(QuizModel quiz) throws WriterException {
         String qrCodeText = quiz.getUrl();
         int size = 125;
