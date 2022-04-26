@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Main {
     public static void main(String[] args) {
-        URL googleCredentials = Main.class.getResource("userdata/google-credentials.json");
+        URL googleCredentials = Main.class.getResource("/userdata/google-credentials.json");
         if (googleCredentials == null) {
             AlertFactory.showJOptionWarning(
                     "Det finnes ingen 'google-credentials.json' fil! Vennligst se installasjonsguiden!");
