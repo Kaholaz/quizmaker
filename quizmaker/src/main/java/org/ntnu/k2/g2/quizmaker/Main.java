@@ -11,7 +11,7 @@ public class Main {
         URL googleCredentials = Main.class.getResource("userdata/google-credentials.json");
         if (googleCredentials == null) {
             AlertFactory.showJOptionWarning(
-                    "Det finnes ingen google-cedentials.json fil! Vennligst se installasjonsguiden!");
+                    "Det finnes ingen 'google-credentials.json' fil! Vennligst se installasjonsguiden!");
             return;
         }
 
