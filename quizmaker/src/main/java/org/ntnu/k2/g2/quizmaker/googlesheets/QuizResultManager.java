@@ -57,12 +57,16 @@ public class QuizResultManager {
         var quizResult = resultSheet.fetchResultSheetValues(quiz.getSheetId());
 
         for (List<Object> row : quizResult) {
-            String teamName = row.get(0).toString();
-            int score = Integer.parseInt((String) row.get(1));
+            try{
+                String teamName = row.get(0).toString();
+                int score = Integer.parseInt((String) row.get(1));
 
-            TeamModel team = QuizRegister.newTeam(quiz);
-            team.setTeamName(teamName);
-            team.setScore(score);
+                TeamModel team = QuizRegister.newTeam(quiz);
+                team.setTeamName(teamName);
+                team.setScore(score);
+            }catch(IndexOutOfBoundsException | NumberFormatException e){
+                //Results are not added if result row is not formatted: <String>,<Int>
+        }
         }
 
         QuizRegister.saveQuiz(quiz);
