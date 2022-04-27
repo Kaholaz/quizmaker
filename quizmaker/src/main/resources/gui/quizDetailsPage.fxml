@@ -104,4 +104,8 @@
          </children>
       </HBox>
    </center>
+   <stylesheets>
+      <URL value="@css/main.css" />
+      <URL value="@css/menu.css" />
+   </stylesheets>
 </BorderPane>
