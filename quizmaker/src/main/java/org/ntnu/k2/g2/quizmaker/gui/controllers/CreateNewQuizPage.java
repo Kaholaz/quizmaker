@@ -55,8 +55,8 @@ public class CreateNewQuizPage {
                 QuizRegister.saveQuiz(createdQuiz);
             } catch (Exception e) {
                 Platform.runLater(() -> {
-                    AlertFactory.createNewErrorAlert("Could not create quiz...");
-                    GUI.setSceneFromNode(mainContainer, "/gui/createNewQuizPage.fxml");
+                    AlertFactory.showJOptionWarning("Could not create quiz..." + e.getMessage());
+                    GUI.setSceneFromNode(mainContainer, "/gui/mainPage.fxml");
                 });
                 return;
             }

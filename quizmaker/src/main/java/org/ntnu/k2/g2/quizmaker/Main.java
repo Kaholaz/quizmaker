@@ -18,10 +18,9 @@ public class Main {
         try {
             QuizRegister.getQuizList();
         } catch (Exception e) {
-            AlertFactory.showJOptionWarning("Det skjedde en uventet feil... \n" + e.getMessage());
+            AlertFactory.showJOptionWarning("Kunne ikke koble til databasen! \n (Husk å kjøre applikasjonen som administrator) \n" + e.getMessage());
             return;
         }
-
         Application.launch(GUI.class, args);
     }
 
