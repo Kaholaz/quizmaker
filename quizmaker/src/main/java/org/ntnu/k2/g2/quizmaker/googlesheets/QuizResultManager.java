@@ -58,7 +58,9 @@ public class QuizResultManager {
 
         for (List<Object> row : quizResult) {
             String teamName = row.get(0).toString();
-            int score = Integer.parseInt((String) row.get(1));
+            String score_raw = row.get(1).toString();
+            // Supports both 1,2 and 1.2 to represent the double 1.2
+            Double score = Double.parseDouble(score_raw.replace(',', '.'));
 
             TeamModel team = QuizRegister.newTeam(quiz);
             team.setTeamName(teamName);

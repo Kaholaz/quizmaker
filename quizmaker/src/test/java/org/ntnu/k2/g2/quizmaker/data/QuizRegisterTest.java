@@ -83,6 +83,15 @@ public class QuizRegisterTest extends TestCase {
         assertEquals(2, team.getId());
     }
 
+    public void testGetTeamWithNonIntegerScore() {
+        TeamModel team = QuizRegister.getTeam(2);
+        team.setScore(2.3);
+        QuizRegister.saveTeam(team);
+        team = QuizRegister.getTeam(2);
+
+        assertEquals(2.3, team.getScore());
+    }
+
     public void testGetTeamReturnsNullOnInvalidId() {
         TeamModel team = QuizRegister.getTeam(100);
 
