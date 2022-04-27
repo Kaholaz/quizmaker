@@ -53,7 +53,7 @@
                         <Text accessibleText="Sist endret" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Sist endret:" GridPane.rowIndex="4" />
                         <Text fx:id="average" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Text fx:id="lastChanged" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Text accessibleText="Active" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Status:" GridPane.rowIndex="5" />
+                        <Text accessibleText="Status" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Status:" GridPane.rowIndex="5" />
                         <Text fx:id="activeStatus" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                      <VBox.margin>
@@ -63,7 +63,7 @@
                   <HBox alignment="BOTTOM_RIGHT" fillHeight="false" prefHeight="154.0" prefWidth="329.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Pane prefHeight="0.0" prefWidth="185.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="delete" accessibleText="Slett" alignment="CENTER" mnemonicParsing="false" onAction="#onDelete" prefHeight="43.0" prefWidth="162.0" styleClass="button-delete" text="Slett quiz" textFill="#0d0d0d">
+                        <Button fx:id="delete" accessibleText="Slett quiz" alignment="CENTER" mnemonicParsing="false" onAction="#onDelete" prefHeight="43.0" prefWidth="162.0" styleClass="button-delete" text="Slett quiz" textFill="#0d0d0d">
                            <HBox.margin>
                               <Insets bottom="10.0" right="20.0" top="5.0" />
                            </HBox.margin>
