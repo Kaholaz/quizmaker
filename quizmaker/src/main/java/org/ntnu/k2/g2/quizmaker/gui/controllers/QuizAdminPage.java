@@ -56,9 +56,6 @@ public class QuizAdminPage {
     @FXML
     private BorderPane borderPane;
 
-    @FXML
-    private VBox quizContainer;
-
     private final QuizModel quiz = QuizHandlerSingleton.getQuiz();
 
     /**
@@ -143,7 +140,7 @@ public class QuizAdminPage {
             try {
                 rt.exec(command);
             } catch (IOException e) {
-                AlertFactory.createNewErrorAlert("Kunne ikke åpne netleser: " + e.getMessage()).show();
+                AlertFactory.createNewErrorAlert("Kunne ikke åpne nettleser: " + e.getMessage()).show();
             }
         } else {
             AlertFactory.createNewErrorAlert("Operativsystemet ditt er ikke støttet for denne operasjonen!").show();
@@ -222,7 +219,7 @@ public class QuizAdminPage {
             changeState.setText("Arkiver quiz");
         } else {
             ContainerDecorator.makeContainerArchived(borderPane);
-            changeState.setText("Åpne quiz");
+            changeState.setText("Aktiver quiz");
         }
     }
 
