@@ -7,7 +7,7 @@ import java.util.Objects;
  */
 public class TeamModel {
     private String teamName;
-    private int score;
+    private double score;
     private int id = -1;
 
     /**
@@ -82,7 +82,7 @@ public class TeamModel {
     /**
      * @return The score of the quiz.
      */
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -91,7 +91,7 @@ public class TeamModel {
      * after QuizRegister::saveTeam is called.
      * @param score The score of the team.
      */
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 }

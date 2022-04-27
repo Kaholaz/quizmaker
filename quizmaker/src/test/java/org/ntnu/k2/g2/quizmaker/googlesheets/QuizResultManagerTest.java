@@ -4,9 +4,11 @@ import com.google.api.services.drive.Drive;
 import junit.framework.TestCase;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
+import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Iterator;
 
 public class QuizResultManagerTest extends TestCase {
 
@@ -17,13 +19,24 @@ public class QuizResultManagerTest extends TestCase {
      */
     String publicSpreadsheet2 = "121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0";
 
-    public void testChangeResultSheetName() {
+    public void testChangeResultSheetName() throws IOException {
+        QuizModel quiz = QuizRegister.newQuiz();
+        quiz.setName("TestQuiz");
+        QuizResultManager.createResultSheet(quiz);
+
+        quiz.setName("New Name");
+        QuizResultManager.changeResultSheetName(quiz);
+
+        ResultSheet resultSheet = new ResultSheet();
+        assertEquals(quiz.getName(), resultSheet.getSheetTitle(quiz.getSheetId()));
+
+        QuizRegister.removeQuiz(quiz);
     }
 
     public void testCreateSheetWithDatabase() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("TestCreateSheetWithDatabase");
-        QuizResultManager.createResultSheet(quiz);
+        QuizResultManager.createResultSheet(quiz); // No exceptions thrown
 
         ResultSheet resultSheet = new ResultSheet();
         Drive driveService = resultSheet.createDriveService();
@@ -44,5 +57,22 @@ public class QuizResultManagerTest extends TestCase {
 
         assertEquals(4, quiz.getTeams().size());
         assertEquals(10, quiz.getCombinedTeamScore());
+    }
+
+    public void testImportResultSheetParsesDecimals() throws IOException {
+        QuizModel quiz = QuizRegister.newQuiz();
+        quiz.setName("TestQuiz");
+
+        QuizResultManager.createResultSheet(quiz);
+        ResultSheet resultSheet = new ResultSheet();
+        resultSheet.appendRowValues(quiz.getSheetId(), "Team 1", "1.2");
+        resultSheet.appendRowValues(quiz.getSheetId(), "Team 2", "2,1");
+
+        QuizResultManager.importResults(quiz);
+        Iterator<TeamModel> teams = quiz.getTeamsSortedByScore();
+        assertEquals(2.1, teams.next().getScore());
+        assertEquals(1.2, teams.next().getScore());
+
+        QuizRegister.removeQuiz(quiz);
     }
 }
