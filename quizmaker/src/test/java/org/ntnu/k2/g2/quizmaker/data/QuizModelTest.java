@@ -22,7 +22,7 @@ public class QuizModelTest extends TestCase {
             quiz.getTeams().put(i, team);
         }
 
-        assertEquals(quiz.getCombinedTeamScore(), 6);
+        assertEquals(6d, quiz.getCombinedTeamScore());
     }
 
     public void testGetDifficulty() {

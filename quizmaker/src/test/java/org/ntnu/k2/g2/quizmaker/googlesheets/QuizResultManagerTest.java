@@ -28,7 +28,7 @@ public class QuizResultManagerTest extends TestCase {
         QuizResultManager.changeResultSheetName(quiz);
 
         ResultSheet resultSheet = new ResultSheet();
-        assertEquals(resultSheet.getSheetTitle(quiz.getSheetId()), quiz.getName());
+        assertEquals(quiz.getName(), resultSheet.getSheetTitle(quiz.getSheetId()));
 
         QuizRegister.removeQuiz(quiz);
     }
@@ -36,7 +36,7 @@ public class QuizResultManagerTest extends TestCase {
     public void testCreateSheetWithDatabase() throws IOException {
         QuizModel quiz = QuizRegister.newQuiz();
         quiz.setName("TestCreateSheetWithDatabase");
-        QuizResultManager.createResultSheet(quiz);
+        QuizResultManager.createResultSheet(quiz); // No exceptions thrown
 
         ResultSheet resultSheet = new ResultSheet();
         Drive driveService = resultSheet.createDriveService();
@@ -70,8 +70,8 @@ public class QuizResultManagerTest extends TestCase {
 
         QuizResultManager.importResults(quiz);
         Iterator<TeamModel> teams = quiz.getTeamsSortedByScore();
-        assertEquals(teams.next().getScore(), 2.1);
-        assertEquals(teams.next().getScore(), 1.2);
+        assertEquals(2.1, teams.next().getScore());
+        assertEquals(1.2, teams.next().getScore());
 
         QuizRegister.removeQuiz(quiz);
     }
