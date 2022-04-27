@@ -16,7 +16,7 @@ if exist src\main\resources\userdata\google-credentials.json (
 )
 
 :ERROR
-echo Creating the installer was not successful!
+echo Creating the installer was NOT successful!
 echo Press any key to exit...
 pause >nul
 exit /b 2
