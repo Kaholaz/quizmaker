@@ -4,6 +4,7 @@ import javafx.application.Application;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
+
 import java.net.URL;
 
 public class Main {
@@ -16,9 +17,11 @@ public class Main {
         }
 
         try {
-            QuizRegister.getQuizList();
+            if (QuizRegister.getQuizList() == null) {
+                throw new NullPointerException("Databasen finnes ikke i angitt bane! Har applikasjonen skrivetilgang?");
+            }
         } catch (Exception e) {
-            AlertFactory.showJOptionWarning("Kunne ikke koble til databasen! \n (Husk å kjøre applikasjonen som administrator) \n" + e.getMessage());
+            AlertFactory.showJOptionWarning("Kunne ikke koble til databasen! \n (Husk å kjøre applikasjonen som administrator): \n" + e.getMessage());
             return;
         }
         Application.launch(GUI.class, args);
