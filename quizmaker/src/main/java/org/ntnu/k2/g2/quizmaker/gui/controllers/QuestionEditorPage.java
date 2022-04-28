@@ -86,9 +86,11 @@ public class QuestionEditorPage {
     @FXML
     void onSave(ActionEvent event) {
         try {
-            QuizRegister.saveQuiz(QuizHandlerSingleton.getQuiz());
+            if (QuizRegister.saveQuiz(QuizHandlerSingleton.getQuiz()) == null) {
+                throw  new NullPointerException("Kunne ikke koble til databasen. Har applikasjonen skrivetilgang?");
+            }
         } catch (Exception e) {
-            AlertFactory.createNewErrorAlert("Could not save the quiz... \n" + e.getMessage());
+            AlertFactory.createNewErrorAlert("Kunne ikke lagre quiz... \n" + e.getMessage());
         }
 
         GUI.setSceneFromActionEvent(event, "/gui/quizAdminPage.fxml");
