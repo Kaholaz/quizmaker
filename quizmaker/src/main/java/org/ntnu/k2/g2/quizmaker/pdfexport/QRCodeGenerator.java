@@ -22,9 +22,9 @@ public class QRCodeGenerator {
      * Creates a QR based on the url of quiz and saves it to disk.
      * @param quiz The quiz to create a QR code of.
      * @return The QR code as an image.
-     * @throws WriterException
+     * @throws WriterException Throws an exception if the operation was unsuccessful.
      */
-    public static Image saveQR(QuizModel quiz) throws WriterException {
+    public static Image getQRImage(QuizModel quiz) throws WriterException {
         String qrCodeText = quiz.getUrl();
         int size = 125;
         return createQRImage(qrCodeText, size);

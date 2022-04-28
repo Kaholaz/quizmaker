@@ -28,28 +28,34 @@ class PdfBuilder {
 
     private final Document document;
     private final QuizModel quiz;
+    private boolean hasQr = false;
 
     /**
-     * Initializes an pdf. The pdf is given a filename. The pdf is connected
-     * to a quiz, and it is therefore stored in the builder.
+     * Creates a new PDF builder that can be used to build a pdf. Use the appropriate methods to construct a suitable
+     * PDF. Once the PDF has been build, use the {@code saveAndWrite} method to save the PDF at its designated destination.
      *
-     * @param quiz        quiz that is connected to the pdf
-     * @param destination where the file will be stored
-     * @param filename    name of the file
+     * @param quiz        Quiz that is connected to the pdf
+     * @param destination In what directory to save the PDF once it has been built
+     *                    (please use forwards-slash ('/') as a path separator)
+     * @param filename    The name the PDF will be saved as. The .pdf extension may be omitted.
      */
     public PdfBuilder(QuizModel quiz, String destination, String filename) {
-        this.document = init(quiz, destination, filename);
+        this.document = initDocument(destination, filename);
         this.quiz = quiz;
     }
 
 
     /**
      * Helper method for initializing the Document.
-     * TODO: Should not be in the builder class, saving should not be done in the builder class
+     * TODO: Should not be in the builder class, saving should not be handled by the builder class.
      */
-    private static Document init(QuizModel quiz, String destination, String filename) {
+    private static Document initDocument(String destination, String filename) {
         PdfWriter writer = null;
-        String dest = destination + "/" + filename + ".pdf";
+        String dest = destination + "/" + filename;
+        if (!dest.endsWith(".pdf")) {
+            dest += ".pdf";
+        }
+
         try {
             writer = new PdfWriter(dest);
         } catch (FileNotFoundException e) {
@@ -61,15 +67,22 @@ class PdfBuilder {
     }
 
     /**
-     * Add a QR code to the pdf. The QR code is linked to the google sheet of the stored quiz.
+     * Add a QR code to the pdf. The QR code is linked to the Google Sheet of the stored quiz.
+     * The QR code will get placed in the top right corner of the first page.
+     * Multiple QR codes can not be added.
      *
-     * @return built element
+     * @return The updated builder.
      */
     public PdfBuilder addQRcode() {
+        // Should not add multiple QR codes as its position is absolute.
+        if (hasQr) {
+            return this;
+        }
+
         ImageData data = null;
 
         try {
-            data = ImageDataFactory.create(QRCodeGenerator.saveQR(quiz), Color.BLACK);
+            data = ImageDataFactory.create(QRCodeGenerator.getQRImage(quiz), Color.BLACK);
         } catch (IOException | WriterException e) {
             e.printStackTrace();
         }
@@ -84,19 +97,20 @@ class PdfBuilder {
         qrDescription.setFixedPosition(384, 765, qrDescription.getWidth());
         document.add(qrDescription);
 
+        hasQr = true; // QR added :)
         return this;
     }
 
     /**
-     * Create a header for the pdf. The header already includes the name of the quiz, and can include other optional
-     * text. headerText can be left blank if no optional text is specified.
+     * Create a header for the pdf. The header contains the name of the quiz concatenated with the provided header text.
      *
-     * @param headerText optional headerText
-     * @return
+     * @param headerText Optional text to add to the header in addition to the name of the quiz. If headerText is null
+     *                   or an empty string, no text is added.
+     * @return The updated builder.
      */
     public PdfBuilder addHeader(String headerText) {
 
-        Paragraph quizName = new Paragraph(quiz.getName() + " " + headerText)
+        Paragraph quizName = new Paragraph(quiz.getName() + " " + ((headerText == null) ? "" : headerText))
                 .setWidth(344)
                 .setFontSize(29);
         document.add(quizName);
@@ -109,29 +123,41 @@ class PdfBuilder {
      * includeAnswer is true, the answer will be included. If includeAnswer is false there will be exported a blank
      * answer field.
      *
-     * @param includeQuestion if questions are wanted
-     * @param includeAnswer   if answers are wanted
-     * @return updated builder
+     * @param includeQuestion If questions are wanted. If this is false the method will just write the ordinal of the question
+     *                        and the possible score that can be gained form the question. If this is set to true,
+     *                        the question will also get added.
+     * @param includeAnswer   if answers are wanted. If this is set to false, a line where participants can enter their score
+     *                        is added. If this is set to true, the full answer string will be added.
+     * @return The updated builder.
      */
     public PdfBuilder addQuestions(boolean includeQuestion, boolean includeAnswer) {
+
+        // Nothing is added if the quiz contains no questions.
         if (quiz.getQuestions().isEmpty()) {
             return this;
         }
+
+        // Questions sorted by id (and by extension when they were added).
         List<QuestionModel> questions = quiz.getQuestions().values().stream().sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
 
         for (int i = 0; i < questions.size(); i++) {
             QuestionModel question = questions.get(i);
 
-            Text header = new Text(i +1 + ") (" + question.getScore() + " poeng) ").setBold();
+            // The header is formatted like this '2) (3 poeng) '
+            Text header = new Text((i + 1) + ") (" + question.getScore() + " poeng) ").setBold();
 
+            // Sets the question text.
+            // No question text if question is null or includeQuestion is set to false.
             String questionText = "";
             if (includeQuestion && question.getQuestion() != null) {
                 questionText = question.getQuestion();
             }
 
-            Text answer1 = new Text("\nSvar:").setBold();
+            Text answer1 = new Text("\nSvar: ").setBold();
             String answer2 = "_______________________________________________";
-            if (includeAnswer && question.getAnswer() != null) {
+            if (question.getAnswer() == null) {
+                answer2 = "";
+            } else if (includeAnswer) {
                 answer2 = question.getAnswer();
             }
 
@@ -149,10 +175,10 @@ class PdfBuilder {
     }
 
     /**
-     * Adding a paragraph element to the pdf
+     * Adds a paragraph element to the pdf.
      *
-     * @param paragraph paragraph element added
-     * @return updated builder
+     * @param paragraph The paragraph element to add.
+     * @return The updated builder.
      */
     public PdfBuilder addParagraph(Paragraph paragraph) {
         document.add(paragraph);
@@ -162,9 +188,10 @@ class PdfBuilder {
     /**
      * Add a footer to the pdf. The footer includes a field for writing score.
      *
-     * @return updated builder
+     * @return The updated builder.
      */
     public PdfBuilder addFooter() {
+
         Paragraph score = new Paragraph("Poengsum:___/" + quiz.getMaxScore())
                 .setFontSize(17);
         document.add(score);
@@ -178,12 +205,21 @@ class PdfBuilder {
     }
 
     /**
-     * Builds the pdf. The document will be closed.
-     *
-     * @return the built pdf
+     * Adds a team name entry field to the PDF.
+     * @return The updated builder.
      */
+    public PdfBuilder addTeamNameField() {
+        Paragraph teamName = new Paragraph("Lagnavn:____________________________________________\n").setFontSize(18);
+        document.add(teamName);
+        return this;
+    }
 
-    public Document build() {
+    /**
+     * Builds the pdf. And saves it to its destination.
+     *
+     * @return The built PDF.
+     */
+    public Document saveAndWrite() {
         document.close();
         return document;
     }

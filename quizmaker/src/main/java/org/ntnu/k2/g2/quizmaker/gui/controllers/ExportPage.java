@@ -57,15 +57,15 @@ public class ExportPage {
 
         try {
             if (c1.isSelected()) {
-                PdfManager.exportAnswersheetWithQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                PdfManager.exportAnswerSheetWithQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
             if (c2.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                PdfManager.exportAnswerSheetWithoutQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
             if (c3.isSelected()) {
-                PdfManager.exportSolution(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                PdfManager.exportAnswerKey(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
         } catch (Exception e) {

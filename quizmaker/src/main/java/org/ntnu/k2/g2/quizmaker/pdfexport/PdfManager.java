@@ -1,6 +1,5 @@
 package org.ntnu.k2.g2.quizmaker.pdfexport;
 
-import com.itextpdf.layout.element.Paragraph;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 /**
@@ -9,28 +8,28 @@ import org.ntnu.k2.g2.quizmaker.data.QuizModel;
  */
 public class PdfManager {
     /**
-     * Creates an answersheet with questions and QR code for the quiz as a pdf saved locally on the computer.
+     * Creates an answer sheet with questions and QR code for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
      *
      * @param destination Chosen destination for the export to be saved
      */
 
-    public static void exportAnswersheetWithQuestions(QuizModel quiz, String destination) {
+    public static void exportAnswerSheetWithQuestions(QuizModel quiz, String destination) {
         PdfBuilder pdfBuilder = new PdfBuilder(quiz, destination, quiz.getName() + " - Quizark med spørsmål");
-        Paragraph teamname = new Paragraph("Lagnavn:____________________________________________\n").setFontSize(18);
-        pdfBuilder.addQRcode().addHeader("").addParagraph(teamname).addQuestions(true, false).addFooter().build();
+        pdfBuilder.addQRcode().addHeader("").addTeamNameField()
+                .addQuestions(true, false).addFooter().saveAndWrite();
     }
 
     /**
-     * Creates an answersheet with QR but without questions for the quiz as a pdf saved locally on the computer.
+     * Creates an answer sheet with QR but without questions for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
      *
      * @param destination Chosen destination for the export to be saved
      */
-    public static void exportAnswersheetWithoutQuestions(QuizModel quiz, String destination) {
+    public static void exportAnswerSheetWithoutQuestions(QuizModel quiz, String destination) {
         PdfBuilder pdfBuilder = new PdfBuilder(quiz, destination, quiz.getName() + " - Quizark uten spørsmål");
-        Paragraph teamname = new Paragraph("Lagnavn:____________________________________________\n").setFontSize(18);
-        pdfBuilder.addQRcode().addHeader("").addParagraph(teamname).addQuestions(false, false).addFooter().build();
+        pdfBuilder.addQRcode().addHeader("").addTeamNameField()
+                .addQuestions(false, false).addFooter().saveAndWrite();
     }
 
     /**
@@ -39,8 +38,8 @@ public class PdfManager {
      *
      * @param destination Chosen destination for the export to be saved
      */
-    public static void exportSolution(QuizModel quiz, String destination) {
+    public static void exportAnswerKey(QuizModel quiz, String destination) {
         PdfBuilder pdfBuilder = new PdfBuilder(quiz, destination, quiz.getName() + "- Fasit");
-        pdfBuilder.addHeader("- Fasit").addQuestions(true, true).build();
+        pdfBuilder.addHeader("- Fasit").addQuestions(true, true).saveAndWrite();
     }
 }

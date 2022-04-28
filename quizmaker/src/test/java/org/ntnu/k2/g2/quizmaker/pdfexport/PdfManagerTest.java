@@ -9,7 +9,7 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import java.io.File;
 import java.io.IOException;
 
-public class PdfExportTest {
+public class PdfManagerTest {
     @After
     public void tearDown() {
         String dest = "src/main/resources/pdfexport";
@@ -37,11 +37,11 @@ public class PdfExportTest {
         }
 
         String destination = "src/main/resources/pdfexport";
-        File destionation_file = new File(destination);
-        destionation_file.mkdir();
+        File destination_file = new File(destination);
+        destination_file.mkdir();
 
-        PdfManager.exportAnswersheetWithQuestions(testQuiz,destination);
-        PdfManager.exportAnswersheetWithoutQuestions(testQuiz,destination);
-        PdfManager.exportSolution(testQuiz,destination);
+        PdfManager.exportAnswerSheetWithQuestions(testQuiz,destination);
+        PdfManager.exportAnswerSheetWithoutQuestions(testQuiz,destination);
+        PdfManager.exportAnswerKey(testQuiz,destination);
     }
 }
