@@ -39,7 +39,7 @@ public class GoogleAuthenticator {
      * @param HTTP_TRANSPORT The network HTTP Transport.
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
-     * TODO: !!
+     * @author Google (https://developers.google.com/sheets/api/quickstart/java)
      */
     static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.

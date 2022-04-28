@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Contains methods used to create and modify Google Sheets
+ */
 public class ResultSheet {
     private final String APPLICATION_NAME = "Quiz Maker";
 
@@ -43,8 +46,8 @@ public class ResultSheet {
         NetHttpTransport HTTP_TRANSPORT = null;
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        } catch (GeneralSecurityException e) {
-            System.out.println("Error when creating newTrustedTransport");
+        } catch (GeneralSecurityException e) {// Something is wrong with the tokes
+            System.out.println("Error when creating the Google Drive service");
             e.printStackTrace();
         }
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
