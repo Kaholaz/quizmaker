@@ -16,7 +16,7 @@ public class PdfManager {
 
     public static void exportAnswerSheetWithQuestions(QuizModel quiz, String destination) {
         PdfBuilder pdfBuilder = new PdfBuilder(quiz, destination, quiz.getName() + " - Quizark med spørsmål");
-        pdfBuilder.addQRcode().addHeader("").addTeamNameField()
+        pdfBuilder.addQRcode().addHeader("").addVerticalSpace().addTeamNameField().addVerticalSpace()
                 .addQuestions(true, false).addFooter().saveAndWrite();
     }
 
@@ -28,7 +28,7 @@ public class PdfManager {
      */
     public static void exportAnswerSheetWithoutQuestions(QuizModel quiz, String destination) {
         PdfBuilder pdfBuilder = new PdfBuilder(quiz, destination, quiz.getName() + " - Quizark uten spørsmål");
-        pdfBuilder.addQRcode().addHeader("").addTeamNameField()
+        pdfBuilder.addQRcode().addHeader("").addVerticalSpace().addTeamNameField().addVerticalSpace()
                 .addQuestions(false, false).addFooter().saveAndWrite();
     }
 

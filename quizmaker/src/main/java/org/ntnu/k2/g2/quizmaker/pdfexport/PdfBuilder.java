@@ -175,6 +175,16 @@ class PdfBuilder {
     }
 
     /**
+     * Adds vertical space to the document.
+     * @return The updated builder.
+     */
+    public PdfBuilder addVerticalSpace() {
+        Paragraph space = new Paragraph("\n");
+        document.add(space);
+        return this;
+    }
+
+    /**
      * Adds a paragraph element to the pdf.
      *
      * @param paragraph The paragraph element to add.
