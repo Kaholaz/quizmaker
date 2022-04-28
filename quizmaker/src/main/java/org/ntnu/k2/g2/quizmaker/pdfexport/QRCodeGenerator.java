@@ -22,9 +22,9 @@ public class QRCodeGenerator {
      * Creates a QR based on the url of quiz and saves it to disk.
      * @param quiz The quiz to create a QR code of.
      * @return The QR code as an image.
-     * @throws WriterException
+     * @throws WriterException Throws an exception if the operation was unsuccessful.
      */
-    public static Image saveQR(QuizModel quiz) throws WriterException {
+    public static Image getQRImage(QuizModel quiz) throws WriterException {
         String qrCodeText = quiz.getUrl();
         int size = 125;
         return createQRImage(qrCodeText, size);
@@ -47,20 +47,20 @@ public class QRCodeGenerator {
         BitMatrix byteMatrix = qrCodeWriter.encode(qrCodeText, BarcodeFormat.QR_CODE, size, size, hintMap);
 
         // Make the BufferedImage that hold the QRCode
-        int matrixWidth = byteMatrix.getWidth();
-        BufferedImage image = new BufferedImage(matrixWidth, matrixWidth, BufferedImage.TYPE_INT_RGB);
+        int matrixSize = byteMatrix.getWidth();
+        BufferedImage image = new BufferedImage(matrixSize, matrixSize, BufferedImage.TYPE_INT_RGB);
         image.createGraphics();
 
         Graphics2D graphics = (Graphics2D) image.getGraphics();
 
         // Fill picture with white (background)
         graphics.setColor(Color.WHITE);
-        graphics.fillRect(0, 0, matrixWidth, matrixWidth);
+        graphics.fillRect(0, 0, matrixSize, matrixSize);
 
         // Set brush color to black and paints QR code
         graphics.setColor(Color.BLACK);
-        for (int i = 0; i < matrixWidth; i++) {
-            for (int j = 0; j < matrixWidth; j++) {
+        for (int i = 0; i < matrixSize; i++) {
+            for (int j = 0; j < matrixSize; j++) {
                 if (byteMatrix.get(i, j)) {
                     // Paint black if the position in the byte-matrix evaluates to 1 (true)
                     graphics.fillRect(i, j, 1, 1);

@@ -14,6 +14,7 @@ import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.pdfexport.PdfManager;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Controller for the exportQAPage. It handles what types of pdfs should be exported.
@@ -57,19 +58,24 @@ public class ExportPage {
 
         try {
             if (c1.isSelected()) {
-                PdfManager.exportAnswersheetWithQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                PdfManager.exportAnswerSheetWithQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
             if (c2.isSelected()) {
-                PdfManager.exportAnswersheetWithoutQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                PdfManager.exportAnswerSheetWithoutQuestions(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
             if (c3.isSelected()) {
-                PdfManager.exportSolution(QuizHandlerSingleton.getQuiz(), exportPath.toString());
+                PdfManager.exportAnswerKey(QuizHandlerSingleton.getQuiz(), exportPath.toString());
                 exported = true;
             }
-        } catch (Exception e) {
-            AlertFactory.createNewErrorAlert("En uventet feil oppstod: \n" + e.getMessage());
+        } catch (IOException e) {
+            AlertFactory.createNewErrorAlert("Kunne ikke skrive til fil.\n" + e.getMessage()).show();
+            exported = false;
+        } catch (NullPointerException e) {
+            TextDecorator.makeTextRed(exportMsg);
+            exportMsg.setText("Ingen mappe ble valgt");
+            return;
         }
 
         // Set the appropriate export msg based on if anything was exported.
