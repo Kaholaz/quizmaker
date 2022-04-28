@@ -37,6 +37,7 @@ class PdfBuilder {
      * @param destination In what directory to save the PDF once it has been built
      *                    (please use forwards-slash ('/') as a path separator)
      * @param filename    The name the PDF will be saved as. The .pdf extension may be omitted.
+     * @throws IOException Throws an IOException if the file cannot be written to.
      */
     public PdfBuilder(QuizModel quiz, String destination, String filename) throws IOException {
         this.document = initDocument(destination, filename);
@@ -47,6 +48,7 @@ class PdfBuilder {
     /**
      * Helper method for initializing the Document.
      * TODO: Should not be in the builder class, saving should not be handled by the builder class.
+     * @throws IOException Throws an IOException if the file cannot be written to.
      */
     private static Document initDocument(String destination, String filename) throws IOException {
 
@@ -67,6 +69,7 @@ class PdfBuilder {
      * Multiple QR codes can not be added.
      *
      * @return The updated builder.
+     * @throws IOException Throws an exception if the QR code could not be created.
      */
     public PdfBuilder addQRcode() throws IOException {
         // Should not add multiple QR codes as its position is absolute.
@@ -74,8 +77,7 @@ class PdfBuilder {
             return this;
         }
 
-        ImageData data = null;
-
+        ImageData data;
         try {
             data = ImageDataFactory.create(QRCodeGenerator.getQRImage(quiz), Color.BLACK);
         } catch (IOException | WriterException e) {

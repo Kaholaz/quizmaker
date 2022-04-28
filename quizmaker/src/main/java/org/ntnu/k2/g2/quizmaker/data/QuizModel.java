@@ -212,6 +212,6 @@ public class QuizModel {
             return -1d;
         }
 
-        return ((double) getCombinedTeamScore()) / (teams.size() * getMaxScore());
+        return getCombinedTeamScore() / (teams.size() * getMaxScore());
     }
 }

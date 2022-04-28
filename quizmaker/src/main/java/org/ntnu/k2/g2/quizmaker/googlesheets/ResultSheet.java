@@ -39,9 +39,8 @@ public class ResultSheet {
             e.printStackTrace();
         }
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 
-        return new Sheets.Builder(HTTP_TRANSPORT, jsonFactory, googleAuthenticator.getCredentials(HTTP_TRANSPORT))
+        return new Sheets.Builder(HTTP_TRANSPORT, jsonFactory, GoogleAuthenticator.getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
@@ -60,9 +59,8 @@ public class ResultSheet {
             e.printStackTrace();
         }
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 
-        return new Drive.Builder(HTTP_TRANSPORT, jsonFactory, googleAuthenticator.getCredentials(HTTP_TRANSPORT))
+        return new Drive.Builder(HTTP_TRANSPORT, jsonFactory, GoogleAuthenticator.getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
@@ -134,9 +132,7 @@ public class ResultSheet {
         Sheets.Spreadsheets.Get getRequest = sheetService.spreadsheets().get(sheetId).setIncludeGridData(false);
         Spreadsheet response = getRequest.execute();
 
-        String title = response.getProperties().getTitle();
-
-        return title;
+        return response.getProperties().getTitle();
     }
 
     /**
@@ -157,8 +153,7 @@ public class ResultSheet {
         BatchUpdateSpreadsheetRequest body = new BatchUpdateSpreadsheetRequest().setRequests(request);
 
         Sheets.Spreadsheets.BatchUpdate batchUpdate = sheetsService.spreadsheets().batchUpdate(sheetId,body);
-
-        BatchUpdateSpreadsheetResponse response = batchUpdate.execute();
+        batchUpdate.execute();
 
         return true;
     }
@@ -180,8 +175,7 @@ public class ResultSheet {
                 .setValueInputOption("USER_ENTERED")
                 .setInsertDataOption("INSERT_ROWS")
                 .setIncludeValuesInResponse(true);
-
-        AppendValuesResponse response = request.execute();
+        request.execute();
     }
 
     /**
@@ -199,8 +193,7 @@ public class ResultSheet {
         ValueRange body = new ValueRange().setValues(List.of(Arrays.asList(valueA, valueB)));
         Sheets.Spreadsheets.Values.Update request = sheetsService.spreadsheets().values()
                 .update(sheetId,range,body).setValueInputOption("RAW");
-
-        UpdateValuesResponse response = request.execute();
+        request.execute();
     }
 
     /**
@@ -241,8 +234,7 @@ public class ResultSheet {
 
         ValueRange response = request.execute();
 
-        List<List<Object>> results = response.getValues();
-        return results;
+        return response.getValues();
     }
     /**
      * Removes all values from the spreadsheet from column A to F
@@ -257,7 +249,7 @@ public class ResultSheet {
         ClearValuesRequest requestBody = new ClearValuesRequest();
         Sheets.Spreadsheets.Values.Clear request = sheetsService.spreadsheets().values().clear(sheetId, range, requestBody);
 
-        ClearValuesResponse response = request.execute();
+        request.execute();
     }
 
 

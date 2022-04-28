@@ -11,7 +11,7 @@ public class QuizResultManager {
     /**
      * This method creates an associated result sheet for a quiz
      * @param quiz The quiz to create the result sheet for.
-     * @throws IOException
+     * @throws IOException Throws an exception if the operation was unsuccessful.
      */
     public static String createResultSheet(QuizModel quiz) throws IOException {
         if (quiz.getSheetId() != null) {
@@ -62,7 +62,7 @@ public class QuizResultManager {
                 String teamName = row.get(0).toString();
                 String score_raw = row.get(1).toString();
                 // Supports both 1,2 and 1.2 to represent the double 1.2
-                Double score = Double.parseDouble(score_raw.replace(',', '.'));
+                double score = Double.parseDouble(score_raw.replace(',', '.'));
                 TeamModel team = QuizRegister.newTeam(quiz);
 
                 team.setTeamName(teamName);

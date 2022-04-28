@@ -13,7 +13,8 @@ public class PdfManager {
      * Creates an answer sheet with questions and QR code for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
      *
-     * @param destination Chosen destination for the export to be saved
+     * @param destination The chosen directory the export should be saved to.
+     * @throws IOException Throws an exception if the file could not be written to.
      */
 
     public static void exportAnswerSheetWithQuestions(QuizModel quiz, String destination) throws IOException {
@@ -26,7 +27,8 @@ public class PdfManager {
      * Creates an answer sheet with QR but without questions for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
      *
-     * @param destination Chosen destination for the export to be saved
+     * @param destination The chosen directory the export should be saved to.
+     * @throws IOException Throws an exception if the file could not be written to.
      */
     public static void exportAnswerSheetWithoutQuestions(QuizModel quiz, String destination) throws IOException {
         PdfBuilder pdfBuilder = new PdfBuilder(quiz, destination, quiz.getName() + " - Quizark uten spørsmål");
@@ -38,7 +40,8 @@ public class PdfManager {
      * Creates a sheet with solutions and questions for the quiz as a pdf saved locally on the computer.
      * Local destination can be changed in dest variable.
      *
-     * @param destination Chosen destination for the export to be saved
+     * @param destination The chosen directory the export should be saved to.
+     * @throws IOException Throws an exception if the file could not be written to.
      */
     public static void exportAnswerKey(QuizModel quiz, String destination) throws IOException {
         PdfBuilder pdfBuilder = new PdfBuilder(quiz, destination, quiz.getName() + "- Fasit");
