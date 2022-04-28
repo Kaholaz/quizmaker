@@ -3,7 +3,6 @@ package org.ntnu.k2.g2.quizmaker.data;
 import org.ntnu.k2.g2.quizmaker.googlesheets.QuizResultManager;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +14,23 @@ public class QuizRegister {
      */
     public static ArrayList<QuizModel> getQuizList() {
         return QuizDAO.getAllQuizzes();
+    }
+
+    /**
+     * Tests if the database is read only.
+     *
+     * @return true if read only and false if writable
+     */
+    public static boolean isReadOnly() {
+        QuizModel quiz = new QuizModel();
+
+        // Tests if it is possible to write to the database
+        QuizModel savedQuiz = QuizDAO.updateQuiz(quiz);
+        boolean result = (savedQuiz == null);
+
+        // Remove quiz
+        QuizDAO.removeQuizById(quiz.getId());
+        return result;
     }
 
     /**
@@ -118,6 +134,7 @@ public class QuizRegister {
 
     /**
      * Create a new quiz.
+     *
      * @return The new quiz.
      * @throws IOException Throws an exception if something wrong happened when creating a result-sheet.
      */
@@ -168,7 +185,7 @@ public class QuizRegister {
      * @return True if the operation was successful, false if not.
      */
     public static boolean removeQuiz(QuizModel quiz) {
-        if (quiz.getSheetId() != null && !Util.isTest() /* Do not remove the test sheets*/ ) {
+        if (quiz.getSheetId() != null && !Util.isTest() /* Do not remove the test sheets*/) {
             try {
                 QuizResultManager.removeResultSheet(quiz);
             } catch (IOException e) {
