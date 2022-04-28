@@ -56,7 +56,7 @@ public class QuizResultManagerTest extends TestCase {
         }
 
         assertEquals(4, quiz.getTeams().size());
-        assertEquals(10, quiz.getCombinedTeamScore());
+        assertEquals(10d, quiz.getCombinedTeamScore());
     }
 
     public void testImportResultSheetParsesDecimals() throws IOException {
