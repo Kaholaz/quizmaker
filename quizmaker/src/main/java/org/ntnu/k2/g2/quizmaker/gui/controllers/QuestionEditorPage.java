@@ -40,8 +40,8 @@ public class QuestionEditorPage {
     }
 
     /**
-     * Initializes the page by generating all question buttons and a navbar.
-     * This method is called after loading the FXML page.
+     * Initializes the page by generating all question buttons and a navbar. This method is called after loading the
+     * FXML page.
      */
     @FXML
     void initialize() {
@@ -67,8 +67,7 @@ public class QuestionEditorPage {
         vBox.getChildren().clear();
 
         // A list of all questions sorted by id (and by extension creation order)
-        List<QuestionModel> sorted = QuizHandlerSingleton.getQuiz()
-                .getQuestions().values().stream()
+        List<QuestionModel> sorted = QuizHandlerSingleton.getQuiz().getQuestions().values().stream()
                 .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
 
         for (int questionNumber = 1; questionNumber <= sorted.size(); questionNumber++) {
@@ -78,16 +77,16 @@ public class QuestionEditorPage {
     }
 
     /**
-     * Saves all the edited questions to the database.
-     * This method is triggered when the user pressed the save button.
+     * Saves all the edited questions to the database. This method is triggered when the user pressed the save button.
      *
-     * @param event The action event when the user presses the save button.
+     * @param event
+     *            The action event when the user presses the save button.
      */
     @FXML
     void onSave(ActionEvent event) {
         try {
             if (QuizRegister.saveQuiz(QuizHandlerSingleton.getQuiz()) == null) {
-                throw  new NullPointerException("Kunne ikke koble til databasen. Har applikasjonen skrivetilgang?");
+                throw new NullPointerException("Kunne ikke koble til databasen. Har applikasjonen skrivetilgang?");
             }
         } catch (Exception e) {
             AlertFactory.createNewErrorAlert("Kunne ikke lagre quiz... \n" + e.getMessage());

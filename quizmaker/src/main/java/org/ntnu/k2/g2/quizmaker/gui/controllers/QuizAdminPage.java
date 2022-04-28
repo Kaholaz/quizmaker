@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 /**
- * Controller class for the AdminPage. This page is an interface for editing and
- * manipulating questions.
+ * Controller class for the AdminPage. This page is an interface for editing and manipulating questions.
  */
 
 public class QuizAdminPage {
@@ -79,7 +78,8 @@ public class QuizAdminPage {
     /**
      * Redirects to the quizDetailspage when the details button is pressed.
      *
-     * @param event The action event when the button is pressed.
+     * @param event
+     *            The action event when the button is pressed.
      */
     @FXML
     void onDetails(ActionEvent event) {
@@ -88,7 +88,9 @@ public class QuizAdminPage {
 
     /**
      * Redirects to the questionEditorPage when the edit questions button is pressed.
-     * @param event The action event when the button is pressed.
+     *
+     * @param event
+     *            The action event when the button is pressed.
      */
     @FXML
     void onEditQuestion(ActionEvent event) {
@@ -100,8 +102,8 @@ public class QuizAdminPage {
     }
 
     /**
-     * Opens URL to the Google sheet of the quiz in the default web-browser.
-     * This is done by checking the os and calling the appropriate shell command to open a web-site.
+     * Opens URL to the Google sheet of the quiz in the default web-browser. This is done by checking the os and calling
+     * the appropriate shell command to open a web-site.
      */
     @FXML
     void onEditTeams() {
@@ -116,7 +118,9 @@ public class QuizAdminPage {
                 QuizResultManager.createResultSheet(quiz);
                 url = quiz.getUrl();
             } catch (IOException | NullPointerException e) {
-                AlertFactory.createNewWarningAlert("Det er ble ikke laget et regneark for denne quizzen!\nPrøv igjen senere når du er koblet til internettet.").show();
+                AlertFactory.createNewWarningAlert(
+                        "Det er ble ikke laget et regneark for denne quizzen!\nPrøv igjen senere når du er koblet til internettet.")
+                        .show();
                 return;
             }
         }
@@ -148,8 +152,8 @@ public class QuizAdminPage {
     }
 
     /**
-     * Opens new window and sets its scene to exportPage.fxml
-     * This method is called when the export quiz button is pressed.
+     * Opens new window and sets its scene to exportPage.fxml This method is called when the export quiz button is
+     * pressed.
      */
     @FXML
     void onExportQA() {
@@ -157,8 +161,7 @@ public class QuizAdminPage {
     }
 
     /**
-     * Retrieve scores from the Google API.
-     * If the retrieve scores button has been pressed.
+     * Retrieve scores from the Google API. If the retrieve scores button has been pressed.
      */
 
     @FXML
@@ -168,7 +171,8 @@ public class QuizAdminPage {
             return;
         }
         if (quiz.getSheetId() == null) {
-            AlertFactory.createNewErrorAlert("Poeng-regnearket eksisterer ikke.\nPrøv igjen senere når du har tilgang til internett.");
+            AlertFactory.createNewErrorAlert(
+                    "Poeng-regnearket eksisterer ikke.\nPrøv igjen senere når du har tilgang til internett.");
             return;
         }
 
@@ -178,7 +182,7 @@ public class QuizAdminPage {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("Kunne ikke hente data. \nSørg for at du er koblet til internett.").show();
             return;
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
@@ -199,7 +203,7 @@ public class QuizAdminPage {
      * Updates the GUI elements according to the current quiz.
      */
     void update() {
-        //change the details info
+        // change the details info
         quizName.setText(quiz.getName());
         sumQuestions.setText(String.valueOf(quiz.getQuestions().values().size()));
         sumTeams.setText(String.valueOf(quiz.getTeams().values().size()));
@@ -217,7 +221,7 @@ public class QuizAdminPage {
             TextDecorator.makeTextRed(activeStatus);
         }
 
-        //change the active status button text
+        // change the active status button text
         if (quiz.isActive()) {
             ContainerDecorator.makeContainerActive(borderPane);
             changeState.setText("Arkiver quiz");
@@ -228,7 +232,8 @@ public class QuizAdminPage {
     }
 
     /**
-     * Initializes the page. It creates a navigation bar and updates the gui elements according to the quiz in the singleton.
+     * Initializes the page. It creates a navigation bar and updates the gui elements according to the quiz in the
+     * singleton.
      */
     @FXML
     void initialize() {
@@ -240,9 +245,9 @@ public class QuizAdminPage {
         if (quiz.getSheetId() == null) {
             try {
                 QuizResultManager.createResultSheet(quiz);
-            }
-            catch (IOException | NullPointerException e) {
-                AlertFactory.showJOptionWarning("Det ble ikke laget et poeng-regneark til denne quizzen.\nPrøv igjen senere når du har tilgang til internett.");
+            } catch (IOException | NullPointerException e) {
+                AlertFactory.showJOptionWarning(
+                        "Det ble ikke laget et poeng-regneark til denne quizzen.\nPrøv igjen senere når du har tilgang til internett.");
             }
         }
     }

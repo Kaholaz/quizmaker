@@ -21,10 +21,12 @@ public class Main {
 
         try {
             if (QuizRegister.isReadOnly()) {
-                AlertFactory.showJOptionWarning("Kan ikke skrive til databasen!\nApplikasjonen trenger administratorrettigheter.");
+                AlertFactory.showJOptionWarning(
+                        "Kan ikke skrive til databasen!\nApplikasjonen trenger administratorrettigheter.");
             }
         } catch (NullPointerException e) {
-            AlertFactory.showJOptionWarning("Kunne ikke koble til databasen! \n (Husk å kjøre applikasjonen som administrator)");
+            AlertFactory.showJOptionWarning(
+                    "Kunne ikke koble til databasen! \n (Husk å kjøre applikasjonen som administrator)");
             return;
         }
 

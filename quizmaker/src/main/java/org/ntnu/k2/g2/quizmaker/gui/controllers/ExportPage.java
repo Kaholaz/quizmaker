@@ -34,10 +34,10 @@ public class ExportPage {
     private Button close; // Value injected by FXMLLoader
 
     /**
-     * An event listener for when the user presses the close/cancel button.
-     * This causes the export window to close.
+     * An event listener for when the user presses the close/cancel button. This causes the export window to close.
      *
-     * @param event Triggering event from the button press.
+     * @param event
+     *            Triggering event from the button press.
      */
     @FXML
     private void onClose(ActionEvent event) {
@@ -46,8 +46,8 @@ public class ExportPage {
     }
 
     /**
-     * Creates pdfs based on the checkboxes checked.
-     * Sets the appropriate messages after a successful export, or alerts the user if the export was unsuccessful.
+     * Creates pdfs based on the checkboxes checked. Sets the appropriate messages after a successful export, or alerts
+     * the user if the export was unsuccessful.
      */
     @FXML
     private void onExport() {

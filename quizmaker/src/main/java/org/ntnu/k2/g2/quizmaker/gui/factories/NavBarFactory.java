@@ -19,19 +19,21 @@ public class NavBarFactory {
     /**
      * Since the class is static, no constructor is needed.
      */
-    private NavBarFactory(){}
+    private NavBarFactory() {
+    }
 
     /**
-    * Creates a top navigation bar. The backPage is optional.
-    * If a backPage is specified (not null or empty) a back button will be created that redirects the user to
-    * this page.
-    *
-    * @param backPage Page that the user will be redirected to by the back button.
-    *                 This argument should be given as a path to an FXML document
-    *                 relative to the 'resources' directory.
-    * @param buttons Other buttons to add to the navigation bar.
-    * @return HBox that is the navigation bar.
-    */
+     * Creates a top navigation bar. The backPage is optional. If a backPage is specified (not null or empty) a back
+     * button will be created that redirects the user to this page.
+     *
+     * @param backPage
+     *            Page that the user will be redirected to by the back button. This argument should be given as a path
+     *            to an FXML document relative to the 'resources' directory.
+     * @param buttons
+     *            Other buttons to add to the navigation bar.
+     *
+     * @return HBox that is the navigation bar.
+     */
     public static HBox createTopNavigationBar(String backPage, Button... buttons) {
         HBox navbar = new HBox();
 

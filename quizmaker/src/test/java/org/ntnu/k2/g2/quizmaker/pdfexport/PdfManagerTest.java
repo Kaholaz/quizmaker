@@ -14,8 +14,9 @@ public class PdfManagerTest {
     public void tearDown() {
         String dest = "src/main/resources/pdfexport";
         File dir = new File(dest);
-        for(File file: dir.listFiles()) {
-            if (!file.isDirectory()) file.delete();
+        for (File file : dir.listFiles()) {
+            if (!file.isDirectory())
+                file.delete();
         }
     }
 
@@ -31,7 +32,8 @@ public class PdfManagerTest {
                 question.setAnswer("Dette er et kort svar");
             } else {
                 question.setQuestion("Dette er et kort spørsmål?");
-                question.setAnswer("Dette er et veldig langt, omfattende og komplisert svar som egentlig kunne vært formulert mye bedre");
+                question.setAnswer(
+                        "Dette er et veldig langt, omfattende og komplisert svar som egentlig kunne vært formulert mye bedre");
             }
 
         }
@@ -40,8 +42,8 @@ public class PdfManagerTest {
         File destination_file = new File(destination);
         destination_file.mkdir();
 
-        PdfManager.exportAnswerSheetWithQuestions(testQuiz,destination);
-        PdfManager.exportAnswerSheetWithoutQuestions(testQuiz,destination);
-        PdfManager.exportAnswerKey(testQuiz,destination);
+        PdfManager.exportAnswerSheetWithQuestions(testQuiz, destination);
+        PdfManager.exportAnswerSheetWithoutQuestions(testQuiz, destination);
+        PdfManager.exportAnswerKey(testQuiz, destination);
     }
 }

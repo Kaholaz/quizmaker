@@ -21,8 +21,7 @@ import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 import java.util.Iterator;
 
 /**
- * Controller class for the quizDetailsPage. It shows the details of each quiz,
- * and the ranking of the teams.
+ * Controller class for the quizDetailsPage. It shows the details of each quiz, and the ranking of the teams.
  */
 
 public class QuizDetailsPage {
@@ -57,8 +56,7 @@ public class QuizDetailsPage {
     private Text activeStatus; // Value injected by FXMLLoader
 
     /**
-     * Function called when the delete button has been pressed.
-     * The quiz is deleted from the database.
+     * Function called when the delete button has been pressed. The quiz is deleted from the database.
      */
     @FXML
     void onDelete(ActionEvent event) {
@@ -74,7 +72,7 @@ public class QuizDetailsPage {
      * Sets all text fields, buttons on the page, and rankingGrid, according to the quiz in the singleton.
      */
     void refreshDetails() {
-        //update the details gridpane
+        // update the details gridpane
         sumQuestions.setText(String.valueOf(QuizHandlerSingleton.getQuiz().getQuestions().size()));
         lastChanged.setText(QuizHandlerSingleton.getQuiz().getLastChanged().toLocalDate().toString());
         sumTeams.setText(String.valueOf(QuizHandlerSingleton.getQuiz().getTeams().size()));
@@ -94,7 +92,7 @@ public class QuizDetailsPage {
         if (QuizHandlerSingleton.getQuiz().getDifficulty() == -1) {
             difficulty.setText("---");
         } else {
-            average.setText(Double.toString(Math.round(QuizHandlerSingleton.getQuiz().getDifficulty()*100))+ "%");
+            average.setText(Double.toString(Math.round(QuizHandlerSingleton.getQuiz().getDifficulty() * 100)) + "%");
         }
 
         // Refill the ranking table

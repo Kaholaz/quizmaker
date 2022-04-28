@@ -11,11 +11,14 @@ public class TextDecorator {
     /**
      * This class is static and should not be instantiated.
      */
-    private TextDecorator(){}
+    private TextDecorator() {
+    }
 
     /**
      * Makes text green.
-     * @param text The text to change.
+     *
+     * @param text
+     *            The text to change.
      */
     public static void makeTextGreen(Text text) {
         text.setFill(Color.GREEN);
@@ -23,7 +26,9 @@ public class TextDecorator {
 
     /**
      * Makes text red.
-     * @param text The text to change.
+     *
+     * @param text
+     *            The text to change.
      */
     public static void makeTextRed(Text text) {
         text.setFill(Color.RED);
