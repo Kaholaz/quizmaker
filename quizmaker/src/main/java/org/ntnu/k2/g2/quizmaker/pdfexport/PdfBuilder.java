@@ -14,7 +14,6 @@ import org.ntnu.k2.g2.quizmaker.data.QuestionModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -50,18 +49,18 @@ class PdfBuilder {
      * TODO: Should not be in the builder class, saving should not be handled by the builder class.
      */
     private static Document initDocument(String destination, String filename) {
-        PdfWriter writer = null;
+
         String dest = destination + "/" + filename;
         if (!dest.endsWith(".pdf")) {
             dest += ".pdf";
         }
+        PdfDocument pdf = null;
 
-        try {
-            writer = new PdfWriter(dest);
-        } catch (FileNotFoundException e) {
+        try (PdfWriter writer = new PdfWriter(dest)) {
+            pdf = new PdfDocument(writer);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        PdfDocument pdf = new PdfDocument(writer);
 
         return new Document(pdf);
     }
@@ -176,22 +175,12 @@ class PdfBuilder {
 
     /**
      * Adds vertical space to the document.
+     *
      * @return The updated builder.
      */
     public PdfBuilder addVerticalSpace() {
         Paragraph space = new Paragraph("\n");
         document.add(space);
-        return this;
-    }
-
-    /**
-     * Adds a paragraph element to the pdf.
-     *
-     * @param paragraph The paragraph element to add.
-     * @return The updated builder.
-     */
-    public PdfBuilder addParagraph(Paragraph paragraph) {
-        document.add(paragraph);
         return this;
     }
 
@@ -216,6 +205,7 @@ class PdfBuilder {
 
     /**
      * Adds a team name entry field to the PDF.
+     *
      * @return The updated builder.
      */
     public PdfBuilder addTeamNameField() {
@@ -227,10 +217,8 @@ class PdfBuilder {
     /**
      * Builds the pdf. And saves it to its destination.
      *
-     * @return The built PDF.
      */
-    public Document saveAndWrite() {
+    public void saveAndWrite() {
         document.close();
-        return document;
     }
 }
