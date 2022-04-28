@@ -1,11 +1,14 @@
 package org.ntnu.k2.g2.quizmaker;
 
 import javafx.application.Application;
+import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,13 +20,14 @@ public class Main {
         }
 
         try {
-            if (QuizRegister.getQuizList() == null) {
-                throw new NullPointerException("Databasen finnes ikke i angitt bane! Har applikasjonen skrivetilgang?");
+            if (QuizRegister.isReadOnly()) {
+                AlertFactory.showJOptionWarning("Kan ikke skrive til databasen!\nApplikasjonen trenger administratorrettigheter.");
             }
-        } catch (Exception e) {
-            AlertFactory.showJOptionWarning("Kunne ikke koble til databasen! \n (Husk å kjøre applikasjonen som administrator): \n" + e.getMessage());
+        } catch (NullPointerException e) {
+            AlertFactory.showJOptionWarning("Kunne ikke koble til databasen! \n (Husk å kjøre applikasjonen som administrator)");
             return;
         }
+
         Application.launch(GUI.class, args);
     }
 

@@ -52,18 +52,25 @@ public class QuizResultManager {
     public static QuizModel importResults(QuizModel quiz) throws IOException {
         ResultSheet resultSheet = new ResultSheet();
 
+        // Remove all teams
         quiz.getTeams().keySet().stream().toList().forEach(id -> quiz.getTeams().remove(id));
+
+
         var quizResult = resultSheet.fetchResultSheetValues(quiz.getSheetId());
-
         for (List<Object> row : quizResult) {
-            String teamName = row.get(0).toString();
-            String score_raw = row.get(1).toString();
-            // Supports both 1,2 and 1.2 to represent the double 1.2
-            Double score = Double.parseDouble(score_raw.replace(',', '.'));
+            try{
+                String teamName = row.get(0).toString();
+                String score_raw = row.get(1).toString();
+                // Supports both 1,2 and 1.2 to represent the double 1.2
+                Double score = Double.parseDouble(score_raw.replace(',', '.'));
+                TeamModel team = QuizRegister.newTeam(quiz);
 
-            TeamModel team = QuizRegister.newTeam(quiz);
-            team.setTeamName(teamName);
-            team.setScore(score);
+                team.setTeamName(teamName);
+                team.setScore(score);
+            } catch(IndexOutOfBoundsException | NumberFormatException e){
+                // Results are not added if result row is not formatted: <String>,<Double>
+                // Be aware: This will discard "bad lines" without giving user feedback
+            }
         }
 
         QuizRegister.saveQuiz(quiz);
