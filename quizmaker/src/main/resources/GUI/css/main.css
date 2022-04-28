@@ -1,0 +1,72 @@
+.rounded-big-with-border {
+    -fx-background-radius: 50%;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+}
+
+.rounded-medium-with-border {
+    -fx-background-radius: 50%;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 75px;
+    -fx-pref-height: 75px;
+}
+
+.rounded-small-with-border {
+    -fx-background-radius: 50%;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
+
+.rounded-big {
+    -fx-background-radius: 50%;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+}
+
+.rounded-medium {
+    -fx-background-radius: 50%;
+    -fx-pref-width: 75px;
+    -fx-pref-height: 75px;
+}
+
+
+.rounded-big {
+    -fx-background-radius: 50%;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
+
+.button-small {
+    -fx-background-color:
+        #707070,
+        linear-gradient(#fcfcfc, #f3f3f3),
+        linear-gradient(#f2f2f2 0%, #ebebeb 49%, #dddddd 50%, #cfcfcf 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-background-color: white;
+    -fx-padding: 3 5 3 5;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.main-container {
+    -fx-background-color: lightgrey;
+    -fx-padding: 4px;
+
+}
+
+.gridPane-basic {
+ -fx-font-size: 15px;
+}
+
+.gridPane-basic-elements {
+    -fx-padding: 9px;
+}
