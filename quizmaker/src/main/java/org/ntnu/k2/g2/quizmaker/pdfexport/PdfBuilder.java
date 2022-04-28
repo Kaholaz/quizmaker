@@ -38,7 +38,7 @@ class PdfBuilder {
      *                    (please use forwards-slash ('/') as a path separator)
      * @param filename    The name the PDF will be saved as. The .pdf extension may be omitted.
      */
-    public PdfBuilder(QuizModel quiz, String destination, String filename) {
+    public PdfBuilder(QuizModel quiz, String destination, String filename) throws IOException {
         this.document = initDocument(destination, filename);
         this.quiz = quiz;
     }
@@ -48,19 +48,15 @@ class PdfBuilder {
      * Helper method for initializing the Document.
      * TODO: Should not be in the builder class, saving should not be handled by the builder class.
      */
-    private static Document initDocument(String destination, String filename) {
+    private static Document initDocument(String destination, String filename) throws IOException {
 
         String dest = destination + "/" + filename;
         if (!dest.endsWith(".pdf")) {
             dest += ".pdf";
         }
-        PdfDocument pdf = null;
 
-        try (PdfWriter writer = new PdfWriter(dest)) {
-            pdf = new PdfDocument(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        PdfWriter writer = new PdfWriter(dest);
+        PdfDocument pdf = new PdfDocument(writer);
 
         return new Document(pdf);
     }
@@ -72,7 +68,7 @@ class PdfBuilder {
      *
      * @return The updated builder.
      */
-    public PdfBuilder addQRcode() {
+    public PdfBuilder addQRcode() throws IOException {
         // Should not add multiple QR codes as its position is absolute.
         if (hasQr) {
             return this;
@@ -83,7 +79,7 @@ class PdfBuilder {
         try {
             data = ImageDataFactory.create(QRCodeGenerator.getQRImage(quiz), Color.BLACK);
         } catch (IOException | WriterException e) {
-            e.printStackTrace();
+            throw new IOException(e.getMessage());
         }
 
         Image qrCode = new Image(data)
@@ -216,7 +212,6 @@ class PdfBuilder {
 
     /**
      * Builds the pdf. And saves it to its destination.
-     *
      */
     public void saveAndWrite() {
         document.close();
