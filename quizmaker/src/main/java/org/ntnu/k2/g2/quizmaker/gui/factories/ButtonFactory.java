@@ -8,21 +8,23 @@ import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.QuizHandlerSingleton;
 
 /**
- * Creates buttons and clickable nodes in the gui. All the methods
- * for creating the elements are static.
+ * Creates buttons and clickable nodes in the gui. All the methods for creating the elements are static.
  */
 
 public class ButtonFactory {
 
     /**
-     *  The class is static, so the constructor is private.
+     * The class is static, so the constructor is private.
      */
-    private ButtonFactory(){}
+    private ButtonFactory() {
+    }
 
     /**
      * Creates a big button for one question in listViewPages.
      *
-     * @param quiz The quiz the button is going to represent.
+     * @param quiz
+     *            The quiz the button is going to represent.
+     *
      * @return A button element styled to occupy the full width.
      */
     public static Button createQuestionListButton(QuizModel quiz) {
@@ -34,7 +36,7 @@ public class ButtonFactory {
             GUI.setSceneFromNode(admin, "/gui/quizAdminPage.fxml");
         });
 
-        //Clear styling
+        // Clear styling
         admin.getStyleClass().clear();
         admin.getStylesheets().clear();
         admin.setStyle("");
@@ -53,7 +55,9 @@ public class ButtonFactory {
     /**
      * Creates the default clickable button in the app.
      *
-     * @param string The button text.
+     * @param string
+     *            The button text.
+     *
      * @return button The button element.
      */
     public static Button createGrayButton(String string) {
@@ -65,7 +69,9 @@ public class ButtonFactory {
     /**
      * Creates a default delete button.
      *
-     * @param string The button text.
+     * @param string
+     *            The button text.
+     *
      * @return button The constructed button element.
      */
     public static Button createNavbarButton(String string) {

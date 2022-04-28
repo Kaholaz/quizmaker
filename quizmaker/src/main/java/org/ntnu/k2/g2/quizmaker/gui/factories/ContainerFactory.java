@@ -19,21 +19,22 @@ import java.util.Objects;
 import static org.ntnu.k2.g2.quizmaker.gui.factories.TextFactory.createNumberOnlyTextField;
 
 /**
- * Creates various containers. The containers can have children nodes.
- * All creation methods are static
+ * Creates various containers. The containers can have children nodes. All creation methods are static
  */
 public class ContainerFactory {
 
     /**
      * Since the class is static, a constructor is not needed.
      */
-    private ContainerFactory(){}
+    private ContainerFactory() {
+    }
 
     /**
-     * Creates a javafx Pane that can be used to show a Question in for example a list.
-     * This constructor sets the question number to the question ID.
+     * Creates a javafx Pane that can be used to show a Question in for example a list. This constructor sets the
+     * question number to the question ID.
      *
-     * @param question The question to create a Pane from.
+     * @param question
+     *            The question to create a Pane from.
      */
     public static Pane createQuestionPane(QuestionModel question, int questionNumber) {
         VBox mainContainer = new VBox();
@@ -42,7 +43,6 @@ public class ContainerFactory {
 
         Button deleteBtn = ButtonFactory.createGrayButton("Slett");
         ButtonDecorator.makeDefaultDeleteButton(deleteBtn);
-
 
         deleteBtn.setOnAction(event -> {
             QuizRegister.removeQuestion(quiz, question.getId());
@@ -67,11 +67,12 @@ public class ContainerFactory {
             }
         });
         questionTextArea.setOnKeyTyped(actionEvent -> question.setQuestion(questionTextArea.getText()));
-        answerTextArea.setOnKeyTyped(actionEvent ->  question.setAnswer(answerTextArea.getText()));
+        answerTextArea.setOnKeyTyped(actionEvent -> question.setAnswer(answerTextArea.getText()));
 
         // Add the text labels to the pane
         buttonContainer.getChildren().add(deleteBtn);
-        mainContainer.getChildren().addAll(questionLabel, questionTextArea, answerLabel, answerTextArea, pointsLabel, pointsField, buttonContainer);
+        mainContainer.getChildren().addAll(questionLabel, questionTextArea, answerLabel, answerTextArea, pointsLabel,
+                pointsField, buttonContainer);
 
         mainContainer.getStylesheets().add("gui/css/containers.css");
 

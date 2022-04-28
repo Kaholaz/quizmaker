@@ -12,8 +12,7 @@ import java.util.Iterator;
 public class QuizResultManagerTest extends TestCase {
 
     /**
-     * Spreadsheet containing 4 Teams with points.
-     * READ ONLY
+     * Spreadsheet containing 4 Teams with points. READ ONLY
      * https://docs.google.com/spreadsheets/d/121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0
      */
     String publicSpreadsheet2 = "121tMrONqwBucH8vJ2ERIeKly8TJyUjBaIqJB8q2FoH0";
@@ -49,8 +48,7 @@ public class QuizResultManagerTest extends TestCase {
             // Result sheets are not created automatically in tests
             quiz.setSheetId(publicSpreadsheet2);
             QuizResultManager.importResults(quiz);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

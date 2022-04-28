@@ -26,10 +26,13 @@ public class ResultSheet {
 
     /**
      * Creates an authorized Drive API service.
+     *
      * @return Sheets API service.
-     * @throws IOException if NetHttpTransport could not be created
+     *
+     * @throws IOException
+     *             if NetHttpTransport could not be created
      */
-    public Sheets createSheetsService() throws IOException{
+    public Sheets createSheetsService() throws IOException {
         NetHttpTransport HTTP_TRANSPORT = null;
 
         try {
@@ -41,16 +44,18 @@ public class ResultSheet {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
         return new Sheets.Builder(HTTP_TRANSPORT, jsonFactory, GoogleAuthenticator.getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+                .setApplicationName(APPLICATION_NAME).build();
     }
 
     /**
      * Creates an authorized Drive API service.
+     *
      * @return Drive API service.
-     * @throws IOException if NetHttpTransport could not be created
+     *
+     * @throws IOException
+     *             if NetHttpTransport could not be created
      */
-    public Drive createDriveService() throws IOException{
+    public Drive createDriveService() throws IOException {
         NetHttpTransport HTTP_TRANSPORT = null;
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -61,16 +66,21 @@ public class ResultSheet {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
         return new Drive.Builder(HTTP_TRANSPORT, jsonFactory, GoogleAuthenticator.getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+                .setApplicationName(APPLICATION_NAME).build();
     }
 
     /**
      * Updates the spreadsheet to be public for everyone with a URL to the spreadsheet.
-     * @param driveService Drive API service.
-     * @param sheetId id of the spreadsheet.
+     *
+     * @param driveService
+     *            Drive API service.
+     * @param sheetId
+     *            id of the spreadsheet.
+     *
      * @return created permission.
-     * @throws IOException Throws an exception if the sheet could not be made public.
+     *
+     * @throws IOException
+     *             Throws an exception if the sheet could not be made public.
      */
     public Permission makeSpreadsheetPublic(Drive driveService, String sheetId) throws IOException {
         Permission permission = new Permission();
@@ -78,19 +88,20 @@ public class ResultSheet {
         permission.setRole("writer");
         permission.setType("anyone");
 
-        try{
+        try {
             return driveService.permissions().create(sheetId, permission).execute();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             throw new IOException("Kunne ikke gjøre regnearket offentlig: " + e);
         }
     }
 
-
     /**
      * Deletes a spreadsheet.
-     * @param driveService Drive API service.
-     * @param sheetId id of the spreadsheet.
+     *
+     * @param driveService
+     *            Drive API service.
+     * @param sheetId
+     *            id of the spreadsheet.
      */
     public void deleteSheet(Drive driveService, String sheetId) {
 
@@ -102,13 +113,16 @@ public class ResultSheet {
         }
     }
 
-
     /**
-     * Creates an empty spreadsheet. Should be called using QuizResultManager and
-     * createResultSheet()  method.
-     * @param sheetTitle Title of the spreadsheet
+     * Creates an empty spreadsheet. Should be called using QuizResultManager and createResultSheet() method.
+     *
+     * @param sheetTitle
+     *            Title of the spreadsheet
+     *
      * @return Spreadsheet-id (used in sheet URL:https://docs.google.com/spreadsheets/d/SHEET_ID)
-     * @throws IOException if spreadsheet could not be created.
+     *
+     * @throws IOException
+     *             if spreadsheet could not be created.
      */
     public String createSheet(String sheetTitle) throws IOException {
         Spreadsheet spreadsheet = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(sheetTitle));
@@ -122,9 +136,14 @@ public class ResultSheet {
 
     /**
      * Gets the title of the spreadsheet.
-     * @param sheetId id of the spreadsheet.
+     *
+     * @param sheetId
+     *            id of the spreadsheet.
+     *
      * @return title of the spreadsheet.
-     * @throws IOException if request could not be executed.
+     *
+     * @throws IOException
+     *             if request could not be executed.
      */
     public String getSheetTitle(String sheetId) throws IOException {
         Sheets sheetService = createSheetsService();
@@ -137,9 +156,14 @@ public class ResultSheet {
 
     /**
      * Changes the title of the spreadsheet.
-     * @param sheetTitle tile of the spreadsheet.
-     * @param sheetId id of the spreadsheet.
-     * @throws IOException if operation was unsuccessful.
+     *
+     * @param sheetTitle
+     *            tile of the spreadsheet.
+     * @param sheetId
+     *            id of the spreadsheet.
+     *
+     * @throws IOException
+     *             if operation was unsuccessful.
      */
 
     public boolean setSheetTitle(String sheetTitle, String sheetId) throws IOException {
@@ -152,7 +176,7 @@ public class ResultSheet {
 
         BatchUpdateSpreadsheetRequest body = new BatchUpdateSpreadsheetRequest().setRequests(request);
 
-        Sheets.Spreadsheets.BatchUpdate batchUpdate = sheetsService.spreadsheets().batchUpdate(sheetId,body);
+        Sheets.Spreadsheets.BatchUpdate batchUpdate = sheetsService.spreadsheets().batchUpdate(sheetId, body);
         batchUpdate.execute();
 
         return true;
@@ -160,86 +184,109 @@ public class ResultSheet {
 
     /**
      * Appends values to spreadsheet in column A and B
-     * @param sheetId id of the spreadsheet.
-     * @param valueA cell value for column A.
-     * @param valueB cell value for column B.
-     * @throws IOException if request could not be executed.
+     *
+     * @param sheetId
+     *            id of the spreadsheet.
+     * @param valueA
+     *            cell value for column A.
+     * @param valueB
+     *            cell value for column B.
+     *
+     * @throws IOException
+     *             if request could not be executed.
      */
     public void appendRowValues(String sheetId, String valueA, String valueB) throws IOException {
         Sheets sheetsService = createSheetsService();
 
         ValueRange body = new ValueRange().setValues(List.of(Arrays.asList(valueA, valueB)));
 
-        Sheets.Spreadsheets.Values.Append request =sheetsService.spreadsheets().values()
-                .append(sheetId, "A1", body)
-                .setValueInputOption("USER_ENTERED")
-                .setInsertDataOption("INSERT_ROWS")
+        Sheets.Spreadsheets.Values.Append request = sheetsService.spreadsheets().values().append(sheetId, "A1", body)
+                .setValueInputOption("USER_ENTERED").setInsertDataOption("INSERT_ROWS")
                 .setIncludeValuesInResponse(true);
         request.execute();
     }
 
     /**
-     * Sets values row of cells in the A and B column of the spreadsheet. Will overwrite existing values.
-     * Use method appendRowValues() instead to put values at the end of the spreadsheet.
-     * @param sheetId id of the spreadsheet.
-     * @param valueA value of cell in column A.
-     * @param valueB value of cell in column B.
-     * @throws IOException if request could not be executed.
+     * Sets values row of cells in the A and B column of the spreadsheet. Will overwrite existing values. Use method
+     * appendRowValues() instead to put values at the end of the spreadsheet.
+     *
+     * @param sheetId
+     *            id of the spreadsheet.
+     * @param valueA
+     *            value of cell in column A.
+     * @param valueB
+     *            value of cell in column B.
+     *
+     * @throws IOException
+     *             if request could not be executed.
      */
     public void addRowValues(String sheetId, String valueA, String valueB, String rowNumber) throws IOException {
         Sheets sheetsService = createSheetsService();
         String range = "A" + rowNumber;
 
         ValueRange body = new ValueRange().setValues(List.of(Arrays.asList(valueA, valueB)));
-        Sheets.Spreadsheets.Values.Update request = sheetsService.spreadsheets().values()
-                .update(sheetId,range,body).setValueInputOption("RAW");
+        Sheets.Spreadsheets.Values.Update request = sheetsService.spreadsheets().values().update(sheetId, range, body)
+                .setValueInputOption("RAW");
         request.execute();
     }
 
     /**
      * Counts number of filled rows in spreadsheet. Includes first row.
-     * @param sheetId spreadsheet id
+     *
+     * @param sheetId
+     *            spreadsheet id
+     *
      * @return number of filled rows
-     * @throws IOException if request could not be executed.
+     *
+     * @throws IOException
+     *             if request could not be executed.
      */
     public int countRows(String sheetId) throws IOException {
         Sheets SheetService = createSheetsService();
         final String range = "A1:B";
 
-        Sheets.Spreadsheets.Values.Get request = SheetService.spreadsheets().values().get(sheetId,range);
+        Sheets.Spreadsheets.Values.Get request = SheetService.spreadsheets().values().get(sheetId, range);
         ValueRange response = request.execute();
 
         List<List<Object>> results = response.getValues();
 
-        if(results == null){
+        if (results == null) {
             return 0;
-        }
-        else{
+        } else {
             return results.size();
         }
     }
 
     /**
      * Fetches the values of column A and B, but does not include row 1.
-     * @param sheetId id of the spreadsheet
+     *
+     * @param sheetId
+     *            id of the spreadsheet
+     *
      * @return list containing spreadsheet values
-     * @throws IOException if request could not be executed.
+     *
+     * @throws IOException
+     *             if request could not be executed.
      */
     public List<List<Object>> fetchResultSheetValues(String sheetId) throws IOException {
         Sheets SheetService = createSheetsService();
         final String range = "A2:B";
 
-        Sheets.Spreadsheets.Values.Get request = SheetService.spreadsheets().values()
-                .get(sheetId, range);
+        Sheets.Spreadsheets.Values.Get request = SheetService.spreadsheets().values().get(sheetId, range);
 
         ValueRange response = request.execute();
 
         return response.getValues();
     }
+
     /**
      * Removes all values from the spreadsheet from column A to F
-     * @param sheetId id of the spreadsheet
-     * @throws IOException if request could not be executed.
+     *
+     * @param sheetId
+     *            id of the spreadsheet
+     *
+     * @throws IOException
+     *             if request could not be executed.
      */
     public void clearSheetValues(String sheetId) throws IOException {
         Sheets sheetsService = createSheetsService();
@@ -247,11 +294,10 @@ public class ResultSheet {
         // Alternative range: <Worksheet name>
         String range = "A:F";
         ClearValuesRequest requestBody = new ClearValuesRequest();
-        Sheets.Spreadsheets.Values.Clear request = sheetsService.spreadsheets().values().clear(sheetId, range, requestBody);
+        Sheets.Spreadsheets.Values.Clear request = sheetsService.spreadsheets().values().clear(sheetId, range,
+                requestBody);
 
         request.execute();
     }
 
-
 }
-

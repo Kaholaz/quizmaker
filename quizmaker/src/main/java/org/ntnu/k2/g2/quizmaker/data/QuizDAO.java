@@ -10,16 +10,18 @@ import java.util.HashMap;
 import java.util.stream.Stream;
 
 /**
- * A class used to interact with the "quizzes"-table in the database.
- * Instances of this class can be used to save and retrieve quiz-data form the database.
- * This method is package-protected. Database interactions should be done using the QuizRegister class.
+ * A class used to interact with the "quizzes"-table in the database. Instances of this class can be used to save and
+ * retrieve quiz-data form the database. This method is package-protected. Database interactions should be done using
+ * the QuizRegister class.
  */
 class QuizDAO {
     /**
-     * Constructs a quiz based on the ResultSet of an SQL query. Please note:
-     * This method does not fill the teams or questions properties. These are filled in getQuizFromId()
+     * Constructs a quiz based on the ResultSet of an SQL query. Please note: This method does not fill the teams or
+     * questions properties. These are filled in getQuizFromId()
      *
-     * @param result The ResultSet of an SQL query.
+     * @param result
+     *            The ResultSet of an SQL query.
+     *
      * @return A quiz based on the result of the SQL query.
      */
     private static QuizModel getQuizFromResultSet(ResultSet result) {
@@ -42,11 +44,12 @@ class QuizDAO {
     }
 
     /**
-     * Constructs an ArrayList of quizzes based on the ResultSet of an SQL query. Please note:
-     * This method does not fill the teams or questions properties.
-     * These properties are filled in the methods that call this method.
+     * Constructs an ArrayList of quizzes based on the ResultSet of an SQL query. Please note: This method does not fill
+     * the teams or questions properties. These properties are filled in the methods that call this method.
      *
-     * @param result The ResultSet of an SQL property
+     * @param result
+     *            The ResultSet of an SQL property
+     *
      * @return An ArrayList of all extracted quizzes form the ResultSet.
      */
     private static ArrayList<QuizModel> getQuizzesFromResultSet(ResultSet result) {
@@ -71,10 +74,12 @@ class QuizDAO {
     }
 
     /**
-     * Gets a quiz by an id. This quiz has its teams and questions properties filled.
-     * This method returns null if no quiz is found.
+     * Gets a quiz by an id. This quiz has its teams and questions properties filled. This method returns null if no
+     * quiz is found.
      *
-     * @param id The id of the quiz.
+     * @param id
+     *            The id of the quiz.
+     *
      * @return The quiz with the id in the database. If no quiz is found, null is returned.
      */
     public static QuizModel getQuizById(int id) {
@@ -138,7 +143,9 @@ class QuizDAO {
     /**
      * Saves a quiz to the database.
      *
-     * @param quiz The quiz to save to the database.
+     * @param quiz
+     *            The quiz to save to the database.
+     *
      * @return The quiz as it is saved in the database after the update is done.
      */
     public static QuizModel updateQuiz(QuizModel quiz) {
@@ -156,8 +163,8 @@ class QuizDAO {
                 preparedStatement = connection.prepareStatement(
                         "INSERT INTO quizzes (name, sheetId, active, lastChanged) VALUES (?, ?, ?, ?);");
             } else {
-                preparedStatement = connection.prepareStatement(
-                        "UPDATE quizzes SET name=?, sheetId=?, active=?, lastChanged=? WHERE id=?;");
+                preparedStatement = connection
+                        .prepareStatement("UPDATE quizzes SET name=?, sheetId=?, active=?, lastChanged=? WHERE id=?;");
                 preparedStatement.setInt(5, quiz.getId());
             }
             preparedStatement.setString(1, quiz.getName());
@@ -216,7 +223,9 @@ class QuizDAO {
     /**
      * Removes a quiz and ALL its components (questions and teams) from the database.
      *
-     * @param id The ID of the quiz to remove.
+     * @param id
+     *            The ID of the quiz to remove.
+     *
      * @return True if the operation was successful, false if not.
      */
     public static boolean removeQuizById(int id) {
@@ -230,15 +239,12 @@ class QuizDAO {
             // remove all questions
             quiz.getQuestions().keySet().forEach(QuestionDAO::removeQuestionById);
 
-
             // remove all teams
             quiz.getQuestions().keySet().forEach(TeamDAO::removeTeamById);
 
-
             // removes the quiz itself
             connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(
-                    "DELETE FROM quizzes WHERE id=?");
+            preparedStatement = connection.prepareStatement("DELETE FROM quizzes WHERE id=?");
             preparedStatement.setInt(1, id);
 
             preparedStatement.execute();

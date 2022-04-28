@@ -19,9 +19,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * This class can be used to build pdf from quizzes. These pdf files can be exported.
- * The builder should only be accessed by classes in the same package. The PdfManager class
- * is responsible for building pdfs and exporting them.
+ * This class can be used to build pdf from quizzes. These pdf files can be exported. The builder should only be
+ * accessed by classes in the same package. The PdfManager class is responsible for building pdfs and exporting them.
  */
 class PdfBuilder {
 
@@ -31,24 +30,31 @@ class PdfBuilder {
 
     /**
      * Creates a new PDF builder that can be used to build a pdf. Use the appropriate methods to construct a suitable
-     * PDF. Once the PDF has been build, use the {@code saveAndWrite} method to save the PDF at its designated destination.
+     * PDF. Once the PDF has been build, use the {@code saveAndWrite} method to save the PDF at its designated
+     * destination.
      *
-     * @param quiz        Quiz that is connected to the pdf
-     * @param destination In what directory to save the PDF once it has been built
-     *                    (please use forwards-slash ('/') as a path separator)
-     * @param filename    The name the PDF will be saved as. The .pdf extension may be omitted.
-     * @throws IOException Throws an IOException if the file cannot be written to.
+     * @param quiz
+     *            Quiz that is connected to the pdf
+     * @param destination
+     *            In what directory to save the PDF once it has been built (please use forwards-slash ('/') as a path
+     *            separator)
+     * @param filename
+     *            The name the PDF will be saved as. The .pdf extension may be omitted.
+     *
+     * @throws IOException
+     *             Throws an IOException if the file cannot be written to.
      */
     public PdfBuilder(QuizModel quiz, String destination, String filename) throws IOException {
         this.document = initDocument(destination, filename);
         this.quiz = quiz;
     }
 
-
     /**
-     * Helper method for initializing the Document.
-     * TODO: Should not be in the builder class, saving should not be handled by the builder class.
-     * @throws IOException Throws an IOException if the file cannot be written to.
+     * Helper method for initializing the Document. TODO: Should not be in the builder class, saving should not be
+     * handled by the builder class.
+     *
+     * @throws IOException
+     *             Throws an IOException if the file cannot be written to.
      */
     private static Document initDocument(String destination, String filename) throws IOException {
 
@@ -64,12 +70,13 @@ class PdfBuilder {
     }
 
     /**
-     * Add a QR code to the pdf. The QR code is linked to the Google Sheet of the stored quiz.
-     * The QR code will get placed in the top right corner of the first page.
-     * Multiple QR codes can not be added.
+     * Add a QR code to the pdf. The QR code is linked to the Google Sheet of the stored quiz. The QR code will get
+     * placed in the top right corner of the first page. Multiple QR codes can not be added.
      *
      * @return The updated builder.
-     * @throws IOException Throws an exception if the QR code could not be created.
+     *
+     * @throws IOException
+     *             Throws an exception if the QR code could not be created.
      */
     public PdfBuilder addQRcode() throws IOException {
         // Should not add multiple QR codes as its position is absolute.
@@ -84,12 +91,10 @@ class PdfBuilder {
             throw new IOException(e.getMessage());
         }
 
-        Image qrCode = new Image(data)
-                .setFixedPosition(464, 716);
+        Image qrCode = new Image(data).setFixedPosition(464, 716);
         document.add(qrCode);
 
-        Paragraph qrDescription = new Paragraph("Skann for å registrere poeng:")
-                .setWidth(92)
+        Paragraph qrDescription = new Paragraph("Skann for å registrere poeng:").setWidth(92)
                 .setTextAlignment(TextAlignment.RIGHT);
         qrDescription.setFixedPosition(384, 765, qrDescription.getWidth());
         document.add(qrDescription);
@@ -101,15 +106,16 @@ class PdfBuilder {
     /**
      * Create a header for the pdf. The header contains the name of the quiz concatenated with the provided header text.
      *
-     * @param headerText Optional text to add to the header in addition to the name of the quiz. If headerText is null
-     *                   or an empty string, no text is added.
+     * @param headerText
+     *            Optional text to add to the header in addition to the name of the quiz. If headerText is null or an
+     *            empty string, no text is added.
+     *
      * @return The updated builder.
      */
     public PdfBuilder addHeader(String headerText) {
 
         Paragraph quizName = new Paragraph(quiz.getName() + " " + ((headerText == null) ? "" : headerText))
-                .setWidth(344)
-                .setFontSize(29);
+                .setWidth(344).setFontSize(29);
         document.add(quizName);
 
         return this;
@@ -120,11 +126,14 @@ class PdfBuilder {
      * includeAnswer is true, the answer will be included. If includeAnswer is false there will be exported a blank
      * answer field.
      *
-     * @param includeQuestion If questions are wanted. If this is false the method will just write the ordinal of the question
-     *                        and the possible score that can be gained form the question. If this is set to true,
-     *                        the question will also get added.
-     * @param includeAnswer   if answers are wanted. If this is set to false, a line where participants can enter their score
-     *                        is added. If this is set to true, the full answer string will be added.
+     * @param includeQuestion
+     *            If questions are wanted. If this is false the method will just write the ordinal of the question and
+     *            the possible score that can be gained form the question. If this is set to true, the question will
+     *            also get added.
+     * @param includeAnswer
+     *            if answers are wanted. If this is set to false, a line where participants can enter their score is
+     *            added. If this is set to true, the full answer string will be added.
+     *
      * @return The updated builder.
      */
     public PdfBuilder addQuestions(boolean includeQuestion, boolean includeAnswer) {
@@ -135,7 +144,8 @@ class PdfBuilder {
         }
 
         // Questions sorted by id (and by extension when they were added).
-        List<QuestionModel> questions = quiz.getQuestions().values().stream().sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
+        List<QuestionModel> questions = quiz.getQuestions().values().stream()
+                .sorted(Comparator.comparingInt(QuestionModel::getId)).toList();
 
         for (int i = 0; i < questions.size(); i++) {
             QuestionModel question = questions.get(i);
@@ -158,12 +168,7 @@ class PdfBuilder {
                 answer2 = question.getAnswer();
             }
 
-            Paragraph quest = new Paragraph()
-                    .add(header)
-                    .add(questionText)
-                    .add(answer1)
-                    .add(answer2)
-                    .setFontSize(18)
+            Paragraph quest = new Paragraph().add(header).add(questionText).add(answer1).add(answer2).setFontSize(18)
                     .setKeepTogether(true);
             document.add(quest);
         }
@@ -189,12 +194,10 @@ class PdfBuilder {
      */
     public PdfBuilder addFooter() {
 
-        Paragraph score = new Paragraph("Poengsum:___/" + quiz.getMaxScore())
-                .setFontSize(17);
+        Paragraph score = new Paragraph("Poengsum:___/" + quiz.getMaxScore()).setFontSize(17);
         document.add(score);
 
-        Paragraph footer = new Paragraph("PDF created with iText 6 (www.itextpdf.com)")
-                .setFontSize(9);
+        Paragraph footer = new Paragraph("PDF created with iText 6 (www.itextpdf.com)").setFontSize(9);
         footer.setFixedPosition(document.getLeftMargin(), 19, footer.getWidth());
         document.add(footer);
 

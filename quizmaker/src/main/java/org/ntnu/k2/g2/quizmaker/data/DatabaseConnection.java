@@ -4,8 +4,8 @@ import java.io.File;
 import java.sql.*;
 
 /**
- * A class that deals with establishing and closing connections to the database,
- * as well as setting up the necessary tables and columns of the database.
+ * A class that deals with establishing and closing connections to the database, as well as setting up the necessary
+ * tables and columns of the database.
  */
 class DatabaseConnection {
     private static Connection connectionSingleton;
@@ -19,8 +19,8 @@ class DatabaseConnection {
     private static final boolean test = Util.isTest();
 
     /**
-     * Creates a new database instance.
-     * The constructor establishes a connection to the database and saves it to the connection property.
+     * Creates a new database instance. The constructor establishes a connection to the database and saves it to the
+     * connection property.
      */
     private DatabaseConnection() {
         File db_path = getDbPath();
@@ -37,8 +37,8 @@ class DatabaseConnection {
     }
 
     /**
-     * There is only ever one connection to the DB. It is retrieved by using this method.
-     * This method initializes a new connection instance if one does not already exist.
+     * There is only ever one connection to the DB. It is retrieved by using this method. This method initializes a new
+     * connection instance if one does not already exist.
      *
      * @return The connection to the database
      */
@@ -54,8 +54,8 @@ class DatabaseConnection {
     }
 
     /**
-     * Returns the appropriate file path to the database. This method takes into account whenever or not
-     * the database is being run inside a test.
+     * Returns the appropriate file path to the database. This method takes into account whenever or not the database is
+     * being run inside a test.
      *
      * @return The path to the database
      */
@@ -122,7 +122,8 @@ class DatabaseConnection {
     /**
      * Closes a PreparedStatement, and handles any thrown exceptions.
      *
-     * @param preparedStatement The PreparedStatement
+     * @param preparedStatement
+     *            The PreparedStatement
      */
     public static void closePreparedStatement(PreparedStatement preparedStatement) {
         if (preparedStatement != null) {
@@ -137,7 +138,8 @@ class DatabaseConnection {
     /**
      * Closes a ResultSet, and handles any thrown exceptions
      *
-     * @param resultSet The ResultSet
+     * @param resultSet
+     *            The ResultSet
      */
     public static void closeResultSet(ResultSet resultSet) {
         if (resultSet != null) {

@@ -29,11 +29,12 @@ public class CreateNewQuizPage {
     private BorderPane borderPane;
 
     /**
-     * Event listener for when the create quiz button is pressed.
-     * This triggers the creation of the new quiz and changes the scene to the question editor for this quiz.
-     * This allows the users to add questions for the newly created quiz.
+     * Event listener for when the create quiz button is pressed. This triggers the creation of the new quiz and changes
+     * the scene to the question editor for this quiz. This allows the users to add questions for the newly created
+     * quiz.
      *
-     * @param event The event for when the create quiz button is pressed.
+     * @param event
+     *            The event for when the create quiz button is pressed.
      */
     @FXML
     private VBox mainContainer;
@@ -47,7 +48,7 @@ public class CreateNewQuizPage {
         mainContainer.getChildren().clear();
         mainContainer.getChildren().add(TextFactory.createTitle("Lager quiz..."));
 
-        new Thread(() -> { //use another thread so long process does not block gui
+        new Thread(() -> { // use another thread so long process does not block gui
             QuizModel createdQuiz;
             try {
                 createdQuiz = QuizRegister.newQuiz();
@@ -68,8 +69,8 @@ public class CreateNewQuizPage {
     }
 
     /**
-     * Initializes the page. Inserts a navigation bar at the top of the page.
-     * This method is called after the fxml page is loaded.
+     * Initializes the page. Inserts a navigation bar at the top of the page. This method is called after the fxml page
+     * is loaded.
      */
     @FXML
     void initialize() {

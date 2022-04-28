@@ -37,7 +37,7 @@ public class QuizModelTest extends TestCase {
             quiz.getTeams().put(i, team);
         }
 
-        assertEquals(1d/3d, quiz.getDifficulty());
+        assertEquals(1d / 3d, quiz.getDifficulty());
     }
 
     public void testGetDifficultyWhenThereAreZeroTeams() {

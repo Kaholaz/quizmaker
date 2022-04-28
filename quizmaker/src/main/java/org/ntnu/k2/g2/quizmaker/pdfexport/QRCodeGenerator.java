@@ -13,16 +13,21 @@ import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
 /**
- * Class that creates QR codes.
- * The main shell of the class is from here: https://www.journaldev.com/470/java-qr-code-generator-zxing-example
+ * Class that creates QR codes. The main shell of the class is from here:
+ * https://www.journaldev.com/470/java-qr-code-generator-zxing-example
  */
 public class QRCodeGenerator {
 
     /**
      * Creates a QR based on the url of quiz and saves it to disk.
-     * @param quiz The quiz to create a QR code of.
+     *
+     * @param quiz
+     *            The quiz to create a QR code of.
+     *
      * @return The QR code as an image.
-     * @throws WriterException Throws an exception if the operation was unsuccessful.
+     *
+     * @throws WriterException
+     *             Throws an exception if the operation was unsuccessful.
      */
     public static Image getQRImage(QuizModel quiz) throws WriterException {
         String qrCodeText = quiz.getUrl();
@@ -32,10 +37,15 @@ public class QRCodeGenerator {
 
     /**
      *
-     * @param qrCodeText The text to encode into the qr code (usually a URL)
-     * @param size The size of the QR code.
+     * @param qrCodeText
+     *            The text to encode into the qr code (usually a URL)
+     * @param size
+     *            The size of the QR code.
+     *
      * @return The QR code image.
-     * @throws WriterException Throws an exception if the operation was unsuccessful.
+     *
+     * @throws WriterException
+     *             Throws an exception if the operation was unsuccessful.
      */
     private static Image createQRImage(String qrCodeText, int size) throws WriterException {
         // Create the ByteMatrix for the QR-Code that encodes the given String

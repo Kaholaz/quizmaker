@@ -62,7 +62,7 @@ public class QuizRegisterTest extends TestCase {
     public void testGetQuiz() {
         QuizModel testQuiz = QuizRegister.getQuiz(1);
 
-        assertEquals( "Test Quiz", testQuiz.getName());
+        assertEquals("Test Quiz", testQuiz.getName());
         assertEquals(5, testQuiz.getQuestions().size());
         assertEquals(3, testQuiz.getTeams().size());
         assertEquals(1, testQuiz.getId());
@@ -241,14 +241,14 @@ public class QuizRegisterTest extends TestCase {
     }
 
     public void testGetArchivedQuizzes() throws IOException {
-        QuizRegister.populateDatabase(1,2,3);
+        QuizRegister.populateDatabase(1, 2, 3);
 
         QuizModel quiz = QuizRegister.getQuiz(2);
         quiz.setActive(false);
 
         QuizRegister.saveQuiz(quiz);
 
-        assertEquals(List.of(QuizRegister.getQuiz(1)),QuizRegister.getActiveQuizzes());
+        assertEquals(List.of(QuizRegister.getQuiz(1)), QuizRegister.getActiveQuizzes());
         assertEquals(List.of(QuizRegister.getQuiz(2)), QuizRegister.getArchivedQuizzes());
     }
 

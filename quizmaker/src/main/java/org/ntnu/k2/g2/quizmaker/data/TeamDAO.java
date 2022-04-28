@@ -4,15 +4,17 @@ import java.sql.*;
 import java.util.HashMap;
 
 /**
- * A class that deals with the "teams"-table in the database.
- * Instances of this class can be used to save and retrieve data about teams from the database.
- * This method is package-protected. Database interactions should be done using the QuizRegister class.
+ * A class that deals with the "teams"-table in the database. Instances of this class can be used to save and retrieve
+ * data about teams from the database. This method is package-protected. Database interactions should be done using the
+ * QuizRegister class.
  */
 class TeamDAO {
     /**
      * Gets a team from a ResultSet of an SQL query.
      *
-     * @param result The ResultSet of an SQL query.
+     * @param result
+     *            The ResultSet of an SQL query.
+     *
      * @return The team based on the ResultSet.
      */
     private static TeamModel getTeamFromResultSet(ResultSet result) {
@@ -35,9 +37,11 @@ class TeamDAO {
     /**
      * Returns a map of all teams from the ResultSet of an SQL query.
      *
-     * @param result The ResultSet of an SQL query.
-     * @return A Map of all teams from the ResultSet of an SQL query. The key is the id of the team,
-     * and the value is the team-object.
+     * @param result
+     *            The ResultSet of an SQL query.
+     *
+     * @return A Map of all teams from the ResultSet of an SQL query. The key is the id of the team, and the value is
+     *         the team-object.
      */
     private static HashMap<Integer, TeamModel> getTeamsFromResultSet(ResultSet result) {
         HashMap<Integer, TeamModel> teams = new HashMap<>();
@@ -62,7 +66,9 @@ class TeamDAO {
     /**
      * Gets the quiz id of the quiz that a team is the component of form the ResultSet of an SQL query.
      *
-     * @param result The ResultSet of an SQL query.
+     * @param result
+     *            The ResultSet of an SQL query.
+     *
      * @return The id of the quiz that the team is a component of. Returns -1 if the ResultSet is empty.
      */
     private static int getQuizIdFromResultSet(ResultSet result) {
@@ -82,7 +88,9 @@ class TeamDAO {
     /**
      * Gets a team from its ID
      *
-     * @param id The id of the team
+     * @param id
+     *            The id of the team
+     *
      * @return The team that matches the ID. Returns null if no team was found.
      */
     public static TeamModel getTeamById(int id) {
@@ -111,9 +119,11 @@ class TeamDAO {
     /**
      * Gets all teams that are components of a quiz.
      *
-     * @param quizId The id of the Quiz
-     * @return A map of all the teams that are components of the quiz. The keys in the map are
-     * the ids of the teams, while the keys are the teams objects.
+     * @param quizId
+     *            The id of the Quiz
+     *
+     * @return A map of all the teams that are components of the quiz. The keys in the map are the ids of the teams,
+     *         while the keys are the teams objects.
      */
     public static HashMap<Integer, TeamModel> getTeamsByQuizId(int quizId) {
         Connection connection;
@@ -140,7 +150,9 @@ class TeamDAO {
     /**
      * Gets the id of a quiz that a team is the component of.
      *
-     * @param teamId The id of the team.
+     * @param teamId
+     *            The id of the team.
+     *
      * @return The id of the quiz. Returns -1 if the teamID is not found in the database.
      */
     public static int getQuizIdByTeamId(int teamId) {
@@ -168,8 +180,11 @@ class TeamDAO {
     /**
      * Updates the entry of a team in the database to reflect a team object
      *
-     * @param team   The team object
-     * @param quizId The id of the quiz that the team is a component of.
+     * @param team
+     *            The team object
+     * @param quizId
+     *            The id of the quiz that the team is a component of.
+     *
      * @return The team how it is saved in the database.
      */
     public static TeamModel updateTeam(TeamModel team, int quizId) {
@@ -184,8 +199,7 @@ class TeamDAO {
                         "INSERT INTO teams (name, score, quizId) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setInt(3, quizId);
             } else {
-                preparedStatement = connection.prepareStatement(
-                        "UPDATE teams SET name=?, score=? WHERE id=?");
+                preparedStatement = connection.prepareStatement("UPDATE teams SET name=?, score=? WHERE id=?");
                 preparedStatement.setInt(3, team.getId());
             }
             preparedStatement.setString(1, team.getTeamName());
@@ -194,7 +208,8 @@ class TeamDAO {
             int resultRows = preparedStatement.executeUpdate();
             if (team.getId() == -1 && resultRows == 1) {
                 result = preparedStatement.getGeneratedKeys();
-                if (result.next()) team.setId(result.getInt(1));
+                if (result.next())
+                    team.setId(result.getInt(1));
             } else if (resultRows == 0) {
                 team = null;
             }
@@ -210,12 +225,15 @@ class TeamDAO {
     /**
      * Updates the database entry of a team by finding the quizId implicitly.
      *
-     * @param team The team to save in the database.
+     * @param team
+     *            The team to save in the database.
+     *
      * @return The team how it is saved in the database.
      */
     public static TeamModel updateTeam(TeamModel team) {
         int quizId = getQuizIdByTeamId(team.getId());
-        if (quizId == -1) return null;
+        if (quizId == -1)
+            return null;
         return updateTeam(team, quizId);
     }
 
@@ -226,8 +244,7 @@ class TeamDAO {
 
         try {
             connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(
-                    "DELETE FROM teams WHERE id=?");
+            preparedStatement = connection.prepareStatement("DELETE FROM teams WHERE id=?");
             preparedStatement.setInt(1, id);
             result = preparedStatement.execute();
         } catch (SQLException e) {

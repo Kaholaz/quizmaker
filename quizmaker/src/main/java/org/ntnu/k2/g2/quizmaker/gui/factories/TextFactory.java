@@ -4,20 +4,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 /**
- * This is a factory used to create nodes that display text.
- * These nodes can be text fields (editable) or labels (non-editable).
+ * This is a factory used to create nodes that display text. These nodes can be text fields (editable) or labels
+ * (non-editable).
  */
 public class TextFactory {
 
     /**
      * TextFactory is a static class so no constructor is needed.
      */
-    private TextFactory(){}
+    private TextFactory() {
+    }
 
     /**
      * Create small text. Used to display basic text elements in the GUI.
      *
-     * @param string The text for the text element.
+     * @param string
+     *            The text for the text element.
+     *
      * @return The constructed text element.
      */
     public static Text createSmallText(String string) {
@@ -30,7 +33,9 @@ public class TextFactory {
     /**
      * Creates a basic text field. A text field excepts user input.
      *
-     * @param string The pre-filled text field content.
+     * @param string
+     *            The pre-filled text field content.
+     *
      * @return The text field.
      */
 
@@ -43,14 +48,16 @@ public class TextFactory {
     /**
      * Creates a text field that only accepts numbers (digits).
      *
-     * @param integer The pre-filled content of the text field.
+     * @param integer
+     *            The pre-filled content of the text field.
+     *
      * @return The integer only text field.
      */
 
     public static TextField createNumberOnlyTextField(int integer) {
         TextField textField = createTextField(String.valueOf(integer));
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            //regex values to remove letters
+            // regex values to remove letters
             if (!newValue.matches("\\d*")) {
                 textField.setText(newValue.replaceAll("[^\\d]", ""));
             }
@@ -60,7 +67,10 @@ public class TextFactory {
 
     /**
      * Creates big header text.
-     * @param s The string to create the text element of.
+     *
+     * @param s
+     *            The string to create the text element of.
+     *
      * @return The text element with the supplied string.
      */
     public static Text createTitle(String s) {

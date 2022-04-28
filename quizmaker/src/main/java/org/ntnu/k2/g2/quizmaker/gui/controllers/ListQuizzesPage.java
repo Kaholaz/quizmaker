@@ -29,8 +29,8 @@ public class ListQuizzesPage {
     private Button switchStatusButton;
 
     /**
-     * Initializes the page. Creates a navbar and updates the gui elements according to the database.
-     * This method is called immediately after the fxml page is loaded.
+     * Initializes the page. Creates a navbar and updates the gui elements according to the database. This method is
+     * called immediately after the fxml page is loaded.
      */
     @FXML
     void initialize() {
@@ -49,23 +49,22 @@ public class ListQuizzesPage {
     }
 
     /**
-     * This method refreshes the quiz list.
-     * This is done in three steps:
+     * This method refreshes the quiz list. This is done in three steps:
      * <ol>
-     *     <li>Clear all quizzes from the gui.</li>
-     *     <li>Fetch the list of quizzes from the database.</li>
-     *     <li>Fill the quiz container with quiz elements according to the list of quizzes.</li>
+     * <li>Clear all quizzes from the gui.</li>
+     * <li>Fetch the list of quizzes from the database.</li>
+     * <li>Fill the quiz container with quiz elements according to the list of quizzes.</li>
      * </ol>
      *
      * This method takes into account the quiz status of the QuizHandler.
      */
     void refreshQuizList() {
-        //clear the container before adding.
+        // clear the container before adding.
         quizContainer.getChildren().clear();
 
         ArrayList<QuizModel> quizzes;
 
-        //Fetch quizzes from the database
+        // Fetch quizzes from the database
         if (QuizHandlerSingleton.isActive()) {
             quizzes = QuizRegister.getActiveQuizzes();
             switchStatusButton.setText("Til inaktive");
@@ -74,7 +73,7 @@ public class ListQuizzesPage {
             quizzes = QuizRegister.getArchivedQuizzes();
         }
 
-        //Add all the quizzes to the container.
+        // Add all the quizzes to the container.
         quizzes.forEach(quiz -> {
             Button button = ButtonFactory.createQuestionListButton(quiz);
 

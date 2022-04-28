@@ -10,11 +10,14 @@ public class ContainerDecorator {
     /**
      * The class is static and should not be instansiated.
      */
-    private ContainerDecorator(){}
+    private ContainerDecorator() {
+    }
 
     /**
      * Styles the background color for archived quizzes.
-     * @param node The gui element.
+     *
+     * @param node
+     *            The gui element.
      */
     public static void makeContainerArchived(Node node) {
         node.setStyle("-fx-background-color: #E3BFBF");
@@ -22,7 +25,9 @@ public class ContainerDecorator {
 
     /**
      * Styles the background color for active quizzes.
-     * @param node The gui element
+     *
+     * @param node
+     *            The gui element
      */
     public static void makeContainerActive(Node node) {
         node.setStyle("-fx-background-color: white;");
