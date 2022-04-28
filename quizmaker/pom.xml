@@ -6,7 +6,7 @@
 
   <groupId>org.ntnu.k2.g2</groupId>
   <artifactId>quizmaker</artifactId>
-  <version>1.0-beta</version>
+  <version>1.0.0</version>
 
   <name>QuizMaker</name>
 
