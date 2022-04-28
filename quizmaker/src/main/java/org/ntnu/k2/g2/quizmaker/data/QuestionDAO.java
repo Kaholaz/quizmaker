@@ -7,22 +7,25 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
- * A class that deals with the "questions"-table in the database.
- * Instances of this class can be used to save and retrieve data from the database.
- * This method is package-protected. Database interactions should be done using the QuizRegister class.
+ * A class that deals with the "questions"-table in the database. Instances of this class can be used to save and
+ * retrieve data from the database. This method is package-protected. Database interactions should be done using the
+ * QuizRegister class.
  */
 class QuestionDAO {
     /**
      * Returns a question from the ResultSet returned by a SQL query.
      *
-     * @param result The ResultSet of an SQL query.
+     * @param result
+     *            The ResultSet of an SQL query.
+     *
      * @return The question
      */
-    private QuestionModel getQuestionFromResultSet(ResultSet result) {
+    private static QuestionModel getQuestionFromResultSet(ResultSet result) {
         QuestionModel question = null;
         try {
             if (result.next()) {
                 question = new QuestionModel();
+                question.setScore(result.getInt("score"));
                 question.setId(result.getInt("id"));
                 question.setQuestion(result.getString("question"));
                 question.setAnswer(result.getString("answer"));
@@ -38,10 +41,12 @@ class QuestionDAO {
     /**
      * Gets the quiz id of the ResultSet of a SQL query in the teams table.
      *
-     * @param result The ResultSet from an SQL query.
+     * @param result
+     *            The ResultSet from an SQL query.
+     *
      * @return The quiz id of the team returned by the SQL query.
      */
-    private int getQuizIdByResultSet(ResultSet result) {
+    private static int getQuizIdByResultSet(ResultSet result) {
         int quizId = -1;
         try {
             if (result.next()) {
@@ -58,15 +63,18 @@ class QuestionDAO {
     /**
      * Returns an ArrayList of all questions extracted from a ResultSet of a SQL query.
      *
-     * @param result The ResultSet of and SQL query
+     * @param result
+     *            The ResultSet of and SQL query
+     *
      * @return An ArrayList of all questions extracted from the ResultSet.
      */
-    private HashMap<Integer, QuestionModel> getQuestionsFromResultSet(ResultSet result) {
+    private static HashMap<Integer, QuestionModel> getQuestionsFromResultSet(ResultSet result) {
         HashMap<Integer, QuestionModel> questions = new HashMap<>();
 
         try {
             while (result.next()) {
                 QuestionModel question = new QuestionModel();
+                question.setScore(result.getInt("score"));
                 question.setId(result.getInt("id"));
                 question.setQuestion(result.getString("question"));
                 question.setAnswer(result.getString("answer"));
@@ -84,10 +92,12 @@ class QuestionDAO {
     /**
      * Gets a question form the database based on its ID.
      *
-     * @param id The id of the question.
+     * @param id
+     *            The id of the question.
+     *
      * @return The question with this ID. If there is no question that matches the ID, a null pointer is returned.
      */
-    public QuestionModel getQuestionById(int id) {
+    public static QuestionModel getQuestionById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -109,7 +119,7 @@ class QuestionDAO {
         return question;
     }
 
-    public HashMap<Integer, QuestionModel> getQuestionsByQuizId(int quizId) {
+    public static HashMap<Integer, QuestionModel> getQuestionsByQuizId(int quizId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -134,10 +144,12 @@ class QuestionDAO {
     /**
      * Gets the id of a quiz that contains a question with the supplied id.
      *
-     * @param questionId The id of the question.
+     * @param questionId
+     *            The id of the question.
+     *
      * @return The quiz id of the quiz where the question is a component. Returns -1 if the questionId is not found.
      */
-    public int getQuizIdByQuestionId(int questionId) {
+    public static int getQuizIdByQuestionId(int questionId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -162,11 +174,14 @@ class QuestionDAO {
     /**
      * Saves a question to the database.
      *
-     * @param question The question to save to the database.
-     * @param quizId   The id of the quiz this question is part of.
+     * @param question
+     *            The question to save to the database.
+     * @param quizId
+     *            The id of the quiz this question is part of.
+     *
      * @return The question as it is now saved in the database.
      */
-    public QuestionModel updateQuestion(QuestionModel question, int quizId) {
+    public static QuestionModel updateQuestion(QuestionModel question, int quizId) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -175,15 +190,16 @@ class QuestionDAO {
             connection = DatabaseConnection.getConnection();
             if (question.getId() == -1) {
                 preparedStatement = connection.prepareStatement(
-                        "INSERT INTO questions (question, answer, quizId) VALUES (?, ?, ?);");
-                preparedStatement.setInt(3, quizId);
+                        "INSERT INTO questions (question, answer, score, quizId) VALUES (?, ?, ?, ?);");
+                preparedStatement.setInt(4, quizId);
             } else {
-                preparedStatement = connection.prepareStatement(
-                        "UPDATE questions SET question=?, answer=? WHERE id=?");
-                preparedStatement.setInt(3, question.getId());
+                preparedStatement = connection
+                        .prepareStatement("UPDATE questions SET question=?, answer=?, score=? WHERE id=?");
+                preparedStatement.setInt(4, question.getId());
             }
             preparedStatement.setString(1, question.getQuestion());
             preparedStatement.setString(2, question.getAnswer());
+            preparedStatement.setInt(3, question.getScore());
 
             int resultRows = preparedStatement.executeUpdate();
             if (question.getId() == -1 && resultRows == 1) {
@@ -204,31 +220,34 @@ class QuestionDAO {
     /**
      * Updates the question is the database by finding its quiz id implicitly.
      *
-     * @param question The question to update in the database
+     * @param question
+     *            The question to update in the database
+     *
      * @return The question as it is now saved in the database.
      */
-    public QuestionModel updateQuestion(QuestionModel question) {
+    public static QuestionModel updateQuestion(QuestionModel question) {
         int quizId = getQuizIdByQuestionId(question.getId());
-        if (quizId == -1) return null;
+        if (quizId == -1)
+            return null;
         return updateQuestion(question, quizId);
     }
-
 
     /**
      * Removes a question with the given id from the database.
      *
-     * @param id The id of the question.
+     * @param id
+     *            The id of the question.
+     *
      * @return True if the question was removed successfully, false if not.
      */
-    public boolean removeQuestionById(int id) {
+    public static boolean removeQuestionById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         boolean result = false;
 
         try {
             connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(
-                    "DELETE FROM questions WHERE id=?");
+            preparedStatement = connection.prepareStatement("DELETE FROM questions WHERE id=?");
             preparedStatement.setInt(1, id);
             result = preparedStatement.execute();
         } catch (SQLException e) {

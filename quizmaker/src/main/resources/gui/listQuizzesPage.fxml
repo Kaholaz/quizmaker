@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.k2.g2.quizmaker.gui.controllers.ListQuizzesPage">
+   <center>
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmin="20.0" prefHeight="412.0" prefWidth="720.0" vbarPolicy="ALWAYS">
+            <content>
+            <VBox fx:id="quizContainer" prefHeight="200.0" prefWidth="687.0" />
+            </content>
+        </ScrollPane>
+   </center>
+   <stylesheets>
+      <URL value="@css/menu.css" />
+      <URL value="@css/main.css" />
+   </stylesheets>
+</BorderPane>

@@ -1,0 +1,27 @@
+/* This file contains basic styles used across all pages for small non-categorizable things */
+.text {
+    -fx-font-size: 20px;
+}
+
+.title {
+    -fx-font-size: 60px;
+}
+
+.quiz-title {
+    -fx-font-size: 40px;
+}
+
+.sub-title {
+    -fx-font-size: 25px;
+}
+
+.text-field {
+    -fx-font-size: 20px;
+    -fx-border-color: black;
+    -fx-border-type: bold;
+    -fx-border-width: 2px;
+}
+
+.root {
+    -fx-background-color: white;
+}
