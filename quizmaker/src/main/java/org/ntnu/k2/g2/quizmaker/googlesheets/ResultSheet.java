@@ -97,7 +97,7 @@ public class ResultSheet {
     public void deleteSheet(Drive driveService, String sheetId) {
 
         try {
-            driveService.files().delete("sheetId").execute();
+            driveService.files().delete(sheetId).execute();
         } catch (IOException e) {
             System.out.println("Error when trying to delete spreadsheet " + sheetId);
             System.out.println("Stacktrace: " + e);
