@@ -89,7 +89,7 @@ public class QuizModel {
      */
     public Iterator<TeamModel> getTeamsSortedByScore() {
         return teams.values().stream().sorted(
-                        Comparator.comparingInt(TeamModel::getScore).reversed())
+                        Comparator.comparingDouble(TeamModel::getScore).reversed())
                 .iterator();
     }
 
@@ -199,8 +199,8 @@ public class QuizModel {
     /**
      * @return The combined score of all teams competing in this quiz.
      */
-    public int getCombinedTeamScore() {
-        return teams.values().stream().map(TeamModel::getScore).reduce(0, Integer::sum);
+    public double getCombinedTeamScore() {
+        return teams.values().stream().map(TeamModel::getScore).reduce(0d, Double::sum);
     }
 
     /**

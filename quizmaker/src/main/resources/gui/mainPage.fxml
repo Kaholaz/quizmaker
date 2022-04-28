@@ -27,7 +27,7 @@
                <children>
                   <HBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="161.0" prefWidth="409.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="btnListQuizzes" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" text="Quizzer">
+                        <Button fx:id="btnListQuizzes" accessibleText="Se quizzer" mnemonicParsing="false" onAction="#onListQuizzesBtnClicked" prefHeight="36.0" prefWidth="106.0" text="Quizzer">
                            <HBox.margin>
                               <Insets right="100.0" />
                            </HBox.margin>
@@ -40,7 +40,7 @@
                               <String fx:value="clickable-node-gray" />
                            </styleClass>
                         </Button>
-                        <Button fx:id="btnNewQuiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" text="Ny quiz">
+                        <Button fx:id="btnNewQuiz" accessibleText="Lag ny quiz" mnemonicParsing="false" onAction="#onCreateNewQuizBtnClicked" text="Ny quiz">
                            <stylesheets>
                               <URL value="@css/buttons.css" />
                               <URL value="@css/clickable-nodes.css" />

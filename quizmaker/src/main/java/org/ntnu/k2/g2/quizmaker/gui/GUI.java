@@ -130,7 +130,7 @@ public class GUI extends Application {
 
         // We don't want a NullPointerException down the line.
         if (root == null) {
-            throw new IllegalStateException("Something when wrong during the loading of the FXML page");
+            throw new IllegalStateException("Something went wrong during the loading of the FXML page");
         }
         return root;
     }

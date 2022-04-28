@@ -59,14 +59,17 @@ public class QuizResultManager {
         for (List<Object> row : quizResult) {
             try{
                 String teamName = row.get(0).toString();
-                int score = Integer.parseInt((String) row.get(1));
+                String score_raw = row.get(1).toString();
+                // Supports both 1,2 and 1.2 to represent the double 1.2
+                Double score = Double.parseDouble(score_raw.replace(',', '.'));
 
                 TeamModel team = QuizRegister.newTeam(quiz);
                 team.setTeamName(teamName);
                 team.setScore(score);
-            }catch(IndexOutOfBoundsException | NumberFormatException e){
-                //Results are not added if result row is not formatted: <String>,<Int>
-        }
+            } catch(IndexOutOfBoundsException | NumberFormatException e){
+                // Results are not added if result row is not formatted: <String>,<Int>
+                // Be aware: This will discard "bad lines" without giving user feedback
+            }
         }
 
         QuizRegister.saveQuiz(quiz);

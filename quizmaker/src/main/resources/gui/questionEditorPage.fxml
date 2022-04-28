@@ -26,9 +26,9 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="64.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateNewQuestion" prefHeight="41.0" prefWidth="195.0" styleClass="navbar-button" text="Legg til spørsmål" />
+            <Button accessibleText="Legg til spørsmål" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateNewQuestion" prefHeight="41.0" prefWidth="195.0" styleClass="navbar-button" text="Legg til spørsmål" />
             <Pane prefHeight="64.0" prefWidth="24.0" HBox.hgrow="NEVER" />
-            <Button mnemonicParsing="false" onAction="#onSave" prefHeight="41.0" prefWidth="160.0" styleClass="button-green" text="Lagre" HBox.hgrow="ALWAYS">
+            <Button accessibleText="Lagre" mnemonicParsing="false" onAction="#onSave" prefHeight="41.0" prefWidth="160.0" styleClass="button-green" text="Lagre" HBox.hgrow="ALWAYS">
                <padding>
                   <Insets bottom="5.0" top="5.0" />
                </padding>

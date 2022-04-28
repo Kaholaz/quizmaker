@@ -92,7 +92,7 @@ class DatabaseConnection {
                     CREATE TABLE IF NOT EXISTS teams (
                       id INTEGER PRIMARY KEY AUTOINCREMENT,
                       name TEXT,
-                      score INTEGER,
+                      score REAL,
                       quizId INTEGER,
                       FOREIGN KEY (quizId) REFERENCES quiz(id)
                     );

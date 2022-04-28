@@ -22,7 +22,7 @@ class TeamDAO {
                 team = new TeamModel();
                 team.setId(result.getInt("id"));
                 team.setTeamName(result.getString("name"));
-                team.setScore(result.getInt("score"));
+                team.setScore(result.getDouble("score"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +47,7 @@ class TeamDAO {
                 TeamModel team = new TeamModel();
                 team.setId(result.getInt("id"));
                 team.setTeamName(result.getString("name"));
-                team.setScore(result.getInt("score"));
+                team.setScore(result.getDouble("score"));
 
                 teams.put(team.getId(), team);
             }
@@ -189,7 +189,7 @@ class TeamDAO {
                 preparedStatement.setInt(3, team.getId());
             }
             preparedStatement.setString(1, team.getTeamName());
-            preparedStatement.setInt(2, team.getScore());
+            preparedStatement.setDouble(2, team.getScore());
 
             int resultRows = preparedStatement.executeUpdate();
             if (team.getId() == -1 && resultRows == 1) {

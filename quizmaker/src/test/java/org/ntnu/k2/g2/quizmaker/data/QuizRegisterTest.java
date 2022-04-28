@@ -79,8 +79,17 @@ public class QuizRegisterTest extends TestCase {
         TeamModel team = QuizRegister.getTeam(2);
 
         assertEquals("T2", team.getTeamName());
-        assertEquals(2, team.getScore());
+        assertEquals(2d, team.getScore());
         assertEquals(2, team.getId());
+    }
+
+    public void testGetTeamWithNonIntegerScore() {
+        TeamModel team = QuizRegister.getTeam(2);
+        team.setScore(2.3);
+        QuizRegister.saveTeam(team);
+        team = QuizRegister.getTeam(2);
+
+        assertEquals(2.3, team.getScore());
     }
 
     public void testGetTeamReturnsNullOnInvalidId() {
@@ -258,6 +267,6 @@ public class QuizRegisterTest extends TestCase {
         assertEquals("Answer 3", quizzes.get(1).getQuestions().get(8).getAnswer());
 
         assertEquals("Team 2", quizzes.get(1).getTeams().get(5).getTeamName());
-        assertEquals(2, quizzes.get(1).getTeams().get(5).getScore());
+        assertEquals(2d, quizzes.get(1).getTeams().get(5).getScore());
     }
 }
