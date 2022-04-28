@@ -1,0 +1,28 @@
+/* --- Nodes that look clickable --- */
+.clickable-node-gray:hover {
+    -fx-cursor: hand;
+}
+
+.clickable-node-gray:pressed {
+    -fx-background-color: #eeeeee;
+}
+
+.clickable-node-lightgreen:hover {
+    -fx-cursor: hand;
+    -fx-background-color: lightgray;
+}
+
+.clickable-node-lightgreen:pressed {
+    -fx-background-color: lightgreen;
+}
+
+.clickable-node-lightblue:hover {
+    -fx-cursor: hand;
+    -fx-background-color: lightgray;
+}
+
+.clickable-node-lightblue:pressed {
+    -fx-background-color: lightblue;
+}
+
+/* --------------------------------- */

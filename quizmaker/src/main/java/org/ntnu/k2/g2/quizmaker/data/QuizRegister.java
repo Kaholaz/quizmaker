@@ -1,10 +1,9 @@
 package org.ntnu.k2.g2.quizmaker.data;
 
-import org.ntnu.k2.g2.quizmaker.UserData.QuizResultManager;
+import org.ntnu.k2.g2.quizmaker.googlesheets.QuizResultManager;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * A class used to interact with the storage system of quizzes
@@ -13,9 +12,25 @@ public class QuizRegister {
     /**
      * @return A complete representation of the database represented by an arraylist of quizzes
      */
-    public ArrayList<QuizModel> getQuizList() {
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.getAllQuizzes();
+    public static ArrayList<QuizModel> getQuizList() {
+        return QuizDAO.getAllQuizzes();
+    }
+
+    /**
+     * Tests if the database is read only.
+     *
+     * @return true if read only and false if writable
+     */
+    public static boolean isReadOnly() {
+        QuizModel quiz = new QuizModel();
+
+        // Tests if it is possible to write to the database
+        QuizModel savedQuiz = QuizDAO.updateQuiz(quiz);
+        boolean result = (savedQuiz == null);
+
+        // Remove quiz
+        QuizDAO.removeQuizById(quiz.getId());
+        return result;
     }
 
     /**
@@ -23,7 +38,7 @@ public class QuizRegister {
      *
      * @return An ArrayList of all active quizzes.
      */
-    public ArrayList<QuizModel> getActiveQuizzes() {
+    public static ArrayList<QuizModel> getActiveQuizzes() {
         return new ArrayList<>(getQuizList().stream().filter(QuizModel::isActive).toList());
     }
 
@@ -32,146 +47,154 @@ public class QuizRegister {
      *
      * @return An ArrayList of al inactive/archived quizzes.
      */
-    public ArrayList<QuizModel> getArchivedQuizzes() {
+    public static ArrayList<QuizModel> getArchivedQuizzes() {
         return new ArrayList<>(getQuizList().stream().filter(quiz -> !quiz.isActive()).toList());
     }
 
     /**
      * Gets a quiz with a specific id.
      *
-     * @param id The id of the quiz.
-     * @return A quiz object representation of the entry in the database.
-     * {@code null} is returned if no quiz matching the query is found in the database.
+     * @param id
+     *            The id of the quiz.
+     *
+     * @return A quiz object representation of the entry in the database. {@code null} is returned if no quiz matching
+     *         the query is found in the database.
      */
-    public QuizModel getQuiz(int id) {
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.getQuizById(id);
+    public static QuizModel getQuiz(int id) {
+        return QuizDAO.getQuizById(id);
     }
 
     /**
      * Gets a team with a specific id
      *
-     * @param id The id of the team.
-     * @return A team object representation of the entry in the database.
-     * {@code null} is returned if no team matching the query is found in the database.
+     * @param id
+     *            The id of the team.
+     *
+     * @return A team object representation of the entry in the database. {@code null} is returned if no team matching
+     *         the query is found in the database.
      */
-    public TeamModel getTeam(int id) {
-        TeamDAO teamDAO = new TeamDAO();
-        return teamDAO.getTeamById(id);
+    public static TeamModel getTeam(int id) {
+        return TeamDAO.getTeamById(id);
     }
 
     /**
      * Gets a question with a specific id
      *
-     * @param id The id of the question.
-     * @return A question object representation of the entry in the database.
-     * {@code null} is returned if no question matching the query is found in the database.
+     * @param id
+     *            The id of the question.
+     *
+     * @return A question object representation of the entry in the database. {@code null} is returned if no question
+     *         matching the query is found in the database.
      */
-    public QuestionModel getQuestion(int id) {
-        QuestionDAO questionDAO = new QuestionDAO();
-        return questionDAO.getQuestionById(id);
+    public static QuestionModel getQuestion(int id) {
+        return QuestionDAO.getQuestionById(id);
     }
 
     /**
      * Saves a quiz and ALL its content to the database.
      *
-     * @param quiz The quiz to save to the database.
-     * @return A quiz object representation of the entry in the database AFTER it has been updated.
-     * {@code null} is returned if something went wrong when the quiz was saved.
+     * @param quiz
+     *            The quiz to save to the database.
+     *
+     * @return A quiz object representation of the entry in the database AFTER it has been updated. {@code null} is
+     *         returned if something went wrong when the quiz was saved.
+     *
+     * @throws IOException
+     *             Throws an exception if something went wrong during the creation of the answer sheet.
      */
-    public QuizModel saveQuiz(QuizModel quiz) {
-        QuizDAO quizDAO = new QuizDAO();
-        QuizModel outQuiz = quizDAO.updateQuiz(quiz);
-        if (!quiz.getName().equals(outQuiz.getName())) {
+    public static QuizModel saveQuiz(QuizModel quiz) throws IOException {
+        QuizModel oldQuiz = QuizDAO.getQuizById(quiz.getId());
+
+        // Quiz is not in the database
+        if (oldQuiz == null) {
+            return null;
+        }
+
+        // Quiz name changed. Sheet is null will cause problems, so the sheet name will not be updated.
+        if (quiz.getSheetId() != null && !quiz.getName().equals(oldQuiz.getName())) {
             QuizResultManager.changeResultSheetName(quiz);
         }
-        return quizDAO.updateQuiz(quiz);
+
+        return QuizDAO.updateQuiz(quiz);
     }
 
     /**
-     * Saves a team to the database. To use this method, the team object should already be an entry in the database.
-     * If it is not, one should instead use the method newTeam to create a new team with a relation to a quiz.
+     * Saves a team to the database. To use this method, the team object should already be an entry in the database. If
+     * it is not, one should instead use the method newTeam to create a new team with a relation to a quiz.
      *
-     * @param team The team to save to the database.
-     * @return A team object representation of the entry in the database AFTER it has been updated.
-     * {@code null} is returned if something went wrong when the team was saved.
+     * @param team
+     *            The team to save to the database.
+     *
+     * @return A team object representation of the entry in the database AFTER it has been updated. {@code null} is
+     *         returned if something went wrong when the team was saved.
      */
-    public TeamModel saveTeam(TeamModel team) {
-        TeamDAO teamDAO = new TeamDAO();
-        return teamDAO.updateTeam(team);
+    public static TeamModel saveTeam(TeamModel team) {
+        return TeamDAO.updateTeam(team);
     }
 
     /**
-     * Saves a question to the database. To use this method, the question object should already be an entry in the database.
-     * If it is not, one should instead use the method newQuestion to create a new question with a relation to a quiz.
+     * Saves a question to the database. To use this method, the question object should already be an entry in the
+     * database. If it is not, one should instead use the method newQuestion to create a new question with a relation to
+     * a quiz.
      *
-     * @param question The question to save to the database.
-     * @return A question object representation of the entry in the database AFTER it has been updated.
-     * {@code null} is returned if something went wrong when the question was saved.
+     * @param question
+     *            The question to save to the database.
+     *
+     * @return A question object representation of the entry in the database AFTER it has been updated. {@code null} is
+     *         returned if something went wrong when the question was saved.
      */
-    public QuestionModel saveQuestion(QuestionModel question) {
-        QuestionDAO questionDAO = new QuestionDAO();
-        return questionDAO.updateQuestion(question);
+    public static QuestionModel saveQuestion(QuestionModel question) {
+        return QuestionDAO.updateQuestion(question);
     }
 
     /**
      * Create a new quiz.
      *
      * @return The new quiz.
-     */
-    public QuizModel newQuiz() {
-        return newQuiz(false);
-    }
-
-    /**
-     * Create a new quiz.
      *
-     * @param isTest If this flag is set to true, new quizzes are created without a result sheet.
-     *               This is to be used in testing.
-     * @return The new quiz.
+     * @throws IOException
+     *             Throws an exception if something wrong happened when creating a result-sheet.
      */
-    protected QuizModel newQuiz(boolean isTest) {
+    public static QuizModel newQuiz() throws IOException {
         QuizModel quiz = new QuizModel();
         quiz.setName("new quiz");
 
-        if (!isTest) {
-            try {
-                QuizResultManager.createResultSheet(quiz);
-            } catch (GeneralSecurityException | IOException e) {
-                e.printStackTrace();
-            }
+        // A result sheet is not generated within testing
+        if (!Util.isTest()) {
+            QuizResultManager.createResultSheet(quiz);
         }
 
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.updateQuiz(quiz);
+        return QuizDAO.updateQuiz(quiz);
     }
 
     /**
-     * Creates a new team entry in the database and ads an object representation to the supplied quiz.
-     * This method must be called when creating a new teams.
+     * Creates a new team entry in the database and ads an object representation to the supplied quiz. This method must
+     * be called when creating a new teams.
      *
-     * @param quiz The quiz the team should be part of.
+     * @param quiz
+     *            The quiz the team should be part of.
+     *
      * @return A team object representation of the entry in the database AFTER it has been added to the database.
-     * {@code null} is returned if something went wrong when the team was added to the database.
+     *         {@code null} is returned if something went wrong when the team was added to the database.
      */
-    public TeamModel newTeam(QuizModel quiz) {
-        TeamDAO teamDAO = new TeamDAO();
-        TeamModel team = teamDAO.updateTeam(new TeamModel(), quiz.getId());
+    public static TeamModel newTeam(QuizModel quiz) {
+        TeamModel team = TeamDAO.updateTeam(new TeamModel(), quiz.getId());
         quiz.getTeams().put(team.getId(), team);
         return team;
     }
 
     /**
-     * Creates a new question entry in the database and ads an object representation to the supplied quiz.
-     * This method must be called when creating a new questions.
+     * Creates a new question entry in the database and ads an object representation to the supplied quiz. This method
+     * must be called when creating a new questions.
      *
-     * @param quiz The quiz the question should be part of.
+     * @param quiz
+     *            The quiz the question should be part of.
+     *
      * @return A question object representation of the entry in the database AFTER it has been added to the database.
-     * {@code null} is returned if something went wrong when the question was added to the database.
+     *         {@code null} is returned if something went wrong when the question was added to the database.
      */
-    public QuestionModel newQuestion(QuizModel quiz) {
-        QuestionDAO questionDAO = new QuestionDAO();
-        QuestionModel question = questionDAO.updateQuestion(new QuestionModel(), quiz.getId());
+    public static QuestionModel newQuestion(QuizModel quiz) {
+        QuestionModel question = QuestionDAO.updateQuestion(new QuestionModel(), quiz.getId());
         quiz.getQuestions().put(question.getId(), question);
         return question;
     }
@@ -179,53 +202,70 @@ public class QuizRegister {
     /**
      * Removes a quiz and all its contents (questions and teams) from the database.
      *
-     * @param quiz The quiz to remove from the database.
+     * @param quiz
+     *            The quiz to remove from the database.
+     *
      * @return True if the operation was successful, false if not.
      */
-    public boolean removeQuiz(QuizModel quiz) {
-        QuizResultManager.deleteResultSheet(quiz);
-
-        QuizDAO quizDAO = new QuizDAO();
-        return quizDAO.removeQuizById(quiz.getId());
+    public static boolean removeQuiz(QuizModel quiz) {
+        if (quiz.getSheetId() != null && !Util.isTest() /* Do not remove the test sheets */) {
+            try {
+                QuizResultManager.removeResultSheet(quiz);
+            } catch (IOException e) {
+                return false;
+            }
+        }
+        return QuizDAO.removeQuizById(quiz.getId());
     }
 
     /**
      * Removes a team from the database.
      *
-     * @param quiz   The quiz the team is a component of.
-     * @param teamId The id of the team to remove.
+     * @param quiz
+     *            The quiz the team is a component of.
+     * @param teamId
+     *            The id of the team to remove.
+     *
      * @return True if the operation was successful, false if not.
      */
-    public boolean removeTeam(QuizModel quiz, int teamId) {
+    public static boolean removeTeam(QuizModel quiz, int teamId) {
         quiz.getTeams().remove(teamId);
 
-        TeamDAO teamDAO = new TeamDAO();
-        return teamDAO.removeTeamById(teamId);
+        return TeamDAO.removeTeamById(teamId);
     }
 
     /**
      * Removes a team from the database.
      *
-     * @param quiz       The quiz the team is a component of.
-     * @param questionId The id of the team to remove.
+     * @param quiz
+     *            The quiz the team is a component of.
+     * @param questionId
+     *            The id of the team to remove.
+     *
      * @return True if the operation was successful, false if not.
      */
-    public boolean removeQuestion(QuizModel quiz, int questionId) {
+    public static boolean removeQuestion(QuizModel quiz, int questionId) {
         quiz.getQuestions().remove(questionId);
 
-        QuestionDAO questionDAO = new QuestionDAO();
-        return questionDAO.removeQuestionById(questionId);
+        return QuestionDAO.removeQuestionById(questionId);
     }
 
     /**
      * Populates the database with a set number of quizzes and a set number of teams and question per quiz.
      *
-     * @param quizzes   The number of quizzes to fill that database with.
-     * @param teams     The number of teams to fill each quiz with.
-     * @param questions The number of questions to fill each quiz with.
+     * @param quizzes
+     *            The number of quizzes to fill that database with.
+     * @param teams
+     *            The number of teams to fill each quiz with.
+     * @param questions
+     *            The number of questions to fill each quiz with.
+     *
      * @return An ArrayList of all the quizzes that were added to the database.
+     *
+     * @throws IOException
+     *             Throws an exception if something wrong happened when creating the result sheet.
      */
-    public ArrayList<QuizModel> populateDatabase(int quizzes, int teams, int questions) {
+    public static ArrayList<QuizModel> populateDatabase(int quizzes, int teams, int questions) throws IOException {
         ArrayList<QuizModel> quizArrayList = new ArrayList<>();
 
         for (int i = 1; i <= quizzes; ++i) {

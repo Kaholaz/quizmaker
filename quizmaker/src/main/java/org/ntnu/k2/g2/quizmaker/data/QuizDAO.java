@@ -10,19 +10,21 @@ import java.util.HashMap;
 import java.util.stream.Stream;
 
 /**
- * A class used to interact with the "quizzes"-table in the database.
- * Instances of this class can be used to save and retrieve quiz-data form the database.
- * This method is package-protected. Database interactions should be done using the QuizRegister class.
+ * A class used to interact with the "quizzes"-table in the database. Instances of this class can be used to save and
+ * retrieve quiz-data form the database. This method is package-protected. Database interactions should be done using
+ * the QuizRegister class.
  */
 class QuizDAO {
     /**
-     * Constructs a quiz based on the ResultSet of an SQL query. Please note:
-     * This method does not fill the teams or questions properties. These are filled in getQuizFromId()
+     * Constructs a quiz based on the ResultSet of an SQL query. Please note: This method does not fill the teams or
+     * questions properties. These are filled in getQuizFromId()
      *
-     * @param result The ResultSet of an SQL query.
+     * @param result
+     *            The ResultSet of an SQL query.
+     *
      * @return A quiz based on the result of the SQL query.
      */
-    private QuizModel getQuizFromResultSet(ResultSet result) {
+    private static QuizModel getQuizFromResultSet(ResultSet result) {
         QuizModel quiz = null;
         try {
             if (result.next()) {
@@ -42,14 +44,15 @@ class QuizDAO {
     }
 
     /**
-     * Constructs an ArrayList of quizzes based on the ResultSet of an SQL query. Please note:
-     * This method does not fill the teams or questions properties.
-     * These properties are filled in the methods that call this method.
+     * Constructs an ArrayList of quizzes based on the ResultSet of an SQL query. Please note: This method does not fill
+     * the teams or questions properties. These properties are filled in the methods that call this method.
      *
-     * @param result The ResultSet of an SQL property
+     * @param result
+     *            The ResultSet of an SQL property
+     *
      * @return An ArrayList of all extracted quizzes form the ResultSet.
      */
-    private ArrayList<QuizModel> getQuizzesFromResultSet(ResultSet result) {
+    private static ArrayList<QuizModel> getQuizzesFromResultSet(ResultSet result) {
         ArrayList<QuizModel> quizzes = new ArrayList<>();
         try {
             while (result.next()) {
@@ -71,13 +74,15 @@ class QuizDAO {
     }
 
     /**
-     * Gets a quiz by an id. This quiz has its teams and questions properties filled.
-     * This method returns null if no quiz is found.
+     * Gets a quiz by an id. This quiz has its teams and questions properties filled. This method returns null if no
+     * quiz is found.
      *
-     * @param id The id of the quiz.
+     * @param id
+     *            The id of the quiz.
+     *
      * @return The quiz with the id in the database. If no quiz is found, null is returned.
      */
-    public QuizModel getQuizById(int id) {
+    public static QuizModel getQuizById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -91,10 +96,8 @@ class QuizDAO {
 
             quiz = getQuizFromResultSet(result);
 
-            TeamDAO teamDAO = new TeamDAO();
-            QuestionDAO questionDAO = new QuestionDAO();
-            quiz.setQuestions(questionDAO.getQuestionsByQuizId(id));
-            quiz.setTeams(teamDAO.getTeamsByQuizId(id));
+            quiz.setQuestions(QuestionDAO.getQuestionsByQuizId(id));
+            quiz.setTeams(TeamDAO.getTeamsByQuizId(id));
         } catch (NullPointerException e) {
             return null;
         } catch (SQLException e) {
@@ -111,7 +114,7 @@ class QuizDAO {
      *
      * @return An ArrayList containing all quizzes in the database. Returns an empty list if there are no entries.
      */
-    public ArrayList<QuizModel> getAllQuizzes() {
+    public static ArrayList<QuizModel> getAllQuizzes() {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -124,12 +127,9 @@ class QuizDAO {
 
             quizzes = getQuizzesFromResultSet(result);
 
-            TeamDAO teamDAO = new TeamDAO();
-            QuestionDAO questionDAO = new QuestionDAO();
-
             quizzes.forEach(quiz -> {
-                quiz.setQuestions(questionDAO.getQuestionsByQuizId(quiz.getId()));
-                quiz.setTeams(teamDAO.getTeamsByQuizId(quiz.getId()));
+                quiz.setQuestions(QuestionDAO.getQuestionsByQuizId(quiz.getId()));
+                quiz.setTeams(TeamDAO.getTeamsByQuizId(quiz.getId()));
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -143,10 +143,12 @@ class QuizDAO {
     /**
      * Saves a quiz to the database.
      *
-     * @param quiz The quiz to save to the database.
+     * @param quiz
+     *            The quiz to save to the database.
+     *
      * @return The quiz as it is saved in the database after the update is done.
      */
-    public QuizModel updateQuiz(QuizModel quiz) {
+    public static QuizModel updateQuiz(QuizModel quiz) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
@@ -161,8 +163,8 @@ class QuizDAO {
                 preparedStatement = connection.prepareStatement(
                         "INSERT INTO quizzes (name, sheetId, active, lastChanged) VALUES (?, ?, ?, ?);");
             } else {
-                preparedStatement = connection.prepareStatement(
-                        "UPDATE quizzes SET name=?, sheetId=?, active=?, lastChanged=? WHERE id=?;");
+                preparedStatement = connection
+                        .prepareStatement("UPDATE quizzes SET name=?, sheetId=?, active=?, lastChanged=? WHERE id=?;");
                 preparedStatement.setInt(5, quiz.getId());
             }
             preparedStatement.setString(1, quiz.getName());
@@ -190,24 +192,22 @@ class QuizDAO {
 
             // Make updates to the team and question tables to reflect the quiz object
             QuizModel oldQuizData = getQuizById(quizId);
-            QuestionDAO questionDAO = new QuestionDAO();
-            TeamDAO teamDAO = new TeamDAO();
 
             // Remove removed questions
             Stream<Integer> UniqueOldQuestions = oldQuizData.getQuestions().keySet().stream()
                     .filter(oldId -> !newQuestions.containsKey(oldId));
-            UniqueOldQuestions.forEach(questionDAO::removeQuestionById);
+            UniqueOldQuestions.forEach(QuestionDAO::removeQuestionById);
 
             // Remove removed teams
             Stream<Integer> UniqueOldTeams = oldQuizData.getTeams().keySet().stream()
                     .filter(oldId -> !newTeams.containsKey(oldId));
-            UniqueOldTeams.forEach(teamDAO::removeTeamById);
+            UniqueOldTeams.forEach(TeamDAO::removeTeamById);
 
             // Update teams
-            newTeams.values().forEach(team -> teamDAO.updateTeam(team, quizId));
+            newTeams.values().forEach(team -> TeamDAO.updateTeam(team, quizId));
 
             // Update questions
-            newQuestions.values().forEach(question -> questionDAO.updateQuestion(question, quizId));
+            newQuestions.values().forEach(question -> QuestionDAO.updateQuestion(question, quizId));
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
@@ -223,10 +223,12 @@ class QuizDAO {
     /**
      * Removes a quiz and ALL its components (questions and teams) from the database.
      *
-     * @param id The ID of the quiz to remove.
+     * @param id
+     *            The ID of the quiz to remove.
+     *
      * @return True if the operation was successful, false if not.
      */
-    public boolean removeQuizById(int id) {
+    public static boolean removeQuizById(int id) {
         Connection connection;
         PreparedStatement preparedStatement = null;
         boolean result = false;
@@ -235,26 +237,21 @@ class QuizDAO {
             QuizModel quiz = getQuizById(id);
 
             // remove all questions
-            QuestionDAO questionDAO = new QuestionDAO();
-            quiz.getQuestions().keySet().forEach(questionDAO::removeQuestionById);
-
+            quiz.getQuestions().keySet().forEach(QuestionDAO::removeQuestionById);
 
             // remove all teams
-            TeamDAO teamDAO = new TeamDAO();
-            quiz.getQuestions().keySet().forEach(teamDAO::removeTeamById);
-
+            quiz.getQuestions().keySet().forEach(TeamDAO::removeTeamById);
 
             // removes the quiz itself
             connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(
-                    "DELETE FROM quizzes WHERE id=?");
+            preparedStatement = connection.prepareStatement("DELETE FROM quizzes WHERE id=?");
             preparedStatement.setInt(1, id);
 
-            result = preparedStatement.execute();
+            preparedStatement.execute();
+            result = true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-
             DatabaseConnection.closePreparedStatement(preparedStatement);
         }
         return result;
