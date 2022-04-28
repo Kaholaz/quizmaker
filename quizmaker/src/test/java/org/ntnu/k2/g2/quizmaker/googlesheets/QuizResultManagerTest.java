@@ -7,7 +7,6 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.Iterator;
 
 public class QuizResultManagerTest extends TestCase {
@@ -56,7 +55,7 @@ public class QuizResultManagerTest extends TestCase {
         }
 
         assertEquals(4, quiz.getTeams().size());
-        assertEquals(10, quiz.getCombinedTeamScore());
+        assertEquals(10d, quiz.getCombinedTeamScore());
     }
 
     public void testImportResultSheetParsesDecimals() throws IOException {
@@ -74,5 +73,23 @@ public class QuizResultManagerTest extends TestCase {
         assertEquals(1.2, teams.next().getScore());
 
         QuizRegister.removeQuiz(quiz);
+    }
+
+    public void testRemoveSheet() throws IOException {
+        QuizModel quiz = QuizRegister.newQuiz();
+
+        QuizResultManager.createResultSheet(quiz);
+        String sheetId = quiz.getSheetId();
+
+        QuizResultManager.removeResultSheet(quiz);
+
+        try {
+            ResultSheet resultSheet = new ResultSheet();
+            resultSheet.getSheetTitle(sheetId);
+            fail("Reading removed sheet should result in IException");
+        } catch (IOException ignored) {
+        } catch (Exception e) {
+            fail("Reading removed sheet should result in IException");
+        }
     }
 }
