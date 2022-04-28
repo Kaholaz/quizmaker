@@ -7,18 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.decorators.ButtonDecorator;
-
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-
-import static org.ntnu.k2.g2.quizmaker.gui.factories.TextFactory.createSmallText;
 
 /**
  * Creates elements meant for navigation.

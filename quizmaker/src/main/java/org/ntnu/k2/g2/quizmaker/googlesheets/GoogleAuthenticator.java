@@ -1,7 +1,6 @@
 package org.ntnu.k2.g2.quizmaker.googlesheets;
 
 import com.google.api.client.auth.oauth2.Credential;
-
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -39,7 +38,7 @@ public class GoogleAuthenticator {
      * @param HTTP_TRANSPORT The network HTTP Transport.
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
-     * TODO: !!
+     * @author Google (https://developers.google.com/sheets/api/quickstart/java)
      */
     static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.

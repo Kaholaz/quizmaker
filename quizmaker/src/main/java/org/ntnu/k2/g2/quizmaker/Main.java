@@ -1,15 +1,15 @@
 package org.ntnu.k2.g2.quizmaker;
 
 import javafx.application.Application;
-import org.ntnu.k2.g2.quizmaker.data.QuizModel;
 import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.gui.GUI;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 
+/**
+ * The main class of the application.
+ */
 public class Main {
     public static void main(String[] args) {
         URL googleCredentials = Main.class.getResource("/userdata/google-credentials.json");

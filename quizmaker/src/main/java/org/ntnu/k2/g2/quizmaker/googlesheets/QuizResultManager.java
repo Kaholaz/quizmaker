@@ -47,7 +47,6 @@ public class QuizResultManager {
 
     /**
      * Imports scores and teams from the result sheet where the users have entered their score.
-     * This method retrieves the scores with the Google API and
      * @param quiz The quiz to import the results for.
      */
     public static QuizModel importResults(QuizModel quiz) throws IOException {
