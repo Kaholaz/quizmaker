@@ -18,7 +18,6 @@ import org.ntnu.k2.g2.quizmaker.gui.decorators.TextDecorator;
 import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
-import java.nio.file.FileSystems;
 import java.util.Iterator;
 
 /**

@@ -7,7 +7,6 @@ import org.ntnu.k2.g2.quizmaker.data.QuizRegister;
 import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.Iterator;
 
 public class QuizResultManagerTest extends TestCase {
