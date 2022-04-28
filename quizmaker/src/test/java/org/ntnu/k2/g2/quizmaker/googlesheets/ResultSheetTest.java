@@ -4,7 +4,6 @@ import com.google.api.services.drive.Drive;
 import junit.framework.TestCase;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 public class ResultSheetTest extends TestCase {
@@ -112,7 +111,7 @@ public class ResultSheetTest extends TestCase {
         String sheetId = resultSheet.createSheet("Old Name");
         resultSheet.setSheetTitle("New name",sheetId);
 
-        assertEquals("New name",resultSheet.getSheetTitle("sheetId"));
+        assertEquals("New name",resultSheet.getSheetTitle(sheetId));
 
         Drive driveService = resultSheet.createDriveService();
         resultSheet.deleteSheet(driveService, sheetId);
