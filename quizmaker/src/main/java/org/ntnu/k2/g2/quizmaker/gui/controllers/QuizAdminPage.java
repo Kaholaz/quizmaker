@@ -19,6 +19,7 @@ import org.ntnu.k2.g2.quizmaker.gui.factories.AlertFactory;
 import org.ntnu.k2.g2.quizmaker.gui.factories.NavBarFactory;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 /**
  * Controller class for the AdminPage. This page is an interface for editing and
@@ -174,7 +175,11 @@ public class QuizAdminPage {
 
         try {
             QuizResultManager.importResults(quiz);
-        } catch (IOException e) {
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            AlertFactory.createNewErrorAlert("Kunne ikke hente data. \nSørg for at du er koblet til internett.").show();
+            return;
+        }catch (IOException e) {
             e.printStackTrace();
             AlertFactory.createNewErrorAlert("Kunne ikke hente data: \n" + e.getMessage()).show();
             return;
