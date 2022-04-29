@@ -1,0 +1,9 @@
+module:org.ntnu.k2.g2.quizmaker
+org.ntnu.k2.g2.quizmaker
+org.ntnu.k2.g2.quizmaker.data
+org.ntnu.k2.g2.quizmaker.googlesheets
+org.ntnu.k2.g2.quizmaker.gui
+org.ntnu.k2.g2.quizmaker.gui.controllers
+org.ntnu.k2.g2.quizmaker.gui.decorators
+org.ntnu.k2.g2.quizmaker.gui.factories
+org.ntnu.k2.g2.quizmaker.pdfexport
