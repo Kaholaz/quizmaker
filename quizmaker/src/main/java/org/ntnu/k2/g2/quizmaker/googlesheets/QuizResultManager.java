@@ -8,6 +8,9 @@ import org.ntnu.k2.g2.quizmaker.data.TeamModel;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A programming interface to interact with Google Sheets
+ */
 public class QuizResultManager {
     /**
      * This method creates an associated result sheet for a quiz
