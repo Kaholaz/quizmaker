@@ -17,6 +17,7 @@ image: maven:3.8.4-openjdk-17
 
 stages:
   - test
+  - deploy
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
@@ -27,3 +28,18 @@ unit-test-job:   # This job runs in the test stage.
     - mvn clean test -Dtest=\!ResultSheetTest*,\!QuizResultManagerTest*
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+
+# NB! Javadoc genereres IKKE under bygging av prosjektet. Man må kjøre javadoc lokalt og legge til katalogen (med navnet "javadoc")
+# til roten av prosjektet. Ellers vil denne delen feile.
+pages:
+  stage: deploy
+  script:
+  - mkdir .public
+  - cp -r javadoc/* .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - main
+
