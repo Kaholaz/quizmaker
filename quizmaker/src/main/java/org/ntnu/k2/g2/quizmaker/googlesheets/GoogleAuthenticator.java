@@ -19,6 +19,11 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A class used to authenticate with Google.
+ *
+ * @author Google (https://developers.google.com/sheets/api/quickstart/java)
+ */
 public class GoogleAuthenticator {
 
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();

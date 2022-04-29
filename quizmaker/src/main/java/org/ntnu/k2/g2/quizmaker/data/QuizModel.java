@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
 
+/**
+ * A class used to represent a single quiz.
+ */
 public class QuizModel {
     private String name;
     private final String SHEET_URL = "https://docs.google.com/spreadsheets/d/";

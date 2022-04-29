@@ -11,6 +11,14 @@ import java.net.URL;
  * The main class of the application.
  */
 public class Main {
+
+    /**
+     * Main method of the application. Does a couple of checks for things necesarry for the application before launching
+     * the gui.
+     *
+     * @param args
+     *            Args are not taken into account
+     */
     public static void main(String[] args) {
         URL googleCredentials = Main.class.getResource("/userdata/google-credentials.json");
         if (googleCredentials == null) {

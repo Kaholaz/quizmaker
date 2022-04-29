@@ -1,5 +1,8 @@
 package org.ntnu.k2.g2.quizmaker.data;
 
+/**
+ * A static class that contains different utility functions not suitable to place in a specific class.
+ */
 public class Util {
     /**
      * Checks whenever or not the database is running inside a test by searching through the stack trace.
